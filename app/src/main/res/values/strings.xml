@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Survirun</string>
     <string name="story_name">당신은 좀비아포칼립스의 생존자입니다당신의이름은무엇인가요.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
