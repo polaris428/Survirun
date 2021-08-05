@@ -45,5 +45,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'in.codeshuffle:typewriterview:1.1.0'
-
+    implementation 'com.etebarian:meow-bottom-navigation:1.0.0'
 }
