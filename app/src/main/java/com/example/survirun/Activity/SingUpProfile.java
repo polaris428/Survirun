@@ -1,8 +1,10 @@
-package com.example.survirun;
+package com.example.survirun.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.survirun.R;
 
 public class SingUpProfile extends AppCompatActivity {
 

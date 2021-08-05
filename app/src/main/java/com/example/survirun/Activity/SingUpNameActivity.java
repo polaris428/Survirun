@@ -1,4 +1,4 @@
-package com.example.survirun;
+package com.example.survirun.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 
 
+import com.example.survirun.R;
+import com.example.survirun.Typewriter;
 import com.example.survirun.databinding.ActivitySingUpNameBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
