@@ -4,21 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
-import com.example.survirun.ExerciseFragment;
-import com.example.survirun.FriendFragment;
+import com.example.survirun.Fragmnet.ExerciseFragment;
+import com.example.survirun.Fragmnet.FriendFragment;
 import com.example.survirun.R;
-import com.example.survirun.StatisticsFragment;
-import com.example.survirun.UserFragment;
+import com.example.survirun.Fragmnet.StatisticsFragment;
+import com.example.survirun.Fragmnet.UserFragment;
 import com.example.survirun.databinding.ActivityMainBinding;
-import com.example.survirun.databinding.ActivitySingUpBinding;
-import com.google.firebase.storage.internal.Util;
-
-import java.util.function.Function;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
