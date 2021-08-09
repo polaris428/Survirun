@@ -50,7 +50,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private double currentLat = 0.0;
     private double currentLng = 0.0;
 
-    private int kcal = 0;
+    private double kcal = 0.0;
     private double walkingDistance = 0;
 
     private ActivityMapBinding binding;
@@ -110,7 +110,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 loB.setLatitude(currentLat);
                 loB.setLongitude(currentLng);
                 walkingDistance = walkingDistance + loA.distanceTo(loB);
-
+                kcal = 80 * walkingDistance;
+                binding.textviewKcal.setText(String.format("%.0f",kcal));
                 binding.textviewKm.setText(String.format("%.2f",walkingDistance / 1000.0));
 
                 lastLat = currentLat;
@@ -139,7 +140,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             checkRunTimePermission();
         }
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.555201,126.970734), 50));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.555201,126.970734), 10));
 
 
     }
