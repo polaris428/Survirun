@@ -92,6 +92,7 @@ public class UserFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+
             }
         });
 
