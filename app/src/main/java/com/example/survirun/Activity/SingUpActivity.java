@@ -44,9 +44,6 @@ public class SingUpActivity extends AppCompatActivity {
         setContentView(view);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        firebaseAuth = FirebaseAuth.getInstance();
-
-
 
         binding.idinput.addTextChangedListener(new TextWatcher() {
             @Override
