@@ -26,9 +26,9 @@ public class UserGoalModifyActivity extends AppCompatActivity {
         binding = ActivityUserGoalModifyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         SharedPreferences sf = getSharedPreferences("goal", MODE_PRIVATE);
-        int calorie = sf.getInt("calorie", 0);
-        int time = sf.getInt("time", 0);
-        int km = sf.getInt("km", 0);
+        int calorie = sf.getInt("calorie", 5);
+        int time = sf.getInt("time", 60);
+        int km = sf.getInt("km", 400);
 
         binding.etCalorie.setText(String.valueOf(calorie));
         binding.etH.setText(String.valueOf(time/60));
