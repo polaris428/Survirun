@@ -53,7 +53,7 @@ public class UserFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    UserModel userModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,13 +63,15 @@ public class UserFragment extends Fragment {
 
         List<UserModel> userModels=new ArrayList<>();
         userModels.clear();
+
         FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                UserModel userModel=snapshot.getValue(UserModel.class);
+                userModel=snapshot.getValue(UserModel.class);
                 userModels.add(snapshot.getValue(UserModel.class));
-                Log.d("asdf",userModels+"");
-
+                binding.tvKm.setText(userModel.todayKm+"");
+                binding.tvCalorie.setText(userModel.todayCalorie+"");
+                binding.tvTime.setText(userModel.todayExerciseTime+"");
             }
 
             @Override
