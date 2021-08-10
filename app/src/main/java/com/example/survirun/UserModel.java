@@ -7,5 +7,5 @@ public class UserModel {
 
     public int todayCalorie;
     public int todayExerciseTime;
-    public int todayKm;
+    public double todayKm;
 }

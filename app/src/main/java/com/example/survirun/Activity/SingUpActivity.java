@@ -125,7 +125,7 @@ public class SingUpActivity extends AppCompatActivity {
 
                                                 userModel.uid=uid;
                                                 userModel.todayExerciseTime=0;
-                                                userModel.todayKm=0;
+                                                userModel.todayKm=0.00;
                                                 userModel.todayCalorie=0;
 
                                                 FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
