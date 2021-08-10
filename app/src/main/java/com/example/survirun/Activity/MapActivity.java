@@ -16,6 +16,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -53,6 +55,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private double kcal = 0.0;
     private double walkingDistance = 0;
 
+    private boolean isRunning = true; //일시정지시 false로
+    private Thread timeThread = null;
     private ActivityMapBinding binding;
 
 
@@ -76,7 +80,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 6000, 10, new LocationListener() {
+
+        timeThread = new Thread(new timeThread());
+        timeThread.start();
+
+
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
                 //location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -110,7 +119,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 loB.setLatitude(currentLat);
                 loB.setLongitude(currentLng);
                 walkingDistance = walkingDistance + loA.distanceTo(loB);
-                kcal = 80 * walkingDistance;
+                kcal = 80 * (walkingDistance / 1000.0);
                 binding.textviewKcal.setText(String.format("%.0f",kcal));
                 binding.textviewKm.setText(String.format("%.2f",walkingDistance / 1000.0));
 
@@ -134,11 +143,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(final GoogleMap googleMap) { //초기 Init
         mMap = googleMap;
+
+
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
         } else {
             checkRunTimePermission();
         }
+        mMap.setMyLocationEnabled(true);
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.555201,126.970734), 10));
 
@@ -286,6 +298,43 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
 
                 break;
+        }
+    }
+
+    @SuppressLint("HandlerLeak")
+    Handler handler = new Handler() {
+        @SuppressLint("DefaultLocale")
+        @Override
+        public void handleMessage(Message msg) {
+            int sec = (msg.arg1 / 100) % 60;
+            int min = (msg.arg1 / 100) / 60;
+            int hour = (msg.arg1 / 100) / 3600;
+            //1000이 1초 1000*60 은 1분 1000*60*10은 10분 1000*60*60은 한시간
+            String str = String.format("%02d:%02d:%02d", hour, min, sec);
+            binding.textviewExerciseTime.setText(str);
+        }
+    };
+
+    public class timeThread implements Runnable {
+        @Override
+        public void run() {
+            int i = 0;
+            while (isRunning) {
+                Message msg = new Message();
+                msg.arg1 = i++;
+                handler.sendMessage(msg);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable(){
+                        @Override
+                        public void run() {
+                        }
+                    });
+                }
+
+            }
         }
     }
 }
