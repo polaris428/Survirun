@@ -102,7 +102,7 @@ public class UserGoalModifyActivity extends AppCompatActivity {
                 editor.putInt("km", inputKm);
                 editor.apply();
                 editor.commit();
-                Intent intent = new Intent(UserGoalModifyActivity.this, UserGoalActivity.class);
+                Intent intent = new Intent(UserGoalModifyActivity.this, MainActivity.class);
                 startActivity(intent);
             }
             else {
