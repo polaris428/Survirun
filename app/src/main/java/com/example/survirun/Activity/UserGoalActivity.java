@@ -22,36 +22,20 @@ public class UserGoalActivity extends AppCompatActivity {
         binding = ActivityUserGoalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         SharedPreferences sf = getSharedPreferences("goal", MODE_PRIVATE);
-        calorie = sf.getInt("calorie", 0);
-        time = sf.getInt("time", 0);
-        km = sf.getInt("km", 0);
+        calorie = sf.getInt("calorie", 400);
+        time = sf.getInt("time", 60);
+        km = sf.getInt("km", 5);
 
-        if(calorie!=0){
-            set();
-        }
-        else {
-            SharedPreferences.Editor editor = sf.edit();
-            editor.putInt("calorie", 400);
-            editor.putInt("time", 60);
-            editor.putInt("km", 5);
-            editor.apply();
-            editor.commit();
-            set();
-        }
-
+        String h = String.valueOf(time/60);
+        String m = String.valueOf(time%60);
+        binding.tvCalorie.setText(String.valueOf(calorie));
+        binding.tvTime.setText(h+"h "+m+"m");
+        binding.tvKm.setText(String.valueOf(km));
 
 
         binding.btnRetouch.setOnClickListener(v -> {
             Intent intent = new Intent(UserGoalActivity.this, UserGoalModifyActivity.class);
             startActivity(intent);
         });
-
-    }
-    private void set(){
-        String h = String.valueOf(time/60);
-        String m = String.valueOf(time%60);
-        binding.tvCalorie.setText(String.valueOf(calorie));
-        binding.tvTime.setText(h+"h "+m+"m");
-        binding.tvKm.setText(String.valueOf(km));
     }
 }

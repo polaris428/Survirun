@@ -26,26 +26,14 @@ public class UserGoalModifyActivity extends AppCompatActivity {
         binding = ActivityUserGoalModifyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         SharedPreferences sf = getSharedPreferences("goal", MODE_PRIVATE);
-        int calorie = sf.getInt("calorie", 5);
+        int calorie = sf.getInt("calorie", 400);
         int time = sf.getInt("time", 60);
-        int km = sf.getInt("km", 400);
+        int km = sf.getInt("km", 5);
 
         binding.etCalorie.setText(String.valueOf(calorie));
         binding.etH.setText(String.valueOf(time/60));
         binding.etM.setText(String.valueOf(time%60));
         binding.etKm.setText(String.valueOf(km));
-
-        binding.etCalorie.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(binding.etCalorie.getText().toString().replace(" ", "").equals("")) isCalorie = false;
-                else isCalorie = true;
-            }
-        });
 
         binding.etH.addTextChangedListener(new TextWatcher() {
             @Override
@@ -92,6 +80,8 @@ public class UserGoalModifyActivity extends AppCompatActivity {
         });
 
         binding.btnSave.setOnClickListener(v -> {
+            if(binding.etCalorie.getText().toString().replace(" ", "").equals("")) isCalorie = false;
+            else isCalorie = true;
             if(isCalorie&&isTimeH&&isTimeM&&isKm){
                 int inputCalorie = Integer.parseInt(binding.etCalorie.getText().toString());
                 int inputTime = Integer.parseInt(binding.etH.getText().toString())*60+Integer.parseInt(binding.etM.getText().toString());
