@@ -99,6 +99,10 @@ public class UserGoalModifyActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "빈칸을 채워주세요", Toast.LENGTH_SHORT).show();
             }
         });
+        binding.btnBack.setOnClickListener(v -> {
+            Intent intent = new Intent(UserGoalModifyActivity.this, UserGoalActivity.class);
+            startActivity(intent);
+        });
 
     }
 }

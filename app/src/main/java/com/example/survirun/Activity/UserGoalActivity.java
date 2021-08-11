@@ -32,6 +32,11 @@ public class UserGoalActivity extends AppCompatActivity {
         binding.tvTime.setText(h+"h "+m+"m");
         binding.tvKm.setText(String.valueOf(km));
 
+        binding.btnBack.setOnClickListener(v -> {
+            Intent intent = new Intent(UserGoalActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
+
 
         binding.btnRetouch.setOnClickListener(v -> {
             Intent intent = new Intent(UserGoalActivity.this, UserGoalModifyActivity.class);
