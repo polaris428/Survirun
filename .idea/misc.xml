@@ -5,6 +5,17 @@
       <map>
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_main.xml" value="0.27708333333333335" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_map.xml" value="0.2" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/activity_sing_up.xml" value="0.2765625" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/activity_sing_up_name.xml" value="0.2765625" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/activity_sing_up_profile.xml" value="0.2765625" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/activity_splash.xml" value="0.2765625" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/activity_user_goal.xml" value="0.2765625" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/fragment_1.xml" value="0.2760416666666667" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/fragment_2.xml" value="0.2760416666666667" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/fragment_3.xml" value="0.2760416666666667" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/fragment_exercise.xml" value="0.2765625" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/fragment_friend.xml" value="0.2765625" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/fragment_statistics.xml" value="0.2765625" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_user.xml" value="0.35885416666666664" />
       </map>
     </option>
