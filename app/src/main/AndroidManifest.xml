@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Survirun">
-        <activity android:name=".Activity.UserGoalModifyActivity"></activity>
+        <activity
+            android:name=".MyMarkerView"
+            android:exported="true" />
+        <activity android:name=".Activity.UserGoalModifyActivity" />
         <activity android:name=".Activity.UserGoalActivity" />
         <activity android:name=".Activity.MapActivity" />
 

@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.survirun.MyMarkerView;
+import com.example.survirun.R;
 import com.example.survirun.databinding.Fragment1Binding;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.components.Description;
@@ -72,7 +74,10 @@ public class Fragment1 extends Fragment {
 
         binding.chart.animateY(2000, Easing.EaseInCubic);
         binding.chart.invalidate();
-
+        MyMarkerView marker = new MyMarkerView(
+                getContext(), R.layout.activity_my_marker_view);
+        marker.setChartView(binding.chart);
+        binding.chart.setMarker(marker);
 
         View view = binding.getRoot();
         return view;
