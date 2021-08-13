@@ -13,7 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.survirun.UserModel;
+import com.example.survirun.Medel.UserModel;
 import com.example.survirun.databinding.ActivitySingUpBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;

@@ -43,6 +43,7 @@ public class UserGoalModifyActivity extends AppCompatActivity {
                 try {
                     if(Integer.parseInt(binding.etH.getText().toString())>23) binding.etH.setText(String.valueOf(23));
                 } catch (Exception e) {
+
                 }
             }
             @Override
