@@ -32,6 +32,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -52,6 +53,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private LocationManager lm; //= (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     private Location location;
     private PolylineOptions polylineOptions = new PolylineOptions();
+
+    private PolylineOptions pausePolylineOpt = new PolylineOptions();
     private TextToSpeech tts;
 
     private double startLat = 0.0;
@@ -66,6 +69,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private double timeToSec = 0.0;
 
     private boolean isRunning = true; //일시정지시 false로
+    private boolean isFirst = false;
     private Thread timeThread = null;
     private ActivityMapBinding binding;
 
@@ -76,6 +80,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         binding = ActivityMapBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        polylineOptions.zIndex(0);
         tts = new TextToSpeech(MapActivity.this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -123,6 +128,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
 
                 if(isRunning) {
+                    isFirst = false;
                     LatLng currentLatLng = new LatLng(currentLat, currentLng);
                     Log.d(">>",String.valueOf(currentLat) +' '+ String.valueOf(currentLng));
                     polylineOptions.color(Color.parseColor("#64A3F5"));
@@ -143,7 +149,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     kcal = 80 * (walkingDistance / 1000.0);
                     binding.textviewKcal.setText(String.format("%.0f",kcal));
                     binding.textviewKm.setText(String.format("%.2f",walkingDistance / 1000.0));
-                } else {
+                } else { /*
                     LatLng currentLatLng = new LatLng(currentLat, currentLng);
                     Log.d(">>",String.valueOf(currentLat) +' '+ String.valueOf(currentLng));
                     polylineOptions.color(Color.parseColor("#A1A69A"));
@@ -151,7 +157,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                     //Log.d(">>>",String.valueOf(polylineOptions));
                     mMap.addPolyline(polylineOptions);
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18)); */
+                    if(isFirst) {
+                        isFirst = false;
+                        pausePolylineOpt = new PolylineOptions();
+                        pausePolylineOpt.zIndex(1);
+                        pausePolylineOpt.color(Color.parseColor("#979DA6"));
+                        pausePolylineOpt.add(new LatLng(lastLat,lastLng));
+
+                    }
+                    LatLng t = new LatLng(currentLat,currentLng);
+                    polylineOptions.add(t);
+                    mMap.addPolyline(polylineOptions);
+                    pausePolylineOpt.add(t);
+                    mMap.addPolyline(pausePolylineOpt);
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(t, 18));
                 }
 
                 lastLat = currentLat;
@@ -165,14 +185,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 btnVisibilityChange(binding.pause);
                 btnVisibilityChange(binding.resume);
                 btnVisibilityChange(binding.stop);
+                isFirst = true;
                 isRunning = false;
-                /*try {
-                    synchronized (timeThread) {
-                        timeThread.wait();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } */
 
             }
         });
@@ -184,9 +198,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 btnVisibilityChange(binding.resume);
                 btnVisibilityChange(binding.stop);
                 isRunning = true;
-                /*synchronized (timeThread) {
-                    timeThread.notify();
-                } */
+                isFirst = false;
 
             }
         });
@@ -224,6 +236,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             checkRunTimePermission();
         }
         mMap.setMyLocationEnabled(true);
+        UiSettings mMapUiSetting = mMap.getUiSettings();
+        mMapUiSetting.setZoomControlsEnabled(true);
+        mMapUiSetting.setZoomGesturesEnabled(true);
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.555201,126.970734), 10));
 
