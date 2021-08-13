@@ -12,14 +12,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.survirun.R;
@@ -32,6 +35,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -44,6 +49,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private LocationManager lm; //= (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     private Location location;
     private PolylineOptions polylineOptions = new PolylineOptions();
+    private TextToSpeech tts;
 
     private double startLat = 0.0;
     private double startLng = 0.0;
@@ -54,11 +60,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private double kcal = 0.0;
     private double walkingDistance = 0;
+    private double timeToSec = 0.0;
 
     private boolean isRunning = true; //일시정지시 false로
     private Thread timeThread = null;
     private ActivityMapBinding binding;
-
 
     @SuppressLint("MissingPermission")
     @Override
@@ -67,12 +73,23 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         binding = ActivityMapBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        tts = new TextToSpeech(MapActivity.this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status == TextToSpeech.SUCCESS) {
+                    int r = tts.setLanguage(Locale.KOREA);
+                }
+
+            }
+        });
 
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
         } else {
             checkRunTimePermission();
         }
+
+
 
         //onMapReady(mMap);
 
@@ -91,10 +108,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 //location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 currentLat = location.getLatitude();
                 currentLng = location.getLongitude();
-                if(lastLat <= 0) {
+                if(lastLat == 0) {
                     lastLat = currentLat;
                     lastLng = currentLng;
-
                     MarkerOptions markerOptions = new MarkerOptions();
                     markerOptions.position(new LatLng(currentLat, currentLng));
                     markerOptions.title("시작");
@@ -103,28 +119,82 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 }
 
-                LatLng currentLatLng = new LatLng(currentLat, currentLng);
-                Log.d(">>",String.valueOf(currentLat) +' '+ String.valueOf(currentLng));
-                polylineOptions.add(currentLatLng);
-                //Log.d(">>>",String.valueOf(polylineOptions));
-                mMap.addPolyline(polylineOptions);
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
+                if(isRunning) {
+                    LatLng currentLatLng = new LatLng(currentLat, currentLng);
+                    Log.d(">>",String.valueOf(currentLat) +' '+ String.valueOf(currentLng));
+                    polylineOptions.color(Color.parseColor("#64A3F5"));
+                    polylineOptions.add(currentLatLng);
+                    //Log.d(">>>",String.valueOf(polylineOptions));
+                    mMap.addPolyline(polylineOptions);
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
 
-                /* 여기에 칼로리 및 거리 구하는 코드 집어넣기!*/
+                    /* 여기에 칼로리 및 거리 구하는 코드 집어넣기!*/
 
-                Location loA = new Location("last");
-                loA.setLatitude(lastLat);
-                loA.setLongitude(lastLng);
-                Location loB = new Location("curr");
-                loB.setLatitude(currentLat);
-                loB.setLongitude(currentLng);
-                walkingDistance = walkingDistance + loA.distanceTo(loB);
-                kcal = 80 * (walkingDistance / 1000.0);
-                binding.textviewKcal.setText(String.format("%.0f",kcal));
-                binding.textviewKm.setText(String.format("%.2f",walkingDistance / 1000.0));
+                    Location loA = new Location("last");
+                    loA.setLatitude(lastLat);
+                    loA.setLongitude(lastLng);
+                    Location loB = new Location("curr");
+                    loB.setLatitude(currentLat);
+                    loB.setLongitude(currentLng);
+                    walkingDistance = walkingDistance + loA.distanceTo(loB);
+                    kcal = 80 * (walkingDistance / 1000.0);
+                    binding.textviewKcal.setText(String.format("%.0f",kcal));
+                    binding.textviewKm.setText(String.format("%.2f",walkingDistance / 1000.0));
+                } else {
+                    LatLng currentLatLng = new LatLng(currentLat, currentLng);
+                    Log.d(">>",String.valueOf(currentLat) +' '+ String.valueOf(currentLng));
+                    polylineOptions.color(Color.parseColor("#A1A69A"));
+                    polylineOptions.add(currentLatLng);
+
+                    //Log.d(">>>",String.valueOf(polylineOptions));
+                    mMap.addPolyline(polylineOptions);
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
+                }
 
                 lastLat = currentLat;
                 lastLng = currentLng;
+            }
+        });
+
+        binding.pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnVisibilityChange(binding.pause);
+                btnVisibilityChange(binding.resume);
+                btnVisibilityChange(binding.stop);
+                isRunning = false;
+                /*try {
+                    synchronized (timeThread) {
+                        timeThread.wait();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } */
+
+            }
+        });
+
+        binding.resume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnVisibilityChange(binding.pause);
+                btnVisibilityChange(binding.resume);
+                btnVisibilityChange(binding.stop);
+                isRunning = true;
+                /*synchronized (timeThread) {
+                    timeThread.notify();
+                } */
+
+            }
+        });
+
+        binding.stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //timeThread.
+                timeThread.interrupt();
+                sendDataToFirebase((int) kcal, walkingDistance /1000, timeToSec);
+                startActivity(new Intent(MapActivity.this, MainActivity.class));
             }
         });
 
@@ -309,6 +379,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             int sec = (msg.arg1 / 100) % 60;
             int min = (msg.arg1 / 100) / 60;
             int hour = (msg.arg1 / 100) / 3600;
+            timeToSec = msg.arg1 / 100.0;
+            if(min%5 == 0 && sec == 0 && (min!=0 || hour != 0)) {
+                String d = String.format("현재 소비 칼로리는 %d며, 총 %.2f킬로미터 달렸습니다. 지금까지 운동한 시간은 %d시간 %d분 %d초입니다.",(int)kcal, walkingDistance/1000.0,hour,min,sec);
+                tts.speak(d,TextToSpeech.QUEUE_FLUSH,null);
+            }
             //1000이 1초 1000*60 은 1분 1000*60*10은 10분 1000*60*60은 한시간
             String str = String.format("%02d:%02d:%02d", hour, min, sec);
             binding.textviewExerciseTime.setText(str);
@@ -318,23 +393,40 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public class timeThread implements Runnable {
         @Override
         public void run() {
-            int i = 0;
-            while (isRunning) {
-                Message msg = new Message();
-                msg.arg1 = i++;
-                handler.sendMessage(msg);
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    runOnUiThread(new Runnable(){
-                        @Override
-                        public void run() {
-                        }
-                    });
+            try {
+                int i = 0;
+                while(true) {
+                    while (isRunning) {
+                        Message msg = new Message();
+                        msg.arg1 = i++;
+                        handler.sendMessage(msg);
+                        Thread.sleep(10);
+                    }
                 }
 
+            } catch(InterruptedException e) {
+                Log.d(">",e.getMessage());
             }
+
         }
+    }
+
+    public void sendDataToFirebase(int kcal, double km, double time) {
+        //something here..
+        Log.d(">",String.format("%d %f %f",kcal,km,time));
+    }
+
+    public void btnVisibilityChange(Button btn) {
+        if(btn.getVisibility() == View.VISIBLE) {
+            btn.setVisibility(View.GONE);
+        } else {
+            btn.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void runTTS(String d) {
+
+
+
     }
 }
