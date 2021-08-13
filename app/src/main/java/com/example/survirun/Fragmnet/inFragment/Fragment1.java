@@ -1,4 +1,4 @@
-package com.example.survirun.Fragmnet;
+package com.example.survirun.Fragmnet.inFragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
