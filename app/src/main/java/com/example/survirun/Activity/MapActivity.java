@@ -431,14 +431,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     public void sendDataToFirebase(int kcal, double km, int time) {
         //something here..
-        Log.d(">",String.format("%d %f %f",kcal,km,time));
+        Log.d("adfadsf","보내는중");
         String uid= FirebaseAuth.getInstance().getUid();
         ScoreModel scoreModel=new ScoreModel();
         scoreModel.todayCalorie=kcal;
         scoreModel.todayKm=km;
         scoreModel.todayExerciseTime=time;
-        FirebaseDatabase.getInstance().getReference().child(uid).setValue(scoreModel);
-
+        FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(scoreModel);
+        Log.d("adfadsf","보냄");
 
 
     }

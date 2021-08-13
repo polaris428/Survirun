@@ -48,7 +48,6 @@ public class SplashActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {//성공했을때
 
                                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             } else {
