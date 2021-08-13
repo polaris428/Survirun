@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.survirun.Medel.ScoreModel;
 import com.example.survirun.R;
 import com.example.survirun.databinding.ActivityMapBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,6 +35,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -411,9 +414,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
-    public void sendDataToFirebase(int kcal, double km, double time) {
+    public void sendDataToFirebase(int kcal, double km, int time) {
         //something here..
         Log.d(">",String.format("%d %f %f",kcal,km,time));
+        String uid= FirebaseAuth.getInstance().getUid();
+        ScoreModel scoreModel=new ScoreModel();
+        scoreModel.todayCalorie=kcal;
+        scoreModel.todayKm=km;
+        scoreModel.todayExerciseTime=time;
+        FirebaseDatabase.getInstance().getReference().child(uid).setValue(scoreModel);
+
+
+
     }
 
     public void btnVisibilityChange(Button btn) {
