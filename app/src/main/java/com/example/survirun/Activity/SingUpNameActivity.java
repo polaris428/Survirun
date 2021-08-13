@@ -58,8 +58,6 @@ public class SingUpNameActivity extends AppCompatActivity {
                     Intent intent=new Intent(SingUpNameActivity.this, SingUpProfileActivity.class);
                     startActivity(intent);
                     finish();
-
-
                 }
             });
         });
