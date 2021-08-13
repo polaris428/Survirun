@@ -1,4 +1,4 @@
-package com.example.survirun;
+package com.example.survirun.Medel;
 
 public class UserModel {
     public String id;
