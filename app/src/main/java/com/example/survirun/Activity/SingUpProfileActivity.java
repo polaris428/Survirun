@@ -7,6 +7,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.survirun.R;
 import com.example.survirun.Typewriter;
 import com.example.survirun.databinding.ActivitySingUpProfileBinding;
@@ -33,17 +36,22 @@ public class SingUpProfileActivity extends AppCompatActivity {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String uid = user.getUid();
 
+
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivitySingUpProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+        binding.profile.setBackground(new ShapeDrawable(new OvalShape()));
+        binding.profile.setClipToOutline(true);
+
         String story= name+(String) getText(R.string.story_profile);
         Handler animationCompleteCallBack = new Handler(msg -> {
             Log.i("Log", "Animation Completed");
             return false;
         });
+
 
         binding.profile.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
@@ -86,7 +94,7 @@ public class SingUpProfileActivity extends AppCompatActivity {
 
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
-            binding.profile.setImageURI(selectedImageUri);
+            Glide.with(getApplicationContext()).load(selectedImageUri).into(binding.profile);
         }
     }
 }
