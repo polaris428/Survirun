@@ -208,7 +208,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 //timeThread.
                 timeThread.interrupt();
-                sendDataToFirebase((int) kcal, walkingDistance /1000, timeToSec);
+                sendDataToFirebase((int) kcal, walkingDistance /1000, (int) timeToSec);
                 startActivity(new Intent(MapActivity.this, MainActivity.class));
             }
         });
@@ -451,9 +451,4 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
-    public void runTTS(String d) {
-
-
-
-    }
 }
