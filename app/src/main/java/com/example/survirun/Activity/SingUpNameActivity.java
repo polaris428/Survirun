@@ -55,7 +55,7 @@ public class SingUpNameActivity extends AppCompatActivity {
             FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).child("name").setValue(name).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
-                    Intent intent=new Intent(SingUpNameActivity.this,SingUpProfile.class);
+                    Intent intent=new Intent(SingUpNameActivity.this, SingUpProfileActivity.class);
                     startActivity(intent);
                     finish();
 
