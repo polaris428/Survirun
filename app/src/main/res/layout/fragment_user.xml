@@ -88,16 +88,23 @@
             android:text="목표량"
             android:textSize="18sp"
             android:layout_marginBottom="15dp"/>
-        <com.dinuscxj.progressbar.CircleProgressBar
-            android:id="@+id/cpb_circlebar"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            app:progress_text_size="50sp"
-            app:style="solid_line"
-            app:progress_stroke_width="20dp "
-            app:progress_stroke_cap="round"
-            app:progress_start_color="#FFBB00"
-            app:progress_end_color="#ABF200"/>
+
+        <com.github.lzyzsd.circleprogress.ArcProgress
+            android:id="@+id/arc_progress"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:background="#FDFDFD"
+            app:arc_text_color="#EA0000"
+            app:arc_finished_color="#EA0000"
+            app:arc_unfinished_color="#000000"
+            app:arc_bottom_text="adfasdadf"
+            app:arc_progress="12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
             <Button
                 android:id="@+id/btn_goal"
                 android:layout_width="250dp"
