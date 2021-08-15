@@ -127,11 +127,10 @@ public class SingUpActivity extends AppCompatActivity {
                                                 userModel.todayExerciseTime=0;
                                                 userModel.todayKm=0.00;
                                                 userModel.todayCalorie=0;
-                                                FirebaseDatabase.getInstance().getReference().child("Email").child(email).setValue(uid);
                                                 FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
-                                                        Intent intent = new Intent(SingUpActivity.this, MainActivity.class);
+                                                        Intent intent = new Intent(SingUpActivity.this, SingUpNameActivity.class);
                                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                                         startActivity(intent);
                                                         finish();
@@ -156,12 +155,7 @@ public class SingUpActivity extends AppCompatActivity {
         editor.putString("id", id);
         editor.putString("pwe", pwe);
         editor.putString("email", email);
-
         editor.commit();
-
-
-
-
     }
 
 
