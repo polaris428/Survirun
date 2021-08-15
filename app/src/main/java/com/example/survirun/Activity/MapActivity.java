@@ -1,6 +1,7 @@
 package com.example.survirun.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -49,6 +50,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     private static final int DEFAULT_KCAL_WEIGHT = 80;
+
+    public static final int DEFAULT_MODE = 0;
+    public static final int ZOMBIE_MODE = 1;
+
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private GoogleMap mMap = null;
     private LocationManager lm;
@@ -70,7 +75,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private boolean isFirst = false;
     private Thread timeThread = null;
     private ActivityMapBinding binding;
-
+    private int CURRENT_MODE;
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,21 +84,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         View view = binding.getRoot();
         setContentView(view);
 
-        if (!checkLocationServicesStatus()) {
-            showDialogForLocationServiceSetting();
-        } else {
-            checkRunTimePermission();
+        try {
+            CURRENT_MODE = getIntent().getExtras().getInt("mode");
+        } catch (Exception e) {
+            CURRENT_MODE = DEFAULT_MODE;
         }
 
+        checkGPSPermission();
         init(MapActivity.this);
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
-
         timeThread = new Thread(new timeThread());
         timeThread.start();
 
@@ -102,19 +104,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onLocationChanged(@NonNull Location location) {
                 setCurrentLatLng(location.getLatitude(),location.getLongitude());
-                if(lastLat == 0) {
-                    exerciseTrackingInit();
-                }
-                if(isRunning) {
-                    drawActivePolyline();
-                    binding.textviewKcal.setText(addUsedKcal());
-                    binding.textviewKm.setText(addMovedDistance());
-                } else {
-                    if(isFirst) {
-                        pausePolylineInit();
+                if(CURRENT_MODE == DEFAULT_MODE) {
+                    if(lastLat == 0) {
+                        exerciseTrackingInit();
                     }
-                    drawPausePolyline();
+                    if(isRunning) {
+                        drawActivePolyline();
+                        binding.textviewKcal.setText(addUsedKcal());
+                        binding.textviewKm.setText(addMovedDistance());
+                    } else {
+                        if(isFirst) {
+                            pausePolylineInit();
+                        }
+                        drawPausePolyline();
+                    }
+                } else if(CURRENT_MODE == ZOMBIE_MODE) {
+
                 }
+
                 setLastLatLng(currentLat,currentLng);
             }
         });
@@ -175,6 +182,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
+    }
+
+    private void checkGPSPermission() {
+        if (!checkLocationServicesStatus()) {
+            showDialogForLocationServiceSetting();
+        } else {
+            checkRunTimePermission();
+        }
     }
 
     public void exerciseTrackingInit() {
@@ -391,20 +406,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             int sec = (msg.arg1 / 100) % 60;
             int min = (msg.arg1 / 100) / 60;
             int hour = (msg.arg1 / 100) / 3600;
-
-            if(isRunning) {
-                timeToSec = msg.arg1 / 100.0;
-                if(min%5 == 0 && sec == 0 && (min!=0 || hour != 0)) {
-                    String d = String.format("현재 소비 칼로리는 %d며, 총 %.2f킬로미터 달렸습니다. 지금까지 운동한 시간은 %d시간 %d분 %d초입니다.",(int)kcal, walkingDistance/1000.0,hour,min,sec);
-                    playTTS(d);
+            timeToSec = msg.arg1 / 100.0;
+            if(CURRENT_MODE == DEFAULT_MODE) {
+                if(isRunning) {
+                    if(min%5 == 0 && sec == 0 && (min!=0 || hour != 0)) {
+                        String d = String.format("현재 소비 칼로리는 %d며, 총 %.2f킬로미터 달렸습니다. 지금까지 운동한 시간은 %d시간 %d분 %d초입니다.",(int)kcal, walkingDistance/1000.0,hour,min,sec);
+                        playTTS(d);
+                    }
+                    //1000이 1초 1000*60 은 1분 1000*60*10은 10분 1000*60*60은 한시간
+                    String str = String.format("%02d:%02d:%02d", hour, min, sec);
+                    binding.textviewExerciseTime.setText(str);
+                } else {
+                    String str = String.format("%02d:%02d:%02d", hour, min, sec);
+                    //binding.쉬는시간텍스트뷰.setText(str);
                 }
-                //1000이 1초 1000*60 은 1분 1000*60*10은 10분 1000*60*60은 한시간
-                String str = String.format("%02d:%02d:%02d", hour, min, sec);
-                binding.textviewExerciseTime.setText(str);
-            } else {
-                String str = String.format("%02d:%02d:%02d", hour, min, sec);
-                //binding.쉬는시간텍스트뷰.setText(str);
             }
+            else if(CURRENT_MODE == ZOMBIE_MODE) {
+
+            }
+
+
 
         }
     };
