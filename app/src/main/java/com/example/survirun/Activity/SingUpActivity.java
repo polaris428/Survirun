@@ -127,6 +127,7 @@ public class SingUpActivity extends AppCompatActivity {
                                                 userModel.todayExerciseTime=0;
                                                 userModel.todayKm=0.00;
                                                 userModel.todayCalorie=0;
+                                                //FirebaseDatabase.getInstance().getReference().child("Email").child(email).setValue(uid);
                                                 FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
@@ -155,7 +156,12 @@ public class SingUpActivity extends AppCompatActivity {
         editor.putString("id", id);
         editor.putString("pwe", pwe);
         editor.putString("email", email);
+
         editor.commit();
+
+
+
+
     }
 
 
