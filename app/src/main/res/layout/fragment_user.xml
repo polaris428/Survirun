@@ -17,11 +17,11 @@
         android:layout_marginLeft="100dp"
         android:layout_marginTop="40dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/tv2"
+        app:layout_constraintRight_toLeftOf="@id/tv_date"
         app:layout_constraintBottom_toTopOf="@id/tv1"
         app:layout_constraintTop_toTopOf="parent"/>
     <TextView
-        android:id="@+id/tv2"
+        android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="(21.08.12)"
@@ -64,9 +64,9 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/tv_calorie"/>
+                app:layout_constraintRight_toLeftOf="@+id/tv_eveCalorie"/>
             <TextView
-                android:id="@+id/tv_calorie"
+                android:id="@+id/tv_eveCalorie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-100kcal"
@@ -76,6 +76,7 @@
                 android:layout_marginLeft="5dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <TextView
+            android:id="@+id/tv_calorie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="412kcal"
@@ -122,21 +123,22 @@
                 android:text="전날 대비"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/tv_time"
+                app:layout_constraintRight_toLeftOf="@id/tv_eveTime"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_time"
+                android:id="@+id/tv_eveTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="-40m"
+                android:text="-20m"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/tv_2"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
+            android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
@@ -179,9 +181,9 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/tv_km"/>
+                    app:layout_constraintRight_toLeftOf="@+id/tv_eveKm"/>
                 <TextView
-                    android:id="@+id/tv_km"
+                    android:id="@+id/tv_eveKm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-2.3km"
@@ -191,6 +193,7 @@
                     android:layout_marginLeft="5dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <TextView
+                android:id="@+id/tv_km"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="8.22km"
