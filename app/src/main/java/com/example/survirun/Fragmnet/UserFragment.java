@@ -19,8 +19,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class UserFragment extends Fragment {
     FragmentUserBinding binding;
@@ -30,6 +34,7 @@ public class UserFragment extends Fragment {
     private String mParam2;
     public  String uid= FirebaseAuth.getInstance().getUid();
     private static final String DEFAULT_PATTERN = "%d%%";
+    Date currentTime = Calendar.getInstance().getTime();
 
     public UserFragment() {
         // Required empty public constructor
@@ -59,7 +64,8 @@ public class UserFragment extends Fragment {
 
         binding = FragmentUserBinding.inflate(inflater, container, false);
         View view=binding.getRoot();
-
+        String date = new SimpleDateFormat("(yy.MM.dd)", Locale.getDefault()).format(currentTime);
+        binding.tvDate.setText(date);
         List<UserModel> userModels=new ArrayList<>();
         userModels.clear();
 
