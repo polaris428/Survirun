@@ -34,7 +34,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/view1"
         android:layout_width="match_parent"
-        android:layout_height="105dp"
+        android:layout_height="95dp"
         android:layout_marginHorizontal="30dp"
         app:cardCornerRadius="30dp"
         android:layout_gravity="center"
@@ -47,14 +47,14 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:text="칼로리"
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"/>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="160dp"
             android:layout_height="30dp"
             android:background="@drawable/circle"
-            android:layout_marginTop="55dp">
+            android:layout_marginTop="50dp">
             <TextView
                 android:id="@+id/tv_1"
                 android:layout_width="wrap_content"
@@ -79,68 +79,77 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="412kcal"
-            android:textSize="25dp"
+            android:textSize="22sp"
             android:textColor="@color/white"
             android:layout_marginRight="20dp"
             android:layout_gravity="right|center_vertical"/>
     </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-            android:layout_height="105dp"
-            android:layout_marginHorizontal="30dp"
-            app:cardCornerRadius="30dp"
-            android:layout_gravity="center"
-            app:cardElevation="100dp"
-            android:backgroundTint="#595959"
-            app:layout_constraintTop_toBottomOf="@id/view1"
-            app:layout_constraintBottom_toTopOf="@id/view3">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="30dp"
+        android:backgroundTint="#595959"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="100dp"
+        app:layout_constraintBottom_toTopOf="@id/view3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:text="운동시간"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="160dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/circle">
+
             <TextView
+                android:id="@+id/tv_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="운동시간"
-                android:textSize="25sp"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="20dp"/>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="160dp"
-                android:layout_height="30dp"
-                android:background="@drawable/circle"
-                android:layout_marginTop="55dp">
-                <TextView
-                    android:id="@+id/tv_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="전날 대비"
-                    android:layout_marginLeft="20dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/tv_time"/>
-                <TextView
-                    android:id="@+id/tv_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-40mm"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/tv_2"
-                    android:layout_marginLeft="5dp"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginLeft="20dp"
+                android:text="전날 대비"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/tv_time"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
+                android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1h 22mm"
-                android:textSize="25dp"
-                android:textColor="@color/white"
-                android:layout_marginRight="20dp"
-                android:layout_gravity="right|center_vertical"/>
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
+                android:layout_marginLeft="5dp"
+                android:text="-40m"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tv_2"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="20dp"
+            android:text="1h 22m"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
             android:id="@+id/view3"
             android:layout_width="match_parent"
-            android:layout_height="105dp"
+            android:layout_height="95dp"
             android:layout_marginHorizontal="30dp"
             app:cardCornerRadius="30dp"
             android:layout_gravity="center"
@@ -153,14 +162,14 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:text="km"
-                android:textSize="25sp"
+                android:textSize="22sp"
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="20dp"/>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="160dp"
                 android:layout_height="30dp"
                 android:background="@drawable/circle"
-                android:layout_marginTop="55dp">
+                android:layout_marginTop="50dp">
                 <TextView
                     android:id="@+id/tv_3"
                     android:layout_width="wrap_content"
@@ -185,7 +194,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="8.22km"
-                android:textSize="25dp"
+                android:textSize="22sp"
                 android:textColor="@color/white"
                 android:layout_marginRight="20dp"
                 android:layout_gravity="right|center_vertical"/>
