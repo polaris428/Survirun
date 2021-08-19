@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.survirun.Medel.UserModel;
+import com.example.survirun.R;
 import com.example.survirun.databinding.ActivitySingUpBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -138,14 +139,14 @@ public class SingUpActivity extends AppCompatActivity {
                                                     }
                                                 });
                                             } else {
-                                        Toast.makeText(SingUpActivity.this, "등록 에러", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SingUpActivity.this, R.string.sign_up_error, Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                 }
                             });
 
                 } else {
-                    Toast.makeText(SingUpActivity.this, "형식을 확인해주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SingUpActivity.this, R.string.format_error, Toast.LENGTH_SHORT).show();
                 }
             }
         });
