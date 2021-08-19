@@ -16,4 +16,8 @@
     <string name="fill_error">Please fill in all the blanks.</string>
     <string name="sign_up_error">Registration error</string>
     <string name="format_error">Please check the format.</string>
+    <string name="calorie">Calorie</string>
+    <string name="exercise_time">Exercise time</string>
+    <string name="daily_target">Daily Target</string>
+    <string name="my_goal">My Goal</string>
 </resources>
