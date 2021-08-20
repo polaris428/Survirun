@@ -22,8 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     ActivityLoginBinding binding;
 
-    boolean idchak=false;
-    boolean pwechak=false;
+
     String uid;
     String email;
     String id;
@@ -39,26 +38,27 @@ public class LoginActivity extends AppCompatActivity {
 
         binding.idEdiText.setText(email);
         binding.pawEditText.setText(pwe);
-        if(email!=null&&pwe!=null){
-            idchak=true;
-            pwechak=true;
-        }
+
         binding.idEdiText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                String id=binding.idEdiText.getText().toString();
-                idchak=true;
-                if (pwechak&&idchak){
-                    //binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
+                id=binding.idEdiText.getText().toString();
+
+                if (!pwe.equals("")&&!id.equals("")){
+                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
+                }else {
+                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btn));
                 }
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String id=binding.idEdiText.getText().toString();
-                idchak=true;
-                if (pwechak&&idchak){
+                id=binding.idEdiText.getText().toString();
+
+                if (!pwe.equals("")&&!id.equals("")){
                     binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
+                }else {
+                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btn));
                 }
 
             }
@@ -71,19 +71,25 @@ public class LoginActivity extends AppCompatActivity {
         binding.pawEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                pwechak=true;
-                if (pwechak&&idchak){
+                pwe=binding.pawEditText.getText().toString();
+
+                if (!pwe.equals("")&&!id.equals("")){
                     binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
+                }else {
+                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btn));
                 }
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String id=binding.idEdiText.getText().toString();
-                idchak=true;
-                if (pwechak&&idchak){
+                pwe=binding.pawEditText.getText().toString();
+
+                if (!pwe.equals("")&&!id.equals("")){
                     binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
 
+                }else {
+
+                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btn));
                 }
             }
 
@@ -97,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(pwechak==true&&idchak==true){
+                if(!pwe.equals("")&&!id.equals("")){
                      email = binding.idEdiText.getText().toString().trim();
 
                     if(email.contains("@")==true){
