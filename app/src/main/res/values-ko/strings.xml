@@ -13,11 +13,15 @@
     <string name="email_error">이메일 형식을 확인해주세요</string>
     <string name="pw_error">비밀번호가 다릅니다</string>
     <string name="login_error">이메일 또는 비밀번호를 확인해주세요</string>
-    <string name="fill_error">빈 칸을 전부 채워주세요</string>
+    <string name="fill_error">빈 칸을 채워주세요</string>
     <string name="sign_up_error">등록 에러</string>
     <string name="format_error">형식을 확인해주세요</string>
     <string name="calorie">칼로리</string>
     <string name="exercise_time">운동시간</string>
     <string name="daily_target">일일 목표량</string>
     <string name="my_goal">나의 목표</string>
+    <string name="modify_goals">목표 수정</string>
+    <string name="yesterday">전날 대비</string>
+    <string name="save">저장하기</string>
+    <string name="goal">목표량</string>
 </resources>

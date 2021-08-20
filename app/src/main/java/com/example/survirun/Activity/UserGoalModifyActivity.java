@@ -97,7 +97,7 @@ public class UserGoalModifyActivity extends AppCompatActivity {
                 startActivity(intent);
             }
             else {
-                Toast.makeText(getApplicationContext(), "빈칸을 채워주세요", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.fill_error, Toast.LENGTH_SHORT).show();
             }
         });
         binding.btnBack.setOnClickListener(v -> {
