@@ -4,12 +4,15 @@ import android.graphics.Bitmap;
 import android.location.Location;
 
 import com.example.survirun.R;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class ZombieModel {
-    public LatLng currentLocation;
     public int markerImageResourceId;
     public final int LOCATION_DIFF = 100;
+    public MarkerOptions options;
 
 
     public void updateCurrentZombieLocation(LatLng humanLocation) {
@@ -20,8 +23,8 @@ public class ZombieModel {
         h.setLatitude(humanLocation.latitude);
         h.setLongitude(humanLocation.longitude);
         Location z = new Location("z");
-        z.setLatitude(currentLocation.latitude);
-        z.setLongitude(currentLocation.longitude);
+        z.setLatitude(options.getPosition().latitude);
+        z.setLongitude(options.getPosition().longitude);
         return Math.round(h.distanceTo(z)*100)/100.0;
     }
 
@@ -29,15 +32,17 @@ public class ZombieModel {
 
     }
 
-    public ZombieModel(LatLng human, int markerImageResourceId) {
-        this.markerImageResourceId = markerImageResourceId;
+    public ZombieModel(LatLng human) {//, int markerImageResourceId) {
+        //this.markerImageResourceId = markerImageResourceId;
         double diffLat = latIndiff(LOCATION_DIFF);
         double diffLon = lonIndiff(human.latitude, LOCATION_DIFF);
         LatLng minLatLng = new LatLng(human.latitude-diffLat, human.longitude-diffLon);
         LatLng maxLatLng = new LatLng(human.latitude+diffLat, human.longitude+diffLon);
         double randomLat = (Math.random() * (maxLatLng.latitude - minLatLng.latitude + 1) + minLatLng.latitude);
         double randomLng = (Math.random() * (maxLatLng.longitude - minLatLng.longitude + 1) + minLatLng.longitude);
-        currentLocation = new LatLng(randomLat,randomLng);
+        this.options.position(new LatLng(randomLat,randomLng));
+        this.options.title("zombie");
+        //this.options.icon(BitmapDescriptorFactory.fromResource(markerImageResourceId));
     }
 
 

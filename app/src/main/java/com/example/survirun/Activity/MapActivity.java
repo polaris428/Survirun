@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.survirun.Medel.ScoreModel;
+import com.example.survirun.Medel.ZombieModel;
 import com.example.survirun.R;
 import com.example.survirun.databinding.ActivityMapBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -50,6 +51,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     private static final int DEFAULT_KCAL_WEIGHT = 80;
+
+    private static final int ZOMBIE_CREATE_MINUTES = 5;
+
+    private static final double lat_weight = 0.0001; //11m 움직이느 ㄴ위도
+
 
     public static final int DEFAULT_MODE = 0;
     public static final int ZOMBIE_MODE = 1;
@@ -76,6 +82,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Thread timeThread = null;
     private ActivityMapBinding binding;
     private int CURRENT_MODE;
+
+    private ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
+    private int zombieListCurrentPos = 0; // +1 해서 좀데 리스트 요소 개수 ㄱㄴ
+
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -422,7 +432,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
             }
             else if(CURRENT_MODE == ZOMBIE_MODE) {
-
+                if(isRunning) {
+                    if((min%5 == 0 && sec == 0 && min!=0) || (min%5==0 && sec == 0 && hour!=0)) {
+                        String d = String.format("현재 소비 칼로리는 %d며, 총 %.2f킬로미터 달렸습니다. 지금까지 운동한 시간은 %d시간 %d분 %d초입니다.",(int)kcal, walkingDistance/1000.0,hour,min,sec);
+                        playTTS(d);
+                    }
+                    String str = String.format("%02d:%02d:%02d", hour, min, sec);
+                    binding.textviewExerciseTime.setText(str);
+                    if((min%ZOMBIE_CREATE_MINUTES == 0 && sec == 0 && min!=0) || (min%ZOMBIE_CREATE_MINUTES==0 && sec == 0 && hour!=0)) {
+                        createZombie();
+                    }
+                }
+            } else {
+                String str = String.format("%02d:%02d:%02d", hour, min, sec);
+                //binding.쉬는시간텍스트뷰.setText(str);
             }
 
 
@@ -452,6 +475,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
 
         }
+    }
+
+    public void createZombie() {
+        ZombieModel mZombie = new ZombieModel(new LatLng(currentLat,currentLng));
+        mMap.addMarker(mZombie.options);
+        zombieList.add(mZombie);
     }
 
 
