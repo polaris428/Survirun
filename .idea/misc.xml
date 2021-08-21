@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Survirun/app/src/main/res/layout/activity_login.xml" value="0.14270833333333333" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_main.xml" value="0.27708333333333335" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_map.xml" value="0.2" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_my_marker_view.xml" value="0.2760416666666667" />
@@ -19,6 +18,8 @@
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_friend.xml" value="0.2765625" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_statistics.xml" value="0.2765625" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_user.xml" value="0.35885416666666664" />
+        <entry key="..\:/Users/iou10/AndroidStudioProjects/Survirun/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/iou10/AndroidStudioProjects/Survirun/app/src/main/res/layout/fragment_user.xml" value="0.17407407407407408" />
       </map>
     </option>
   </component>
