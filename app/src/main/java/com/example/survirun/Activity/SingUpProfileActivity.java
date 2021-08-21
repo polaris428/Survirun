@@ -70,7 +70,7 @@ public class SingUpProfileActivity extends AppCompatActivity {
                 });
             }
             else{
-                Toast.makeText(getApplicationContext(), "사진을 넣어주세요", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.profile_error, Toast.LENGTH_SHORT).show();
             }
         });
 

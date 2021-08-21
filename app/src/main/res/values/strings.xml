@@ -24,4 +24,10 @@
     <string name="yesterday">Yesterday</string>
     <string name="save">Save</string>
     <string name="goal">Goal</string>
+    <string name="next">Next</string>
+    <string name="type_name">Please type your name.</string>
+    <string name="profile_error">Please register your photo.</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="stop">Stop</string>
 </resources>

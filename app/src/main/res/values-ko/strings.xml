@@ -24,4 +24,10 @@
     <string name="yesterday">전날 대비</string>
     <string name="save">저장하기</string>
     <string name="goal">목표량</string>
+    <string name="next">다음</string>
+    <string name="type_name">이름을 입력해주세요</string>
+    <string name="profile_error">사진을 넣어주세요</string>
+    <string name="pause">일시정지</string>
+    <string name="resume">이어하기</string>
+    <string name="stop">그만하기</string>
 </resources>
