@@ -1,15 +1,21 @@
 package com.example.survirun.Fragmnet;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.survirun.R;
 import com.example.survirun.databinding.FragmentExerciseBinding;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,8 +67,45 @@ public class ExerciseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding=FragmentExerciseBinding.inflate(inflater,container,false);
-        View view=binding.getRoot();
+        binding = FragmentExerciseBinding.inflate(inflater, container, false);
+         recyclerViewAdapter recyclerViewAdapter=new recyclerViewAdapter();
+        recyclerViewAdapter.items.add("1");
+        recyclerViewAdapter.items.add("1");
+        recyclerViewAdapter.items.add("1");
+        recyclerViewAdapter.items.add("1");
+         binding.recyclerView.setAdapter(recyclerViewAdapter);
+        View view = binding.getRoot();
+
         return view;
+    }
+
+    public class recyclerViewAdapter extends RecyclerView.Adapter<recyclerViewAdapter.ViewHolder> {
+        private ArrayList items = new ArrayList<>();
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemexercise, parent, false);
+            ViewHolder viewHolder = new ViewHolder(itemView);
+            return viewHolder;
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return items.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            TextView textView;
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+
+            }
+        }
     }
 }
