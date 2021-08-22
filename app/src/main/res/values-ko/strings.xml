@@ -38,4 +38,5 @@
     <string name="need_location">이 앱을 실행하려면 위치 접근 권한이 필요합니다.</string>
     <string name="permission_error_re_run">퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.</string>
     <string name="permission_error_allow_setting">퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다.</string>
+    <string name="tts_type">현재 소비 칼로리는 %d며, 총 %.2f킬로미터 달렸습니다. 지금까지 운동한 시간은 %d시간 %d분 %d초입니다.</string>
 </resources>

@@ -101,9 +101,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                if(status!=android.speech.tts.TextToSpeech.ERROR) {
-                    tts.setLanguage(Locale.KOREAN);
+                if(status== TextToSpeech.SUCCESS) {
+                    Locale mSysLocale = getResources().getConfiguration().locale;
+                    String strLanguage = mSysLocale.getLanguage();
+                    if(strLanguage.equals("ko")) {
+                        tts.setLanguage(Locale.KOREAN);
+                    } else {
+                        tts.setLanguage(Locale.ENGLISH);
+                    }
+
                 }
+                else Log.d("</>","system error"+status);
             }
         });
 
@@ -440,7 +448,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             if(CURRENT_MODE == DEFAULT_MODE) {
                 if(isRunning) {
                     if(min%5 == 0 && sec == 0 && (min!=0 || hour != 0)) {
-                        String d = String.format("현재 소비 칼로리는 %d며, 총 %.2f킬로미터 달렸습니다. 지금까지 운동한 시간은 %d시간 %d분 %d초입니다.",(int)kcal, walkingDistance/1000.0,hour,min,sec);
+                        String d = String.format(getString(R.string.tts_type),(int)kcal, walkingDistance/1000.0,hour,min,sec);
                         playTTS(d);
                     }
                     //1000이 1초 1000*60 은 1분 1000*60*10은 10분 1000*60*60은 한시간
@@ -454,13 +462,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             else if(CURRENT_MODE == ZOMBIE_MODE) {
                 if(isRunning) {
                     if((timeToSec/60)%3 == 0 && timeToSec != 0 ) {
-                        String d = String.format("현재 소비 칼로리는 %d며, 총 %.2f킬로미터 달렸습니다. 지금까지 운동한 시간은 %d시간 %d분 %d초입니다.",(int)kcal, walkingDistance/1000.0,hour,min,sec);
+                        String d = String.format(getString(R.string.tts_type),(int)kcal, walkingDistance/1000.0,hour,min,sec);
                         playTTS(d);
                     }
                     String str = String.format("%02d:%02d:%02d", hour, min, sec);
                     binding.textviewExerciseTime.setText(str);
                     if((timeToSec/60)%ZOMBIE_CREATE_MINUTES == 0 && timeToSec != 0 ) {
-                        Log.d(">","zogun");
                         createZombie();
                     }
                 }
