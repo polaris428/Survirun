@@ -30,4 +30,12 @@
     <string name="pause">Pause</string>
     <string name="resume">Resume</string>
     <string name="stop">Stop</string>
+    <string name="disable_location">Disable Location Services</string>
+    <string name="use_location_service">Location service is required to use the app.</string>
+    <string name="modify_location">Are you sure you want to modify the location settings?</string>
+    <string name="setting">Setting</string>
+    <string name="cancel">Cancel</string>
+    <string name="need_location">You need location access to run this app.</string>
+    <string name="permission_error_re_run">Permission denied. Please re-run the app to allow permission.</string>
+    <string name="permission_error_allow_setting">Permission denied. Permissions must be allowed in settings (app information).</string>
 </resources>

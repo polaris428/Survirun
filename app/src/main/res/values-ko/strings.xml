@@ -30,4 +30,12 @@
     <string name="pause">일시정지</string>
     <string name="resume">이어하기</string>
     <string name="stop">그만하기</string>
+    <string name="disable_location">위치 서비스 비활성화</string>
+    <string name="use_location_service">앱을 사용하기 위해서는 위치 서비스가 필요합니다.</string>
+    <string name="modify_location">위치 설정을 수정하시겠습니까?</string>
+    <string name="setting">설정</string>
+    <string name="cancel">취소</string>
+    <string name="need_location">이 앱을 실행하려면 위치 접근 권한이 필요합니다.</string>
+    <string name="permission_error_re_run">퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.</string>
+    <string name="permission_error_allow_setting">퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다.</string>
 </resources>
