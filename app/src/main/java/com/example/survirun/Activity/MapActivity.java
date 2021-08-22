@@ -61,7 +61,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public static final int ZOMBIE_MODE = 1;
 
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-    private GoogleMap mMap = null;
+    public static GoogleMap mMap = null;
     private LocationManager lm;
     private PolylineOptions polylineOptions = new PolylineOptions();
 
@@ -70,14 +70,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private double lastLat = 0.0;
     private double lastLng = 0.0;
-    private double currentLat = 0.0;
-    private double currentLng = 0.0;
+    public static double currentLat = 0.0;
+    public static double currentLng = 0.0;
 
     private double kcal = 0.0;
     private double walkingDistance = 0;
     private double timeToSec = 0.0;
 
-    private boolean isRunning = true; //일시정지시 false로
+    public static boolean isRunning = true; //일시정지시 false로
     private boolean isFirst = false;
     private Thread timeThread = null;
     private ActivityMapBinding binding;
@@ -163,9 +163,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         binding.stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                timeThread.interrupt();
-                sendDataToFirebase((int) kcal, walkingDistance /1000, (int) timeToSec);
-                startActivity(new Intent(MapActivity.this, MainActivity.class));
+                stop();
             }
         });
 
@@ -175,6 +173,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onStart();
 
     }
+
+    public void stop() {
+        timeThread.interrupt();
+        sendDataToFirebase((int) kcal, walkingDistance /1000, (int) timeToSec);
+        startActivity(new Intent(MapActivity.this, MainActivity.class));
+    }
+
 
     public void init(Context ctx) {
         polylineOptions.color(Color.parseColor("#64A3F5"));
@@ -482,6 +487,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap.addMarker(mZombie.options);
         zombieList.add(mZombie);
     }
+
+
 
 
 }
