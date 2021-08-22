@@ -12,6 +12,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -52,9 +53,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     private static final int DEFAULT_KCAL_WEIGHT = 80;
 
-    private static final int ZOMBIE_CREATE_MINUTES = 5;
+    private static final int ZOMBIE_CREATE_MINUTES = 3;
 
-    private static final double lat_weight = 0.0001; //11m 움직이느 ㄴ위도
 
 
     public static final int DEFAULT_MODE = 0;
@@ -94,11 +94,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         View view = binding.getRoot();
         setContentView(view);
 
-        try {
-            CURRENT_MODE = getIntent().getExtras().getInt("mode");
-        } catch (Exception e) {
-            CURRENT_MODE = DEFAULT_MODE;
-        }
+
+        CURRENT_MODE = getIntent().getIntExtra("mode",DEFAULT_MODE);
+        Log.d(">",CURRENT_MODE+"");
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status!=android.speech.tts.TextToSpeech.ERROR) {
+                    tts.setLanguage(Locale.KOREAN);
+                }
+            }
+        });
+
 
         checkGPSPermission();
         init(MapActivity.this);
@@ -129,7 +137,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         drawPausePolyline();
                     }
                 } else if(CURRENT_MODE == ZOMBIE_MODE) {
-
+                    if(lastLat == 0) {
+                        exerciseTrackingInit();
+                    }
+                    if(isRunning) {
+                        drawActivePolyline();
+                        binding.textviewKcal.setText(addUsedKcal());
+                        binding.textviewKm.setText(addMovedDistance());
+                    } else {
+                        if(isFirst) {
+                            pausePolylineInit();
+                        }
+                        drawPausePolyline();
+                    }
                 }
 
                 setLastLatLng(currentLat,currentLng);
@@ -187,15 +207,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         lm = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
 
 
-        tts = new TextToSpeech(ctx, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status == TextToSpeech.SUCCESS) {
-                    int r = tts.setLanguage(Locale.KOREA);
-                }
 
-            }
-        });
 
     }
 
@@ -410,7 +422,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void playTTS(String text) {
-        tts.speak(text,TextToSpeech.QUEUE_FLUSH,null);
+        tts.setPitch(1.0f);
+        tts.setSpeechRate(1.0f);
+
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, text);
     }
 
     @SuppressLint("HandlerLeak")
@@ -438,13 +453,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
             else if(CURRENT_MODE == ZOMBIE_MODE) {
                 if(isRunning) {
-                    if((min%5 == 0 && sec == 0 && min!=0) || (min%5==0 && sec == 0 && hour!=0)) {
+                    if((timeToSec/60)%3 == 0 && timeToSec != 0 ) {
                         String d = String.format("현재 소비 칼로리는 %d며, 총 %.2f킬로미터 달렸습니다. 지금까지 운동한 시간은 %d시간 %d분 %d초입니다.",(int)kcal, walkingDistance/1000.0,hour,min,sec);
                         playTTS(d);
                     }
                     String str = String.format("%02d:%02d:%02d", hour, min, sec);
                     binding.textviewExerciseTime.setText(str);
-                    if((min%ZOMBIE_CREATE_MINUTES == 0 && sec == 0 && min!=0) || (min%ZOMBIE_CREATE_MINUTES==0 && sec == 0 && hour!=0)) {
+                    if((timeToSec/60)%ZOMBIE_CREATE_MINUTES == 0 && timeToSec != 0 ) {
+                        Log.d(">","zogun");
                         createZombie();
                     }
                 }
@@ -484,8 +500,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     public void createZombie() {
         ZombieModel mZombie = new ZombieModel(new LatLng(currentLat,currentLng));
-        mMap.addMarker(mZombie.options);
         zombieList.add(mZombie);
+    }
+
+    public static void createMarker(MarkerOptions mo) {
+        Log.d(">","opt crfeate fun do");
+        mMap.addMarker(mo);
     }
 
 

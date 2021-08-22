@@ -9,10 +9,14 @@ import android.util.Log;
 
 import com.example.survirun.Activity.MapActivity;
 import com.example.survirun.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.Map;
+import java.util.Random;
 
 public class ZombieModel {
     public int markerImageResourceId;
@@ -45,14 +49,42 @@ public class ZombieModel {
 
     public ZombieModel(LatLng human) {//, int markerImageResourceId) {
         //this.markerImageResourceId = markerImageResourceId;
+        Random r = new Random();
+        r.setSeed(System.currentTimeMillis());
+        int d = r.nextInt(3);
+        double ta;
+        double to;
+        double z = 0.001;
+        switch (d) {
+            case 0:
+                ta = z;
+                to = z;
+                break;
+            case 1:
+                ta = 0-z;
+                to = z;
+                break;
+            case 2:
+                ta = 0-z;
+                to = 0-z;
+                break;
+            default:
+                ta = z;
+                to = 0-z;
+                break;
+        }
         double diffLat = latIndiff(LOCATION_DIFF);
         double diffLon = lonIndiff(human.latitude, LOCATION_DIFF);
         LatLng minLatLng = new LatLng(human.latitude-diffLat, human.longitude-diffLon);
         LatLng maxLatLng = new LatLng(human.latitude+diffLat, human.longitude+diffLon);
-        double randomLat = (Math.random() * (maxLatLng.latitude - minLatLng.latitude + 1) + minLatLng.latitude);
-        double randomLng = (Math.random() * (maxLatLng.longitude - minLatLng.longitude + 1) + minLatLng.longitude);
+        double randomLat = (Math.random() * (maxLatLng.latitude - minLatLng.latitude + ta) + minLatLng.latitude);
+        double randomLng = (Math.random() * (maxLatLng.longitude - minLatLng.longitude + to) + minLatLng.longitude);
+        this.options = new MarkerOptions();
         this.options.position(new LatLng(randomLat,randomLng));
         this.options.title("zombie");
+        Log.d(">",this.options.getPosition().latitude+" "+this.options.getPosition().longitude);
+        MapActivity.mMap.addMarker(this.options);
+        MapActivity.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(randomLat,randomLng), 18));
         //this.options.icon(BitmapDescriptorFactory.fromResource(markerImageResourceId));
     }
 
