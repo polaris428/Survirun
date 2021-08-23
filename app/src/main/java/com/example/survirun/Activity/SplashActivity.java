@@ -63,8 +63,7 @@ public class SplashActivity extends AppCompatActivity {
             Handler mHandler = new Handler();
             mHandler.postDelayed(new Runnable()  {
                 public void run() {
-                    Intent intent = new Intent(SplashActivity.this, MapActivity.class);
-                    intent.putExtra("mode", MapActivity.ZOMBIE_MODE);
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
