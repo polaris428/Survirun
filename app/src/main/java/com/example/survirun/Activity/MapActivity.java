@@ -222,12 +222,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         for(ZombieModel z : zombieList) {
             z.thread.interrupt();
         }
-
-
     }
 
     public void stop() {
         timeThread.interrupt();
+        stopZombie();
         sendDataToFirebase((int) kcal, walkingDistance /1000, (int) timeToSec);
         startActivity(new Intent(MapActivity.this, MainActivity.class));
     }
@@ -479,7 +478,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     String str = String.format("%02d:%02d:%02d", hour, min, sec);
                     binding.textviewExerciseTime.setText(str);
                 } else {
-                    String str = String.format("%02d:%02d:%02d", hour, min, sec);
+                    String str = String.format(getString(R.string.pause_text)+"%02d:%02d:%02d", hour, min, sec);
                     binding.pauseText.setText(str);
                 }
             }
@@ -496,7 +495,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     }
                 }
                 else {
-                    String str = String.format("%02d:%02d:%02d", hour, min, sec);
+                    String str = String.format(getString(R.string.pause_text)+"%02d:%02d:%02d", hour, min, sec);
                     binding.pauseText.setText(str);
                 }
             }
