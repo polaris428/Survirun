@@ -83,7 +83,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private ActivityMapBinding binding;
     private int CURRENT_MODE;
 
-    private ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
+    private static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
     private int zombieListCurrentPos = 0; // +1 해서 좀데 리스트 요소 개수 ㄱㄴ
 
     @SuppressLint("MissingPermission")
@@ -170,6 +170,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 btnVisibilityChange(binding.pause);
                 btnVisibilityChange(binding.resume);
                 btnVisibilityChange(binding.stop);
+                binding.viewPause.setVisibility(View.VISIBLE);
+                waitZombie();
                 isFirst = true;
                 isRunning = false;
 
@@ -182,6 +184,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 btnVisibilityChange(binding.pause);
                 btnVisibilityChange(binding.resume);
                 btnVisibilityChange(binding.stop);
+                binding.viewPause.setVisibility(View.GONE);
+                resumeZombie();
                 isRunning = true;
                 isFirst = false;
 
@@ -199,6 +203,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onStart() {
         super.onStart();
+
+    }
+
+    public static void waitZombie() {
+        for(ZombieModel z : zombieList) {
+            z.isRun = false;
+        }
+    }
+
+    public static void resumeZombie() {
+        for(ZombieModel z : zombieList) {
+            z.isRun = true;
+        }
+    }
+
+    public static void stopZombie() {
+        for(ZombieModel z : zombieList) {
+            z.thread.interrupt();
+        }
+
 
     }
 
@@ -456,7 +480,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     binding.textviewExerciseTime.setText(str);
                 } else {
                     String str = String.format("%02d:%02d:%02d", hour, min, sec);
-                    //binding.쉬는시간텍스트뷰.setText(str);
+                    binding.pauseText.setText(str);
                 }
             }
             else if(CURRENT_MODE == ZOMBIE_MODE) {
@@ -471,9 +495,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         createZombie();
                     }
                 }
-            } else {
-                String str = String.format("%02d:%02d:%02d", hour, min, sec);
-                //binding.쉬는시간텍스트뷰.setText(str);
+                else {
+                    String str = String.format("%02d:%02d:%02d", hour, min, sec);
+                    binding.pauseText.setText(str);
+                }
             }
 
 
@@ -510,10 +535,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         zombieList.add(mZombie);
     }
 
-    public static void createMarker(MarkerOptions mo) {
-        Log.d(">","opt crfeate fun do");
-        mMap.addMarker(mo);
-    }
+
+
+
 
 
 

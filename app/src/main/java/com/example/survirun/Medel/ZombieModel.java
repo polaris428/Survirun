@@ -22,6 +22,8 @@ public class ZombieModel {
     public int markerImageResourceId;
     public final int LOCATION_DIFF = 100;
     public MarkerOptions options;
+    public Thread thread;
+    public boolean isRun;
 
 
     public void updateCurrentZombieLocation(LatLng humanLocation) {
@@ -31,6 +33,7 @@ public class ZombieModel {
         /* 마지막에 거리 검사 */
         if(getZombieToHumanDistance(humanLocation) <= 10) { //단위가 몇이였더라..
             /* 종료코드 */
+            MapActivity.stopZombie(); //all zombie thread stop.
         }
     }
     public double getZombieToHumanDistance(LatLng humanLocation) {
@@ -85,6 +88,9 @@ public class ZombieModel {
         Log.d(">",this.options.getPosition().latitude+" "+this.options.getPosition().longitude);
         MapActivity.mMap.addMarker(this.options);
         MapActivity.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(randomLat,randomLng), 18));
+        thread = new Thread(new zombieMoveThread());
+        isRun = true;
+        thread.start();
         //this.options.icon(BitmapDescriptorFactory.fromResource(markerImageResourceId));
     }
 
@@ -120,12 +126,15 @@ public class ZombieModel {
             try {
                 int runTime = 0; //sec
                 while(true) {
-                    Message msg = new Message();
-                    if(MapActivity.isRunning) {
-                        msg.arg1 = runTime++;
+                    if (isRun) {
+                        Message msg = new Message();
+                        if(MapActivity.isRunning) {
+                            msg.arg1 = runTime++;
+                        }
+                        zombieHandler.handleMessage(msg);
+                        Thread.sleep(1000);
                     }
-                    zombieHandler.handleMessage(msg);
-                    Thread.sleep(1000);
+
 
                 }
             } catch (InterruptedException e) {
