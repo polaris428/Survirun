@@ -40,4 +40,7 @@
     <string name="permission_error_allow_setting">퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다.</string>
     <string name="tts_type">현재 소비 칼로리는 %d며, 총 %.2f킬로미터 달렸습니다. 지금까지 운동한 시간은 %d시간 %d분 %d초입니다.</string>
     <string name="pause_text">쉬기 시작한지\n</string>
+    <string name="total_exercise">운동량</string>
+    <string name="exercise_time_br">운동\n시간</string>
+    <string name="route">루트</string>
 </resources>
