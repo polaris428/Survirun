@@ -24,11 +24,27 @@ public class ZombieModel {
     public MarkerOptions options;
     public Thread thread;
     public boolean isRun;
+    public Marker myMarker;
+    public int currentIdx;
 
 
-    public void updateCurrentZombieLocation(LatLng humanLocation) {
+    public void updateCurrentZombieLocation(LatLng humanLocation, Message msg) {
         /* 여기에서 마커위치 업데이트. */
+        Location zb = new Location("my");
+        zb.setLatitude(this.options.getPosition().latitude);
+        zb.setLongitude(this.options.getPosition().longitude);
+        Location human = new Location("zombie");
+        human.setLatitude(this.options.getPosition().latitude);
+        human.setLongitude(this.options.getPosition().longitude);
+        double dis = 0.01;
+        /* 움직일 좌표만 구해주세연 */
 
+
+        this.options = new MarkerOptions();
+        this.options.position(new LatLng(zb.getLatitude(), zb.getLongitude()));
+        this.options.title(String.valueOf(msg.arg1));
+        //myMarker.setPosition(this.options.getPosition());
+        MapActivity.updateMarkerPos(this.currentIdx);
 
         /* 마지막에 거리 검사 */
         if(getZombieToHumanDistance(humanLocation) <= 10) { //단위가 몇이였더라..
@@ -41,6 +57,7 @@ public class ZombieModel {
         h.setLatitude(humanLocation.latitude);
         h.setLongitude(humanLocation.longitude);
         Location z = new Location("z");
+
         z.setLatitude(this.options.getPosition().latitude);
         z.setLongitude(this.options.getPosition().longitude);
         return Math.round(h.distanceTo(z)*100)/100.0;
@@ -50,8 +67,9 @@ public class ZombieModel {
 
     }
 
-    public ZombieModel(LatLng human) {//, int markerImageResourceId) {
+    public ZombieModel(LatLng human, int idx) {//, int markerImageResourceId) {
         //this.markerImageResourceId = markerImageResourceId;
+        this.currentIdx = idx;
         Random r = new Random();
         r.setSeed(System.currentTimeMillis());
         int d = r.nextInt(3);
@@ -86,7 +104,7 @@ public class ZombieModel {
         this.options.position(new LatLng(randomLat,randomLng));
         this.options.title("zombie");
         Log.d(">",this.options.getPosition().latitude+" "+this.options.getPosition().longitude);
-        MapActivity.mMap.addMarker(this.options);
+        myMarker = MapActivity.mMap.addMarker(this.options);
         MapActivity.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(randomLat,randomLng), 18));
         thread = new Thread(new zombieMoveThread());
         isRun = true;
@@ -114,7 +132,7 @@ public class ZombieModel {
         @Override
         public void handleMessage(Message msg) {
             if(MapActivity.isRunning) {
-                updateCurrentZombieLocation(new LatLng(MapActivity.currentLat, MapActivity.currentLng));
+                updateCurrentZombieLocation(new LatLng(MapActivity.currentLat, MapActivity.currentLng), msg);
             }
 
         }
@@ -132,7 +150,7 @@ public class ZombieModel {
                             msg.arg1 = runTime++;
                         }
                         zombieHandler.handleMessage(msg);
-                        Thread.sleep(1000);
+                        Thread.sleep(2000);
                     }
 
 

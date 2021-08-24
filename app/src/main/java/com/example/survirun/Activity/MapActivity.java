@@ -1,5 +1,6 @@
 package com.example.survirun.Activity;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -53,7 +55,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     private static final int DEFAULT_KCAL_WEIGHT = 80;
 
-    private static final int ZOMBIE_CREATE_MINUTES = 3;
+    private static final int ZOMBIE_CREATE_MINUTES = 1;
 
 
 
@@ -530,8 +532,23 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void createZombie() {
-        ZombieModel mZombie = new ZombieModel(new LatLng(currentLat,currentLng));
+        ZombieModel mZombie = new ZombieModel(new LatLng(currentLat,currentLng),zombieListCurrentPos);
+        zombieListCurrentPos++;
         zombieList.add(mZombie);
+    }
+
+    @MainThread
+    public static void updateMarkerPos(int idx) {
+        //
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                //zombieList.get(idx).myMarker.setPosition(zombieList.get(idx).options.getPosition());
+                zombieList.get(idx).myMarker.remove();
+                zombieList.get(idx).myMarker = mMap.addMarker(zombieList.get(idx).options);
+
+            }
+        });
     }
 
 
