@@ -85,7 +85,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private ActivityMapBinding binding;
     private int CURRENT_MODE;
 
-    private static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
+    public static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
     private int zombieListCurrentPos = 0; // +1 해서 좀데 리스트 요소 개수 ㄱㄴ
 
     @SuppressLint("MissingPermission")
@@ -547,6 +547,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 zombieList.get(idx).myMarker.remove();
                 zombieList.get(idx).myMarker = mMap.addMarker(zombieList.get(idx).options);
 
+            }
+        });
+    }
+    @MainThread
+    public static void removeMarker(int idx) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                zombieList.get(idx).myMarker.remove();
             }
         });
     }
