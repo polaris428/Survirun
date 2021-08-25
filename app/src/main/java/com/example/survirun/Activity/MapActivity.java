@@ -55,7 +55,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     private static final int DEFAULT_KCAL_WEIGHT = 80;
 
-    private static final int ZOMBIE_CREATE_MINUTES = 1;
+    private static final int ZOMBIE_CREATE_MINUTES = 3;
 
 
 
@@ -85,7 +85,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private ActivityMapBinding binding;
     private int CURRENT_MODE;
 
-    private static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
+    public static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
     private int zombieListCurrentPos = 0; // +1 해서 좀데 리스트 요소 개수 ㄱㄴ
 
     @SuppressLint("MissingPermission")
@@ -98,7 +98,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
         CURRENT_MODE = getIntent().getIntExtra("mode",DEFAULT_MODE);
-        Log.d(">",CURRENT_MODE+"");
+
 
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -132,36 +132,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onLocationChanged(@NonNull Location location) {
                 setCurrentLatLng(location.getLatitude(),location.getLongitude());
-                if(CURRENT_MODE == DEFAULT_MODE) {
-                    if(lastLat == 0) {
-                        exerciseTrackingInit();
-                    }
-                    if(isRunning) {
-                        drawActivePolyline();
-                        binding.textviewKcal.setText(addUsedKcal());
-                        binding.textviewKm.setText(addMovedDistance());
-                    } else {
-                        if(isFirst) {
-                            pausePolylineInit();
-                        }
-                        drawPausePolyline();
-                    }
-                } else if(CURRENT_MODE == ZOMBIE_MODE) {
-                    if(lastLat == 0) {
-                        exerciseTrackingInit();
-                    }
-                    if(isRunning) {
-                        drawActivePolyline();
-                        binding.textviewKcal.setText(addUsedKcal());
-                        binding.textviewKm.setText(addMovedDistance());
-                    } else {
-                        if(isFirst) {
-                            pausePolylineInit();
-                        }
-                        drawPausePolyline();
-                    }
+                if(lastLat == 0) {
+                    exerciseTrackingInit();
                 }
-
+                if(isRunning) {
+                    drawActivePolyline();
+                    binding.textviewKcal.setText(addUsedKcal());
+                    binding.textviewKm.setText(addMovedDistance());
+                } else {
+                    if(isFirst) {
+                        pausePolylineInit();
+                    }
+                    drawPausePolyline();
+                }
                 setLastLatLng(currentLat,currentLng);
             }
         });
@@ -431,8 +414,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void sendDataToFirebase(int kcal, double km, int time) {
-        //something here..
-        Log.d("adfadsf","보내는중");
         String uid= FirebaseAuth.getInstance().getUid();
         ScoreModel scoreModel=new ScoreModel();
         scoreModel.todayCalorie=kcal;
@@ -441,7 +422,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if (uid != null) {
             FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(scoreModel);
         }
-        Log.d("adfadsf","보냄");
 
 
     }
@@ -457,7 +437,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void playTTS(String text) {
         tts.setPitch(1.0f);
         tts.setSpeechRate(1.0f);
-
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, text);
     }
 
@@ -466,17 +445,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         @SuppressLint("DefaultLocale")
         @Override
         public void handleMessage(Message msg) {
-            int sec = (msg.arg1 / 100) % 60;
-            int min = (msg.arg1 / 100) / 60;
-            int hour = (msg.arg1 / 100) / 3600;
-            timeToSec = msg.arg1 / 100.0;
+            int sec = msg.arg1 % 60;
+            int min = msg.arg1 / 60;
+            int hour = msg.arg1 / 3600;
+            timeToSec = msg.arg1;
             if(CURRENT_MODE == DEFAULT_MODE) {
                 if(isRunning) {
-                    if(min%5 == 0 && sec == 0 && (min!=0 || hour != 0)) {
+                    if((timeToSec/60)%3 == 0 && timeToSec != 0 ) {
                         String d = String.format(getString(R.string.tts_type),(int)kcal, walkingDistance/1000.0,hour,min,sec);
                         playTTS(d);
                     }
-                    //1000이 1초 1000*60 은 1분 1000*60*10은 10분 1000*60*60은 한시간
                     String str = String.format("%02d:%02d:%02d", hour, min, sec);
                     binding.textviewExerciseTime.setText(str);
                 } else {
@@ -521,19 +499,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         msg.arg1 = restTime++;
                     }
                     handler.sendMessage(msg);
-                    Thread.sleep(10);
+                    Thread.sleep(1000);
                 }
 
             } catch(InterruptedException e) {
-                Log.d(">",e.getMessage());
+                //do
             }
 
         }
     }
 
     public void createZombie() {
-        ZombieModel mZombie = new ZombieModel(new LatLng(currentLat,currentLng),zombieListCurrentPos);
-        zombieListCurrentPos++;
+        ZombieModel mZombie = new ZombieModel(new LatLng(currentLat,currentLng),zombieListCurrentPos++);
         zombieList.add(mZombie);
     }
 
@@ -543,10 +520,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                //zombieList.get(idx).myMarker.setPosition(zombieList.get(idx).options.getPosition());
-                zombieList.get(idx).myMarker.remove();
+                removeMarker(idx);
                 zombieList.get(idx).myMarker = mMap.addMarker(zombieList.get(idx).options);
 
+            }
+        });
+    }
+    @MainThread
+    public static void removeMarker(int idx) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                zombieList.get(idx).myMarker.remove();
             }
         });
     }
