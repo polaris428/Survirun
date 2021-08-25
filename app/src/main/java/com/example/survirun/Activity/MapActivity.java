@@ -1,5 +1,6 @@
 package com.example.survirun.Activity;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -19,6 +21,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -52,16 +55,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     private static final int DEFAULT_KCAL_WEIGHT = 80;
 
-    private static final int ZOMBIE_CREATE_MINUTES = 5;
+    private static final int ZOMBIE_CREATE_MINUTES = 1;
 
-    private static final double lat_weight = 0.0001; //11m 움직이느 ㄴ위도
 
 
     public static final int DEFAULT_MODE = 0;
     public static final int ZOMBIE_MODE = 1;
 
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-    private GoogleMap mMap = null;
+    public static GoogleMap mMap = null;
     private LocationManager lm;
     private PolylineOptions polylineOptions = new PolylineOptions();
 
@@ -70,20 +72,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private double lastLat = 0.0;
     private double lastLng = 0.0;
-    private double currentLat = 0.0;
-    private double currentLng = 0.0;
+    public static double currentLat = 0.0;
+    public static double currentLng = 0.0;
 
     private double kcal = 0.0;
     private double walkingDistance = 0;
     private double timeToSec = 0.0;
 
-    private boolean isRunning = true; //일시정지시 false로
+    public static boolean isRunning = true; //일시정지시 false로
     private boolean isFirst = false;
     private Thread timeThread = null;
     private ActivityMapBinding binding;
     private int CURRENT_MODE;
 
-    private ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
+    private static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
     private int zombieListCurrentPos = 0; // +1 해서 좀데 리스트 요소 개수 ㄱㄴ
 
     @SuppressLint("MissingPermission")
@@ -94,11 +96,27 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         View view = binding.getRoot();
         setContentView(view);
 
-        try {
-            CURRENT_MODE = getIntent().getExtras().getInt("mode");
-        } catch (Exception e) {
-            CURRENT_MODE = DEFAULT_MODE;
-        }
+
+        CURRENT_MODE = getIntent().getIntExtra("mode",DEFAULT_MODE);
+        Log.d(">",CURRENT_MODE+"");
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status== TextToSpeech.SUCCESS) {
+                    Locale mSysLocale = getResources().getConfiguration().locale;
+                    String strLanguage = mSysLocale.getLanguage();
+                    if(strLanguage.equals("ko")) {
+                        tts.setLanguage(Locale.KOREAN);
+                    } else {
+                        tts.setLanguage(Locale.ENGLISH);
+                    }
+
+                }
+                else Log.d("</>","system error"+status);
+            }
+        });
+
 
         checkGPSPermission();
         init(MapActivity.this);
@@ -129,7 +147,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         drawPausePolyline();
                     }
                 } else if(CURRENT_MODE == ZOMBIE_MODE) {
-
+                    if(lastLat == 0) {
+                        exerciseTrackingInit();
+                    }
+                    if(isRunning) {
+                        drawActivePolyline();
+                        binding.textviewKcal.setText(addUsedKcal());
+                        binding.textviewKm.setText(addMovedDistance());
+                    } else {
+                        if(isFirst) {
+                            pausePolylineInit();
+                        }
+                        drawPausePolyline();
+                    }
                 }
 
                 setLastLatLng(currentLat,currentLng);
@@ -142,6 +172,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 btnVisibilityChange(binding.pause);
                 btnVisibilityChange(binding.resume);
                 btnVisibilityChange(binding.stop);
+                binding.viewPause.setVisibility(View.VISIBLE);
+                waitZombie();
                 isFirst = true;
                 isRunning = false;
 
@@ -154,6 +186,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 btnVisibilityChange(binding.pause);
                 btnVisibilityChange(binding.resume);
                 btnVisibilityChange(binding.stop);
+                binding.viewPause.setVisibility(View.GONE);
+                resumeZombie();
                 isRunning = true;
                 isFirst = false;
 
@@ -163,9 +197,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         binding.stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                timeThread.interrupt();
-                sendDataToFirebase((int) kcal, walkingDistance /1000, (int) timeToSec);
-                startActivity(new Intent(MapActivity.this, MainActivity.class));
+                stop();
             }
         });
 
@@ -176,21 +208,39 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
+    public static void waitZombie() {
+        for(ZombieModel z : zombieList) {
+            z.isRun = false;
+        }
+    }
+
+    public static void resumeZombie() {
+        for(ZombieModel z : zombieList) {
+            z.isRun = true;
+        }
+    }
+
+    public static void stopZombie() {
+        for(ZombieModel z : zombieList) {
+            z.thread.interrupt();
+        }
+    }
+
+    public void stop() {
+        timeThread.interrupt();
+        stopZombie();
+        sendDataToFirebase((int) kcal, walkingDistance /1000, (int) timeToSec);
+        startActivity(new Intent(MapActivity.this, MainActivity.class));
+    }
+
+
     public void init(Context ctx) {
         polylineOptions.color(Color.parseColor("#64A3F5"));
         polylineOptions.zIndex(0);
         lm = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
 
 
-        tts = new TextToSpeech(ctx, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status == TextToSpeech.SUCCESS) {
-                    int r = tts.setLanguage(Locale.KOREA);
-                }
 
-            }
-        });
 
     }
 
@@ -301,11 +351,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void showDialogForLocationServiceSetting() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
-        builder.setTitle("위치 서비스 비활성화");
-        builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
-                + "위치 설정을 수정하실래요?");
+        builder.setTitle(R.string.disable_location);
+        builder.setMessage(R.string.use_location_service+"\n"
+                + R.string.modify_location);
         builder.setCancelable(true);
-        builder.setPositiveButton("설정", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.setting, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 Intent callGPSSettingIntent
@@ -313,7 +363,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE);
             }
         });
-        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
@@ -331,7 +381,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 Manifest.permission.ACCESS_COARSE_LOCATION);
         if (hasFineLocationPermission != PackageManager.PERMISSION_GRANTED || hasCoarseLocationPermission != PackageManager.PERMISSION_GRANTED) {
             if(ActivityCompat.shouldShowRequestPermissionRationale(MapActivity.this, REQUIRED_PERMISSIONS[0])) {
-                Toast.makeText(MapActivity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                Toast.makeText(MapActivity.this, R.string.need_location, Toast.LENGTH_LONG).show();
             }
             ActivityCompat.requestPermissions(MapActivity.this, REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE);
         }
@@ -357,11 +407,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])
                         || ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[1])) {
                     //binding.currentLocation.setText("위치 알 수 없음");
-                    Toast.makeText(MapActivity.this, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MapActivity.this, R.string.permission_error_re_run, Toast.LENGTH_LONG).show();
                     finish();
                 } else {
                     //binding.currentLocation.setText("위치 알 수 없음");
-                    Toast.makeText(MapActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MapActivity.this, R.string.permission_error_allow_setting, Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -405,7 +455,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void playTTS(String text) {
-        tts.speak(text,TextToSpeech.QUEUE_FLUSH,null);
+        tts.setPitch(1.0f);
+        tts.setSpeechRate(1.0f);
+
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, text);
     }
 
     @SuppressLint("HandlerLeak")
@@ -420,32 +473,33 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             if(CURRENT_MODE == DEFAULT_MODE) {
                 if(isRunning) {
                     if(min%5 == 0 && sec == 0 && (min!=0 || hour != 0)) {
-                        String d = String.format("현재 소비 칼로리는 %d며, 총 %.2f킬로미터 달렸습니다. 지금까지 운동한 시간은 %d시간 %d분 %d초입니다.",(int)kcal, walkingDistance/1000.0,hour,min,sec);
+                        String d = String.format(getString(R.string.tts_type),(int)kcal, walkingDistance/1000.0,hour,min,sec);
                         playTTS(d);
                     }
                     //1000이 1초 1000*60 은 1분 1000*60*10은 10분 1000*60*60은 한시간
                     String str = String.format("%02d:%02d:%02d", hour, min, sec);
                     binding.textviewExerciseTime.setText(str);
                 } else {
-                    String str = String.format("%02d:%02d:%02d", hour, min, sec);
-                    //binding.쉬는시간텍스트뷰.setText(str);
+                    String str = String.format(getString(R.string.pause_text)+"%02d:%02d:%02d", hour, min, sec);
+                    binding.pauseText.setText(str);
                 }
             }
             else if(CURRENT_MODE == ZOMBIE_MODE) {
                 if(isRunning) {
-                    if((min%5 == 0 && sec == 0 && min!=0) || (min%5==0 && sec == 0 && hour!=0)) {
-                        String d = String.format("현재 소비 칼로리는 %d며, 총 %.2f킬로미터 달렸습니다. 지금까지 운동한 시간은 %d시간 %d분 %d초입니다.",(int)kcal, walkingDistance/1000.0,hour,min,sec);
+                    if((timeToSec/60)%3 == 0 && timeToSec != 0 ) {
+                        String d = String.format(getString(R.string.tts_type),(int)kcal, walkingDistance/1000.0,hour,min,sec);
                         playTTS(d);
                     }
                     String str = String.format("%02d:%02d:%02d", hour, min, sec);
                     binding.textviewExerciseTime.setText(str);
-                    if((min%ZOMBIE_CREATE_MINUTES == 0 && sec == 0 && min!=0) || (min%ZOMBIE_CREATE_MINUTES==0 && sec == 0 && hour!=0)) {
+                    if((timeToSec/60)%ZOMBIE_CREATE_MINUTES == 0 && timeToSec != 0 ) {
                         createZombie();
                     }
                 }
-            } else {
-                String str = String.format("%02d:%02d:%02d", hour, min, sec);
-                //binding.쉬는시간텍스트뷰.setText(str);
+                else {
+                    String str = String.format(getString(R.string.pause_text)+"%02d:%02d:%02d", hour, min, sec);
+                    binding.pauseText.setText(str);
+                }
             }
 
 
@@ -478,10 +532,30 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void createZombie() {
-        ZombieModel mZombie = new ZombieModel(new LatLng(currentLat,currentLng));
-        mMap.addMarker(mZombie.options);
+        ZombieModel mZombie = new ZombieModel(new LatLng(currentLat,currentLng),zombieListCurrentPos);
+        zombieListCurrentPos++;
         zombieList.add(mZombie);
     }
+
+    @MainThread
+    public static void updateMarkerPos(int idx) {
+        //
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                //zombieList.get(idx).myMarker.setPosition(zombieList.get(idx).options.getPosition());
+                zombieList.get(idx).myMarker.remove();
+                zombieList.get(idx).myMarker = mMap.addMarker(zombieList.get(idx).options);
+
+            }
+        });
+    }
+
+
+
+
+
+
 
 
 }
