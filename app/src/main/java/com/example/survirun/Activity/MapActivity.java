@@ -55,9 +55,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     private static final int DEFAULT_KCAL_WEIGHT = 80;
 
-    private static final int ZOMBIE_CREATE_MINUTES = 3;
+    private static final int ZOMBIE_CREATE_MINUTES = 1;
 
-
+    public static boolean isZombieCreating = true;
 
     public static final int DEFAULT_MODE = 0;
     public static final int ZOMBIE_MODE = 1;
@@ -65,7 +65,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     public static GoogleMap mMap = null;
     private LocationManager lm;
-    private PolylineOptions polylineOptions = new PolylineOptions();
+    public static PolylineOptions polylineOptions = new PolylineOptions();
 
     private PolylineOptions pausePolylineOpt = new PolylineOptions();
     private TextToSpeech tts;
@@ -97,55 +97,77 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(view);
 
 
-        CURRENT_MODE = getIntent().getIntExtra("mode",DEFAULT_MODE);
+        CURRENT_MODE = getIntent().getIntExtra("mode", DEFAULT_MODE);
 
 
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                if(status== TextToSpeech.SUCCESS) {
-                    Locale mSysLocale = getResources().getConfiguration().locale;
-                    String strLanguage = mSysLocale.getLanguage();
-                    if(strLanguage.equals("ko")) {
+                if (status == TextToSpeech.SUCCESS) {
+                    String strLanguage = Locale.getDefault().getLanguage();
+                    if (strLanguage.equals("ko")) {
                         tts.setLanguage(Locale.KOREAN);
                     } else {
                         tts.setLanguage(Locale.ENGLISH);
                     }
 
-                }
-                else Log.d("</>","system error"+status);
+                } else Log.d("</>", "system error" + status);
             }
         });
 
 
         checkGPSPermission();
-        init(MapActivity.this);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
+
+        try {
+            init(MapActivity.this);
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            if (mapFragment != null) {
+                mapFragment.getMapAsync(this);
+            }
+            timeThread = new Thread(new timeThread());
+            timeThread.start();
+        } catch (Exception e) {
+
         }
-        timeThread = new Thread(new timeThread());
-        timeThread.start();
 
 
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
-                setCurrentLatLng(location.getLatitude(),location.getLongitude());
-                if(lastLat == 0) {
-                    exerciseTrackingInit();
-                }
-                if(isRunning) {
-                    drawActivePolyline();
-                    binding.textviewKcal.setText(addUsedKcal());
-                    binding.textviewKm.setText(addMovedDistance());
-                } else {
-                    if(isFirst) {
-                        pausePolylineInit();
+                try {
+                    setCurrentLatLng(location.getLatitude(), location.getLongitude());
+                    if (lastLat == 0) {
+                        exerciseTrackingInit();
                     }
-                    drawPausePolyline();
+                    if (isRunning) {
+                        drawActivePolyline();
+                        binding.textviewKcal.setText(addUsedKcal());
+                        binding.textviewKm.setText(addMovedDistance());
+                    } else {
+                        if (isFirst) {
+                            pausePolylineInit();
+                        }
+                        drawPausePolyline();
+                    }
+                    setLastLatLng(currentLat, currentLng);
+                } catch (Exception e) {
                 }
-                setLastLatLng(currentLat,currentLng);
+
+            }
+
+            @Override
+            public void onProviderEnabled(@NonNull String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(@NonNull String provider) {
+
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
             }
         });
 
@@ -185,6 +207,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
 
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -192,27 +215,43 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public static void waitZombie() {
-        for(ZombieModel z : zombieList) {
+        isZombieCreating = false;
+        for (ZombieModel z : zombieList) {
             z.isRun = false;
+
         }
     }
 
     public static void resumeZombie() {
-        for(ZombieModel z : zombieList) {
+        isZombieCreating = true;
+        for (ZombieModel z : zombieList) {
             z.isRun = true;
+
         }
     }
 
+    @MainThread
     public static void stopZombie() {
-        for(ZombieModel z : zombieList) {
-            z.thread.interrupt();
-        }
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                isZombieCreating = false;
+                polylineOptions.color(Color.parseColor("#FA1D25"));
+                for (ZombieModel z : zombieList) {
+                    z.myMarker.remove();
+                    z.thread.interrupt();
+
+
+                }
+
+            }
+        });
     }
 
     public void stop() {
         timeThread.interrupt();
         stopZombie();
-        sendDataToFirebase((int) kcal, walkingDistance /1000, (int) timeToSec);
+        sendDataToFirebase((int) kcal, walkingDistance / 1000, (int) timeToSec);
         startActivity(new Intent(MapActivity.this, MainActivity.class));
     }
 
@@ -221,8 +260,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         polylineOptions.color(Color.parseColor("#64A3F5"));
         polylineOptions.zIndex(0);
         lm = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
-
-
 
 
     }
@@ -272,13 +309,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         loB.setLatitude(currentLat);
         loB.setLongitude(currentLng);
         walkingDistance = walkingDistance + loA.distanceTo(loB);
-        return String.format("%.2f",walkingDistance / 1000.0);
+        return String.format("%.2f", walkingDistance / 1000.0);
     }
 
     @SuppressLint("DefaultLocale")
     public String addUsedKcal() {
         kcal = DEFAULT_KCAL_WEIGHT * (walkingDistance / 1000.0);
-        return String.format("%.0f",kcal);
+        return String.format("%.0f", kcal);
     }
 
     public void pausePolylineInit() {
@@ -286,22 +323,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         pausePolylineOpt = new PolylineOptions();
         pausePolylineOpt.zIndex(1);
         pausePolylineOpt.color(Color.parseColor("#979DA6"));
-        pausePolylineOpt.add(new LatLng(lastLat,lastLng));
+        pausePolylineOpt.add(new LatLng(lastLat, lastLng));
     }
 
     public void drawPausePolyline() {
-        LatLng t = new LatLng(currentLat,currentLng);
+        LatLng t = new LatLng(currentLat, currentLng);
         polylineOptions.add(t);
         mMap.addPolyline(polylineOptions);
         pausePolylineOpt.add(t);
         mMap.addPolyline(pausePolylineOpt);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(t, 18));
     }
-
-
-
-
-
 
 
     @Override
@@ -335,7 +367,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
         builder.setTitle(R.string.disable_location);
-        builder.setMessage(R.string.use_location_service+"\n"
+        builder.setMessage(R.string.use_location_service + "\n"
                 + R.string.modify_location);
         builder.setCancelable(true);
         builder.setPositiveButton(R.string.setting, new DialogInterface.OnClickListener() {
@@ -363,7 +395,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         int hasCoarseLocationPermission = ContextCompat.checkSelfPermission(MapActivity.this,
                 Manifest.permission.ACCESS_COARSE_LOCATION);
         if (hasFineLocationPermission != PackageManager.PERMISSION_GRANTED || hasCoarseLocationPermission != PackageManager.PERMISSION_GRANTED) {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(MapActivity.this, REQUIRED_PERMISSIONS[0])) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MapActivity.this, REQUIRED_PERMISSIONS[0])) {
                 Toast.makeText(MapActivity.this, R.string.need_location, Toast.LENGTH_LONG).show();
             }
             ActivityCompat.requestPermissions(MapActivity.this, REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE);
@@ -414,11 +446,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void sendDataToFirebase(int kcal, double km, int time) {
-        String uid= FirebaseAuth.getInstance().getUid();
-        ScoreModel scoreModel=new ScoreModel();
-        scoreModel.todayCalorie=kcal;
-        scoreModel.todayKm=km;
-        scoreModel.todayExerciseTime=time;
+        String uid = FirebaseAuth.getInstance().getUid();
+        ScoreModel scoreModel = new ScoreModel();
+        scoreModel.todayCalorie = kcal;
+        scoreModel.todayKm = km;
+        scoreModel.todayExerciseTime = time;
         if (uid != null) {
             FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(scoreModel);
         }
@@ -427,7 +459,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void btnVisibilityChange(Button btn) {
-        if(btn.getVisibility() == View.VISIBLE) {
+        if (btn.getVisibility() == View.VISIBLE) {
             btn.setVisibility(View.GONE);
         } else {
             btn.setVisibility(View.VISIBLE);
@@ -445,41 +477,42 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         @SuppressLint("DefaultLocale")
         @Override
         public void handleMessage(Message msg) {
-            int sec = msg.arg1 % 60;
-            int min = msg.arg1 / 60;
-            int hour = msg.arg1 / 3600;
-            timeToSec = msg.arg1;
-            if(CURRENT_MODE == DEFAULT_MODE) {
-                if(isRunning) {
-                    if((timeToSec/60)%3 == 0 && timeToSec != 0 ) {
-                        String d = String.format(getString(R.string.tts_type),(int)kcal, walkingDistance/1000.0,hour,min,sec);
-                        playTTS(d);
+            try {
+                int sec = msg.arg1 % 60;
+                int min = msg.arg1 / 60;
+                int hour = msg.arg1 / 3600;
+                timeToSec = msg.arg1;
+                if (CURRENT_MODE == DEFAULT_MODE) {
+                    if (isRunning) {
+                        if ((timeToSec / 60) % 3 == 0 && timeToSec != 0) {
+                            String d = String.format(getString(R.string.tts_type), (int) kcal, walkingDistance / 1000.0, hour, min, sec);
+                            playTTS(d);
+                        }
+                        String str = String.format("%02d:%02d:%02d", hour, min, sec);
+                        binding.textviewExerciseTime.setText(str);
+                    } else {
+                        String str = String.format(getString(R.string.pause_text) + "%02d:%02d:%02d", hour, min, sec);
+                        binding.pauseText.setText(str);
                     }
-                    String str = String.format("%02d:%02d:%02d", hour, min, sec);
-                    binding.textviewExerciseTime.setText(str);
-                } else {
-                    String str = String.format(getString(R.string.pause_text)+"%02d:%02d:%02d", hour, min, sec);
-                    binding.pauseText.setText(str);
+                } else if (CURRENT_MODE == ZOMBIE_MODE) {
+                    if (isRunning) {
+                        if ((timeToSec / 60) % 3 == 0 && timeToSec != 0) {
+                            String d = String.format(getString(R.string.tts_type), (int) kcal, walkingDistance / 1000.0, hour, min, sec);
+                            playTTS(d);
+                        }
+                        String str = String.format("%02d:%02d:%02d", hour, min, sec);
+                        binding.textviewExerciseTime.setText(str);
+                        if ((timeToSec / 60) % ZOMBIE_CREATE_MINUTES == 0 && timeToSec != 0 && isZombieCreating) {
+                            createZombie();
+                        }
+                    } else {
+                        String str = String.format(getString(R.string.pause_text) + "%02d:%02d:%02d", hour, min, sec);
+                        binding.pauseText.setText(str);
+                    }
                 }
+            } catch (Exception e) {
+                //    Log.d("<MapActivity> : " , e.getMessage());
             }
-            else if(CURRENT_MODE == ZOMBIE_MODE) {
-                if(isRunning) {
-                    if((timeToSec/60)%3 == 0 && timeToSec != 0 ) {
-                        String d = String.format(getString(R.string.tts_type),(int)kcal, walkingDistance/1000.0,hour,min,sec);
-                        playTTS(d);
-                    }
-                    String str = String.format("%02d:%02d:%02d", hour, min, sec);
-                    binding.textviewExerciseTime.setText(str);
-                    if((timeToSec/60)%ZOMBIE_CREATE_MINUTES == 0 && timeToSec != 0 ) {
-                        createZombie();
-                    }
-                }
-                else {
-                    String str = String.format(getString(R.string.pause_text)+"%02d:%02d:%02d", hour, min, sec);
-                    binding.pauseText.setText(str);
-                }
-            }
-
 
 
         }
@@ -502,7 +535,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     Thread.sleep(1000);
                 }
 
-            } catch(InterruptedException e) {
+            } catch (InterruptedException e) {
                 //do
             }
 
@@ -510,7 +543,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void createZombie() {
-        ZombieModel mZombie = new ZombieModel(new LatLng(currentLat,currentLng),zombieListCurrentPos++);
+        ZombieModel mZombie = new ZombieModel(new LatLng(currentLat, currentLng), zombieListCurrentPos);
+        zombieListCurrentPos++;
         zombieList.add(mZombie);
     }
 
@@ -520,12 +554,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                removeMarker(idx);
+                zombieList.get(idx).myMarker.remove();
+
                 zombieList.get(idx).myMarker = mMap.addMarker(zombieList.get(idx).options);
 
             }
         });
     }
+
     @MainThread
     public static void removeMarker(int idx) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -535,12 +571,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
     }
-
-
-
-
-
-
 
 
 }
