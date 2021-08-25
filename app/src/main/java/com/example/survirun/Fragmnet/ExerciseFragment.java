@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.ExerciseData;
 import com.example.survirun.R;
+import com.example.survirun.RecyclerViewAdapter;
 import com.example.survirun.databinding.FragmentExerciseBinding;
 
 import java.util.ArrayList;
@@ -63,49 +65,26 @@ public class ExerciseFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    ArrayList<ExerciseData> mList=new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentExerciseBinding.inflate(inflater, container, false);
-         recyclerViewAdapter recyclerViewAdapter=new recyclerViewAdapter();
-        recyclerViewAdapter.items.add("1");
-        recyclerViewAdapter.items.add("1");
-        recyclerViewAdapter.items.add("1");
-        recyclerViewAdapter.items.add("1");
-         binding.recyclerView.setAdapter(recyclerViewAdapter);
+        RecyclerViewAdapter recyclerViewAdapter=new RecyclerViewAdapter(mList);
+        ExerciseData exerciseData=new ExerciseData();
+        exerciseData.setExName("걷기");
+
+        exerciseData.setHour(1);
+        mList.add(exerciseData);
+        exerciseData.setExName("걷기");
+
+        exerciseData.setHour(1);
+        mList.add(exerciseData);
+        binding.recyclerView.setAdapter(recyclerViewAdapter);
         View view = binding.getRoot();
 
         return view;
     }
 
-    public class recyclerViewAdapter extends RecyclerView.Adapter<recyclerViewAdapter.ViewHolder> {
-        private ArrayList items = new ArrayList<>();
-
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemexercise, parent, false);
-            ViewHolder viewHolder = new ViewHolder(itemView);
-            return viewHolder;
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return items.size();
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            TextView textView;
-            public ViewHolder(@NonNull View itemView) {
-                super(itemView);
-
-            }
-        }
-    }
-}
+   }
