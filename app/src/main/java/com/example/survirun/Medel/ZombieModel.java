@@ -40,7 +40,7 @@ public class ZombieModel {
         Location human = new Location("zombie");
         human.setLatitude(humanLocation.latitude);
         human.setLongitude(humanLocation.longitude);
-        double dis = 0.000015;
+        double dis = 0.000023;
         if(human.getLatitude() <=  zb.getLatitude()) {
             double lat = zb.getLatitude() - dis;
             double lng = getLngWithEq(humanLocation,new LatLng(zb.getLatitude(),zb.getLongitude()),lat);
@@ -56,8 +56,6 @@ public class ZombieModel {
 
         this.options = new MarkerOptions();
         this.options.position(new LatLng(zb.getLatitude(), zb.getLongitude()));
-        this.options.title(String.valueOf(msg.arg1));
-        //myMarker.setPosition(this.options.getPosition());
         MapActivity.updateMarkerPos(this.currentIdx);
 
         /* 마지막에 거리 검사 */
@@ -171,7 +169,7 @@ public class ZombieModel {
                             msg.arg1 = runTime++;
                         }
                         zombieHandler.handleMessage(msg);
-                        Thread.sleep(2000);
+                        Thread.sleep(1500);
                     }
 
 
