@@ -68,7 +68,7 @@
                 android:id="@+id/tv_eveCalorie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-100kcal"
+
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/tv_1"
@@ -129,7 +129,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="-20m"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/tv_2"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -183,7 +182,6 @@
                     android:id="@+id/tv_eveKm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="-2.3km"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/tv_3"
