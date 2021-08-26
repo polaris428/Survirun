@@ -42,6 +42,7 @@
             android:hint="@string/pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="e"
             android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,7 +71,6 @@
         app:layout_constraintTop_toBottomOf="@+id/signUpTextView">
 
     </Button>
-
 
 
 
