@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragmnet.UserFragment"
-    android:background="@color/black">
+    tools:context=".Fragmnet.UserFragment">
 
     <TextView
         android:id="@+id/tv1"
@@ -208,10 +207,9 @@
             android:layout_width="170dp"
             android:layout_height="170dp"
             android:layout_gravity="center"
-            android:background="#000000"
             app:arc_text_color="#EA0000"
             app:arc_finished_color="#EA0000"
-            app:arc_unfinished_color="#FFFFFF"
+            app:arc_unfinished_color="#000000"
             app:arc_bottom_text="@string/goal"
             app:arc_bottom_text_size="15sp"
             app:arc_progress="12"
