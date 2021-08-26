@@ -35,7 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExerciseData data = items.get(position) ;
-        holder.textView.setText(data.getExName(position)+"\n"+data.getHour(position)+"분");
+        holder.textView.setText(data.getExName(position)+"   "+data.getHour(position)+"분");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
