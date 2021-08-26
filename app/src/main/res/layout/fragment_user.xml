@@ -78,7 +78,6 @@
             android:id="@+id/tv_calorie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="412kcal"
             android:textSize="22sp"
             android:textColor="@color/white"
             android:layout_marginRight="20dp"
@@ -142,7 +141,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
             android:layout_marginRight="20dp"
-            android:text="1h 22m"
             android:textColor="@color/white"
             android:textSize="22sp" />
     </androidx.cardview.widget.CardView>
@@ -195,7 +193,7 @@
                 android:id="@+id/tv_km"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="8.22km"
+
                 android:textSize="22sp"
                 android:textColor="@color/white"
                 android:layout_marginRight="20dp"
