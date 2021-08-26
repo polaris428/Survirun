@@ -1,5 +1,6 @@
 package com.example.survirun.Fragmnet;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -67,24 +68,31 @@ public class ExerciseFragment extends Fragment {
     }
     ArrayList<ExerciseData> mList=new ArrayList<>();
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentExerciseBinding.inflate(inflater, container, false);
         RecyclerViewAdapter recyclerViewAdapter=new RecyclerViewAdapter(mList);
-        ExerciseData exerciseData=new ExerciseData();
-        exerciseData.setExName("걷기");
-
-        exerciseData.setHour(1);
-        mList.add(exerciseData);
-        exerciseData.setExName("걷기");
-
-        exerciseData.setHour(1);
-        mList.add(exerciseData);
         binding.recyclerView.setAdapter(recyclerViewAdapter);
-        View view = binding.getRoot();
+        UpData("가볍게 걷기",30);
+        UpData("꾸준히 걷기",50);
+        UpData("가볍게 달리기",30);
+        UpData("힘차게 달리기",30);
+        UpData("활기차게 걷기",40);
+        UpData("지방태우기",60);
 
+
+        View view = binding.getRoot();
         return view;
+    }
+    void UpData(String exerciseName,int hour ){
+
+        ExerciseData exerciseData=new ExerciseData();
+        exerciseData.setExName(exerciseName);
+        exerciseData.setHour(hour);
+        mList.add(exerciseData);
+
     }
 
    }

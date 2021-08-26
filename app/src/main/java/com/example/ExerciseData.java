@@ -12,13 +12,14 @@ public class ExerciseData {
         this.exName = exName;
     }
 
-    public int getHour() {
+    public int getHour(int position) {
         return this.hour;
     }
 
     public void setHour(int hour) {
         this.hour = hour;
     }
+
 
 
 }

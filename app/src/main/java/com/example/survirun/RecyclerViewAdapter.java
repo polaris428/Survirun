@@ -1,5 +1,6 @@
 package com.example.survirun;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ExerciseData;
+import com.example.survirun.Activity.ExercisePreparationActivity;
+import com.example.survirun.Activity.MainActivity;
 import com.example.survirun.Fragmnet.ExerciseFragment;
 
 import java.util.ArrayList;
@@ -32,7 +35,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExerciseData data = items.get(position) ;
-        holder.textView.setText(data.getExName(position));
+        holder.textView.setText(data.getExName(position)+"\n"+data.getHour(position)+"분");
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(holder.itemView.getContext(), ExercisePreparationActivity.class);
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
 
     }
 
@@ -45,6 +55,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
+
+
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView=itemView.findViewById(R.id.textView);
