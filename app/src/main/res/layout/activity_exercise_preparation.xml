@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".Activity.ExercisePreparationActivity">
 
+    <Button
+        android:id="@+id/exerciseStartButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </Button>
 </androidx.constraintlayout.widget.ConstraintLayout>
