@@ -43,11 +43,17 @@
     <string name="total_exercise">Total Exercise</string>
     <string name="exercise_time_br">Exercise\nTime</string>
     <string name="route">Route</string>
-    <string name="pace_target">Pace Target</string>
+    <string name="pace_goal">Pace Goal</string>
     <string name="walking_lightly">Walking Lightly</string>
     <string name="walking_steadily">Walking Steadily</string>
     <string name="running_lightly">Running Lightly</string>
     <string name="running_vigorously">Running Vigorously</string>
     <string name="walking_briskly">Walking Briskly</string>
     <string name="burning_fat">Burning Fat</string>
+    <string name="exercise_time_goal">Exercise Time Goal</string>
+    <string name="exercise_distance_goal">Exercise Distance Goal</string>
+    <string name="hour">"-hour "</string>
+    <string name="minute_exercise">-minute Exercise</string>
+    <string name="hour_exercise">-hour Exercise</string>
+    <string name="calorie_burning_goal">Calorie Burning Goal</string>
 </resources>

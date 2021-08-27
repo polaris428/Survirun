@@ -95,7 +95,7 @@ public class ExerciseFragment extends Fragment {
     void  ExerciseList(){
         switch (count){
             case 1:{
-                binding.exerciseTypeTextView.setText(R.string.pace_target);
+                binding.exerciseTypeTextView.setText(R.string.pace_goal);
                 mList=new ArrayList<>();
                 UpData(getString(R.string.walking_lightly),30,0);
                 UpData(getString(R.string.walking_steadily),50,0);
@@ -108,18 +108,18 @@ public class ExerciseFragment extends Fragment {
 
             }
             case 2:{
-                ListChange("운동시간 목표");
-                UpData("30분 운동",30,0);
-                UpData("1시간 운동",60,0);
-                UpData("1시간 30분운동",90,0);
-                UpData("2시간 운동",120,0);
-                UpData("2시간 30분 운동",150,0);
+                ListChange(getString(R.string.exercise_time_goal));
+                UpData("30"+getString(R.string.minute_exercise),30,0);
+                UpData("1"+getString(R.string.hour_exercise),60,0);
+                UpData("1"+getString(R.string.hour)+"30"+getString(R.string.minute_exercise),90,0);
+                UpData("2"+getString(R.string.hour_exercise),120,0);
+                UpData("2"+getString(R.string.hour)+"30"+getString(R.string.minute_exercise),150,0);
                 break;
 
 
             }
             case 3:{
-                ListChange("운동 거리 목표");
+                ListChange(getString(R.string.exercise_distance_goal));
                 UpData("1Km",0,0);
                 UpData("2Km",0,0);
                 UpData("3Km",0,0);
@@ -129,12 +129,12 @@ public class ExerciseFragment extends Fragment {
 
             }
             case 4:{
-                ListChange("칼로리 소모 목표");
-                UpData("300칼로리",0,300);
-                UpData("400칼로리",0,400);
-                UpData("500칼로리",0,500);
-                UpData("600칼로리",0,600);
-                UpData("700칼로리",0,700);
+                ListChange(getString(R.string.calorie_burning_goal));
+                UpData("300kcal",0,300);
+                UpData("400kcal",0,400);
+                UpData("500kcal",0,500);
+                UpData("600kcal",0,600);
+                UpData("700kcal",0,700);
                 break;
 
             }

@@ -43,11 +43,17 @@
     <string name="total_exercise">운동량</string>
     <string name="exercise_time_br">운동\n시간</string>
     <string name="route">루트</string>
-    <string name="pace_target">페이스목표</string>
+    <string name="pace_goal">페이스목표</string>
     <string name="walking_lightly">가볍게 걷기</string>
     <string name="walking_steadily">꾸준히 걷기</string>
     <string name="running_lightly">가볍게 달리기</string>
     <string name="running_vigorously">힘차게 달리기</string>
     <string name="walking_briskly">활기차게 걷기</string>
     <string name="burning_fat">지방태우기</string>
+    <string name="exercise_time_goal">운동 시간 목표</string>
+    <string name="exercise_distance_goal">운동 거리 목표</string>
+    <string name="hour">"시간 "</string>
+    <string name="minute_exercise">분 운동</string>
+    <string name="hour_exercise">시간 운동</string>
+    <string name="calorie_burning_goal">칼로리 소모 목표</string>
 </resources>
