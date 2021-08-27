@@ -6,7 +6,7 @@
     <string name="story_name">You\'re a survivor of zombie apocalypse. What is your name?</string>
     <string name="pw">Password</string>
     <string name="login">Login</string>
-    <string name="no_acccount">Sign up</string>
+    <string name="no_account">Sign up</string>
     <string name="email">Email</string>
     <string name="confirm_pw">Confirm Password</string>
     <string name="sign_up">Sign up</string>

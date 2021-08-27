@@ -6,7 +6,7 @@
     <string name="hello_blank_fragment">안뇽</string>
     <string name="pw">비밀번호</string>
     <string name="login">로그인</string>
-    <string name="no_acccount">아직 회원이 아니신가요?</string>
+    <string name="no_account">아직 회원이 아니신가요?</string>
     <string name="email">이메일</string>
     <string name="confirm_pw">비밀번호 확인</string>
     <string name="sign_up">회원가입</string>
@@ -49,7 +49,7 @@
     <string name="running_lightly">가볍게 달리기</string>
     <string name="running_vigorously">힘차게 달리기</string>
     <string name="walking_briskly">활기차게 걷기</string>
-    <string name="burning_fat">지방 태우기</string>
+    <string name="burning_fat">지방태우기</string>
     <string name="exercise_time_goal">운동 시간 목표</string>
     <string name="exercise_distance_goal">운동 거리 목표</string>
     <string name="hour">"시간 "</string>
