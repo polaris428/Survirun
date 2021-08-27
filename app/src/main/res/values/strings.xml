@@ -43,4 +43,11 @@
     <string name="total_exercise">Total Exercise</string>
     <string name="exercise_time_br">Exercise\nTime</string>
     <string name="route">Route</string>
+    <string name="pace_target">Pace Target</string>
+    <string name="walk_lightly">Walk Lightly</string>
+    <string name="walk_steadily">Walk Steadily</string>
+    <string name="run_lightly">Run Lightly</string>
+    <string name="run_vigorously">Run Vigorously</string>
+    <string name="walk_briskly">Walk Briskly</string>
+    <string name="burning_fat">Burning Fat</string>
 </resources>

@@ -1,18 +1,13 @@
 package com.example.survirun.Fragmnet;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.ExerciseData;
 import com.example.survirun.R;
@@ -100,14 +95,14 @@ public class ExerciseFragment extends Fragment {
     void  ExerciseList(){
         switch (count){
             case 1:{
-                binding.exerciseTypeTextView.setText("페이스목표");
+                binding.exerciseTypeTextView.setText(R.string.pace_target);
                 mList=new ArrayList<>();
-                UpData("가볍게 걷기",30,0);
-                UpData("꾸준히 걷기",50,0);
-                UpData("가볍게 달리기",30,0);
-                UpData("힘차게 달리기",30,0);
-                UpData("활기차게 걷기",40,0);
-                UpData("지방태우기",60,0);
+                UpData(getString(R.string.walk_lightly),30,0);
+                UpData(getString(R.string.walk_steadily),50,0);
+                UpData(getString(R.string.run_lightly),30,0);
+                UpData(getString(R.string.run_vigorously),30,0);
+                UpData(getString(R.string.walk_briskly),40,0);
+                UpData(getString(R.string.burning_fat),60,0);
                 break;
 
 
