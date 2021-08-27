@@ -114,11 +114,11 @@ public class ExerciseFragment extends Fragment {
             }
             case 2:{
                 ListChange("운동시간 목표");
-                UpData("30분 운동하기",30,0);
-                UpData("1시간 운동하기",60,0);
-                UpData("1시간 30분운동하기",90,0);
-                UpData("2시간 운동하기",120,0);
-                UpData("2시간 30분 운동하기",150,0);
+                UpData("30분 운동",30,0);
+                UpData("1시간 운동",60,0);
+                UpData("1시간 30분운동",90,0);
+                UpData("2시간 운동",120,0);
+                UpData("2시간 30분 운동",150,0);
                 break;
 
 
