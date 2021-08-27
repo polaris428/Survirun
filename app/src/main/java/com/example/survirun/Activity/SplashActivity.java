@@ -39,8 +39,8 @@ public class SplashActivity extends AppCompatActivity {
             sf.edit().putInt("day",today).commit();
             Log.d("asdf",today+"");
         }
-        if (email != "" && pwe != "") {
-            firebaseAuth = firebaseAuth.getInstance();
+        if (!email.equals("") && !pwe.equals("") ) {
+            firebaseAuth = FirebaseAuth.getInstance();
             firebaseAuth.signInWithEmailAndPassword(email, pwe)
                     .addOnCompleteListener(SplashActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -63,7 +63,7 @@ public class SplashActivity extends AppCompatActivity {
             Handler mHandler = new Handler();
             mHandler.postDelayed(new Runnable()  {
                 public void run() {
-                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
