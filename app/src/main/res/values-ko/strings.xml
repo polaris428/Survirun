@@ -44,10 +44,10 @@
     <string name="exercise_time_br">운동\n시간</string>
     <string name="route">루트</string>
     <string name="pace_target">페이스목표</string>
-    <string name="walk_lightly">가볍게 걷기</string>
-    <string name="walk_steadily">꾸준히 걷기</string>
-    <string name="run_lightly">가볍게 달리기</string>
-    <string name="run_vigorously">힘차게 달리기</string>
-    <string name="walk_briskly">활기차게 걷기</string>
+    <string name="walking_lightly">가볍게 걷기</string>
+    <string name="walking_steadily">꾸준히 걷기</string>
+    <string name="running_lightly">가볍게 달리기</string>
+    <string name="running_vigorously">힘차게 달리기</string>
+    <string name="walking_briskly">활기차게 걷기</string>
     <string name="burning_fat">지방태우기</string>
 </resources>

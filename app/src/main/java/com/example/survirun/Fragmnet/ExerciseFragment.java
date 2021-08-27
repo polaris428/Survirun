@@ -97,11 +97,11 @@ public class ExerciseFragment extends Fragment {
             case 1:{
                 binding.exerciseTypeTextView.setText(R.string.pace_target);
                 mList=new ArrayList<>();
-                UpData(getString(R.string.walk_lightly),30,0);
-                UpData(getString(R.string.walk_steadily),50,0);
-                UpData(getString(R.string.run_lightly),30,0);
-                UpData(getString(R.string.run_vigorously),30,0);
-                UpData(getString(R.string.walk_briskly),40,0);
+                UpData(getString(R.string.walking_lightly),30,0);
+                UpData(getString(R.string.walking_steadily),50,0);
+                UpData(getString(R.string.running_lightly),30,0);
+                UpData(getString(R.string.running_vigorously),30,0);
+                UpData(getString(R.string.walking_briskly),40,0);
                 UpData(getString(R.string.burning_fat),60,0);
                 break;
 

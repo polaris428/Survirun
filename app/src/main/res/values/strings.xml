@@ -44,10 +44,10 @@
     <string name="exercise_time_br">Exercise\nTime</string>
     <string name="route">Route</string>
     <string name="pace_target">Pace Target</string>
-    <string name="walk_lightly">Walk Lightly</string>
-    <string name="walk_steadily">Walk Steadily</string>
-    <string name="run_lightly">Run Lightly</string>
-    <string name="run_vigorously">Run Vigorously</string>
-    <string name="walk_briskly">Walk Briskly</string>
+    <string name="walking_lightly">Walking Lightly</string>
+    <string name="walking_steadily">Walking Steadily</string>
+    <string name="running_lightly">Running Lightly</string>
+    <string name="running_vigorously">Running Vigorously</string>
+    <string name="walking_briskly">Walking Briskly</string>
     <string name="burning_fat">Burning Fat</string>
 </resources>
