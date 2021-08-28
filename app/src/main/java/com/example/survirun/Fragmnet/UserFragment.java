@@ -1,6 +1,9 @@
 package com.example.survirun.Fragmnet;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,35 +31,11 @@ import java.util.Locale;
 
 public class UserFragment extends Fragment {
     FragmentUserBinding binding;
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
-    public  String uid= FirebaseAuth.getInstance().getUid();
-    private static final String DEFAULT_PATTERN = "%d%%";
+    String uid= FirebaseAuth.getInstance().getUid();
     Date currentTime = Calendar.getInstance().getTime();
 
-    public UserFragment() {
-        // Required empty public constructor
-    }
+    int progress=0;
 
-    public static UserFragment newInstance(String param1, String param2) {
-        UserFragment fragment = new UserFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
     UserModel userModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,6 +43,10 @@ public class UserFragment extends Fragment {
 
         binding = FragmentUserBinding.inflate(inflater, container, false);
         View view=binding.getRoot();
+        SharedPreferences sf = getContext().getSharedPreferences("goal", MODE_PRIVATE);
+        int goalCalorie = sf.getInt("calorie", 400);
+        int goalTime = sf.getInt("time", 60);
+        int goalkm = sf.getInt("km", 5);
         String date = new SimpleDateFormat("(yy.MM.dd)", Locale.getDefault()).format(currentTime);
         binding.tvDate.setText(date);
         List<UserModel> userModels=new ArrayList<>();
@@ -74,9 +57,25 @@ public class UserFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userModel=snapshot.getValue(UserModel.class);
                 userModels.add(snapshot.getValue(UserModel.class));
-                binding.tvKm.setText(userModel.todayKm+"");
-                binding.tvCalorie.setText(userModel.todayCalorie+"");
-                binding.tvTime.setText(userModel.todayExerciseTime+"");
+                binding.kmTextView.setText(userModel.todayKm+"");
+                binding.calorieTextView.setText(userModel.todayCalorie+"");
+                binding.timeTextView.setText(userModel.todayExerciseTime+"");
+                if(goalCalorie==userModel.todayCalorie){
+                    progress=progress+33;
+                    binding.arcProgress.setProgress(progress);
+                }
+                if(goalTime==userModel.todayExerciseTime){
+                    progress=progress+33;
+                    binding.arcProgress.setProgress(progress);
+                }
+                if(goalkm==userModel.todayKm){
+                    progress=progress+33;
+                    binding.arcProgress.setProgress(progress);
+                }
+                if(progress==99){
+                    progress=100;
+                    binding.arcProgress.setProgress(progress);
+                }
             }
 
             @Override
