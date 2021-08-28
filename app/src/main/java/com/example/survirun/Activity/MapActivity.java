@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
@@ -43,8 +44,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -85,6 +93,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private ActivityMapBinding binding;
     private int CURRENT_MODE;
 
+    public static SupportMapFragment mapFragment;
+
     public static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
     private int zombieListCurrentPos = 0; // +1 해서 좀데 리스트 요소 개수 ㄱㄴ
 
@@ -120,7 +130,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         try {
             init(MapActivity.this);
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
             if (mapFragment != null) {
                 mapFragment.getMapAsync(this);
             }
@@ -251,16 +261,92 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void stop() {
         timeThread.interrupt();
         stopZombie();
-        sendDataToFirebase((int) kcal, walkingDistance / 1000, (int) timeToSec);
-        startActivity(new Intent(MapActivity.this, MainActivity.class));
+
+        List<LatLng> list = polylineOptions.getPoints();
+        LatLng leftTopLatLng = list.get(0), rightBottomLatLng = list.get(0);
+        for(LatLng i : list) {
+
+            if(leftTopLatLng.latitude < i.latitude) {
+                leftTopLatLng = new LatLng(i.latitude, leftTopLatLng.longitude);
+            }
+            if(leftTopLatLng.longitude > i.longitude) {
+                leftTopLatLng = new LatLng(leftTopLatLng.latitude, i.longitude);
+            }
+            if(rightBottomLatLng.latitude > i.latitude ) {
+                rightBottomLatLng = new LatLng(i.latitude, rightBottomLatLng.longitude);
+            }
+            if(rightBottomLatLng.longitude < i.longitude) {
+                rightBottomLatLng = new LatLng(rightBottomLatLng.latitude, i.longitude);
+            }
+
+        }
+        LatLng mid = new LatLng((leftTopLatLng.latitude + rightBottomLatLng.latitude)/2 , (leftTopLatLng.longitude + rightBottomLatLng.longitude) /2);
+        Location ltl = new Location("ltl");
+        Location rbl = new Location("rbl");
+        ltl.setLatitude(leftTopLatLng.latitude);
+        ltl.setLongitude(leftTopLatLng.longitude);
+        rbl.setLatitude(rightBottomLatLng.latitude);
+        rbl.setLongitude(rightBottomLatLng.longitude);
+
+        double d  =ltl.distanceTo(rbl)/1000;
+        Log.d(">",""+d);
+        int zoomLv = (int) (25 / (ltl.distanceTo(rbl)/100000));
+        if(d >= 100) {
+            zoomLv = 5;
+        } else if(d >= 50 ){
+            zoomLv = 8;
+        } else if(d >= 25) {
+            zoomLv = 11;
+        }else if(d >= 10) {
+            zoomLv = 14;
+        } else {
+            zoomLv = 17;
+        }
+
+
+
+
+
+
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mid, zoomLv));
+        GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback()
+        {
+
+            @Override
+            public void onSnapshotReady(Bitmap snapshot)
+            {
+                sendDataToFirebase((int) kcal, walkingDistance / 1000, (int) timeToSec, snapshot);
+
+
+
+            }
+        };
+
+
+        mMap.snapshot(callback);
+        mMap.clear();
+
+        Intent intent = new Intent(MapActivity.this,MainActivity.class); //main말고 다른걸로 변경
+        intent.putExtra("kcal",(int)kcal);
+        intent.putExtra("walkedDistaceToKm", walkingDistance / 1000);
+        intent.putExtra("timeToSec",(int) timeToSec);
+        startActivity(intent);
+
     }
+
+
+
+
 
 
     public void init(Context ctx) {
         polylineOptions.color(Color.parseColor("#64A3F5"));
         polylineOptions.zIndex(0);
         lm = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
-
+        isRunning = true;
+        isFirst = false;
+        isZombieCreating = true;
 
     }
 
@@ -445,15 +531,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
-    public void sendDataToFirebase(int kcal, double km, int time) {
+    public void sendDataToFirebase(int kcal, double km, int time, Bitmap mapImg) {
         String uid = FirebaseAuth.getInstance().getUid();
         ScoreModel scoreModel = new ScoreModel();
         scoreModel.todayCalorie = kcal;
         scoreModel.todayKm = km;
         scoreModel.todayExerciseTime = time;
+        SimpleDateFormat format1 = new SimpleDateFormat( "yyyy-MM-dd/HH:mm:ss");
+        Date t = new Date();
+        String time1 = format1.format(t);
+        StorageReference imgRef = FirebaseStorage.getInstance().getReference().child(uid+"/"+time1);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        mapImg.compress(Bitmap.CompressFormat.JPEG,100, baos);
+        byte[] d = baos.toByteArray();
         if (uid != null) {
             FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(scoreModel);
+            imgRef.putBytes(d);
         }
+
 
 
     }
