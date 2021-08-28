@@ -38,7 +38,7 @@
         app:layout_constraintRight_toLeftOf="@id/layout2"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/tv_calorie"
+            android:id="@+id/calorieTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
@@ -48,7 +48,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
         <TextView
-            android:id="@+id/tv_time"
+            android:id="@+id/timeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
