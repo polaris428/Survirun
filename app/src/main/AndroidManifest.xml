@@ -13,9 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Survirun">
-        <activity android:name=".ExplanationActivity"
-            android:theme="@android:style/Theme.Dialog">
-        </activity>
+        <activity
+            android:name=".Activity.ExerciseResultActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ExplanationActivity"
+            android:theme="@android:style/Theme.Dialog"></activity>
         <activity
             android:name=".Activity.ExercisePreparationActivity"
             android:exported="true" />

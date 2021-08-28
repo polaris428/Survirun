@@ -327,9 +327,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap.snapshot(callback);
         mMap.clear();
 
-        Intent intent = new Intent(MapActivity.this,MainActivity.class); //main말고 다른걸로 변경
+        Intent intent = new Intent(MapActivity.this,ExerciseResultActivity.class); //main말고 다른걸로 변경
         intent.putExtra("kcal",(int)kcal);
-        intent.putExtra("walkedDistaceToKm", walkingDistance / 1000);
+        intent.putExtra("walkedDistanceToKm", walkingDistance / 1000);
         intent.putExtra("timeToSec",(int) timeToSec);
         startActivity(intent);
 
