@@ -60,8 +60,7 @@ public class ZombieModel {
 
         /* 마지막에 거리 검사 */
         if (getZombieToHumanDistance(humanLocation) <= 5) { //단위가 몇이였더라..
-            /* 종료코드 */
-            MapActivity.stopZombie(); //all zombie thread stop.
+            MapActivity.minusHPAndCheck();
         }
 
         if(getZombieToHumanDistance(humanLocation) >= 1000) {
