@@ -28,8 +28,8 @@ public class UserGoalActivity extends AppCompatActivity {
 
         String h = String.valueOf(time/60);
         String m = String.valueOf(time%60);
-        binding.tvCalorie.setText(String.valueOf(calorie));
-        binding.tvTime.setText(h+"h "+m+"m");
+        binding.calorieTextView.setText(String.valueOf(calorie));
+        binding.timeTextView.setText(h+"h "+m+"m");
         binding.tvKm.setText(String.valueOf(km));
 
         binding.btnBack.setOnClickListener(v -> {
