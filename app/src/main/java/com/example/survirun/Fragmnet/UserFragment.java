@@ -2,8 +2,11 @@ package com.example.survirun.Fragmnet;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static com.example.survirun.R.color.btn_color;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.example.survirun.Activity.UserGoalActivity;
 import com.example.survirun.Medel.UserModel;
+import com.example.survirun.R;
 import com.example.survirun.databinding.FragmentUserBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +39,6 @@ public class UserFragment extends Fragment {
     Date currentTime = Calendar.getInstance().getTime();
 
     int progress=0;
-
     UserModel userModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,22 +63,43 @@ public class UserFragment extends Fragment {
                 binding.kmTextView.setText(userModel.todayKm+"");
                 binding.calorieTextView.setText(userModel.todayCalorie+"");
                 binding.timeTextView.setText(userModel.todayExerciseTime+"");
+                if(goalCalorie/2>userModel.todayCalorie){
+                    progress=progress+25;
+                    binding.calorieCardView.setCardBackgroundColor(Color.YELLOW);
+                }
+                if(goalTime/2>userModel.todayExerciseTime){
+                    progress=progress+25;
+                    binding.exerciseTimeCardView.setCardBackgroundColor(Color.YELLOW);
+                }
+                if(goalkm/2>userModel.todayKm){
+                    progress=progress+25;
+                    binding.kmCardView.setCardBackgroundColor(Color.YELLOW);
+                }
+                if(goalCalorie/2>userModel.todayCalorie){
+                    progress=progress+25;
+                    binding.calorieCardView.setCardBackgroundColor(Color.YELLOW);
+                }
                 if(goalCalorie==userModel.todayCalorie){
-                    progress=progress+33;
+                    progress=progress+8;
                     binding.arcProgress.setProgress(progress);
+                    binding.calorieCardView.setCardBackgroundColor(Color.GREEN);
                 }
                 if(goalTime==userModel.todayExerciseTime){
-                    progress=progress+33;
+                    progress=progress+8;
                     binding.arcProgress.setProgress(progress);
+                    binding.exerciseTimeCardView.setCardBackgroundColor(Color.GREEN);
                 }
                 if(goalkm==userModel.todayKm){
-                    progress=progress+33;
+                    progress=progress+8;
                     binding.arcProgress.setProgress(progress);
+                    binding.kmCardView.setCardBackgroundColor(Color.GREEN);
                 }
                 if(progress==99){
                     progress=100;
                     binding.arcProgress.setProgress(progress);
                 }
+
+
             }
 
             @Override

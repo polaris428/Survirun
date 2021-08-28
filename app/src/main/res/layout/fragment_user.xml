@@ -205,7 +205,6 @@
             app:arc_finished_color="#EA0000"
             app:arc_unfinished_color="#000000"
             app:arc_bottom_text="@string/goal"
-
             app:arc_bottom_text_size="15sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
