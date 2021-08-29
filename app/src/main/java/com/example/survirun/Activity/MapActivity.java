@@ -66,7 +66,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int ZOMBIE_CREATE_MINUTES = 3;
     private static final int STORY_READ_MINUTES = 10;
     public static int HP = 100;
-    public static int minusHp = 25;
+    public static int minusHp = 20;
 
     public static boolean isZombieCreating = true;
 
@@ -242,6 +242,31 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         }
     }
+    @MainThread
+    public static void updateMarkerPos(int idx) {
+        //
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                zombieList.get(idx).myMarker.remove();
+                zombieList.get(idx).myMarker = mMap.addMarker(zombieList.get(idx).options);
+
+            }
+        });
+    }
+
+    @MainThread
+    public static void removeMarker(int idx) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                zombieList.get(idx).myMarker.remove();
+            }
+        });
+    }
+
+
+
 
     @MainThread
     public static void stopZombie() {
@@ -585,7 +610,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 timeToSec = msg.arg1;
                 if (CURRENT_MODE.contains(DEFAULT_MODE)) {
                     if (isRunning) {
-                        if ((timeToSec / 60) % 3 == 0 && timeToSec%60 == 0) {
+                        if ((timeToSec / 60) % 3 == 0 && timeToSec%60 == 0 && timeToSec >= 60) {
                             String d = String.format(getString(R.string.tts_type), (int) kcal, walkingDistance / 1000.0, hour, min, sec);
                             playTTS(d);
                         }
@@ -595,30 +620,32 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         String str = String.format(getString(R.string.pause_text) + "%02d:%02d:%02d", hour, min, sec);
                         binding.pauseText.setText(str);
                     }
-                } else if (CURRENT_MODE.contains(ZOMBIE_MODE)) {
+                }
+                if (CURRENT_MODE.contains(ZOMBIE_MODE)) {
                     if (isRunning) {
-                        if ((timeToSec / 60) % 3 == 0 && timeToSec%60 != 0) {
+                        if ((timeToSec / 60) % 3 == 0 && timeToSec%60 != 0&& timeToSec >= 60) {
                             String d = String.format(getString(R.string.tts_type), (int) kcal, walkingDistance / 1000.0, hour, min, sec);
                             playTTS(d);
                         }
                         String str = String.format("%02d:%02d:%02d", hour, min, sec);
                         binding.textviewExerciseTime.setText(str);
-                        if ((timeToSec / 60) % ZOMBIE_CREATE_MINUTES == 0 && timeToSec%60 == 0 && isZombieCreating) {
+                        if ((timeToSec / 60) % ZOMBIE_CREATE_MINUTES == 0 && timeToSec%60 == 0 && isZombieCreating&& timeToSec >= 60) {
                             createZombie();
                         }
                     } else {
                         String str = String.format(getString(R.string.pause_text) + "%02d:%02d:%02d", hour, min, sec);
                         binding.pauseText.setText(str);
                     }
-                } else if (CURRENT_MODE.contains(STORY_MODE)) {
+                }
+                if (CURRENT_MODE.contains(STORY_MODE)) {
                     if (isRunning) {
-                        if ((timeToSec / 60) % 3 == 0 && timeToSec%60 == 0) {
+                        if ((timeToSec / 60) % 3 == 0 && timeToSec%60 == 0&& timeToSec >= 60) {
                             String d = String.format(getString(R.string.tts_type), (int) kcal, walkingDistance / 1000.0, hour, min, sec);
                             playTTS(d);
                         }
                         String str = String.format("%02d:%02d:%02d", hour, min, sec);
                         binding.textviewExerciseTime.setText(str);
-                        if((timeToSec / 60) % STORY_READ_MINUTES == 0 && timeToSec%60 == 0) {
+                        if((timeToSec / 60) % STORY_READ_MINUTES == 0 && timeToSec%60 == 0&& timeToSec >= 60) {
                             readStory();
                         }
                     } else {
@@ -635,7 +662,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     };
 
     public static void minusHPAndCheck() {
-        MapActivity.HP -= MapActivity.minusHp;
+        MapActivity.HP = MapActivity.HP -  MapActivity.minusHp;
         updateHpUI();
         if(HP <= 0 ){
             stopZombie();
@@ -689,29 +716,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         zombieList.add(mZombie);
     }
 
-    @MainThread
-    public static void updateMarkerPos(int idx) {
-        //
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                zombieList.get(idx).myMarker.remove();
 
-                zombieList.get(idx).myMarker = mMap.addMarker(zombieList.get(idx).options);
-
-            }
-        });
-    }
-
-    @MainThread
-    public static void removeMarker(int idx) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                zombieList.get(idx).myMarker.remove();
-            }
-        });
-    }
 
 
 }
