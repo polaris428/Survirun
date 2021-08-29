@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 id=binding.idEdiText.getText().toString();
-
+                pwe=binding.pawEditText.getText().toString();
                 if (!pwe.equals("")&&!id.equals("")){
                     binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
                 }else {
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 pwe=binding.pawEditText.getText().toString();
-
+                id=binding.idEdiText.getText().toString();
                 if (!pwe.equals("")&&!id.equals("")){
                     binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
                 }else {
