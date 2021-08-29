@@ -20,7 +20,7 @@ public class ExplanationActivity extends Activity {
         setContentView(binding.getRoot());
         Intent intent = getIntent();
         result = intent.getStringExtra("info");
-        binding.informationTextView.setText(result);
+        binding.informationTextview.setText(result);
 
     }
 }

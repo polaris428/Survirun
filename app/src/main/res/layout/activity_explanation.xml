@@ -7,7 +7,7 @@
     android:layout_gravity="center"
     tools:context=".ExplanationActivity">
     <TextView
-        android:id="@+id/informationTextView"
+        android:id="@+id/information_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="왜"

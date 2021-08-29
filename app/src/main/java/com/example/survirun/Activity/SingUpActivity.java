@@ -47,7 +47,7 @@ public class SingUpActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
 
-        binding.idInputEditText.addTextChangedListener(new TextWatcher() {
+        binding.idInputEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -55,12 +55,12 @@ public class SingUpActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String emile = binding.idInputEditText.getText().toString();
+                String emile = binding.idInputEdittext.getText().toString();
                 if (emile.indexOf("@") != -1) {
-                    binding.idErrorTextView.setVisibility(View.INVISIBLE);
+                    binding.idErrorTextview.setVisibility(View.INVISIBLE);
                     emailtrue = true;
                 } else {
-                    binding.idErrorTextView.setVisibility(View.VISIBLE);
+                    binding.idErrorTextview.setVisibility(View.VISIBLE);
                     emailtrue = false;
                 }
             }
@@ -72,21 +72,21 @@ public class SingUpActivity extends AppCompatActivity {
         });
 
 
-        binding.pawCheckEditText.addTextChangedListener(new TextWatcher() {
+        binding.passwordCheckEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String p = binding.pawInputEditText.getText().toString();
-                String p1 = binding.pawCheckEditText.getText().toString();
+                String p = binding.passwordInputEdittext.getText().toString();
+                String p1 = binding.passwordCheckEdittext.getText().toString();
                 if (p.equals(p1)) {
-                    binding.pawErrorTextView.setVisibility(View.INVISIBLE);
+                    binding.passwordErrorTextview.setVisibility(View.INVISIBLE);
                     pawtrue = true;
                     Log.d("문자", p + p1);
                 } else {
-                    binding.pawErrorTextView.setVisibility(View.VISIBLE);
+                    binding.passwordErrorTextview.setVisibility(View.VISIBLE);
                     pawtrue = false;
                 }
             }
@@ -103,8 +103,8 @@ public class SingUpActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (pawtrue && emailtrue) {
-                    email = binding.idInputEditText.getText().toString().trim();
-                    pwe = binding.pawInputEditText.getText().toString().trim();
+                    email = binding.idInputEdittext.getText().toString().trim();
+                    pwe = binding.passwordInputEdittext.getText().toString().trim();
 
 
                     firebaseAuth.createUserWithEmailAndPassword(email, pwe)

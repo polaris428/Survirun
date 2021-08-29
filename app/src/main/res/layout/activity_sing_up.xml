@@ -39,7 +39,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/text1"
                 android:layout_marginTop="10dp">
                 <EditText
-                    android:id="@+id/idInputEditText"
+                    android:id="@+id/id_input_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/rounded_edittext"
@@ -48,7 +48,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/idErrorTextView"
+                android:id="@+id/id_error_textview"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:text="@string/email_error"
@@ -64,7 +64,7 @@
                 android:layout_marginTop="10dp"
                 android:textSize="15sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/idErrorTextView"/>
+                app:layout_constraintTop_toBottomOf="@+id/id_error_textview"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout2"
@@ -75,7 +75,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/text2"
                 android:layout_marginTop="10dp">
                 <EditText
-                    android:id="@+id/pawInputEditText"
+                    android:id="@+id/password_input_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:inputType="textPassword"
@@ -102,7 +102,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text3">
                 <EditText
-                    android:id="@+id/pawCheckEditText"
+                    android:id="@+id/password_check_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/rounded_edittext"
@@ -111,7 +111,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/pawErrorTextView"
+                android:id="@+id/password_error_textview"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:text="@string/pw_error"
@@ -122,14 +122,14 @@
 
 
             <Button
-                android:id="@+id/signUpButton"
+                android:id="@+id/sign_up_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/sign_up"
                 android:background="@drawable/rounded_btn"
                 android:layout_marginTop="50dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pawErrorTextView"/>
+                app:layout_constraintTop_toBottomOf="@+id/password_error_textview"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

@@ -7,7 +7,7 @@
     tools:context=".Activity.SingUpNameActivity">
 
     <TextView
-        android:id="@+id/storyTextView"
+        android:id="@+id/story_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/type_name"
@@ -17,16 +17,16 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
-        android:id="@+id/nameInputEditText"
+        android:id="@+id/name_input_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/type_name"
         android:background="@drawable/rounded_edittext"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/storyTextView"/>
+        app:layout_constraintTop_toBottomOf="@+id/story_textview"/>
 
     <Button
-        android:id="@+id/nameSendButton"
+        android:id="@+id/name_send_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

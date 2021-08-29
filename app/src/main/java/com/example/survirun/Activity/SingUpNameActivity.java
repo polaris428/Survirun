@@ -32,7 +32,7 @@ public class SingUpNameActivity extends AppCompatActivity {
         binding = ActivitySingUpNameBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         story= (String) getText(R.string.story_name);
-        binding.nameInputEditText.addTextChangedListener(new TextWatcher() {
+        binding.nameInputEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -49,7 +49,7 @@ public class SingUpNameActivity extends AppCompatActivity {
             }
         });
         binding.nameSendButton.setOnClickListener(v -> {
-            name=binding.nameInputEditText.getText().toString();
+            name=binding.nameInputEdittext.getText().toString();
             String uid=FirebaseAuth.getInstance().getUid();
             Log.d("adsf",uid);
             FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).child("name").setValue(name).addOnSuccessListener(new OnSuccessListener<Void>() {
