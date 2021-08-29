@@ -58,4 +58,8 @@
     <string name="calorie_burning_goal">Calorie Burning Goal</string>
     <string name="test">나는 문어 꿈을 꾸는 문어 꿈속에서는 무엇이든지 될 수 있어 나는 문어 잠을 자는 문어 잠에 드는 순간 여행이 시작되는 거야 높은 산에 올라가면 나는 초록색 문어 장미꽃 밭 숨어들면 나는 빨간색 문어 횡단보도 건너가면 나는 줄무늬 문어 밤하늘을 날아가면 나는 오색 찬란한 문어가 되는 거야 아아아 야 아아아 아아아 깊은 바닷속은 너무 외로워 춥고 어둡고 차갑고 때로는 무섭기도 해 에에에 야 아아아 아아 그래서 나는 매일 꿈을 꿔 이곳은 참 우울해</string>
     <string name="end">END</string>
+    <string name="explanation">Explanation</string>
+    <string name="zombie_mode">Zombie Mode</string>
+    <string name="story_mode">Story Mode</string>
+    <string name="start">Start</string>
 </resources>

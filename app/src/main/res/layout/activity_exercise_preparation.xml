@@ -10,7 +10,7 @@
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="설명"
+        android:text="@string/explanation"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -43,7 +43,7 @@
         app:layout_constraintRight_toLeftOf="@id/storySwitch"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/explanationTextView"
-        android:text="좀비모드"/>
+        android:text="@string/zombie_mode"/>
     <ImageButton
         android:id="@+id/infoStoryButton"
         android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@id/zombieSwitch"
         app:layout_constraintTop_toTopOf="@id/zombieSwitch"
-        android:text="스토리모드"/>
+        android:text="@string/story_mode"/>
     <ImageButton
         android:id="@+id/infoGpsButton"
         android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
         android:id="@+id/exerciseStartButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="시작하기"
+        android:text="@string/start"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
