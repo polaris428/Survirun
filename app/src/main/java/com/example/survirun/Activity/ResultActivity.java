@@ -16,7 +16,7 @@ public class ResultActivity extends AppCompatActivity {
         binding = ActivityResultBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.btnNext.setOnClickListener(v -> {
+        binding.nextButton.setOnClickListener(v -> {
             Intent intent = new Intent(ResultActivity.this, MainActivity.class);
             startActivity(intent);
         });

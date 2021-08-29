@@ -7,7 +7,7 @@
     tools:context=".Activity.ExercisePreparationActivity">
 
     <TextView
-        android:id="@+id/tv"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/explanation"
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/test"
-        app:layout_constraintTop_toBottomOf="@id/tv"
+        app:layout_constraintTop_toBottomOf="@id/textView"
         app:layout_constraintBottom_toTopOf="@id/zombieSwitch"
         android:layout_marginHorizontal="20dp"/>
 

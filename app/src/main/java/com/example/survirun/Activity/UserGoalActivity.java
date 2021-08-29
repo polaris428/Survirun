@@ -30,15 +30,15 @@ public class UserGoalActivity extends AppCompatActivity {
         String m = String.valueOf(time%60);
         binding.calorieTextView.setText(String.valueOf(calorie));
         binding.timeTextView.setText(h+"h "+m+"m");
-        binding.tvKm.setText(String.valueOf(km));
+        binding.kmTextView.setText(String.valueOf(km));
 
-        binding.btnBack.setOnClickListener(v -> {
+        binding.backButton.setOnClickListener(v -> {
             Intent intent = new Intent(UserGoalActivity.this, MainActivity.class);
             startActivity(intent);
         });
 
 
-        binding.btnRetouch.setOnClickListener(v -> {
+        binding.retouchButton.setOnClickListener(v -> {
             Intent intent = new Intent(UserGoalActivity.this, UserGoalModifyActivity.class);
             startActivity(intent);
         });

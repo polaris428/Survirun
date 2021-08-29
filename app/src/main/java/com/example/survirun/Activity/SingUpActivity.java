@@ -37,6 +37,7 @@ public class SingUpActivity extends AppCompatActivity {
     private final int GET_GALLERY_IMAGE = 200;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,7 @@ public class SingUpActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
 
-        binding.idinput.addTextChangedListener(new TextWatcher() {
+        binding.idInputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -54,12 +55,12 @@ public class SingUpActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String emile = binding.idinput.getText().toString();
+                String emile = binding.idInputEditText.getText().toString();
                 if (emile.indexOf("@") != -1) {
-                    binding.idtext.setVisibility(View.INVISIBLE);
+                    binding.idErrorTextView.setVisibility(View.INVISIBLE);
                     emailtrue = true;
                 } else {
-                    binding.idtext.setVisibility(View.VISIBLE);
+                    binding.idErrorTextView.setVisibility(View.VISIBLE);
                     emailtrue = false;
                 }
             }
@@ -71,22 +72,21 @@ public class SingUpActivity extends AppCompatActivity {
         });
 
 
-        binding.pawinput2.addTextChangedListener(new TextWatcher() {
+        binding.pawCheckEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String p = binding.pawinput1.getText().toString();
-                String p1 = binding.pawinput2.getText().toString();
+                String p = binding.pawInputEditText.getText().toString();
+                String p1 = binding.pawCheckEditText.getText().toString();
                 if (p.equals(p1)) {
-                    binding.pwetext.setVisibility(View.INVISIBLE);
+                    binding.pawErrorTextView.setVisibility(View.INVISIBLE);
                     pawtrue = true;
                     Log.d("문자", p + p1);
                 } else {
-                    binding.pwetext.setVisibility(View.VISIBLE);
+                    binding.pawErrorTextView.setVisibility(View.VISIBLE);
                     pawtrue = false;
                 }
             }
@@ -97,14 +97,14 @@ public class SingUpActivity extends AppCompatActivity {
             }
         });
 
-        binding.joinbtn.setOnClickListener(new View.OnClickListener() {
+        binding.signUpButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                if (pawtrue && emailtrue ) {
-                    email = binding.idinput.getText().toString().trim();
-                    pwe = binding.pawinput1.getText().toString().trim();
+                if (pawtrue && emailtrue) {
+                    email = binding.idInputEditText.getText().toString().trim();
+                    pwe = binding.pawInputEditText.getText().toString().trim();
 
 
                     firebaseAuth.createUserWithEmailAndPassword(email, pwe)
@@ -120,26 +120,25 @@ public class SingUpActivity extends AppCompatActivity {
                                         String uid = task.getResult().getUser().getUid();
 
 
+                                        UserModel userModel = new UserModel();
+                                        userModel.id = id;
 
-                                                UserModel userModel = new UserModel();
-                                                userModel.id=id;
+                                        userModel.uid = uid;
+                                        userModel.todayExerciseTime = 0;
+                                        userModel.todayKm = 0.00;
+                                        userModel.todayCalorie = 0;
 
-                                                userModel.uid=uid;
-                                                userModel.todayExerciseTime=0;
-                                                userModel.todayKm=0.00;
-                                                userModel.todayCalorie=0;
-
-                                                FirebaseDatabase.getInstance().getReference().child("Userid").child(id).setValue(uid);
-                                                FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Intent intent = new Intent(SingUpActivity.this, SingUpNameActivity.class);
-                                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                                        startActivity(intent);
-                                                        finish();
-                                                    }
-                                                });
-                                            } else {
+                                        FirebaseDatabase.getInstance().getReference().child("Userid").child(id).setValue(uid);
+                                        FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Intent intent = new Intent(SingUpActivity.this, SingUpNameActivity.class);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        });
+                                    } else {
                                         Toast.makeText(SingUpActivity.this, R.string.sign_up_error, Toast.LENGTH_SHORT).show();
                                         return;
                                     }
@@ -152,22 +151,13 @@ public class SingUpActivity extends AppCompatActivity {
             }
         });
     }
-    public void login(){
+
+    public void login() {
         SharedPreferences sharedPreferences = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
         SharedPreferences.Editor editor = sharedPreferences.edit(); //sharedPreferences를 제어할 editor를 선언
         editor.putString("id", id);
         editor.putString("pwe", pwe);
         editor.putString("email", email);
-
         editor.commit();
-
-
-
-
     }
-
-
-
-
-
 }

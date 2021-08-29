@@ -43,8 +43,8 @@ public class SingUpProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding=ActivitySingUpProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-        binding.profile.setBackground(new ShapeDrawable(new OvalShape()));
-        binding.profile.setClipToOutline(true);
+        binding.profileImageView.setBackground(new ShapeDrawable(new OvalShape()));
+        binding.profileImageView.setClipToOutline(true);
 
         String story= name+(String) getText(R.string.story_profile);
         Handler animationCompleteCallBack = new Handler(msg -> {
@@ -53,13 +53,13 @@ public class SingUpProfileActivity extends AppCompatActivity {
         });
 
 
-        binding.profile.setOnClickListener(v -> {
+        binding.profileImageView.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent. setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             startActivityForResult(intent, GET_GALLERY_IMAGE);
         });
 
-        binding.next.setOnClickListener(v -> {
+        binding.nextButton.setOnClickListener(v -> {
             if(selectedImageUri!=null) {
                 FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(selectedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -94,7 +94,7 @@ public class SingUpProfileActivity extends AppCompatActivity {
 
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
-            Glide.with(getApplicationContext()).load(selectedImageUri).into(binding.profile);
+            Glide.with(getApplicationContext()).load(selectedImageUri).into(binding.profileImageView);
         }
     }
 }
