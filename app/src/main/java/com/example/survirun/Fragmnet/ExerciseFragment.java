@@ -95,7 +95,7 @@ public class ExerciseFragment extends Fragment {
     void  ExerciseList(){
         switch (count){
             case 1:{
-                binding.exerciseTypeTextView.setText(R.string.pace_goal);
+                binding.exerciseTypeTextview.setText(R.string.pace_goal);
                 mList=new ArrayList<>();
                 UpData(getString(R.string.walking_lightly),30,0);
                 UpData(getString(R.string.walking_steadily),50,0);
@@ -148,7 +148,7 @@ public class ExerciseFragment extends Fragment {
 
     }
     void ListChange(String title){
-        binding.exerciseTypeTextView.setText(title);
+        binding.exerciseTypeTextview.setText(title);
         mList.clear();
         ExerciseListRecyclerViewAdapter exerciseListRecyclerViewAdapter =new ExerciseListRecyclerViewAdapter(mList);
         binding.recyclerView.setAdapter(exerciseListRecyclerViewAdapter);

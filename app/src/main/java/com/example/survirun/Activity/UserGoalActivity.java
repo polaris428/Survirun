@@ -28,9 +28,9 @@ public class UserGoalActivity extends AppCompatActivity {
 
         String h = String.valueOf(time/60);
         String m = String.valueOf(time%60);
-        binding.calorieTextView.setText(String.valueOf(calorie));
-        binding.timeTextView.setText(h+"h "+m+"m");
-        binding.kmTextView.setText(String.valueOf(km));
+        binding.calorieTextview.setText(String.valueOf(calorie));
+        binding.timeTextview.setText(h+"h "+m+"m");
+        binding.kmTextview.setText(String.valueOf(km));
 
         binding.backButton.setOnClickListener(v -> {
             Intent intent = new Intent(UserGoalActivity.this, MainActivity.class);

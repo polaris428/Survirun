@@ -30,63 +30,63 @@ public class UserGoalModifyActivity extends AppCompatActivity {
         int time = sf.getInt("time", 60);
         int km = sf.getInt("km", 5);
 
-        binding.etCalorie.setText(String.valueOf(calorie));
-        binding.etH.setText(String.valueOf(time/60));
-        binding.etM.setText(String.valueOf(time%60));
-        binding.etKm.setText(String.valueOf(km));
+        binding.calorieEdittext.setText(String.valueOf(calorie));
+        binding.hourEdittext.setText(String.valueOf(time/60));
+        binding.minuteEdittext.setText(String.valueOf(time%60));
+        binding.kmEdittext.setText(String.valueOf(km));
 
-        binding.etH.addTextChangedListener(new TextWatcher() {
+        binding.hourEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    if(Integer.parseInt(binding.etH.getText().toString())>23) binding.etH.setText(String.valueOf(23));
+                    if(Integer.parseInt(binding.hourEdittext.getText().toString())>23) binding.hourEdittext.setText(String.valueOf(23));
                 } catch (Exception e) {
 
                 }
             }
             @Override
             public void afterTextChanged(Editable s) {
-                if(binding.etH.getText().toString().replace(" ", "").equals("")) isTimeH = false;
+                if(binding.hourEdittext.getText().toString().replace(" ", "").equals("")) isTimeH = false;
                 else isTimeH = true;
             }
         });
-        binding.etM.addTextChangedListener(new TextWatcher() {
+        binding.minuteEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    if(Integer.parseInt(binding.etM.getText().toString())>59) binding.etM.setText(String.valueOf(59));
+                    if(Integer.parseInt(binding.minuteEdittext.getText().toString())>59) binding.minuteEdittext.setText(String.valueOf(59));
                 } catch (Exception e) {
                 }
             }
             @Override
             public void afterTextChanged(Editable s) {
-                if(binding.etM.getText().toString().replace(" ", "").equals("")) isTimeM = false;
+                if(binding.minuteEdittext.getText().toString().replace(" ", "").equals("")) isTimeM = false;
                 else isTimeM = true;
             }
         });
-        binding.etKm.addTextChangedListener(new TextWatcher() {
+        binding.kmEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                if(binding.etKm.getText().toString().replace(" ", "").equals("")) isKm = false;
+                if(binding.kmEdittext.getText().toString().replace(" ", "").equals("")) isKm = false;
                 else isKm = true;
             }
         });
 
-        binding.btnSave.setOnClickListener(v -> {
-            if(binding.etCalorie.getText().toString().replace(" ", "").equals("")) isCalorie = false;
+        binding.saveButton.setOnClickListener(v -> {
+            if(binding.calorieEdittext.getText().toString().replace(" ", "").equals("")) isCalorie = false;
             else isCalorie = true;
             if(isCalorie&&isTimeH&&isTimeM&&isKm){
-                int inputCalorie = Integer.parseInt(binding.etCalorie.getText().toString());
-                int inputTime = Integer.parseInt(binding.etH.getText().toString())*60+Integer.parseInt(binding.etM.getText().toString());
-                int inputKm = Integer.parseInt(binding.etKm.getText().toString());
+                int inputCalorie = Integer.parseInt(binding.calorieEdittext.getText().toString());
+                int inputTime = Integer.parseInt(binding.hourEdittext.getText().toString())*60+Integer.parseInt(binding.minuteEdittext.getText().toString());
+                int inputKm = Integer.parseInt(binding.kmEdittext.getText().toString());
                 SharedPreferences.Editor editor= sf.edit();
                 editor.putInt("calorie", inputCalorie);
                 editor.putInt("time", inputTime);
@@ -100,7 +100,7 @@ public class UserGoalModifyActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), R.string.fill_error, Toast.LENGTH_SHORT).show();
             }
         });
-        binding.btnBack.setOnClickListener(v -> {
+        binding.backButton.setOnClickListener(v -> {
             Intent intent = new Intent(UserGoalModifyActivity.this, UserGoalActivity.class);
             startActivity(intent);
         });
