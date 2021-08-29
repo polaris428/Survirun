@@ -50,16 +50,38 @@ public class ExercisePreparationActivity extends AppCompatActivity {
         });
         binding.zombieSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             isCheckedZombie = isChecked;
-
-        });
-
-        binding.exerciseStartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ExercisePreparationActivity.this, MapActivity.class);
-                startActivity(intent);
+            if(isChecked){
+                binding.storySwitch.setChecked(false);
+                binding.gpsSwitch.setChecked(false);
+                binding.noSwitch.setChecked(false);
             }
         });
+        binding.storySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            isCheckedStory = isChecked;
+            if(isChecked){
+                binding.zombieSwitch.setChecked(false);
+                binding.gpsSwitch.setChecked(false);
+                binding.noSwitch.setChecked(false);
+            }
+        });
+        binding.gpsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            isCheckedGPS = isChecked;
+            if(isChecked){
+                binding.zombieSwitch.setChecked(false);
+                binding.storySwitch.setChecked(false);
+                binding.noSwitch.setChecked(false);
+            }
+        });
+        binding.noSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            isCheckedNo = isChecked;
+            if(isChecked){
+                binding.zombieSwitch.setChecked(false);
+                binding.storySwitch.setChecked(false);
+                binding.gpsSwitch.setChecked(false);
+            }
+        });
+        binding.exerciseStartButton.setOnClickListener(v -> {
 
+        });
     }
 }
