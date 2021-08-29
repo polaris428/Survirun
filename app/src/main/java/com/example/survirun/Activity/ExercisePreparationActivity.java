@@ -12,9 +12,9 @@ import android.widget.ImageButton;
 import android.widget.Switch;
 
 import com.example.survirun.ExplanationActivity;
-import com.example.survirun.R;
 import com.example.survirun.databinding.ActivityExercisePreparationBinding;
-import com.example.survirun.databinding.ActivityLoginBinding;
+
+import java.util.ArrayList;
 
 public class ExercisePreparationActivity extends AppCompatActivity {
     ActivityExercisePreparationBinding binding;
@@ -81,7 +81,14 @@ public class ExercisePreparationActivity extends AppCompatActivity {
             }
         });
         binding.exerciseStartButton.setOnClickListener(v -> {
-
+            ArrayList<Integer> modeList = new ArrayList();
+            if(isCheckedZombie)modeList.add(MapActivity.ZOMBIE_MODE);
+            else if(isCheckedStory) modeList.add(MapActivity.STORY_MODE);
+            else modeList.add(MapActivity.DEFAULT_MODE);
+            Intent i = new Intent(ExercisePreparationActivity.this, MapActivity.class);
+            i.putExtra("mode", modeList);
+            Log.d("asdf", String.valueOf(modeList));
+            startActivity(i);
         });
     }
 }
