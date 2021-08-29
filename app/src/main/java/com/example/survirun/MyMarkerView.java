@@ -1,9 +1,7 @@
 package com.example.survirun;
 
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.os.Bundle;
+import android.content.Context;;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.components.MarkerView;
