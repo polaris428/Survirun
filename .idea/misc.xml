@@ -3,10 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Survirun/app/src/main/res/drawable/rounded_btn.xml" value="0.20208333333333334" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_exercise_preparation.xml" value="0.25364583333333335" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_login.xml" value="0.24947916666666667" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_main.xml" value="0.27708333333333335" />
-        <entry key="..\:/Survirun/app/src/main/res/layout/activity_map.xml" value="0.2" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/activity_map.xml" value="0.16" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_my_marker_view.xml" value="0.2760416666666667" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_sing_up.xml" value="0.2765625" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_sing_up_name.xml" value="0.2765625" />
