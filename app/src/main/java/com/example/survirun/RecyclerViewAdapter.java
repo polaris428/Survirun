@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ExerciseData;
 import com.example.survirun.Activity.ExercisePreparationActivity;
-import com.example.survirun.Activity.MainActivity;
-import com.example.survirun.Fragmnet.ExerciseFragment;
 
 import java.util.ArrayList;
 
@@ -26,7 +24,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemexercise, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.iteme_xercise, parent, false);
         RecyclerViewAdapter.ViewHolder viewHolder = new RecyclerViewAdapter.ViewHolder(itemView);
 
         return viewHolder;
