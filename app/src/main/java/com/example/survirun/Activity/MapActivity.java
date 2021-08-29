@@ -63,12 +63,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     private static final int DEFAULT_KCAL_WEIGHT = 80;
 
-    private static final int ZOMBIE_CREATE_MINUTES = 1;
+    private static final int ZOMBIE_CREATE_MINUTES = 3;
+    private static final int STORY_READ_MINUTES = 10;
+    public static int HP = 100;
+    public static int minusHp = 25;
 
     public static boolean isZombieCreating = true;
 
     public static final int DEFAULT_MODE = 0;
     public static final int ZOMBIE_MODE = 1;
+    public static final int STORY_MODE = 2;
 
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     public static GoogleMap mMap = null;
@@ -90,8 +94,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public static boolean isRunning = true; //일시정지시 false로
     private boolean isFirst = false;
     private Thread timeThread = null;
-    private ActivityMapBinding binding;
-    private int CURRENT_MODE;
+    public static ActivityMapBinding binding;
+    private ArrayList<Integer> CURRENT_MODE;
+
 
     public static SupportMapFragment mapFragment;
 
@@ -106,9 +111,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         View view = binding.getRoot();
         setContentView(view);
 
-
-        CURRENT_MODE = getIntent().getIntExtra("mode", DEFAULT_MODE);
-
+        CURRENT_MODE = getIntent().getIntegerArrayListExtra("mode");
 
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -260,7 +263,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     public void stop() {
         timeThread.interrupt();
-        stopZombie();
+        if(CURRENT_MODE.contains(ZOMBIE_MODE)) {
+            stopZombie();
+        }
+
 
         List<LatLng> list = polylineOptions.getPoints();
         LatLng leftTopLatLng = list.get(0), rightBottomLatLng = list.get(0);
@@ -542,7 +548,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         String time1 = format1.format(t);
         StorageReference imgRef = FirebaseStorage.getInstance().getReference().child(uid+"/"+time1);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        mapImg.compress(Bitmap.CompressFormat.JPEG,100, baos);
+        mapImg.compress(Bitmap.CompressFormat.JPEG,50, baos);
         byte[] d = baos.toByteArray();
         if (uid != null) {
             FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(scoreModel);
@@ -577,9 +583,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 int min = msg.arg1 / 60;
                 int hour = msg.arg1 / 3600;
                 timeToSec = msg.arg1;
-                if (CURRENT_MODE == DEFAULT_MODE) {
+                if (CURRENT_MODE.contains(DEFAULT_MODE)) {
                     if (isRunning) {
-                        if ((timeToSec / 60) % 3 == 0 && timeToSec != 0) {
+                        if ((timeToSec / 60) % 3 == 0 && timeToSec%60 == 0) {
                             String d = String.format(getString(R.string.tts_type), (int) kcal, walkingDistance / 1000.0, hour, min, sec);
                             playTTS(d);
                         }
@@ -589,16 +595,31 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         String str = String.format(getString(R.string.pause_text) + "%02d:%02d:%02d", hour, min, sec);
                         binding.pauseText.setText(str);
                     }
-                } else if (CURRENT_MODE == ZOMBIE_MODE) {
+                } else if (CURRENT_MODE.contains(ZOMBIE_MODE)) {
                     if (isRunning) {
-                        if ((timeToSec / 60) % 3 == 0 && timeToSec != 0) {
+                        if ((timeToSec / 60) % 3 == 0 && timeToSec%60 != 0) {
                             String d = String.format(getString(R.string.tts_type), (int) kcal, walkingDistance / 1000.0, hour, min, sec);
                             playTTS(d);
                         }
                         String str = String.format("%02d:%02d:%02d", hour, min, sec);
                         binding.textviewExerciseTime.setText(str);
-                        if ((timeToSec / 60) % ZOMBIE_CREATE_MINUTES == 0 && timeToSec != 0 && isZombieCreating) {
+                        if ((timeToSec / 60) % ZOMBIE_CREATE_MINUTES == 0 && timeToSec%60 == 0 && isZombieCreating) {
                             createZombie();
+                        }
+                    } else {
+                        String str = String.format(getString(R.string.pause_text) + "%02d:%02d:%02d", hour, min, sec);
+                        binding.pauseText.setText(str);
+                    }
+                } else if (CURRENT_MODE.contains(STORY_MODE)) {
+                    if (isRunning) {
+                        if ((timeToSec / 60) % 3 == 0 && timeToSec%60 == 0) {
+                            String d = String.format(getString(R.string.tts_type), (int) kcal, walkingDistance / 1000.0, hour, min, sec);
+                            playTTS(d);
+                        }
+                        String str = String.format("%02d:%02d:%02d", hour, min, sec);
+                        binding.textviewExerciseTime.setText(str);
+                        if((timeToSec / 60) % STORY_READ_MINUTES == 0 && timeToSec%60 == 0) {
+                            readStory();
                         }
                     } else {
                         String str = String.format(getString(R.string.pause_text) + "%02d:%02d:%02d", hour, min, sec);
@@ -612,6 +633,31 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         }
     };
+
+    public static void minusHPAndCheck() {
+        MapActivity.HP -= MapActivity.minusHp;
+        updateHpUI();
+        if(HP <= 0 ){
+            stopZombie();
+            //종료하고 싶으면 stop();
+        }
+    }
+
+    @MainThread
+    public static void updateHpUI() {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                binding.progress2.setProgress(HP);
+            }
+        });
+    }
+
+
+    private void readStory() {
+        /* Write Story to read */
+        /* playTTS(String d) */
+    }
 
     public class timeThread implements Runnable {
         @Override
