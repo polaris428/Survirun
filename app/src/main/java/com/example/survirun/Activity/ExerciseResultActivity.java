@@ -28,7 +28,7 @@ public class ExerciseResultActivity extends AppCompatActivity {
         int min = timeToSec / 60;
         int hour = timeToSec / 3600;
         binding.endTime.setText(String.format("%d:%d:%d",hour,min,sec));
-        binding.btnGoMain.setOnClickListener(new View.OnClickListener() {
+        binding.goMainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ExerciseResultActivity.this, MainActivity.class));

@@ -7,99 +7,99 @@
     tools:context=".Activity.ExercisePreparationActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/explanation"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/explanationTextView"/>
+        app:layout_constraintBottom_toTopOf="@id/explanation_textview"/>
 
     <TextView
-        android:id="@+id/explanationTextView"
+        android:id="@+id/explanation_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/test"
-        app:layout_constraintTop_toBottomOf="@id/textView"
-        app:layout_constraintBottom_toTopOf="@id/zombieSwitch"
+        app:layout_constraintTop_toBottomOf="@id/textview"
+        app:layout_constraintBottom_toTopOf="@id/zombie_switch"
         android:layout_marginHorizontal="20dp"/>
 
     <ImageButton
-        android:id="@+id/infoZombieButton"
+        android:id="@+id/info_zombie_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
         android:src="@drawable/ic_information"
         android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/zombieSwitch"
-        app:layout_constraintRight_toLeftOf="@id/zombieSwitch"
-        app:layout_constraintTop_toTopOf="@id/zombieSwitch" />
+        app:layout_constraintBottom_toBottomOf="@id/zombie_switch"
+        app:layout_constraintRight_toLeftOf="@id/zombie_switch"
+        app:layout_constraintTop_toTopOf="@id/zombie_switch" />
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/zombieSwitch"
+        android:id="@+id/zombie_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/storySwitch"
+        app:layout_constraintRight_toLeftOf="@id/story_switch"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/explanationTextView"
+        app:layout_constraintTop_toBottomOf="@id/explanation_textview"
         android:text="@string/zombie_mode"/>
     <ImageButton
-        android:id="@+id/infoStoryButton"
+        android:id="@+id/info_story_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_information"
         android:background="@color/transparent"
         android:layout_marginEnd="10dp"
-        app:layout_constraintTop_toTopOf="@id/storySwitch"
-        app:layout_constraintBottom_toBottomOf="@id/storySwitch"
-        app:layout_constraintRight_toLeftOf="@id/storySwitch"/>
+        app:layout_constraintTop_toTopOf="@id/story_switch"
+        app:layout_constraintBottom_toBottomOf="@id/story_switch"
+        app:layout_constraintRight_toLeftOf="@id/story_switch"/>
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/storySwitch"
+        android:id="@+id/story_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/zombieSwitch"
-        app:layout_constraintTop_toTopOf="@id/zombieSwitch"
+        app:layout_constraintLeft_toRightOf="@id/zombie_switch"
+        app:layout_constraintTop_toTopOf="@id/zombie_switch"
         android:text="@string/story_mode"/>
     <ImageButton
-        android:id="@+id/infoGpsButton"
+        android:id="@+id/info_gps_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
         android:src="@drawable/ic_information"
         android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/gpsSwitch"
-        app:layout_constraintRight_toLeftOf="@id/gpsSwitch"
-        app:layout_constraintTop_toTopOf="@id/gpsSwitch" />
+        app:layout_constraintBottom_toBottomOf="@id/gps_switch"
+        app:layout_constraintRight_toLeftOf="@id/gps_switch"
+        app:layout_constraintTop_toTopOf="@id/gps_switch" />
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/gpsSwitch"
+        android:id="@+id/gps_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/noSwitch"
-        app:layout_constraintTop_toBottomOf="@id/zombieSwitch"
+        app:layout_constraintRight_toLeftOf="@id/no_switch"
+        app:layout_constraintTop_toBottomOf="@id/zombie_switch"
         android:text="GPS"/>
     <ImageButton
-        android:id="@+id/infoNoButton"
+        android:id="@+id/info_no_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_information"
         android:background="@color/transparent"
         android:layout_marginEnd="10dp"
-        app:layout_constraintTop_toTopOf="@id/noSwitch"
-        app:layout_constraintBottom_toBottomOf="@id/noSwitch"
-        app:layout_constraintRight_toLeftOf="@id/noSwitch"/>
+        app:layout_constraintTop_toTopOf="@id/no_switch"
+        app:layout_constraintBottom_toBottomOf="@id/no_switch"
+        app:layout_constraintRight_toLeftOf="@id/no_switch"/>
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/noSwitch"
+        android:id="@+id/no_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/gpsSwitch"
-        app:layout_constraintTop_toTopOf="@id/gpsSwitch"
+        app:layout_constraintLeft_toRightOf="@id/gps_switch"
+        app:layout_constraintTop_toTopOf="@id/gps_switch"
         android:text="미정"/>
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/exerciseStartButton"
+        android:id="@+id/exercise_start_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/start"
