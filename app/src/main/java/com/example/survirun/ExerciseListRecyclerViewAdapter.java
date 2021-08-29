@@ -14,18 +14,18 @@ import com.example.survirun.Activity.ExercisePreparationActivity;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseListRecyclerViewAdapter.ViewHolder> {
     public ArrayList<ExerciseData> items ;
 
-    public RecyclerViewAdapter(ArrayList<ExerciseData> list) {
+    public ExerciseListRecyclerViewAdapter(ArrayList<ExerciseData> list) {
         items = list ;
     }
 
     @NonNull
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ExerciseListRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.iteme_xercise, parent, false);
-        RecyclerViewAdapter.ViewHolder viewHolder = new RecyclerViewAdapter.ViewHolder(itemView);
+        ExerciseListRecyclerViewAdapter.ViewHolder viewHolder = new ExerciseListRecyclerViewAdapter.ViewHolder(itemView);
 
         return viewHolder;
     }

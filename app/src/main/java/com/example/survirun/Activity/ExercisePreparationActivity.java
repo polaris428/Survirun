@@ -31,17 +31,17 @@ public class ExercisePreparationActivity extends AppCompatActivity {
         Intent intent = new Intent(ExercisePreparationActivity.this, ExplanationActivity.class);
 
         binding.infoZombieButton.setOnClickListener(v -> {
-            intent.putExtra("info", "zombie");
+            intent.putExtra("info", "좀비모드를 킬시 맵에 좀비들이 달려옵니다 ");
             startActivity(intent);
         });
 
         binding.infoStoryButton.setOnClickListener(v -> {
-            intent.putExtra("info", "story");
+            intent.putExtra("info", "스토리 모드를 켤시 운동중 스토리 타운에 도착하면 좀비런의 스토리를 플레이 할 수 있습니다");
             startActivity(intent);
         });
 
         binding.infoGpsButton.setOnClickListener(v -> {
-            intent.putExtra("info", "gps");
+            intent.putExtra("info", "GPS를 킬시 내가 구글맵을 통해 다양한 기능을 제공 받을 수 있습니다 GPS를 끌시 걸음수로 운동을 특정합니다 ");
             startActivity(intent);
         });
         binding.infoNoButton.setOnClickListener(v -> {

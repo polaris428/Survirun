@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.ExerciseData;
 import com.example.survirun.R;
-import com.example.survirun.RecyclerViewAdapter;
+import com.example.survirun.ExerciseListRecyclerViewAdapter;
 import com.example.survirun.databinding.FragmentExerciseBinding;
 
 import java.util.ArrayList;
@@ -86,8 +86,8 @@ public class ExerciseFragment extends Fragment {
             }
         });
 
-        RecyclerViewAdapter recyclerViewAdapter=new RecyclerViewAdapter(mList);
-        binding.recyclerView.setAdapter(recyclerViewAdapter);
+        ExerciseListRecyclerViewAdapter exerciseListRecyclerViewAdapter =new ExerciseListRecyclerViewAdapter(mList);
+        binding.recyclerView.setAdapter(exerciseListRecyclerViewAdapter);
 
         View view = binding.getRoot();
         return view;
@@ -150,8 +150,8 @@ public class ExerciseFragment extends Fragment {
     void ListChange(String title){
         binding.exerciseTypeTextView.setText(title);
         mList.clear();
-        RecyclerViewAdapter recyclerViewAdapter=new RecyclerViewAdapter(mList);
-        binding.recyclerView.setAdapter(recyclerViewAdapter);
+        ExerciseListRecyclerViewAdapter exerciseListRecyclerViewAdapter =new ExerciseListRecyclerViewAdapter(mList);
+        binding.recyclerView.setAdapter(exerciseListRecyclerViewAdapter);
 
     }
 
