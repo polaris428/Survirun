@@ -34,64 +34,65 @@ import java.util.Locale;
 
 public class UserFragment extends Fragment {
     FragmentUserBinding binding;
-    String uid= FirebaseAuth.getInstance().getUid();
+    String uid = FirebaseAuth.getInstance().getUid();
     Date currentTime = Calendar.getInstance().getTime();
 
-    int progress=0;
+    int progress = 0;
     UserModel userModel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentUserBinding.inflate(inflater, container, false);
-        View view=binding.getRoot();
+        View view = binding.getRoot();
         SharedPreferences sf = getContext().getSharedPreferences("goal", MODE_PRIVATE);
         int goalCalorie = sf.getInt("calorie", 400);
         int goalTime = sf.getInt("time", 60);
         int goalkm = sf.getInt("km", 5);
         String date = new SimpleDateFormat("(yy.MM.dd)", Locale.getDefault()).format(currentTime);
-        binding.tvDate.setText(date);
-        List<UserModel> userModels=new ArrayList<>();
+        binding.dateTextview.setText(date);
+        List<UserModel> userModels = new ArrayList<>();
         userModels.clear();
 
         FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                userModel=snapshot.getValue(UserModel.class);
+                userModel = snapshot.getValue(UserModel.class);
                 userModels.add(snapshot.getValue(UserModel.class));
-                binding.kmTextView.setText(userModel.todayKm+"");
-                binding.calorieTextView.setText(userModel.todayCalorie+"");
-                binding.timeTextView.setText(userModel.todayExerciseTime+"");
-                if(goalCalorie/2<userModel.todayCalorie){
-                    progress=progress+25;
+                binding.kmTextview.setText(userModel.todayKm + "");
+                binding.calorieTextview.setText(userModel.todayCalorie + "");
+                binding.timeTextview.setText(userModel.todayExerciseTime + "");
+                if (goalCalorie / 2 < userModel.todayCalorie) {
+                    progress = progress + 25;
                     binding.calorieCardView.setCardBackgroundColor(Color.YELLOW);
                 }
-                if(goalTime/2<userModel.todayExerciseTime){
-                    progress=progress+25;
+                if (goalTime / 2 < userModel.todayExerciseTime) {
+                    progress = progress + 25;
                     binding.exerciseTimeCardView.setCardBackgroundColor(Color.YELLOW);
                 }
-                if(goalkm/2<userModel.todayKm){
-                    progress=progress+25;
+                if (goalkm / 2 < userModel.todayKm) {
+                    progress = progress + 25;
                     binding.kmCardView.setCardBackgroundColor(Color.YELLOW);
                 }
 
-                if(goalCalorie<=userModel.todayCalorie){
-                    progress=progress+8;
+                if (goalCalorie <= userModel.todayCalorie) {
+                    progress = progress + 8;
                     binding.arcProgress.setProgress(progress);
                     binding.calorieCardView.setCardBackgroundColor(Color.GREEN);
                 }
-                if(goalTime<=userModel.todayExerciseTime){
-                    progress=progress+8;
+                if (goalTime <= userModel.todayExerciseTime) {
+                    progress = progress + 8;
                     binding.arcProgress.setProgress(progress);
                     binding.exerciseTimeCardView.setCardBackgroundColor(Color.GREEN);
                 }
-                if(goalkm<=userModel.todayKm){
-                    progress=progress+8;
+                if (goalkm <= userModel.todayKm) {
+                    progress = progress + 8;
                     binding.arcProgress.setProgress(progress);
                     binding.kmCardView.setCardBackgroundColor(Color.GREEN);
                 }
-                if(progress>=99){
-                    progress=100;
+                if (progress >= 99) {
+                    progress = 100;
                     binding.arcProgress.setProgress(progress);
                 }
 
@@ -104,12 +105,12 @@ public class UserFragment extends Fragment {
 
             }
         });
-        binding.btnGoal.setOnClickListener(v ->{
+        binding.goalButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), UserGoalActivity.class);
             startActivity(intent);
         });
 
-        return view ;
+        return view;
     }
 
 }
