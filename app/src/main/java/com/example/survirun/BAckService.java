@@ -26,7 +26,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.survirun.activity.MainActivity;
 
-public class BackgroundService extends Service {
+public class BAckService extends Service implements SensorEventListener {
 
     private static final String TAG = "서비스";
     SensorManager sensorManager;
@@ -82,6 +82,34 @@ public class BackgroundService extends Service {
 
             //현재 노티피케이션 메시지를 포그라운드 서비스의 메시지로 등록
             startForeground(10, notification);
+            // 활동 퍼미션 체크
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
+
+
+            }
+            // 걸음 센서 연결
+            // * 옵션
+            // - TYPE_STEP_DETECTOR:  리턴 값이 무조건 1, 앱이 종료되면 다시 0부터 시작
+            // - TYPE_STEP_COUNTER : 앱 종료와 관계없이 계속 기존의 값을 가지고 있다가 1씩 증가한 값을 리턴
+            //
+            sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+            stepCountSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+
+            // 디바이스에 걸음 센서의 존재 여부 체크
+            if (stepCountSensor == null) {
+                Toast.makeText(this, "No Step Sensor", Toast.LENGTH_SHORT).show();
+            }
+            if (stepCountSensor != null) {
+                // 센서 속도 설정
+                // * 옵션
+                // - SENSOR_DELAY_NORMAL: 20,000 초 딜레이
+                // - SENSOR_DELAY_UI: 6,000 초 딜레이
+                // - SENSOR_DELAY_GAME: 20,000 초 딜레이
+                // - SENSOR_DELAY_FASTEST: 딜레이 없음
+                //
+                sensorManager.registerListener(this, stepCountSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            }
         }
 
         return super.onStartCommand(intent, flags, startId);
@@ -111,5 +139,28 @@ public class BackgroundService extends Service {
         super.onDestroy();
     }
 
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
+
+            if (event.values[0] == 1.0f) {
+                // 센서 이벤트가 발생할때 마다 걸음수 증가
+                currentSteps++;
+                NCBuilder.setContentText("걸음수" + currentSteps);
+                Notification notification = NCBuilder.build();
+
+                //현재 노티피케이션 메시지를 포그라운드 서비스의 메시지로 등록
+                startForeground(10, notification);
+
+            }
+
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
 }
 
