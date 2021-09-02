@@ -55,6 +55,12 @@ public class BackgroundService extends Service {
         Log.d(TAG, "서비스 시작");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            PendingIntent mPendingIntent = PendingIntent.getActivity(
+                    getApplicationContext(),
+                    0, // 보통 default값 0을 삽입
+                    new Intent(getApplicationContext(), MainActivity.class),
+                    PendingIntent.FLAG_UPDATE_CURRENT
+            );
 
 
             NotificationManager NoManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -68,6 +74,7 @@ public class BackgroundService extends Service {
             NCBuilder.setContentTitle("서비스 가동");
             NCBuilder.setContentText("서비스가 가동 중입니다" + currentSteps);
             NCBuilder.setOngoing(true);
+            NCBuilder.setContentIntent(mPendingIntent);
             NCBuilder.setAutoCancel(true);
 
 
