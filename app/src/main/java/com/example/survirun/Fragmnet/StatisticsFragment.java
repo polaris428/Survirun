@@ -3,14 +3,13 @@ package com.example.survirun.Fragmnet;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.survirun.R;
-import com.example.survirun.ViewPagerAdapter;
+import com.example.survirun.Fragmnet.inFragment.ViewPagerAdapter;
 import com.example.survirun.databinding.FragmentStatisticsBinding;
 import com.google.android.material.tabs.TabLayoutMediator;
 

@@ -1,17 +1,12 @@
-package com.example.survirun.Activity;
+package com.example.survirun.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.example.survirun.R;
 import com.example.survirun.databinding.ActivityUserGoalBinding;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class UserGoalActivity extends AppCompatActivity {
     private ActivityUserGoalBinding binding;

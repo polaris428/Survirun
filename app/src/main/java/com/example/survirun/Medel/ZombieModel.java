@@ -1,21 +1,16 @@
 package com.example.survirun.Medel;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.example.survirun.Activity.MapActivity;
-import com.example.survirun.R;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.example.survirun.activity.exercise.MapActivity;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.Map;
 import java.util.Random;
 
 public class ZombieModel {

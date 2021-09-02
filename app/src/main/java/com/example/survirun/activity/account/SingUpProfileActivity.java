@@ -1,10 +1,9 @@
-package com.example.survirun.Activity;
+package com.example.survirun.activity.account;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.ShapeDrawable;
@@ -19,12 +18,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.survirun.R;
 import com.example.survirun.Typewriter;
+import com.example.survirun.activity.exercise.ResultActivity;
 import com.example.survirun.databinding.ActivitySingUpProfileBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
 

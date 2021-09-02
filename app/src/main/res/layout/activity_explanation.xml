@@ -5,7 +5,7 @@
     android:layout_width="300dp"
     android:layout_height="400dp"
     android:layout_gravity="center"
-    tools:context=".ExplanationActivity">
+    tools:context=".activity.ExplanationActivity">
     <TextView
         android:id="@+id/information_textview"
         android:layout_width="wrap_content"

@@ -1,4 +1,4 @@
-package com.example.survirun.Activity;
+package com.example.survirun.activity.account;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,15 +11,14 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.survirun.R;
+import com.example.survirun.activity.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 
 public class SplashActivity extends AppCompatActivity {

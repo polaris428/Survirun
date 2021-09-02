@@ -15,37 +15,37 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Survirun">
         <activity
-            android:name=".Activity.ExerciseResultActivity"
+            android:name=".activity.exercise.ExerciseResultActivity"
             android:exported="true" />
         <activity
-            android:name=".ExplanationActivity"
+            android:name=".activity.ExplanationActivity"
             android:theme="@android:style/Theme.Dialog"></activity>
         <activity
-            android:name=".Activity.ExercisePreparationActivity"
+            android:name=".activity.ExercisePreparationActivity"
             android:exported="true" />
-        <activity android:name=".Activity.ResultActivity" />
+        <activity android:name=".activity.exercise.ResultActivity" />
         <activity android:name=".MyMarkerView" android:exported="true"
             tools:ignore="Instantiatable" />
-        <activity android:name=".Activity.UserGoalModifyActivity" />
-        <activity android:name=".Activity.UserGoalActivity" />
-        <activity android:name=".Activity.MapActivity" />
+        <activity android:name=".activity.UserGoalModifyActivity" />
+        <activity android:name=".activity.UserGoalActivity" />
+        <activity android:name=".activity.exercise.MapActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBcD4zxjZ4BRHDN4xgOhAdG21TQPEtCRG0" />
 
-        <activity android:name=".Activity.SingUpProfileActivity" />
-        <activity android:name=".Activity.SingUpNameActivity" />
-        <activity android:name=".Activity.SingUpActivity" />
-        <activity android:name=".Activity.LoginActivity" />
-        <activity android:name=".Activity.SplashActivity">
+        <activity android:name=".activity.account.SingUpProfileActivity" />
+        <activity android:name=".activity.account.SingUpNameActivity" />
+        <activity android:name=".activity.account.SingUpActivity" />
+        <activity android:name=".activity.account.LoginActivity" />
+        <activity android:name=".activity.account.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".activity.MainActivity" />
     </application>
 
 </manifest>

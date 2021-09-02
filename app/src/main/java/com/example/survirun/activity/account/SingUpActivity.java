@@ -1,4 +1,4 @@
-package com.example.survirun.Activity;
+package com.example.survirun.activity.account;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

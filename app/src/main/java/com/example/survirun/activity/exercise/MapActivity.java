@@ -1,8 +1,7 @@
-package com.example.survirun.Activity;
+package com.example.survirun.activity.exercise;
 
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -13,7 +12,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -50,12 +48,9 @@ import com.google.firebase.storage.StorageReference;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -358,7 +353,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap.snapshot(callback);
         mMap.clear();
 
-        Intent intent = new Intent(MapActivity.this,ExerciseResultActivity.class); //main말고 다른걸로 변경
+        Intent intent = new Intent(MapActivity.this, ExerciseResultActivity.class); //main말고 다른걸로 변경
         intent.putExtra("kcal",(int)kcal);
         intent.putExtra("walkedDistanceToKm", walkingDistance / 1000);
         intent.putExtra("timeToSec",(int) timeToSec);

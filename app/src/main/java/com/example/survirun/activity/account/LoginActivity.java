@@ -1,4 +1,4 @@
-package com.example.survirun.Activity;
+package com.example.survirun.activity.account;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.survirun.R;
+import com.example.survirun.activity.MainActivity;
 import com.example.survirun.databinding.ActivityLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

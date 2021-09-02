@@ -2,8 +2,6 @@ package com.example.survirun.Fragmnet;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import static com.example.survirun.R.color.btn_color;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -16,7 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.survirun.Activity.UserGoalActivity;
+import com.example.survirun.activity.UserGoalActivity;
 import com.example.survirun.Medel.UserModel;
 import com.example.survirun.databinding.FragmentUserBinding;
 import com.google.firebase.auth.FirebaseAuth;

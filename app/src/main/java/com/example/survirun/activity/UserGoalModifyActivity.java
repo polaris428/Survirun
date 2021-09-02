@@ -1,4 +1,4 @@
-package com.example.survirun.Activity;
+package com.example.survirun.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.survirun.R;

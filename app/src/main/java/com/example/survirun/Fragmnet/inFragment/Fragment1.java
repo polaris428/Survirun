@@ -1,6 +1,5 @@
 package com.example.survirun.Fragmnet.inFragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,22 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.survirun.MyMarkerView;
-import com.example.survirun.R;
-
 import com.example.survirun.databinding.Fragment1Binding;
-import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 
 import org.eazegraph.lib.models.BarModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Fragment1 extends Fragment {
     Fragment1Binding binding;

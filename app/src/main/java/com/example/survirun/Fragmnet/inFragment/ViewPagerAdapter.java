@@ -1,4 +1,4 @@
-package com.example.survirun;
+package com.example.survirun.Fragmnet.inFragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

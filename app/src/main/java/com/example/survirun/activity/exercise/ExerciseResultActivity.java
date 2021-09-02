@@ -1,4 +1,4 @@
-package com.example.survirun.Activity;
+package com.example.survirun.activity.exercise;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.survirun.R;
+import com.example.survirun.activity.MainActivity;
 import com.example.survirun.databinding.ActivityExerciseResultBinding;
 
 public class ExerciseResultActivity extends AppCompatActivity {

@@ -1,6 +1,4 @@
-package com.example.survirun;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.survirun.activity;
 
 import android.app.Activity;
 import android.content.Intent;

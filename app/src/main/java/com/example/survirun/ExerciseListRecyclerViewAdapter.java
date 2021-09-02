@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ExerciseData;
-import com.example.survirun.Activity.ExercisePreparationActivity;
+import com.example.survirun.activity.ExercisePreparationActivity;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.survirun.Activity;
+package com.example.survirun.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
