@@ -25,7 +25,7 @@
         <activity
             android:name=".activity.ExercisePreparationActivity"
             android:exported="true" />
-        <activity android:name=".activity.exercise.ResultActivity" />
+        <activity android:name=".activity.account.ResultActivity" />
         <activity android:name=".activity.UserGoalModifyActivity" />
         <activity android:name=".activity.UserGoalActivity" />
         <activity android:name=".activity.exercise.MapActivity" />
