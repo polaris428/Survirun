@@ -26,8 +26,6 @@
             android:name=".activity.ExercisePreparationActivity"
             android:exported="true" />
         <activity android:name=".activity.exercise.ResultActivity" />
-        <activity android:name=".MyMarkerView" android:exported="true"
-            tools:ignore="Instantiatable" />
         <activity android:name=".activity.UserGoalModifyActivity" />
         <activity android:name=".activity.UserGoalActivity" />
         <activity android:name=".activity.exercise.MapActivity" />
