@@ -1,15 +1,23 @@
 package com.example.survirun.activity.exercise;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.survirun.Medel.UserModel;
 import com.example.survirun.R;
 import com.example.survirun.activity.MainActivity;
+import com.example.survirun.databinding.ActivityExercisePreparationBinding;
 import com.example.survirun.databinding.ActivityExerciseResultBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ExerciseResultActivity extends AppCompatActivity {
     private ActivityExerciseResultBinding binding;
@@ -17,7 +25,8 @@ public class ExerciseResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_exercise_result);
+        binding = ActivityExerciseResultBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         int kcal = getIntent().getIntExtra("kcal",0);
         double km = getIntent().getDoubleExtra("walkedDistanceToKm",0);
@@ -35,5 +44,6 @@ public class ExerciseResultActivity extends AppCompatActivity {
                 startActivity(new Intent(ExerciseResultActivity.this, MainActivity.class));
             }
         });
+
     }
 }
