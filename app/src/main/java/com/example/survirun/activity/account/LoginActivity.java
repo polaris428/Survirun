@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
+    FirebaseUser user;
 
     String uid;
     String email;
@@ -68,7 +69,6 @@ public class LoginActivity extends AppCompatActivity {
 
         binding.googleLoginButton.setOnClickListener(v -> {
             signIn();
-            Log.d("asdf", "1");
         });
 
         binding.idEdittext.addTextChangedListener(new TextWatcher() {
@@ -192,7 +192,6 @@ public class LoginActivity extends AppCompatActivity {
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-        Log.d("asdf", "2");
     }
 
     @Override
@@ -204,7 +203,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-            } catch (ApiException ignored) {
+            } catch (ApiException e) {
             }
         }
     }
@@ -216,8 +215,9 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            String uid = user.getUid();
+                            user = firebaseAuth.getCurrentUser();
+                            uid = user.getUid();
+                            //현재있는 유저인지 확인
                             email = user.getEmail();
                             int idx = email.indexOf("@");
                             id = email.substring(0, idx);
@@ -232,12 +232,12 @@ public class LoginActivity extends AppCompatActivity {
                             databaseReference.child("UserProfile").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Intent intent = new Intent(LoginActivity.this, SignUpNameActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                    startActivity(intent);
-                                    finish();
                                 }
                             });
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent);
+                            finish();
                         }
 
                     }
