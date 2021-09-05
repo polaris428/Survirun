@@ -46,6 +46,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -149,8 +150,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     }
                     if (isRunning) {
                         drawActivePolyline();
-                        binding.textviewKcal.setText(addUsedKcal());
                         binding.textviewKm.setText(addMovedDistance());
+                        binding.textviewKcal.setText(addUsedKcal());
                     } else {
                         if (isFirst) {
                             pausePolylineInit();
@@ -336,6 +337,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mid, zoomLv));
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e){
+            Log.d("ERR",e.getMessage());
+        }
+
         GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback()
         {
 

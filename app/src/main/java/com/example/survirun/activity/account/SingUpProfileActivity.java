@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.survirun.R;
 import com.example.survirun.Typewriter;
-import com.example.survirun.activity.exercise.ResultActivity;
 import com.example.survirun.databinding.ActivitySingUpProfileBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
