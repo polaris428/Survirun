@@ -34,9 +34,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBcD4zxjZ4BRHDN4xgOhAdG21TQPEtCRG0" />
 
-        <activity android:name=".activity.account.SingUpProfileActivity" />
-        <activity android:name=".activity.account.SingUpNameActivity" />
-        <activity android:name=".activity.account.SingUpActivity" />
+        <activity android:name=".activity.account.SignUpProfileActivity" />
+        <activity android:name=".activity.account.SignUpNameActivity" />
+        <activity android:name=".activity.account.SignUpActivity" />
         <activity android:name=".activity.account.LoginActivity" />
         <activity android:name=".activity.account.SplashActivity">
             <intent-filter>

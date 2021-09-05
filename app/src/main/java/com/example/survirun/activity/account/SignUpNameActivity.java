@@ -15,13 +15,13 @@ import android.view.View;
 
 import com.example.survirun.R;
 import com.example.survirun.Typewriter;
-import com.example.survirun.databinding.ActivitySingUpNameBinding;
+import com.example.survirun.databinding.ActivitySignUpNameBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class SingUpNameActivity extends AppCompatActivity {
-    ActivitySingUpNameBinding binding;
+public class SignUpNameActivity extends AppCompatActivity {
+    ActivitySignUpNameBinding binding;
     String story;
     String name;
     int i;
@@ -29,7 +29,7 @@ public class SingUpNameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySingUpNameBinding.inflate(getLayoutInflater());
+        binding = ActivitySignUpNameBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         story= (String) getText(R.string.story_name);
         binding.nameInputEdittext.addTextChangedListener(new TextWatcher() {
@@ -55,7 +55,7 @@ public class SingUpNameActivity extends AppCompatActivity {
             FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).child("name").setValue(name).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
-                    Intent intent=new Intent(SingUpNameActivity.this, SingUpProfileActivity.class);
+                    Intent intent=new Intent(SignUpNameActivity.this, SignUpProfileActivity.class);
                     startActivity(intent);
                     finish();
                 }

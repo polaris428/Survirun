@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.account.SingUpNameActivity">
+    tools:context=".activity.account.SignUpNameActivity">
 
     <TextView
         android:id="@+id/story_textview"

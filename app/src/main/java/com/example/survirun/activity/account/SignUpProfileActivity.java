@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.survirun.R;
 import com.example.survirun.Typewriter;
-import com.example.survirun.databinding.ActivitySingUpProfileBinding;
+import com.example.survirun.databinding.ActivitySignUpProfileBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,9 +26,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
 
-public class SingUpProfileActivity extends AppCompatActivity {
+public class SignUpProfileActivity extends AppCompatActivity {
     String name="name";
-    ActivitySingUpProfileBinding binding;
+    ActivitySignUpProfileBinding binding;
     private final int GET_GALLERY_IMAGE = 200;
     Uri selectedImageUri;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -39,7 +39,7 @@ public class SingUpProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivitySingUpProfileBinding.inflate(getLayoutInflater());
+        binding= ActivitySignUpProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         binding.profileImageview.setBackground(new ShapeDrawable(new OvalShape()));
         binding.profileImageview.setClipToOutline(true);
@@ -62,7 +62,7 @@ public class SingUpProfileActivity extends AppCompatActivity {
                 FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(selectedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        Intent intent = new Intent(SingUpProfileActivity.this, ResultActivity.class);
+                        Intent intent = new Intent(SignUpProfileActivity.this, ResultActivity.class);
                         startActivity(intent);
                     }
                 });

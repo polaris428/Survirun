@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.survirun.Medel.UserModel;
 import com.example.survirun.R;
-import com.example.survirun.databinding.ActivitySingUpBinding;
+import com.example.survirun.databinding.ActivitySignUpBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -24,8 +24,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class SingUpActivity extends AppCompatActivity {
-    ActivitySingUpBinding binding;
+public class SignUpActivity extends AppCompatActivity {
+    ActivitySignUpBinding binding;
     String id;
     FirebaseAuth firebaseAuth;
 
@@ -41,7 +41,7 @@ public class SingUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySingUpBinding.inflate(getLayoutInflater());
+        binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -108,13 +108,13 @@ public class SingUpActivity extends AppCompatActivity {
 
 
                     firebaseAuth.createUserWithEmailAndPassword(email, pwe)
-                            .addOnCompleteListener(SingUpActivity.this, new OnCompleteListener<AuthResult>() {
+                            .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         int idx = email.indexOf("@");
                                         id = email.substring(0, idx);
-                                        Log.d("adsaf", " " + email + id + pwe + SingUpActivity.this);
+                                        Log.d("adsaf", " " + email + id + pwe + SignUpActivity.this);
 
                                         login();
                                         String uid = task.getResult().getUser().getUid();
@@ -132,21 +132,21 @@ public class SingUpActivity extends AppCompatActivity {
                                         FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                Intent intent = new Intent(SingUpActivity.this, SingUpNameActivity.class);
+                                                Intent intent = new Intent(SignUpActivity.this, SignUpNameActivity.class);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                                 startActivity(intent);
                                                 finish();
                                             }
                                         });
                                     } else {
-                                        Toast.makeText(SingUpActivity.this, R.string.sign_up_error, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SignUpActivity.this, R.string.sign_up_error, Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                 }
                             });
 
                 } else {
-                    Toast.makeText(SingUpActivity.this, R.string.format_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, R.string.format_error, Toast.LENGTH_SHORT).show();
                 }
             }
         });
