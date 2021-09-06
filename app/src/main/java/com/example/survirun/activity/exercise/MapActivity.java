@@ -293,16 +293,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         LatLng leftTopLatLng = list.get(0), rightBottomLatLng = list.get(0);
         for(LatLng i : list) {
 
-            if(leftTopLatLng.latitude < i.latitude) {
+            if(leftTopLatLng.latitude > i.latitude) {
                 leftTopLatLng = new LatLng(i.latitude, leftTopLatLng.longitude);
             }
-            if(leftTopLatLng.longitude > i.longitude) {
+            if(leftTopLatLng.longitude < i.longitude) {
                 leftTopLatLng = new LatLng(leftTopLatLng.latitude, i.longitude);
             }
-            if(rightBottomLatLng.latitude > i.latitude ) {
+            if(rightBottomLatLng.latitude < i.latitude ) {
                 rightBottomLatLng = new LatLng(i.latitude, rightBottomLatLng.longitude);
             }
-            if(rightBottomLatLng.longitude < i.longitude) {
+            if(rightBottomLatLng.longitude > i.longitude) {
                 rightBottomLatLng = new LatLng(rightBottomLatLng.latitude, i.longitude);
             }
 
@@ -315,20 +315,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         rbl.setLatitude(rightBottomLatLng.latitude);
         rbl.setLongitude(rightBottomLatLng.longitude);
 
-        double d  =ltl.distanceTo(rbl)/1000;
+        double d  =ltl.distanceTo(rbl);
         Log.d(">",""+d);
-        int zoomLv = (int) (25 / (ltl.distanceTo(rbl)/100000));
-        if(d >= 100) {
-            zoomLv = 5;
-        } else if(d >= 50 ){
-            zoomLv = 8;
-        } else if(d >= 25) {
-            zoomLv = 11;
-        }else if(d >= 10) {
-            zoomLv = 14;
-        } else {
-            zoomLv = 17;
-        }
+        int zoomLv = getZoomLevelFromMeters(d);
 
 
 
@@ -358,13 +347,35 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
         mMap.snapshot(callback);
-        mMap.clear();
+        try {
+            Thread.sleep(10);
+        } catch (Exception e){
+            Log.d("ERR",e.getMessage());
+        }
 
         Intent intent = new Intent(MapActivity.this, ExerciseResultActivity.class); //main말고 다른걸로 변경
         intent.putExtra("kcal",(int)kcal);
         intent.putExtra("walkedDistanceToKm", walkingDistance / 1000);
         intent.putExtra("timeToSec",(int) timeToSec);
+        mMap.clear();
+        polylineOptions = new PolylineOptions();
+        pausePolylineOpt = new PolylineOptions();
         startActivity(intent);
+
+    }
+
+    private int getZoomLevelFromMeters(double distanceTo) {
+        int dis = 24576000;
+        int ret = 21;
+        for(int i = 1; i<=21; i++) {
+            if(distanceTo >= dis) {
+                ret = i;
+                break;
+            } else {
+                dis /= 2;
+            }
+        }
+        return ret;
 
     }
 
