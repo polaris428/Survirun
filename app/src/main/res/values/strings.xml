@@ -1,4 +1,5 @@
 <resources>
+    <string name="default_web_client_id" translatable="false">499929011768-2m4fj3m0034dhvajn2jeheq3ebra8qrv.apps.googleusercontent.com</string>
     <string name="app_name">Survirun</string>
     <string name="story_profile">...that\'s a nice name. Please register your photo.</string>
     <!-- TODO: Remove or change this placeholder text -->
