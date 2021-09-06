@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
+    UserModel userModel;
 
     String uid;
     String email;
@@ -149,9 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                                         if (task.isSuccessful()) {//성공했을때
                                             login();
                                             uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                            startActivity(intent);
+                                            intentMain();
                                         } else {
                                             Toast.makeText(LoginActivity.this, R.string.login_error, Toast.LENGTH_SHORT).show();
                                         }
@@ -188,6 +187,13 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("email", email);
         editor.commit();
     }
+    public void loginSf() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
+        SharedPreferences.Editor editor = sharedPreferences.edit(); //sharedPreferences를 제어할 editor를 선언
+        editor.putString("id", id);
+        editor.putString("email", email);
+        editor.commit();
+    }
 
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -217,25 +223,35 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            String uid = user.getUid();
+                            uid = user.getUid();
                             email = user.getEmail();
                             int idx = email.indexOf("@");
                             id = email.substring(0, idx);
                             Log.d("asdf", " " + email + id + LoginActivity.this);
-                            UserModel userModel = new UserModel();
-                            userModel.id = id;
-                            userModel.uid = uid;
-                            userModel.todayExerciseTime = 0;
-                            userModel.todayKm = 0.00;
-                            userModel.todayCalorie = 0;
-                            databaseReference.child("Userid").child(id).setValue(uid);
-                            databaseReference.child("UserProfile").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            databaseReference.child("UserProfile").child(uid).addValueEventListener(new ValueEventListener() {
                                 @Override
-                                public void onSuccess(Void aVoid) {
-                                    Intent intent = new Intent(LoginActivity.this, SignUpNameActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                    startActivity(intent);
-                                    finish();
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(snapshot.getValue()==null){
+                                        newUser();
+                                        databaseReference.child("UserProfile").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Intent intent = new Intent(LoginActivity.this, SignUpNameActivity.class);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        });
+                                    }
+                                    else{
+                                        intentMain();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
                                 }
                             });
                         }
@@ -243,8 +259,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-    public  void newUser(String uid){
-        UserModel userModel = new UserModel();
+    public  void newUser(){
+        userModel = new UserModel();
         userModel.id = id;
         userModel.uid = uid;
         userModel.todayExerciseTime = 0;
@@ -252,6 +268,11 @@ public class LoginActivity extends AppCompatActivity {
         userModel.todayCalorie = 0;
         databaseReference.child("Userid").child(id).setValue(uid);
         databaseReference.child("UserProfile").child(uid).setValue(userModel);
+    }
+    public  void  intentMain(){
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
     }
 
 }
