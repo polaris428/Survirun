@@ -42,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
-    FirebaseUser user;
 
     String uid;
     String email;
@@ -243,6 +242,16 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+    public  void newUser(String uid){
+        UserModel userModel = new UserModel();
+        userModel.id = id;
+        userModel.uid = uid;
+        userModel.todayExerciseTime = 0;
+        userModel.todayKm = 0.00;
+        userModel.todayCalorie = 0;
+        databaseReference.child("Userid").child(id).setValue(uid);
+        databaseReference.child("UserProfile").child(uid).setValue(userModel);
     }
 
 }
