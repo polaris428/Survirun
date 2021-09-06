@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
+    FirebaseUser user;
 
     String uid;
     String email;
@@ -222,20 +223,26 @@ public class LoginActivity extends AppCompatActivity {
                             int idx = email.indexOf("@");
                             id = email.substring(0, idx);
                             Log.d("asdf", " " + email + id + LoginActivity.this);
+                            UserModel userModel = new UserModel();
+                            userModel.id = id;
+                            userModel.uid = uid;
+                            userModel.todayExerciseTime = 0;
+                            userModel.todayKm = 0.00;
+                            userModel.todayCalorie = 0;
+                            databaseReference.child("Userid").child(id).setValue(uid);
+                            databaseReference.child("UserProfile").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Intent intent = new Intent(LoginActivity.this, SignUpNameActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
                         }
 
                     }
                 });
-    }
-    public  void newUser(String uid) {
-        UserModel userModel = new UserModel();
-        userModel.id = id;
-        userModel.uid = uid;
-        userModel.todayExerciseTime = 0;
-        userModel.todayKm = 0.00;
-        userModel.todayCalorie = 0;
-        databaseReference.child("Userid").child(id).setValue(uid);
-        databaseReference.child("UserProfile").child(uid).setValue(userModel);
     }
 
 }
