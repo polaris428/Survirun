@@ -35,6 +35,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class LoginActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     ActivityLoginBinding binding;
@@ -49,6 +52,10 @@ public class LoginActivity extends AppCompatActivity {
     String id;
     String pwe;
     String name;
+
+    int today;
+    int saveDay;
+
     SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +76,12 @@ public class LoginActivity extends AppCompatActivity {
         binding.passwordEdittext.setText(pwe);
         firebaseAuth = FirebaseAuth.getInstance();
         uid = firebaseAuth.getCurrentUser().getUid();
+        saveDay = sf.getInt("day", 0);
+
+        if (today > saveDay) {
+            sf.edit().putInt("day", today).commit();
+            Log.d("asdf", today + "");
+        }
         if (firebaseAuth.getCurrentUser() != null) {
             checkName();
             finish();
@@ -282,6 +295,7 @@ public class LoginActivity extends AppCompatActivity {
                     name = snapshot.getValue().toString();
                     editor.putString("name", name);
                     editor.commit();
+                    getToday();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
@@ -293,6 +307,25 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+    public void getToday() {
+        //오늘 날짜 구하는 함수
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd");
+        String getDay = sdf.format(date);
+        today = Integer.parseInt(getDay);
+        String uid = FirebaseAuth.getInstance().getUid();
+        if (today > saveDay) {
+            UserModel userModel;
+            userModel = new UserModel();
+            userModel.todayExerciseTime = 0;
+            userModel.todayKm = 0.00;
+            userModel.todayCalorie = 0;
+            FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(userModel);
+        }
+
+
     }
 
 }
