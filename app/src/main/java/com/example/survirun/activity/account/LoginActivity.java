@@ -48,13 +48,15 @@ public class LoginActivity extends AppCompatActivity {
     String email;
     String id;
     String pwe;
-
+    String name;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);
+        SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
+        editor = sf.edit();
         email = sf.getString("email", "");
         pwe = sf.getString("pwe", "");
         GoogleSignInOptions gso = new GoogleSignInOptions
@@ -66,6 +68,11 @@ public class LoginActivity extends AppCompatActivity {
         binding.idEdittext.setText(email);
         binding.passwordEdittext.setText(pwe);
         firebaseAuth = FirebaseAuth.getInstance();
+        uid = firebaseAuth.getCurrentUser().getUid();
+        if (firebaseAuth.getCurrentUser() != null) {
+            checkName();
+            finish();
+        }
 
         binding.googleLoginButton.setOnClickListener(v -> {
             signIn();
@@ -139,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (!pwe.equals("") && !id.equals("")) {
                     email = binding.idEdittext.getText().toString().trim();
 
-                    if (email.contains("@") == true) {
+                    if (email.contains("@")== true) {
                         int idx = email.indexOf("@");
                         id = email.substring(0, idx);
                         pwe = binding.passwordEdittext.getText().toString().trim();
@@ -149,8 +156,7 @@ public class LoginActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {//성공했을때
                                             login();
-                                            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                            intentMain();
+                                            checkName();
                                         } else {
                                             Toast.makeText(LoginActivity.this, R.string.login_error, Toast.LENGTH_SHORT).show();
                                         }
@@ -180,16 +186,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login() {
-        SharedPreferences sharedPreferences = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
-        SharedPreferences.Editor editor = sharedPreferences.edit(); //sharedPreferences를 제어할 editor를 선언
         editor.putString("id", id);
         editor.putString("pwe", pwe);
         editor.putString("email", email);
         editor.commit();
     }
-    public void loginSf() {
-        SharedPreferences sharedPreferences = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
-        SharedPreferences.Editor editor = sharedPreferences.edit(); //sharedPreferences를 제어할 editor를 선언
+    public void loginGoogle() {
         editor.putString("id", id);
         editor.putString("email", email);
         editor.commit();
@@ -223,7 +225,6 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            uid = user.getUid();
                             email = user.getEmail();
                             int idx = email.indexOf("@");
                             id = email.substring(0, idx);
@@ -233,20 +234,12 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if(snapshot.getValue()==null){
                                         newUser();
-                                        databaseReference.child("UserProfile").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Intent intent = new Intent(LoginActivity.this, SignUpNameActivity.class);
-                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        });
+                                        databaseReference.child("UserProfile").child(uid).setValue(userModel);
                                     }
                                     else{
-                                        intentMain();
+                                        checkName();
                                     }
-
+                                    loginGoogle();
                                 }
 
                                 @Override
@@ -254,8 +247,9 @@ public class LoginActivity extends AppCompatActivity {
 
                                 }
                             });
+                            updateUI(user);
                         }
-
+                        else updateUI(null);
                     }
                 });
     }
@@ -269,10 +263,36 @@ public class LoginActivity extends AppCompatActivity {
         databaseReference.child("Userid").child(id).setValue(uid);
         databaseReference.child("UserProfile").child(uid).setValue(userModel);
     }
-    public  void  intentMain(){
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            checkName();
+            finish();
+        }
+    }
+    public  void checkName(){
+        databaseReference.child("UserProfile").child(uid).child("name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue()==null){
+                    Intent intent = new Intent(LoginActivity.this, SignUpNameActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
+                }
+                else {
+                    name = snapshot.getValue().toString();
+                    editor.putString("name", name);
+                    editor.commit();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 }
