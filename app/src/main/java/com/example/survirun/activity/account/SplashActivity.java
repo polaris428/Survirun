@@ -42,7 +42,6 @@ public class SplashActivity extends AppCompatActivity {
         SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);
         String email = sf.getString("email", "");
         String pwe = sf.getString("pwe", "");
-        getToday();
         saveDay = sf.getInt("day", 0);
 
         if(today>saveDay){
@@ -56,7 +55,7 @@ public class SplashActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {//성공했을때
-
+                                getToday();
                                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
