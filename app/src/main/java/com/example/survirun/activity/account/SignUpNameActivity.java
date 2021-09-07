@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.example.survirun.R;
@@ -24,14 +26,17 @@ public class SignUpNameActivity extends AppCompatActivity {
     ActivitySignUpNameBinding binding;
     String story;
     String name;
-    int i;
+
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpNameBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-        story= (String) getText(R.string.story_name);
+        SharedPreferences.Editor editor = getSharedPreferences("Login", MODE_PRIVATE).edit();
+
+
+        story = (String) getText(R.string.story_name);
         binding.nameInputEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -49,17 +54,25 @@ public class SignUpNameActivity extends AppCompatActivity {
             }
         });
         binding.nameSendButton.setOnClickListener(v -> {
-            name=binding.nameInputEdittext.getText().toString();
-            String uid=FirebaseAuth.getInstance().getUid();
-            Log.d("adsf",uid);
-            FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).child("name").setValue(name).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void unused) {
-                    Intent intent=new Intent(SignUpNameActivity.this, SignUpProfileActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            });
+            name = binding.nameInputEdittext.getText().toString();
+            String uid = FirebaseAuth.getInstance().getUid();
+            Log.d("adsf", uid);
+            if (name.replace(" ", "").length()==0){
+                Toast.makeText(getApplicationContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).child("name").setValue(name).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Intent intent = new Intent(SignUpNameActivity.this, SignUpProfileActivity.class);
+                        startActivity(intent);
+                        editor.putString("name", name);
+                        editor.commit();
+                        finish();
+                    }
+                });
+            }
+
         });
         Handler animationCompleteCallBack = new Handler(msg -> {
             Log.i("Log", "Animation Completed");
