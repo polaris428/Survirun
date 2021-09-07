@@ -13,12 +13,14 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.survirun.Medel.UserModel;
 import com.example.survirun.R;
 import com.example.survirun.activity.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,6 +29,7 @@ import java.util.Date;
 public class SplashActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     int today;
+    int saveDay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
         String email = sf.getString("email", "");
         String pwe = sf.getString("pwe", "");
         getToday();
-        int saveDay = sf.getInt("day", 0);
+        saveDay = sf.getInt("day", 0);
 
         if(today>saveDay){
             sf.edit().putInt("day",today).commit();
@@ -87,8 +90,17 @@ public class SplashActivity extends AppCompatActivity {
         long now = System.currentTimeMillis();
         Date date = new Date(now);
         SimpleDateFormat sdf = new SimpleDateFormat("dd");
-        String getday = sdf.format(date);
-        today=Integer.parseInt(getday);
+        String getDay = sdf.format(date);
+        today=Integer.parseInt(getDay);
+        String uid=FirebaseAuth.getInstance().getUid();
+        if(today>saveDay){
+            UserModel userModel;
+            userModel = new UserModel();
+            userModel.todayExerciseTime = 0;
+            userModel.todayKm = 0.00;
+            userModel.todayCalorie = 0;
+            FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(userModel);
+        }
 
 
 
