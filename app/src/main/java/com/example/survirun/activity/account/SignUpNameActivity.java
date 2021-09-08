@@ -45,6 +45,9 @@ public class SignUpNameActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (name.replace(" ", "").length()>=1){
+                    binding.nameErrMessage.setVisibility(View.INVISIBLE);
+                }
                 binding.nameSendButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
             }
 
@@ -58,7 +61,7 @@ public class SignUpNameActivity extends AppCompatActivity {
             String uid = FirebaseAuth.getInstance().getUid();
             Log.d("adsf", uid);
             if (name.replace(" ", "").length()==0){
-                Toast.makeText(getApplicationContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
+               binding.nameErrMessage.setVisibility(View.VISIBLE);
             }
             else{
                 FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).child("name").setValue(name).addOnSuccessListener(new OnSuccessListener<Void>() {

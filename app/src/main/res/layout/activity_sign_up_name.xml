@@ -20,11 +20,21 @@
         android:id="@+id/name_input_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:lines = "1"
         android:hint="@string/type_name"
         android:background="@drawable/rounded_edittext"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/story_textview"/>
+    <TextView
+        android:id="@+id/name_err_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="이름을 입력해주세요"
+        android:textColor="#FF0000"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/name_input_edittext">
 
+    </TextView>
     <Button
         android:id="@+id/name_send_button"
         android:layout_width="match_parent"
