@@ -45,7 +45,7 @@ public class SignUpNameActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (name.replace(" ", "").length()>=1){
+                if (s.length()>=1){
                     binding.nameErrMessage.setVisibility(View.INVISIBLE);
                 }
                 binding.nameSendButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
