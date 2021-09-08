@@ -72,8 +72,8 @@ public class LoginActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(LoginActivity.this, gso);
-        binding.idEdittext.setText(email);
-        binding.passwordEdittext.setText(pwe);
+        //binding.idEdittext.setText(email);
+        //binding.passwordEdittext.setText(pwe);
         firebaseAuth = FirebaseAuth.getInstance();
 
         saveDay = sf.getInt("day", 0);

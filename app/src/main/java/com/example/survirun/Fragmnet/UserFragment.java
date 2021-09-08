@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.survirun.UserPageActivity;
 import com.example.survirun.activity.UserGoalActivity;
 import com.example.survirun.Medel.UserModel;
 import com.example.survirun.databinding.FragmentUserBinding;
@@ -52,6 +53,11 @@ public class UserFragment extends Fragment {
         binding.dateTextview.setText(date);
         List<UserModel> userModels = new ArrayList<>();
         userModels.clear();
+
+        binding.userPageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), UserPageActivity.class);
+            startActivity(intent);
+        });
 
         FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
