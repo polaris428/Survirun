@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         binding.idEdittext.setText(email);
         binding.passwordEdittext.setText(pwe);
         firebaseAuth = FirebaseAuth.getInstance();
-        uid = firebaseAuth.getCurrentUser().getUid();
+
         saveDay = sf.getInt("day", 0);
 
         if (today > saveDay) {
@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("asdf", today + "");
         }
         if (firebaseAuth.getCurrentUser() != null) {
+            uid = firebaseAuth.getCurrentUser().getUid();
             checkName();
             finish();
         }
@@ -168,6 +169,7 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {//성공했을때
+                                            uid = firebaseAuth.getCurrentUser().getUid();
                                             login();
                                             checkName();
                                         } else {
@@ -238,6 +240,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
+                            uid = firebaseAuth.getCurrentUser().getUid();
                             email = user.getEmail();
                             int idx = email.indexOf("@");
                             id = email.substring(0, idx);
@@ -295,7 +298,6 @@ public class LoginActivity extends AppCompatActivity {
                     name = snapshot.getValue().toString();
                     editor.putString("name", name);
                     editor.commit();
-                    getToday();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
@@ -308,14 +310,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    public void getToday() {
+    /*public void getToday() {
         //오늘 날짜 구하는 함수
         long now = System.currentTimeMillis();
         Date date = new Date(now);
         SimpleDateFormat sdf = new SimpleDateFormat("dd");
         String getDay = sdf.format(date);
         today = Integer.parseInt(getDay);
-        String uid = FirebaseAuth.getInstance().getUid();
         if (today > saveDay) {
             UserModel userModel;
             userModel = new UserModel();
@@ -326,6 +327,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-    }
+    }*/
 
 }

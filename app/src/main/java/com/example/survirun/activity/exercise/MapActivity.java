@@ -52,6 +52,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -69,6 +70,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public static final int DEFAULT_MODE = 0;
     public static final int ZOMBIE_MODE = 1;
     public static final int STORY_MODE = 2;
+    public int storyUserSelect = -1;
 
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     public static GoogleMap mMap = null;
@@ -573,6 +575,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
             }
         }
+        if(requestCode == 1000) {
+            if(resultCode==RESULT_OK) {
+                storyUserSelect = data.getIntExtra("result",-1);
+            } else {
+                storyUserSelect = -1;
+            }
+            afterReadStory();
+        }
     }
 
     public void sendDataToFirebase(int kcal, double km, int time, Bitmap mapImg) {
@@ -697,7 +707,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void readStory() {
         /* Write Story to read */
         /* playTTS(String d) */
+        Intent u = new Intent(MapActivity.this, ExerciseStoryActivity.class);
+        u.putExtra("storyBody","TEST STORY");
+        u.putExtra("negative","NO");
+        u.putExtra("positive","YES");
+        startActivityForResult(u,1000);
     }
+
+    private void afterReadStory() {
+
+    }
+
+
 
     public class timeThread implements Runnable {
         @Override

@@ -62,4 +62,5 @@
     <string name="zombie_mode">Zombie Mode</string>
     <string name="story_mode">Story Mode</string>
     <string name="start">Start</string>
+    <string name="story">Story #</string>
 </resources>
