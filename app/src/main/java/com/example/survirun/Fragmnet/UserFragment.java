@@ -64,34 +64,34 @@ public class UserFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userModel = snapshot.getValue(UserModel.class);
                 userModels.add(snapshot.getValue(UserModel.class));
-                String km=String.format("%.2f",userModel.todayKm);
+                String km=String.format("%.2f",userModel.score.todayKm);
                 binding.kmTextview.setText(km);
-                binding.calorieTextview.setText(userModel.todayCalorie + "");
-                binding.timeTextview.setText(userModel.todayExerciseTime + "");
-                if (goalCalorie / 2 < userModel.todayCalorie) {
+                binding.calorieTextview.setText(userModel.score.todayCalorie + "");
+                binding.timeTextview.setText(userModel.score.todayExerciseTime + "");
+                if (goalCalorie / 2 < userModel.score.todayCalorie) {
                     progress = progress + 25;
                     binding.calorieCardView.setCardBackgroundColor(Color.YELLOW);
                 }
-                if (goalTime / 2 < userModel.todayExerciseTime) {
+                if (goalTime / 2 < userModel.score.todayExerciseTime) {
                     progress = progress + 25;
                     binding.exerciseTimeCardView.setCardBackgroundColor(Color.YELLOW);
                 }
-                if (goalkm / 2 < userModel.todayKm) {
+                if (goalkm / 2 < userModel.score.todayKm) {
                     progress = progress + 25;
                     binding.kmCardView.setCardBackgroundColor(Color.YELLOW);
                 }
 
-                if (goalCalorie <= userModel.todayCalorie) {
+                if (goalCalorie <= userModel.score.todayCalorie) {
                     progress = progress + 8;
                     binding.arcProgress.setProgress(progress);
                     binding.calorieCardView.setCardBackgroundColor(Color.GREEN);
                 }
-                if (goalTime <= userModel.todayExerciseTime) {
+                if (goalTime <= userModel.score.todayExerciseTime) {
                     progress = progress + 8;
                     binding.arcProgress.setProgress(progress);
                     binding.exerciseTimeCardView.setCardBackgroundColor(Color.GREEN);
                 }
-                if (goalkm <= userModel.todayKm) {
+                if (goalkm <= userModel.score.todayKm) {
                     progress = progress + 8;
                     binding.arcProgress.setProgress(progress);
                     binding.kmCardView.setCardBackgroundColor(Color.GREEN);

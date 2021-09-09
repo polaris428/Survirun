@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.survirun.Medel.ScoreModel;
 import com.example.survirun.Medel.UserModel;
 import com.example.survirun.R;
 import com.example.survirun.databinding.ActivitySignUpBinding;
@@ -124,9 +125,10 @@ public class SignUpActivity extends AppCompatActivity {
                                         userModel.id = id;
 
                                         userModel.uid = uid;
-                                        userModel.todayExerciseTime = 0;
-                                        userModel.todayKm = 0.00;
-                                        userModel.todayCalorie = 0;
+                                        userModel.score=new ScoreModel();
+                                        userModel.score.todayExerciseTime = 0;
+                                        userModel.score.todayKm = 0.00;
+                                        userModel.score.todayCalorie = 0;
 
                                         FirebaseDatabase.getInstance().getReference().child("Userid").child(id).setValue(uid);
                                         FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {

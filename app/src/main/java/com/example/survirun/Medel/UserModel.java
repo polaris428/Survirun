@@ -5,7 +5,5 @@ public class UserModel {
     public  String uid;
     public  String name;
 
-    public int todayCalorie;
-    public int todayExerciseTime;
-    public double todayKm;
+    public ScoreModel score;
 }

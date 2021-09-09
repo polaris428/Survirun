@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         pwe = sf.getString("pwe", "");
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+               // .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(LoginActivity.this, gso);
@@ -273,9 +273,9 @@ public class LoginActivity extends AppCompatActivity {
         userModel = new UserModel();
         userModel.id = id;
         userModel.uid = uid;
-        userModel.todayExerciseTime = 0;
-        userModel.todayKm = 0.00;
-        userModel.todayCalorie = 0;
+        userModel.score.todayExerciseTime = 0;
+        userModel.score.todayKm = 0.00;
+        userModel.score.todayCalorie = 0;
         databaseReference.child("Userid").child(id).setValue(uid);
         databaseReference.child("UserProfile").child(uid).setValue(userModel);
     }
