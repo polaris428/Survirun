@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "499929011768",
+    "firebase_url": "https://survirun-default-rtdb.firebaseio.com",
     "project_id": "survirun",
     "storage_bucket": "survirun.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "499929011768-4gqdltkkp1f38p4tq246om5ee4lbman1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.survirun",
+            "certificate_hash": "f9f75b6abaf4178a1898caf1a163193bca8dc724"
+          }
+        },
         {
           "client_id": "499929011768-2m4fj3m0034dhvajn2jeheq3ebra8qrv.apps.googleusercontent.com",
           "client_type": 3
