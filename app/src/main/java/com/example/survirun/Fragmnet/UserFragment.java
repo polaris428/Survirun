@@ -64,7 +64,8 @@ public class UserFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userModel = snapshot.getValue(UserModel.class);
                 userModels.add(snapshot.getValue(UserModel.class));
-                binding.kmTextview.setText(userModel.todayKm + "");
+                String km=String.format("%.2f",userModel.todayKm);
+                binding.kmTextview.setText(km);
                 binding.calorieTextview.setText(userModel.todayCalorie + "");
                 binding.timeTextview.setText(userModel.todayExerciseTime + "");
                 if (goalCalorie / 2 < userModel.todayCalorie) {
