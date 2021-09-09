@@ -57,7 +57,7 @@ public class ExerciseResultActivity extends AppCompatActivity {
             }
         });
 
-        FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).child("score").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 scoreModel = snapshot.getValue(ScoreModel.class);
