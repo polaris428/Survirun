@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.survirun.Fragmnet.ExerciseFragment;
-import com.example.survirun.Fragmnet.FriendFragment;
+import com.example.survirun.Fragmnet.inFragment.Friend.FriendFragment;
 import com.example.survirun.R;
 import com.example.survirun.Fragmnet.StatisticsFragment;
 import com.example.survirun.Fragmnet.UserFragment;
