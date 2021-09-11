@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     int saveDay;
 
     SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (!pwe.equals("") && !id.equals("")) {
                     email = binding.idEdittext.getText().toString().trim();
 
-                    if (email.contains("@")== true) {
+                    if (email.contains("@") == true) {
                         int idx = email.indexOf("@");
                         id = email.substring(0, idx);
                         pwe = binding.passwordEdittext.getText().toString().trim();
@@ -206,6 +207,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("email", email);
         editor.commit();
     }
+
     public void loginGoogle() {
         editor.putString("id", id);
         editor.putString("email", email);
@@ -248,11 +250,10 @@ public class LoginActivity extends AppCompatActivity {
                             databaseReference.child("UserProfile").child(uid).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if(snapshot.getValue()==null){
+                                    if (snapshot.getValue() == null) {
                                         newUser();
                                         databaseReference.child("UserProfile").child(uid).setValue(userModel);
-                                    }
-                                    else{
+                                    } else {
                                         checkName();
                                     }
                                     loginGoogle();
@@ -264,12 +265,12 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             });
                             updateUI(user);
-                        }
-                        else updateUI(null);
+                        } else updateUI(null);
                     }
                 });
     }
-    public  void newUser(){
+
+    public void newUser() {
         userModel = new UserModel();
         userModel.id = id;
         userModel.uid = uid;
@@ -279,22 +280,23 @@ public class LoginActivity extends AppCompatActivity {
         databaseReference.child("Userid").child(id).setValue(uid);
         databaseReference.child("UserProfile").child(uid).setValue(userModel);
     }
+
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             checkName();
             finish();
         }
     }
-    public  void checkName(){
+
+    public void checkName() {
         databaseReference.child("UserProfile").child(uid).child("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue()==null){
+                if (snapshot.getValue() == null) {
                     Intent intent = new Intent(LoginActivity.this, SignUpNameActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
-                }
-                else {
+                } else {
                     name = snapshot.getValue().toString();
                     editor.putString("name", name);
                     editor.commit();
