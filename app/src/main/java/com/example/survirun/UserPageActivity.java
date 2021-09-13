@@ -22,14 +22,14 @@ public class UserPageActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(UserPageActivity.this);
 
         binding.logoutButton.setOnClickListener(v -> {
-            builder.setTitle("로그아웃").setMessage("로그아웃을 하시겠습니까?").setPositiveButton("예", new DialogInterface.OnClickListener() {
+            builder.setTitle(R.string.logout).setMessage(R.string.logout_user).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     FirebaseAuth.getInstance().signOut();
                     Intent intent = new Intent(UserPageActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
-            }).setNegativeButton("아니요", null).show();
+            }).setNegativeButton(R.string.no, null).show();
         });
     }
 }

@@ -594,7 +594,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         SimpleDateFormat format1 = new SimpleDateFormat( "yyyy-MM-dd/HH:mm:ss");
         Date t = new Date();
         String time1 = format1.format(t);
-        StorageReference imgRef = FirebaseStorage.getInstance().getReference().child(uid+"/"+time1);
+        StorageReference imgRef = FirebaseStorage.getInstance().getReference().child("exercisePhoto/"+uid+"/"+time1);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         mapImg.compress(Bitmap.CompressFormat.JPEG,50, baos);
         byte[] d = baos.toByteArray();

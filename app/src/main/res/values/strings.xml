@@ -63,4 +63,8 @@
     <string name="story_mode">Story Mode</string>
     <string name="start">Start</string>
     <string name="story">Story #</string>
+    <string name="logout">Logout</string>
+    <string name="logout_user">Do you want to log out?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
