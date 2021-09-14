@@ -36,6 +36,7 @@ import retrofit2.Response;
 public class SplashActivity extends AppCompatActivity {
     String email;
     String pwe;
+    String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +49,7 @@ public class SplashActivity extends AppCompatActivity {
         SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
         email = sf.getString("email", "");
         pwe = sf.getString("pwe", "");
+        name=sf.getString("name","");
         Handler mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
             public void run() {
@@ -74,8 +76,14 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<TokenData> call, Response<TokenData> response) {
                 if(response.isSuccessful()) {
-                    Intent intent=new Intent(SplashActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    if(!name.equals("")){
+                        Intent intent=new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }else {
+                        Intent intent=new Intent(SplashActivity.this, SignUpNameActivity.class);
+                        startActivity(intent);
+                    }
+
                 }
             }
 
