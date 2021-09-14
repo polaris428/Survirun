@@ -16,6 +16,9 @@ import android.widget.Toast;
 import com.example.survirun.Medel.UserModel;
 import com.example.survirun.R;
 import com.example.survirun.activity.MainActivity;
+import com.example.survirun.data.LoginData;
+import com.example.survirun.data.TokenData;
+import com.example.survirun.server.ServerClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,9 +28,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class SplashActivity extends AppCompatActivity {
-
+    String email;
+    String pwe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,17 +45,45 @@ public class SplashActivity extends AppCompatActivity {
 
             requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
         }
+        SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
+        email = sf.getString("email", "");
+        pwe = sf.getString("pwe", "");
         Handler mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
+                if(!email. equals("")){
+                    login();
+
+                }else {
+
+
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                }
             }
-        }, 3000); // 0.5초후
+        }, 2000); // 0.5초후
 
 
+    }
+    public void login(){
+        LoginData loginData=new LoginData(email,pwe);
+        Call<TokenData> call= ServerClient.getServerService().login(loginData);
+        call.enqueue(new Callback<TokenData>() {
+            @Override
+            public void onResponse(Call<TokenData> call, Response<TokenData> response) {
+                if(response.isSuccessful()) {
+                    Intent intent=new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TokenData> call, Throwable t) {
+
+            }
+        });
     }
 
 
