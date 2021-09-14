@@ -1,11 +1,9 @@
 package com.example.survirun.activity.account;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,31 +11,30 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.survirun.Medel.ScoreModel;
-import com.example.survirun.Medel.UserModel;
 import com.example.survirun.R;
+import com.example.survirun.data.LoginData;
+import com.example.survirun.data.NewUserData;
+import com.example.survirun.data.TokenData;
 import com.example.survirun.databinding.ActivitySignUpBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.survirun.server.ServerClient;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
     ActivitySignUpBinding binding;
     String id;
     FirebaseAuth firebaseAuth;
 
-    boolean emailtrue = false;
-    boolean pawtrue = false;
-    Uri selectedImageUri;
+    boolean emailTrue = false;
+    boolean pawTrue = false;
     String email;
-    String pwe;
-    private final int GET_GALLERY_IMAGE = 200;
-    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference databaseReference = firebaseDatabase.getReference();
+    String pwe;;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +56,10 @@ public class SignUpActivity extends AppCompatActivity {
                 String emile = binding.idInputEdittext.getText().toString();
                 if (emile.indexOf("@") != -1) {
                     binding.idErrorTextview.setVisibility(View.INVISIBLE);
-                    emailtrue = true;
+                    emailTrue = true;
                 } else {
                     binding.idErrorTextview.setVisibility(View.VISIBLE);
-                    emailtrue = false;
+                    emailTrue = false;
                 }
             }
 
@@ -84,11 +81,11 @@ public class SignUpActivity extends AppCompatActivity {
                 String p1 = binding.passwordCheckEdittext.getText().toString();
                 if (p.equals(p1)) {
                     binding.passwordErrorTextview.setVisibility(View.INVISIBLE);
-                    pawtrue = true;
+                    pawTrue = true;
                     Log.d("문자", p + p1);
                 } else {
                     binding.passwordErrorTextview.setVisibility(View.VISIBLE);
-                    pawtrue = false;
+                    pawTrue = false;
                 }
             }
 
@@ -98,63 +95,69 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        binding.signUpButton.setOnClickListener(new View.OnClickListener() {
+        binding.signUpButton.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            if (pawTrue && emailTrue) {
+                email = binding.idInputEdittext.getText().toString().trim();
+                pwe = binding.passwordInputEdittext.getText().toString().trim();
+                NewUserData newUserData=new NewUserData(email,pwe,"");
+                Call<TokenData> call = ServerClient.getServerService().signUp(newUserData);
+                call.enqueue(new Callback<TokenData>() {
+                    @Override
+                    public void onResponse(Call<TokenData> call, Response<TokenData> response) {
+                        if(response.isSuccessful()){
 
-                if (pawtrue && emailtrue) {
-                    email = binding.idInputEdittext.getText().toString().trim();
-                    pwe = binding.passwordInputEdittext.getText().toString().trim();
 
-
-                    firebaseAuth.createUserWithEmailAndPassword(email, pwe)
-                            .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                            login();
+                            LoginData loginData =new LoginData(email,pwe);
+                            Call<TokenData> call1=ServerClient.getServerService().login(loginData);
+                            call1.enqueue(new Callback<TokenData>() {
                                 @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        int idx = email.indexOf("@");
-                                        id = email.substring(0, idx);
-                                        Log.d("adsaf", " " + email + id + pwe + SignUpActivity.this);
+                                public void onResponse(Call<TokenData> call, Response<TokenData> response) {
+                                    if(response.isSuccessful()){
+                                        Intent intent=new Intent(SignUpActivity.this,SignUpNameActivity.class);
+                                        startActivity(intent);
 
-                                        login();
-                                        String uid = task.getResult().getUser().getUid();
-
-
-                                        UserModel userModel = new UserModel();
-                                        userModel.id = id;
-
-                                        userModel.uid = uid;
-                                        userModel.score=new ScoreModel();
-                                        userModel.score.todayExerciseTime = 0;
-                                        userModel.score.todayKm = 0.00;
-                                        userModel.score.todayCalorie = 0;
-
-                                        FirebaseDatabase.getInstance().getReference().child("Userid").child(id).setValue(uid);
-                                        FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Intent intent = new Intent(SignUpActivity.this, SignUpNameActivity.class);
-                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        });
-                                    } else {
-                                        Toast.makeText(SignUpActivity.this, R.string.sign_up_error, Toast.LENGTH_SHORT).show();
-                                        return;
                                     }
                                 }
-                            });
 
-                } else {
-                    Toast.makeText(SignUpActivity.this, R.string.format_error, Toast.LENGTH_SHORT).show();
-                }
+                                @Override
+                                public void onFailure(Call<TokenData> call, Throwable t) {
+
+                                }
+                            });
+                        }else{
+                            try {
+
+                                Log.e("SignUpActivity",response.errorBody().string());
+
+                            } catch (IOException e) {
+                                Toast.makeText(SignUpActivity.this, R.string.format_error, Toast.LENGTH_SHORT).show();
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<TokenData> call, Throwable t) {
+                        t.printStackTrace();
+                        Toast.makeText(SignUpActivity.this, R.string.format_error, Toast.LENGTH_SHORT).show();
+                    }
+
+                });
             }
-        });
+
+
+
+
+
+            });
     }
 
     public void login() {
+
         SharedPreferences sharedPreferences = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
         SharedPreferences.Editor editor = sharedPreferences.edit(); //sharedPreferences를 제어할 editor를 선언
         editor.putString("id", id);
