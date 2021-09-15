@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     String email;
     String id;
     String pwe;
-
+    String name;
     SharedPreferences.Editor editor;
 
     @Override
@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         editor = sf.edit();
         email = sf.getString("email", "");
         pwe = sf.getString("pwe", "");
-
+        name=sf.getString("name","");
 
 
         binding.idEdittext.addTextChangedListener(new TextWatcher() {
@@ -119,6 +119,16 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<TokenData> call, Response<TokenData> response) {
                                 if(response.isSuccessful()) {
+                                    editor.putString("email", email);
+                                    editor.putString("pwe",pwe);
+                                    editor.putString("token",response.body().token);
+                                    editor.commit();
+
+                                    if(name.equals("")){
+                                        Intent intent=new Intent(LoginActivity.this, SignUpNameActivity.class);
+                                        startActivity(intent);
+                                    }
+
                                     Intent intent=new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                 }
