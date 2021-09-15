@@ -37,6 +37,7 @@ public class SplashActivity extends AppCompatActivity {
     String email;
     String pwe;
     String name;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,7 @@ public class SplashActivity extends AppCompatActivity {
         email = sf.getString("email", "");
         pwe = sf.getString("pwe", "");
         name=sf.getString("name","");
+        editor=sf.edit();
         Handler mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
             public void run() {
@@ -57,8 +59,6 @@ public class SplashActivity extends AppCompatActivity {
                     login();
 
                 }else {
-
-
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -75,21 +75,32 @@ public class SplashActivity extends AppCompatActivity {
         call.enqueue(new Callback<TokenData>() {
             @Override
             public void onResponse(Call<TokenData> call, Response<TokenData> response) {
+
                 if(response.isSuccessful()) {
-                    if(!name.equals("")){
-                        Intent intent=new Intent(SplashActivity.this, MainActivity.class);
-                        startActivity(intent);
+                    editor.putString("email", email);
+                    editor.putString("pwe",pwe);
+                    editor.putString("token",response.body().token);
+                    editor.commit();
+                    Intent intent;
+
+                    if(name.equals("")){
+                        Log.d("token",response.body().token);
+                        intent = new Intent(SplashActivity.this, SignUpNameActivity.class);
                     }else {
-                        Intent intent=new Intent(SplashActivity.this, SignUpNameActivity.class);
-                        startActivity(intent);
+                        intent = new Intent(SplashActivity.this, MainActivity.class);
                     }
+                    startActivity(intent);
+
+                }else{
+                    Intent intent=new Intent(SplashActivity.this, SignUpActivity.class);
+                    startActivity(intent);
 
                 }
             }
 
             @Override
             public void onFailure(Call<TokenData> call, Throwable t) {
-
+                t.printStackTrace();
             }
         });
     }
