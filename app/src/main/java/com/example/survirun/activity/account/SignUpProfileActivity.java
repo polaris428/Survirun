@@ -31,8 +31,7 @@ public class SignUpProfileActivity extends AppCompatActivity {
     ActivitySignUpProfileBinding binding;
     private final int GET_GALLERY_IMAGE = 200;
     Uri selectedImageUri;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String uid = user.getUid();
+
 
 
     @SuppressLint("ResourceAsColor")
@@ -59,7 +58,7 @@ public class SignUpProfileActivity extends AppCompatActivity {
 
         binding.nextButton.setOnClickListener(v -> {
             if(selectedImageUri!=null) {
-                FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(selectedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                FirebaseStorage.getInstance().getReference().child("userImages").child("").putFile(selectedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         Intent intent = new Intent(SignUpProfileActivity.this, ResultActivity.class);

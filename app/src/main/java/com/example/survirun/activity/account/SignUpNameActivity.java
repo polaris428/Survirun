@@ -17,23 +17,32 @@ import android.widget.Toast;
 
 import com.example.survirun.R;
 import com.example.survirun.Typewriter;
+import com.example.survirun.data.ResultData;
 import com.example.survirun.databinding.ActivitySignUpNameBinding;
+import com.example.survirun.server.ServerClient;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.http.Path;
 
 public class SignUpNameActivity extends AppCompatActivity {
     ActivitySignUpNameBinding binding;
     String story;
     String name;
-
+    String token;
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpNameBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-        SharedPreferences.Editor editor = getSharedPreferences("Login", MODE_PRIVATE).edit();
+        SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
+        token = sf.getString("token", "");
+        Log.d("와아",token);
 
 
         story = (String) getText(R.string.story_name);
@@ -58,20 +67,29 @@ public class SignUpNameActivity extends AppCompatActivity {
         });
         binding.nameSendButton.setOnClickListener(v -> {
             name = binding.nameInputEdittext.getText().toString();
-            String uid = FirebaseAuth.getInstance().getUid();
-            Log.d("adsf", uid);
             if (name.replace(" ", "").length()==0){
                binding.nameErrMessage.setVisibility(View.VISIBLE);
             }
             else{
-                FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).child("name").setValue(name).addOnSuccessListener(new OnSuccessListener<Void>() {
+                Log.d("asdf",name);
+                Log.d("asdf",token+"토큰");
+
+                Call<ResultData> call= ServerClient.getServerService().inputName(name,token);
+                call.enqueue(new Callback<ResultData>() {
                     @Override
-                    public void onSuccess(Void unused) {
-                        Intent intent = new Intent(SignUpNameActivity.this, SignUpProfileActivity.class);
-                        startActivity(intent);
-                        editor.putString("name", name);
-                        editor.commit();
-                        finish();
+                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                        if(response.isSuccessful()){
+                            Intent intent=new Intent(SignUpNameActivity.this,SignUpProfileActivity.class);
+                            startActivity(intent);
+                        }else {
+                            response.errorBody();
+                            Log.d("adsf",   response.errorBody().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResultData> call, Throwable t) {
+                        t.printStackTrace();
                     }
                 });
             }

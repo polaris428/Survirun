@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServerClient {
 
-    private static final String baseUrl = "https://studyrestapi.2tle.repl.co/";
+    private static final String baseUrl = "https://dicon21.2tle.io/";
 
     public static ServiceService getServerService() {
         return getInstance().create(ServiceService.class);
