@@ -12,22 +12,16 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 
 import com.example.survirun.R;
-import com.example.survirun.Typewriter;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.databinding.ActivitySignUpNameBinding;
 import com.example.survirun.server.ServerClient;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Path;
 
 public class SignUpNameActivity extends AppCompatActivity {
     ActivitySignUpNameBinding binding;
@@ -40,10 +34,12 @@ public class SignUpNameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpNameBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+        setContentView(view);
         SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
         token = sf.getString("token", "");
         Log.d("와아",token);
-
+        binding.textView.setCharacterDelay(160);
+        binding.textView.displayTextWithAnimation("안녕하세요");
 
         story = (String) getText(R.string.story_name);
         binding.nameInputEdittext.addTextChangedListener(new TextWatcher() {
@@ -100,17 +96,7 @@ public class SignUpNameActivity extends AppCompatActivity {
             return false;
         });
 
-        Typewriter typewriter = new Typewriter(this);
-        typewriter.setCharacterDelay(100);
-        typewriter.setTextSize(20);
-        typewriter.setTextColor(R.color.black);
-        typewriter.setTypeface(null, Typeface.NORMAL);
-        typewriter.setPadding(20, 20, 20, 20);
-        typewriter.setAnimationCompleteListener(animationCompleteCallBack);
-        typewriter.animateText(story);
-        setContentView(typewriter);
-        Handler handler = new Handler();
-        handler.postDelayed(() -> setContentView(view), 5000); //딜레이 타임 조절
+
 
 
     }
