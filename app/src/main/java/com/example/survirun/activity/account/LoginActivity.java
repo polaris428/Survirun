@@ -126,10 +126,12 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if(name.equals("")){
                                         Intent intent=new Intent(LoginActivity.this, SignUpNameActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
                                     }
 
                                     Intent intent=new Intent(LoginActivity.this, MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
                                 }
                             }

@@ -116,6 +116,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 public void onResponse(Call<TokenData> call, Response<TokenData> response) {
                                     if(response.isSuccessful()){
                                         Intent intent=new Intent(SignUpActivity.this,SignUpNameActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
 
                                     }

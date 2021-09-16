@@ -76,6 +76,7 @@ public class SignUpNameActivity extends AppCompatActivity {
                             sf.edit().putString("name",name);
                             sf.edit().commit();
                             Intent intent=new Intent(SignUpNameActivity.this,SignUpProfileActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         }else {
                             response.errorBody();
