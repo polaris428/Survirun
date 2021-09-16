@@ -67,4 +67,5 @@
     <string name="logout_user">로그아웃을 하시겠습니까?</string>
     <string name="yes">예</string>
     <string name="no">아니오</string>
+    <string name="duplicate_check">중복확인</string>
 </resources>
