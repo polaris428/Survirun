@@ -37,7 +37,6 @@ public class SignUpNameActivity extends AppCompatActivity {
         setContentView(view);
         SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
         token = sf.getString("token", "");
-        Log.d("와아",token);
         binding.textView.setCharacterDelay(160);
         binding.textView.displayTextWithAnimation("안녕하세요");
 
@@ -67,14 +66,15 @@ public class SignUpNameActivity extends AppCompatActivity {
                binding.nameErrMessage.setVisibility(View.VISIBLE);
             }
             else{
-                Log.d("asdf",name);
-                Log.d("asdf",token+"토큰");
+
 
                 Call<ResultData> call= ServerClient.getServerService().inputName(name,token);
                 call.enqueue(new Callback<ResultData>() {
                     @Override
                     public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                         if(response.isSuccessful()){
+                            sf.edit().putString("name",name);
+                            sf.edit().commit();
                             Intent intent=new Intent(SignUpNameActivity.this,SignUpProfileActivity.class);
                             startActivity(intent);
                         }else {
