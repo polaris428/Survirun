@@ -85,6 +85,7 @@ public class SplashActivity extends AppCompatActivity {
 
                     if(name.equals("")){
                         Log.d("token",response.body().token);
+                        Log.d("name",name);
                         intent = new Intent(SplashActivity.this, SignUpNameActivity.class);
                     }else {
                         intent = new Intent(SplashActivity.this, MainActivity.class);
@@ -92,7 +93,7 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 }else{
-                    Intent intent=new Intent(SplashActivity.this, SignUpActivity.class);
+                    Intent intent=new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(intent);
 
                 }
