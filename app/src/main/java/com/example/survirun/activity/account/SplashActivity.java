@@ -37,6 +37,7 @@ public class SplashActivity extends AppCompatActivity {
     String email;
     String pwe;
     String name;
+    Boolean profile;
     SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class SplashActivity extends AppCompatActivity {
         email = sf.getString("email", "");
         pwe = sf.getString("pwe", "");
         name=sf.getString("name","");
+        profile=sf.getBoolean("profile",false);
         editor=sf.edit();
         Handler mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
@@ -88,7 +90,12 @@ public class SplashActivity extends AppCompatActivity {
                         Log.d("name",name);
                         intent = new Intent(SplashActivity.this, SignUpNameActivity.class);
                     }else {
-                        intent = new Intent(SplashActivity.this, MainActivity.class);
+                        if(profile==true){
+                            intent = new Intent(SplashActivity.this, MainActivity.class);
+                        }else{
+                            intent = new Intent(SplashActivity.this, SignUpProfileActivity.class);
+                        }
+
                     }
                     startActivity(intent);
 
