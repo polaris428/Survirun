@@ -28,6 +28,7 @@ public class SignUpNameActivity extends AppCompatActivity {
     String story;
     String name;
     String token;
+    SharedPreferences.Editor editor;
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class SignUpNameActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
+        editor=sf.edit();
         token = sf.getString("token", "");
         binding.textView.setCharacterDelay(160);
         binding.textView.displayTextWithAnimation("안녕하세요");
@@ -73,8 +75,8 @@ public class SignUpNameActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                         if(response.isSuccessful()){
-                            sf.edit().putString("name",name);
-                            sf.edit().commit();
+                            editor.putString("name",name);
+                            editor.commit();
                             Intent intent=new Intent(SignUpNameActivity.this,SignUpProfileActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
