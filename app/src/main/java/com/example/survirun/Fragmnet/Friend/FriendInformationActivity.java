@@ -1,4 +1,4 @@
-package com.example.survirun.Fragmnet.inFragment.Friend;
+package com.example.survirun.Fragmnet.Friend;
 
 import androidx.appcompat.app.AppCompatActivity;
 

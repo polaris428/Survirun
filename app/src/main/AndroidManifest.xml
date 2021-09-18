@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Survirun">
         <activity
-            android:name=".Fragmnet.inFragment.Friend.FriendInformationActivity"
+            android:name=".Fragmnet.Friend.FriendInformationActivity"
             android:exported="true" />
         <activity
             android:name=".UserPageActivity"
