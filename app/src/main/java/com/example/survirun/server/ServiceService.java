@@ -41,7 +41,7 @@ public interface ServiceService {
     @POST("/api/v1/auth/profile")
     Call<ResultData>postProfile(@Header("x-access-token")String token,@Part MultipartBody.Part file );
 
-    @GET("/api/v1/auth/by-email/:{email}/exists")
+    @GET("/api/v1/auth/by-email/{email}/exists")
     Call<EmileCheck>getEmileCheck(@Path("email")String email);
 
 }

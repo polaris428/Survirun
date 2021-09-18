@@ -81,21 +81,25 @@ public class SignUpActivity extends AppCompatActivity {
                         binding.idErrorTextview.setText("이메일을 입력해주세요");
 
                     } else {
-                        Log.d("emile",email);
+
+                        email = binding.idInputEdittext.getText().toString().trim();
                         Call<EmileCheck>call=ServerClient.getServerService().getEmileCheck(email);
                         call.enqueue(new Callback<EmileCheck>() {
                             @Override
                             public void onResponse(Call<EmileCheck> call, Response<EmileCheck> response) {
                                 if(response.isSuccessful()){
+                                    Log.d("adsf",response.body()+"");
                                     if(response.body().exists){
                                         Log.d("qwer",response.body().exists+"");
                                         binding.idErrorTextview.setVisibility(View.VISIBLE);
+                                        Log.d("emile",email);
                                         binding.idErrorTextview.setText("이미 가입된 이메일 입니다");
 
                                     }else{
                                         Log.d("qwer",response.body().exists+"");
                                         binding.idErrorTextview.setVisibility(View.VISIBLE);
                                         emileCheck=true;
+                                        Log.d("emile",email);
                                         binding.idErrorTextview.setText("사용 가능한 이메일 입니다");
                                     }
                                 }
