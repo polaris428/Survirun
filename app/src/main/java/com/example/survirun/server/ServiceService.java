@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import com.example.survirun.data.EmileCheck;
 import com.example.survirun.data.ExerciseData;
+import com.example.survirun.data.FindUserData;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.NewUserData;
 import com.example.survirun.data.ResultData;
@@ -44,4 +45,6 @@ public interface ServiceService {
     @GET("/api/v1/auth/by-email/{email}/exists")
     Call<EmileCheck>getEmileCheck(@Path("email")String email);
 
+    @GET("/api/v1/friend/list")
+    Call<FindUserData>getFriendList(@Header("x-access-token")String token);
 }

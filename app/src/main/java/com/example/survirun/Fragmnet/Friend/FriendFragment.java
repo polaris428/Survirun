@@ -1,5 +1,6 @@
 package com.example.survirun.Fragmnet.Friend;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,7 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.survirun.data.FindUserData;
+import com.example.survirun.data.Friends;
 import com.example.survirun.databinding.FragmentFriendBinding;
+import com.example.survirun.server.ServerClient;
+import com.example.survirun.server.ServiceService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,6 +24,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,7 +81,29 @@ public class FriendFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentFriendBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        ArrayList list=new ArrayList();
+        SharedPreferences sf = getContext().getSharedPreferences("Login", getContext().MODE_PRIVATE);
+        String token=sf.getString("token","");
+
+        Call<FindUserData> call= ServerClient.getServerService().getFriendList(token);
+        call.enqueue(new Callback<FindUserData>() {
+            @Override
+            public void onResponse(Call<FindUserData> call, Response<FindUserData> response) {
+                if(response.isSuccessful()){
+                    Log.d("asdf",response.body().friends.size()+"");
+
+                    ArrayList list=new ArrayList();
+                    FriendAdapter adapter = new FriendAdapter(list);
+                    binding.friendListRecyclerView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FindUserData> call, Throwable t) {
+
+            }
+        });
+
+
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,28 +135,7 @@ public class FriendFragment extends Fragment {
                 });
             }
         });
-        FirebaseDatabase.getInstance().getReference().child("UserProfile").child(FirebaseAuth.getInstance().getUid()).child("friend").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-               String post = postSnapshot.getValue(String.class);
-                    list.add(post);
-                    Log.e("Get Data", post);
-                }
-                // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
-                FriendAdapter adapter = new FriendAdapter(list);
-                binding.friendListRecyclerView.setAdapter(adapter);
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
