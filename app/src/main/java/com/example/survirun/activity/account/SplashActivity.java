@@ -38,8 +38,6 @@ import retrofit2.Response;
 public class SplashActivity extends AppCompatActivity {
     String email;
     String pwe;
-    String name;
-    Boolean profile;
     SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +52,6 @@ public class SplashActivity extends AppCompatActivity {
         SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
         email = sf.getString("email", "");
         pwe = sf.getString("pwe", "");
-        name=sf.getString("name","");
-        profile=sf.getBoolean("profile",false);
         editor=sf.edit();
         Handler mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
@@ -88,12 +84,11 @@ public class SplashActivity extends AppCompatActivity {
                     editor.commit();
                     Intent intent;
 
-                    if(name.equals("")){
+                    if(!response.body().username){
                         Log.d("token",response.body().token);
-                        Log.d("name",name);
                         intent = new Intent(SplashActivity.this, SignUpNameActivity.class);
                     }else {
-                        if(profile==true){
+                        if(response.body().profile){
                             intent = new Intent(SplashActivity.this, MainActivity.class);
                         }else{
                             intent = new Intent(SplashActivity.this, SignUpProfileActivity.class);
