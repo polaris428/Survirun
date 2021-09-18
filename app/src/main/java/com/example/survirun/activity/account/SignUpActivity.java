@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.survirun.R;
+import com.example.survirun.data.EmileCheck;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.NewUserData;
 import com.example.survirun.data.TokenData;
@@ -32,6 +33,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     boolean emailTrue = false;
     boolean pawTrue = false;
+    boolean emileCheck=false;
     String email;
     String pwe;;
 
@@ -69,7 +71,47 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+        binding.duplicateCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(emailTrue){
+                    email = binding.idInputEdittext.getText().toString().trim();
+                    if (email.equals("")) {
+                        binding.idErrorTextview.setVisibility(View.VISIBLE);
+                        binding.idErrorTextview.setText("이메일을 입력해주세요");
 
+                    } else {
+                        Log.d("emile",email);
+                        Call<EmileCheck>call=ServerClient.getServerService().getEmileCheck(email);
+                        call.enqueue(new Callback<EmileCheck>() {
+                            @Override
+                            public void onResponse(Call<EmileCheck> call, Response<EmileCheck> response) {
+                                if(response.isSuccessful()){
+                                    if(response.body().exists){
+                                        Log.d("qwer",response.body().exists+"");
+                                        binding.idErrorTextview.setVisibility(View.VISIBLE);
+                                        binding.idErrorTextview.setText("이미 가입된 이메일 입니다");
+
+                                    }else{
+                                        Log.d("qwer",response.body().exists+"");
+                                        binding.idErrorTextview.setVisibility(View.VISIBLE);
+                                        emileCheck=true;
+                                        binding.idErrorTextview.setText("사용 가능한 이메일 입니다");
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<EmileCheck> call, Throwable t) {
+                                t.printStackTrace();
+                            }
+                        });
+                    }
+
+                }
+
+            }
+        });
         binding.passwordCheckEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -97,8 +139,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         binding.signUpButton.setOnClickListener(v -> {
 
-            if (pawTrue && emailTrue) {
-                email = binding.idInputEdittext.getText().toString().trim();
+            if (pawTrue && emailTrue&&emileCheck) {
+
                 pwe = binding.passwordInputEdittext.getText().toString().trim();
                 NewUserData newUserData=new NewUserData(email,pwe,"");
                 Call<TokenData> call = ServerClient.getServerService().signUp(newUserData);

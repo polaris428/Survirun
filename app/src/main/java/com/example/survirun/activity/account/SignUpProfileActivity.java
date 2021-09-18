@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.survirun.R;
+import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.databinding.ActivitySignUpProfileBinding;
 import com.example.survirun.server.ServerClient;
@@ -54,7 +55,7 @@ public class SignUpProfileActivity extends AppCompatActivity {
     private final int GET_GALLERY_IMAGE = 200;
     Uri selectedImageUri;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
+    SharedPreferences.Editor editor;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -64,7 +65,8 @@ public class SignUpProfileActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         mAuth = FirebaseAuth.getInstance();
-
+        SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);
+        editor=sf.edit();
 
         binding.profileImageview.setBackground(new ShapeDrawable(new OvalShape()));
         binding.profileImageview.setClipToOutline(true);
@@ -76,7 +78,6 @@ public class SignUpProfileActivity extends AppCompatActivity {
             return false;
         });
 
-        SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
         token = sf.getString("token", "");
         name=sf.getString("name","");
         email = sf.getString("email", "");
@@ -89,7 +90,7 @@ public class SignUpProfileActivity extends AppCompatActivity {
         binding.nextButton.setOnClickListener(v -> {
             if(selectedImageUri!=null) {
 
-                File file = new File(getRealPathFromURI(selectedImageUri));
+
                 MultipartBody.Part body1 = prepareFilePart("image", selectedImageUri);
                 Call<ResultData>call= ServerClient.getServerService().postProfile(token,body1);
 
@@ -97,7 +98,9 @@ public class SignUpProfileActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                         if(response.isSuccessful()){
-                            Log.d("asdf","성공");
+                            editor.putBoolean("profile",true);
+                            Intent intent =new Intent(SignUpProfileActivity.this, MainActivity.class);
+                            startActivity(intent);
                         }else{
                             Log.d("adsf",response.errorBody().toString());
                         }

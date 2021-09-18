@@ -2,6 +2,7 @@ package com.example.survirun.server;
 
 import android.net.Uri;
 
+import com.example.survirun.data.EmileCheck;
 import com.example.survirun.data.ExerciseData;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.NewUserData;
@@ -39,5 +40,8 @@ public interface ServiceService {
     @Multipart
     @POST("/api/v1/auth/profile")
     Call<ResultData>postProfile(@Header("x-access-token")String token,@Part MultipartBody.Part file );
+
+    @GET("/api/v1/auth/by-email/:{email}/exists")
+    Call<EmileCheck>getEmileCheck(@Path("email")String email);
 
 }
