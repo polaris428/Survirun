@@ -68,4 +68,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="duplicate_check">Check</string>
+    <string name="email_enter">Please enter your email.</string>
+    <string name="email_already">This email has already been signed up.</string>
+    <string name="email_can_use">You can use this email.</string>
 </resources>
