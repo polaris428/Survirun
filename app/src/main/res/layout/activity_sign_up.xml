@@ -42,14 +42,14 @@
                 <EditText
                     android:id="@+id/id_input_edittext"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="52dp"
                     android:background="@drawable/rounded_edittext"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"/>
             </com.google.android.material.textfield.TextInputLayout>
             <Button
                 android:id="@+id/duplicate_check"
-                android:layout_width="85dp"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:text="@string/duplicate_check"
                 android:layout_marginLeft="10dp"
@@ -87,7 +87,7 @@
                 <EditText
                     android:id="@+id/password_input_edittext"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="52dp"
                     android:inputType="textPassword"
                     android:background="@drawable/rounded_edittext"
                     android:hint="@string/pw"/>
@@ -114,7 +114,7 @@
                 <EditText
                     android:id="@+id/password_check_edittext"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="52dp"
                     android:background="@drawable/rounded_edittext"
                     android:hint="@string/confirm_pw"
                     android:inputType="textPassword"/>
