@@ -78,7 +78,7 @@ public class SignUpActivity extends AppCompatActivity {
                     email = binding.idInputEdittext.getText().toString().trim();
                     if (email.equals("")) {
                         binding.idErrorTextview.setVisibility(View.VISIBLE);
-                        binding.idErrorTextview.setText("이메일을 입력해주세요");
+                        binding.idErrorTextview.setText(R.string.email_enter);
 
                     } else {
 
@@ -93,14 +93,14 @@ public class SignUpActivity extends AppCompatActivity {
                                         Log.d("qwer",response.body().exists+"");
                                         binding.idErrorTextview.setVisibility(View.VISIBLE);
                                         Log.d("emile",email);
-                                        binding.idErrorTextview.setText("이미 가입된 이메일 입니다");
+                                        binding.idErrorTextview.setText(R.string.email_already);
 
                                     }else{
                                         Log.d("qwer",response.body().exists+"");
                                         binding.idErrorTextview.setVisibility(View.VISIBLE);
                                         emileCheck=true;
                                         Log.d("emile",email);
-                                        binding.idErrorTextview.setText("사용 가능한 이메일 입니다");
+                                        binding.idErrorTextview.setText(R.string.email_can_use);
                                     }
                                 }
                             }
