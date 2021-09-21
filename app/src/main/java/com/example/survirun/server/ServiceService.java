@@ -7,6 +7,7 @@ import com.example.survirun.data.ExerciseData;
 import com.example.survirun.data.FindUserData;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.NewUserData;
+import com.example.survirun.data.ProfileImageData;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.data.TokenData;
 
@@ -24,6 +25,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ServiceService {
     @POST("/api/v1/auth/new")
@@ -47,4 +49,9 @@ public interface ServiceService {
 
     @GET("/api/v1/friend/list")
     Call<FindUserData>getFriendList(@Header("x-access-token")String token);
+
+    @POST("/api/v1/friend")
+    Call<ResultData>PostFindFriend(@Header("x-access-token")String token, String emile);
+    @GET("/api/v1/auth/profile")
+    Call<ProfileImageData>getProfileImage(@Header("x-access-token")String token );
 }
