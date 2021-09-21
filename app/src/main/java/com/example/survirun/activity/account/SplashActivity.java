@@ -1,5 +1,6 @@
 package com.example.survirun.activity.account;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -9,9 +10,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.survirun.R;
 import com.example.survirun.activity.MainActivity;
@@ -37,25 +40,17 @@ public class SplashActivity extends AppCompatActivity {
         email = sf.getString("email", "");
         pwe = sf.getString("pwe", "");
         editor = sf.edit();
-        if (ContextCompat.checkSelfPermission(this,
+        /*if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
             requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
         }
-        verifyStoragePermissions(this);
-        Handler mHandler = new Handler();
-        mHandler.postDelayed(new Runnable() {
-            public void run() {
-                if (!email.equals("")) {
-                    login();
-
-                } else {
-                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        }, 2000); // 0.5초후
+        verifyStoragePermissions(this);*/
+        ActivityCompat.requestPermissions(this,
+                new String[]{ Manifest.permission.ACTIVITY_RECOGNITION, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                },
+                1000);
+        // 0.5초후
 
 
     }
@@ -128,6 +123,41 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+
+            // requestPermission의 배열의 index가 아래 grantResults index와 매칭
+            // 퍼미션이 승인되면
+            if(grantResults.length > 0  && grantResults[0]== PackageManager.PERMISSION_GRANTED){
+                if (!email.equals("")) {
+                    login();
+
+                } else {
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                }
+
+            }
+            // 퍼미션이 승인 거부되면
+            else {
+                Toast.makeText(getApplicationContext(), "퍼미션 거부", Toast.LENGTH_SHORT).show();
+                if (!email.equals("")) {
+                    login();
+
+                } else {
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        }
+    }
 
 }
 
