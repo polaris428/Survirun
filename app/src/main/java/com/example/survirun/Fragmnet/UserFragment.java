@@ -7,31 +7,21 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.survirun.UserPageActivity;
 import com.example.survirun.activity.UserGoalActivity;
-import com.example.survirun.Medel.UserModel;
+import com.example.survirun.activity.UserPageActivity;
 import com.example.survirun.data.ExerciseData;
 import com.example.survirun.databinding.FragmentUserBinding;
 import com.example.survirun.server.ServerClient;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
