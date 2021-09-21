@@ -23,7 +23,7 @@
             android:name=".Fragmnet.Friend.FriendInformationActivity"
             android:exported="true" />
         <activity
-            android:name=".UserPageActivity"
+            android:name=".activity.UserPageActivity"
             android:exported="true" />
         <activity
             android:name=".activity.exercise.ExerciseStoryActivity"
