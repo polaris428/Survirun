@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.survirun.data.FindUserData;
 import com.example.survirun.data.Friends;
+import com.example.survirun.data.ResultData;
 import com.example.survirun.databinding.FragmentFriendBinding;
 import com.example.survirun.server.ServerClient;
 import com.example.survirun.server.ServiceService;
@@ -107,37 +108,48 @@ public class FriendFragment extends Fragment {
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = binding.emileInputEditText.getText().toString();
-                FirebaseDatabase.getInstance().getReference().child("Userid").child(name).addValueEventListener(new ValueEventListener() {
+              Call<ResultData>call1=ServerClient.getServerService().PostFindFriend(token,binding.emileInputEditText.getText().toString());
+              call1.enqueue(new Callback<ResultData>() {
+                  @Override
+                  public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                      if(response.isSuccessful()){
+
+                      }
+                  }
+
+                  @Override
+                  public void onFailure(Call<ResultData> call, Throwable t) {
+
+                  }
+              });
+            }
+        });
+        Log.d("토큰",token);
+        binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        binding.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Call<ResultData>call1=ServerClient.getServerService().postAddFriend(token,"",binding.emileInputEditText.getText().toString());
+                call1.enqueue(new Callback<ResultData>() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String uid = snapshot.getValue(String.class);
-                        FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).child("name").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                String name = snapshot.getValue(String.class);
-                                Log.d("adsf", name);
-                                FirebaseDatabase.getInstance().getReference().child("UserProfile").child(FirebaseAuth.getInstance().getUid()).child("friend").child(name).setValue(uid);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
+                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                        if(response.isSuccessful()){
+                            Log.d("adsf",response.body().result.toString());
+                        }else{
+                            Log.d("asdf",binding.emileInputEditText.getText().toString());
+                            Log.d("adsf","실패");
+                            Log.d("adsf",token);
+                        }
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                    public void onFailure(Call<ResultData> call, Throwable t) {
 
                     }
                 });
             }
         });
-
-        binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
 
 
         return view;

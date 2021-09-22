@@ -54,4 +54,9 @@ public interface ServiceService {
     Call<ResultData>PostFindFriend(@Header("x-access-token")String token, String emile);
     @GET("/api/v1/auth/profile")
     Call<ProfileImageData>getProfileImage(@Header("x-access-token")String token );
+
+
+    @POST("/api/v1/friend")
+    Call<ResultData>postAddFriend(@Header("x-access-token")String token,@Body String username,String emile);
+
 }

@@ -1,5 +1,5 @@
 package com.example.survirun.data;
 
 public class ResultData {
-    Boolean result;
+    public  Boolean result;
 }
