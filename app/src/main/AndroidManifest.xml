@@ -5,11 +5,15 @@
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    //신체활동
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    //위치
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    //위치
+    <uses-permission android:name="android.permission.INTERNET" />//인터넷
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />//스토리지 쓰기
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />//스토리지 읽기
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -46,7 +50,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBcD4zxjZ4BRHDN4xgOhAdG21TQPEtCRG0" />
 
-        <activity android:name=".activity.account.SignUpProfileActivity" />
+        <activity
+            android:name=".activity.account.SignUpProfileActivity"
+            android:exported="true" />
         <activity android:name=".activity.account.SignUpNameActivity" />
         <activity android:name=".activity.account.SignUpActivity" />
         <activity android:name=".activity.account.LoginActivity" />
