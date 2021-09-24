@@ -124,21 +124,34 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("token",response.body().token);
                                     editor.commit();
 
-                                    if(name.equals("")){
+                                    if(!response.body().username){
                                         Intent intent=new Intent(LoginActivity.this, SignUpNameActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
+                                    }else{
+                                        if(!response.body().profile){
+                                            Intent intent=new Intent(LoginActivity.this, SignUpProfileActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(intent);
+
+                                        }else{
+                                            Intent intent=new Intent(LoginActivity.this, MainActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(intent);
+                                        }
                                     }
 
-                                    Intent intent=new Intent(LoginActivity.this, MainActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(intent);
+
+                                }else{
+                                    binding.loginErrMessage.setVisibility(View.VISIBLE);
+                                    binding.loginErrMessage.setText("아이디 또는 비밀번호를 확인해주세요");
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<TokenData> call, Throwable t) {
-
+                                binding.loginErrMessage.setVisibility(View.VISIBLE);
+                                binding.loginErrMessage.setText("서버오류 서비스 이용에 불편을 드려 죄송합니다 ");
                             }
                         });
 
