@@ -30,26 +30,31 @@ import retrofit2.Response;
 
 public class UserPageActivity extends AppCompatActivity {
     ActivityUserPageBinding binding;
+    SharedPreferences sf;
+    SharedPreferences.Editor editor;
+    String token;
+    String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityUserPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);
-        String token=sf.getString("token","");
-        String name=sf.getString("name","");
-        Log.d("adsf",token);
+        sf = getSharedPreferences("Login", MODE_PRIVATE);
+        token = sf.getString("token", "");
+        name = sf.getString("name", "");
+        editor = sf.edit();
+        Log.d("adsf", token);
         binding.profileImageview.setImageResource(R.drawable.ic_profile);
         AlertDialog.Builder builder = new AlertDialog.Builder(UserPageActivity.this);
-        Call<ImageData>getProfile=ServerClient.getServerService().getProfile(token,"self","url");
+        Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
         getProfile.enqueue(new Callback<ImageData>() {
             @Override
             public void onResponse(Call<ImageData> call, Response<ImageData> response) {
-                if(response.isSuccessful()){
-                    Log.d("adf",response.body().img);
+                if (response.isSuccessful()) {
+                    Log.d("adf", response.body().img);
                     Glide.with(UserPageActivity.this)
-                            .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id="+response.body().img)
+                            .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
                             .error(R.drawable.ic_profile)
                             .into(binding.profileImageview);
 
@@ -67,7 +72,11 @@ public class UserPageActivity extends AppCompatActivity {
             builder.setTitle(R.string.logout).setMessage(R.string.logout_user).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    FirebaseAuth.getInstance().signOut();
+                    editor.putString("email", "");
+                    editor.putString("pwe", "");
+                    editor.putString("token", "");
+                    editor.putString("name", "");
+                    editor.commit();
                     Intent intent = new Intent(UserPageActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
