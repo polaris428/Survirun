@@ -23,8 +23,8 @@ public class StatisticsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding=FragmentStatisticsBinding.inflate(inflater,container,false);
-        View view=binding.getRoot();
+        binding = FragmentStatisticsBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
         titles.add(getString(R.string.total_exercise));
         titles.add(getString(R.string.goal));
         titles.add(getString(R.string.route));

@@ -11,6 +11,7 @@ import com.example.survirun.databinding.ActivityUserGoalBinding;
 public class UserGoalActivity extends AppCompatActivity {
     private ActivityUserGoalBinding binding;
     int calorie, time, km;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,17 +22,16 @@ public class UserGoalActivity extends AppCompatActivity {
         time = sf.getInt("time", 60);
         km = sf.getInt("km", 5);
 
-        String h = String.valueOf(time/60);
-        String m = String.valueOf(time%60);
+        String h = String.valueOf(time / 60);
+        String m = String.valueOf(time % 60);
         binding.calorieTextview.setText(String.valueOf(calorie));
-        binding.timeTextview.setText(h+"h "+m+"m");
+        binding.timeTextview.setText(h + "h " + m + "m");
         binding.kmTextview.setText(String.valueOf(km));
 
         binding.backButton.setOnClickListener(v -> {
             Intent intent = new Intent(UserGoalActivity.this, MainActivity.class);
             startActivity(intent);
         });
-
 
         binding.retouchButton.setOnClickListener(v -> {
             Intent intent = new Intent(UserGoalActivity.this, UserGoalModifyActivity.class);

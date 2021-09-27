@@ -12,6 +12,7 @@ import com.example.survirun.databinding.Fragment3Binding;
 
 public class Fragment3 extends Fragment {
     Fragment3Binding binding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         editor = sf.edit();
         email = sf.getString("email", "");
         pwe = sf.getString("pwe", "");
-        name=sf.getString("name","");
+        name = sf.getString("name", "");
 
         customProgressDialog = new ProgressDialog(this);
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -115,43 +115,42 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!pwe.equals("") && !id.equals("")) {
                     email = binding.idEdittext.getText().toString().trim();
-
                     if (email.contains("@") == true) {
                         customProgressDialog.show();
                         pwe = binding.passwordEdittext.getText().toString().trim();
-                        LoginData loginData=new LoginData(email,pwe);
-                        Call<TokenData> call= ServerClient.getServerService().login(loginData);
+                        LoginData loginData = new LoginData(email, pwe);
+                        Call<TokenData> call = ServerClient.getServerService().login(loginData);
                         call.enqueue(new Callback<TokenData>() {
                             @Override
                             public void onResponse(Call<TokenData> call, Response<TokenData> response) {
-                                if(response.isSuccessful()) {
+                                if (response.isSuccessful()) {
                                     editor.putString("email", email);
-                                    editor.putString("pwe",pwe);
-                                    editor.putString("token",response.body().token);
+                                    editor.putString("pwe", pwe);
+                                    editor.putString("token", response.body().token);
                                     editor.commit();
 
-                                    if(!response.body().username){
+                                    if (!response.body().username) {
                                         customProgressDialog.dismiss();
-                                        Intent intent=new Intent(LoginActivity.this, SignUpNameActivity.class);
+                                        Intent intent = new Intent(LoginActivity.this, SignUpNameActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
-                                    }else{
-                                        if(!response.body().profile){
+                                    } else {
+                                        if (!response.body().profile) {
                                             customProgressDialog.dismiss();
-                                            Intent intent=new Intent(LoginActivity.this, SignUpProfileActivity.class);
+                                            Intent intent = new Intent(LoginActivity.this, SignUpProfileActivity.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             startActivity(intent);
 
-                                        }else{
+                                        } else {
                                             customProgressDialog.dismiss();
-                                            Intent intent=new Intent(LoginActivity.this, MainActivity.class);
+                                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             startActivity(intent);
                                         }
                                     }
 
 
-                                }else{
+                                } else {
                                     customProgressDialog.dismiss();
                                     binding.loginErrMessage.setVisibility(View.VISIBLE);
                                     binding.loginErrMessage.setText("아이디 또는 비밀번호를 확인해주세요");
@@ -187,8 +186,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
-
 
 
 }

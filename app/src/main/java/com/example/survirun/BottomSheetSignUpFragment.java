@@ -12,13 +12,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 public class BottomSheetSignUpFragment extends BottomSheetDialogFragment {
     FragmentBottomSheetSignUpBinding binding;
     private BottomSheetListener mListener;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentBottomSheetSignUpBinding.inflate(inflater, container, false);
         View v = binding.getRoot();
-        mListener = (BottomSheetListener)getContext();
+        mListener = (BottomSheetListener) getContext();
         binding.gallery.setOnClickListener(view -> {
             mListener.onClickGallery();
         });
@@ -30,9 +31,12 @@ public class BottomSheetSignUpFragment extends BottomSheetDialogFragment {
         });
         return v;
     }
-    public interface BottomSheetListener{
+
+    public interface BottomSheetListener {
         void onClickGallery();
+
         void onClickCamera();
+
         void onClickBasics();
     }
 }

@@ -10,6 +10,7 @@ import com.example.survirun.databinding.ActivityExplanationBinding;
 public class ExplanationActivity extends Activity {
     ActivityExplanationBinding binding;
     String result;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

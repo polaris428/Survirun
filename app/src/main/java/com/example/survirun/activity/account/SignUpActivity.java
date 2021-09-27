@@ -29,14 +29,12 @@ import retrofit2.Response;
 public class SignUpActivity extends AppCompatActivity {
     ActivitySignUpBinding binding;
     String id;
-    FirebaseAuth firebaseAuth;
 
     boolean emailTrue = false;
     boolean pawTrue = false;
-    boolean emileCheck=false;
+    boolean emileCheck = false;
     String email;
-    String pwe;;
-
+    String pwe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +42,6 @@ public class SignUpActivity extends AppCompatActivity {
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        firebaseAuth = FirebaseAuth.getInstance();
-
 
         binding.idInputEdittext.addTextChangedListener(new TextWatcher() {
             @Override
@@ -74,32 +70,29 @@ public class SignUpActivity extends AppCompatActivity {
         binding.duplicateCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(emailTrue){
+                if (emailTrue) {
                     email = binding.idInputEdittext.getText().toString().trim();
                     if (email.equals("")) {
                         binding.idErrorTextview.setVisibility(View.VISIBLE);
                         binding.idErrorTextview.setText(R.string.email_enter);
-
                     } else {
-
                         email = binding.idInputEdittext.getText().toString().trim();
-                        Call<EmileCheck>call=ServerClient.getServerService().getEmileCheck(email);
+                        Call<EmileCheck> call = ServerClient.getServerService().getEmileCheck(email);
                         call.enqueue(new Callback<EmileCheck>() {
                             @Override
                             public void onResponse(Call<EmileCheck> call, Response<EmileCheck> response) {
-                                if(response.isSuccessful()){
-                                    Log.d("adsf",response.body()+"");
-                                    if(response.body().exists){
-                                        Log.d("qwer",response.body().exists+"");
+                                if (response.isSuccessful()) {
+                                    Log.d("adsf", response.body() + "");
+                                    if (response.body().exists) {
+                                        Log.d("qwer", response.body().exists + "");
                                         binding.idErrorTextview.setVisibility(View.VISIBLE);
-                                        Log.d("emile",email);
+                                        Log.d("emile", email);
                                         binding.idErrorTextview.setText(R.string.email_already);
-
-                                    }else{
-                                        Log.d("qwer",response.body().exists+"");
+                                    } else {
+                                        Log.d("qwer", response.body().exists + "");
                                         binding.idErrorTextview.setVisibility(View.VISIBLE);
-                                        emileCheck=true;
-                                        Log.d("emile",email);
+                                        emileCheck = true;
+                                        Log.d("emile", email);
                                         binding.idErrorTextview.setText(R.string.email_can_use);
                                     }
                                 }
@@ -111,9 +104,7 @@ public class SignUpActivity extends AppCompatActivity {
                             }
                         });
                     }
-
                 }
-
             }
         });
         binding.passwordCheckEdittext.addTextChangedListener(new TextWatcher() {
@@ -142,29 +133,24 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         binding.signUpButton.setOnClickListener(v -> {
-
-            if (pawTrue && emailTrue&&emileCheck) {
-
+            if (pawTrue && emailTrue && emileCheck) {
                 pwe = binding.passwordInputEdittext.getText().toString().trim();
-                NewUserData newUserData=new NewUserData(email,pwe,"");
+                NewUserData newUserData = new NewUserData(email, pwe, "");
                 Call<TokenData> call = ServerClient.getServerService().signUp(newUserData);
                 call.enqueue(new Callback<TokenData>() {
                     @Override
                     public void onResponse(Call<TokenData> call, Response<TokenData> response) {
-                        if(response.isSuccessful()){
-
-
+                        if (response.isSuccessful()) {
                             login();
-                            LoginData loginData =new LoginData(email,pwe);
-                            Call<TokenData> call1=ServerClient.getServerService().login(loginData);
+                            LoginData loginData = new LoginData(email, pwe);
+                            Call<TokenData> call1 = ServerClient.getServerService().login(loginData);
                             call1.enqueue(new Callback<TokenData>() {
                                 @Override
                                 public void onResponse(Call<TokenData> call, Response<TokenData> response) {
-                                    if(response.isSuccessful()){
-                                        Intent intent=new Intent(SignUpActivity.this,SignUpNameActivity.class);
+                                    if (response.isSuccessful()) {
+                                        Intent intent = new Intent(SignUpActivity.this, SignUpNameActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
-
                                     }
                                 }
 
@@ -173,18 +159,16 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 }
                             });
-                        }else{
+                        } else {
                             try {
 
-                                Log.e("SignUpActivity",response.errorBody().string());
+                                Log.e("SignUpActivity", response.errorBody().string());
 
                             } catch (IOException e) {
                                 Toast.makeText(SignUpActivity.this, R.string.format_error, Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                             }
-
                         }
-
                     }
 
                     @Override
@@ -192,19 +176,12 @@ public class SignUpActivity extends AppCompatActivity {
                         t.printStackTrace();
                         Toast.makeText(SignUpActivity.this, R.string.format_error, Toast.LENGTH_SHORT).show();
                     }
-
                 });
             }
-
-
-
-
-
-            });
+        });
     }
 
     public void login() {
-
         SharedPreferences sharedPreferences = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
         SharedPreferences.Editor editor = sharedPreferences.edit(); //sharedPreferences를 제어할 editor를 선언
         editor.putString("id", id);

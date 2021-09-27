@@ -29,6 +29,7 @@ public class SignUpNameActivity extends AppCompatActivity {
     String name;
     String token;
     SharedPreferences.Editor editor;
+
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +37,11 @@ public class SignUpNameActivity extends AppCompatActivity {
         binding = ActivitySignUpNameBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
         SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
-        editor=sf.edit();
+        editor = sf.edit();
         token = sf.getString("token", "");
+
         binding.textView.setCharacterDelay(160);
         binding.textView.displayTextWithAnimation("안녕하세요");
 
@@ -51,7 +54,7 @@ public class SignUpNameActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length()>=1){
+                if (s.length() >= 1) {
                     binding.nameErrMessage.setVisibility(View.INVISIBLE);
                 }
                 binding.nameSendButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
@@ -62,27 +65,26 @@ public class SignUpNameActivity extends AppCompatActivity {
 
             }
         });
+
         binding.nameSendButton.setOnClickListener(v -> {
             name = binding.nameInputEdittext.getText().toString();
-            if (name.replace(" ", "").length()==0){
-               binding.nameErrMessage.setVisibility(View.VISIBLE);
-            }
-            else{
+            if (name.replace(" ", "").length() == 0) {
+                binding.nameErrMessage.setVisibility(View.VISIBLE);
+            } else {
 
-
-                Call<ResultData> call= ServerClient.getServerService().inputName(name,token);
+                Call<ResultData> call = ServerClient.getServerService().inputName(name, token);
                 call.enqueue(new Callback<ResultData>() {
                     @Override
                     public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                        if(response.isSuccessful()){
-                            editor.putString("name",name);
+                        if (response.isSuccessful()) {
+                            editor.putString("name", name);
                             editor.commit();
-                            Intent intent=new Intent(SignUpNameActivity.this,SignUpProfileActivity.class);
+                            Intent intent = new Intent(SignUpNameActivity.this, SignUpProfileActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
-                        }else {
+                        } else {
                             response.errorBody();
-                            Log.d("adsf",   response.errorBody().toString());
+                            Log.d("adsf", response.errorBody().toString());
                         }
                     }
 
@@ -94,15 +96,10 @@ public class SignUpNameActivity extends AppCompatActivity {
             }
 
         });
+
         Handler animationCompleteCallBack = new Handler(msg -> {
             Log.i("Log", "Animation Completed");
             return false;
         });
-
-
-
-
     }
-
-
 }
