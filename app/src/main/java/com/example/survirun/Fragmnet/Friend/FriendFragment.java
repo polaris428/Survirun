@@ -30,51 +30,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FriendFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FriendFragment extends Fragment {
     FragmentFriendBinding binding;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public FriendFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FriendFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FriendFragment newInstance(String param1, String param2) {
-        FriendFragment fragment = new FriendFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -83,16 +43,16 @@ public class FriendFragment extends Fragment {
         binding = FragmentFriendBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         SharedPreferences sf = getContext().getSharedPreferences("Login", getContext().MODE_PRIVATE);
-        String token=sf.getString("token","");
+        String token = sf.getString("token", "");
 
-        Call<FindUserData> call= ServerClient.getServerService().getFriendList(token);
+        Call<FindUserData> call = ServerClient.getServerService().getFriendList(token);
         call.enqueue(new Callback<FindUserData>() {
             @Override
             public void onResponse(Call<FindUserData> call, Response<FindUserData> response) {
-                if(response.isSuccessful()){
-                    Log.d("asdf",response.body().friends.size()+"");
+                if (response.isSuccessful()) {
+                    Log.d("asdf", response.body().friends.size() + "");
 
-                    ArrayList list=new ArrayList();
+                    ArrayList list = new ArrayList();
                     FriendAdapter adapter = new FriendAdapter(list);
                     binding.friendListRecyclerView.setAdapter(adapter);
                 }
@@ -108,38 +68,12 @@ public class FriendFragment extends Fragment {
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              Call<ResultData>call1=ServerClient.getServerService().PostFindFriend(token,binding.emileInputEditText.getText().toString());
-              call1.enqueue(new Callback<ResultData>() {
-                  @Override
-                  public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                      if(response.isSuccessful()){
-
-                      }
-                  }
-
-                  @Override
-                  public void onFailure(Call<ResultData> call, Throwable t) {
-
-                  }
-              });
-            }
-        });
-        Log.d("토큰",token);
-        binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        binding.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Call<ResultData>call1=ServerClient.getServerService().postAddFriend(token,"",binding.emileInputEditText.getText().toString());
+                Call<ResultData> call1 = ServerClient.getServerService().PostFindFriend(token, binding.emileInputEditText.getText().toString());
                 call1.enqueue(new Callback<ResultData>() {
                     @Override
                     public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                        if(response.isSuccessful()){
-                            Log.d("adsf",response.body().result.toString());
-                        }else{
-                            Log.d("asdf",binding.emileInputEditText.getText().toString());
-                            Log.d("adsf","실패");
-                            Log.d("adsf",token);
+                        if (response.isSuccessful()) {
+
                         }
                     }
 
@@ -151,7 +85,32 @@ public class FriendFragment extends Fragment {
             }
         });
 
+        Log.d("토큰", token);
+        binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        binding.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Call<ResultData> call1 = ServerClient.getServerService().postAddFriend(token, "", binding.emileInputEditText.getText().toString());
+                call1.enqueue(new Callback<ResultData>() {
+                    @Override
+                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("adsf", response.body().result.toString());
+                        } else {
+                            Log.d("asdf", binding.emileInputEditText.getText().toString());
+                            Log.d("adsf", "실패");
+                            Log.d("adsf", token);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResultData> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
         return view;
     }
 }

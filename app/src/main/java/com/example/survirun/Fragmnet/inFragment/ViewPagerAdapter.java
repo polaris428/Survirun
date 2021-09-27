@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
-    private  final List<Fragment> list = new ArrayList<>();
+    private final List<Fragment> list = new ArrayList<>();
 
     public ViewPagerAdapter(@NonNull @NotNull StatisticsFragment fragmentActivity) {
         super(fragmentActivity);

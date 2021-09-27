@@ -13,6 +13,7 @@ import org.eazegraph.lib.models.BarModel;
 
 public class Fragment2 extends Fragment {
     Fragment2Binding binding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -29,7 +30,6 @@ public class Fragment2 extends Fragment {
         binding.tab1Chart2.addBar(new BarModel("17", 10f, 0xFF56B7F1));
 
         binding.tab1Chart2.startAnimation();
-
 
 
         return view;

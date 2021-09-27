@@ -37,9 +37,11 @@ public class SignUpNameActivity extends AppCompatActivity {
         binding = ActivitySignUpNameBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
         SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
         editor = sf.edit();
         token = sf.getString("token", "");
+
         binding.textView.setCharacterDelay(160);
         binding.textView.displayTextWithAnimation("안녕하세요");
 
@@ -63,11 +65,13 @@ public class SignUpNameActivity extends AppCompatActivity {
 
             }
         });
+
         binding.nameSendButton.setOnClickListener(v -> {
             name = binding.nameInputEdittext.getText().toString();
             if (name.replace(" ", "").length() == 0) {
                 binding.nameErrMessage.setVisibility(View.VISIBLE);
             } else {
+
                 Call<ResultData> call = ServerClient.getServerService().inputName(name, token);
                 call.enqueue(new Callback<ResultData>() {
                     @Override
@@ -92,6 +96,7 @@ public class SignUpNameActivity extends AppCompatActivity {
             }
 
         });
+
         Handler animationCompleteCallBack = new Handler(msg -> {
             Log.i("Log", "Animation Completed");
             return false;

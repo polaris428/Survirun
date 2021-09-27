@@ -14,6 +14,7 @@ import org.eazegraph.lib.models.BarModel;
 
 public class Fragment1 extends Fragment {
     Fragment1Binding binding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,9 +64,6 @@ public class Fragment1 extends Fragment {
         binding.kmBarGraph.addBar(new BarModel("17", 10f, 0xFF56B7F1));
 
         binding.kmBarGraph.startAnimation();
-
-
-
 
         return view;
     }
