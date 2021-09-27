@@ -34,36 +34,37 @@ public interface ServiceService {
     Call<TokenData> signUp(@Body NewUserData user);
 
     @POST("/api/v1/auth/local")
-    Call<TokenData>login(@Body LoginData loginData);
+    Call<TokenData> login(@Body LoginData loginData);
 
     @PATCH("/api/v1/auth/by-username/:{username}")
-    Call<ResultData>inputName(@Path("username")String name,@Header("x-access-token")String token);
+    Call<ResultData> inputName(@Path("username") String name, @Header("x-access-token") String token);
 
     @GET("/api/v1/exercise")
-    Call<ExerciseData>getExercise(@Header("x-access-token")String token);
+    Call<ExerciseData> getExercise(@Header("x-access-token") String token);
 
     @Multipart
     @POST("/api/v1/auth/profile")
-    Call<ResultData>postProfile(@Header("x-access-token")String token,@Part MultipartBody.Part file );
+    Call<ResultData> postProfile(@Header("x-access-token") String token, @Part MultipartBody.Part file);
 
     @GET("/api/v1/auth/by-email/{email}/exists")
-    Call<EmileCheck>getEmileCheck(@Path("email")String email);
+    Call<EmileCheck> getEmileCheck(@Path("email") String email);
 
     @GET("/api/v1/friend/list")
-    Call<FindUserData>getFriendList(@Header("x-access-token")String token);
+    Call<FindUserData> getFriendList(@Header("x-access-token") String token);
 
     @POST("/api/v1/friend")
-    Call<ResultData>PostFindFriend(@Header("x-access-token")String token, String emile);
+    Call<ResultData> PostFindFriend(@Header("x-access-token") String token, String emile);
+
     @GET("/api/v1/auth/profile")
-    Call<ProfileImageData>getProfileImage(@Header("x-access-token")String token );
+    Call<ProfileImageData> getProfileImage(@Header("x-access-token") String token);
 
 
     @POST("/api/v1/friend")
-    Call<ResultData>postAddFriend(@Header("x-access-token")String token,@Body String username,String emile);
+    Call<ResultData> postAddFriend(@Header("x-access-token") String token, @Body String username, String emile);
 
     @GET("/api/v1/auth/jwt-decode")
-    Call<JwtToken>getJwt(@Header("x-access-token")String token);
+    Call<JwtToken> getJwt(@Header("x-access-token") String token);
 
     @GET("/api/v1/auth/profile")
-    Call<ImageData>getProfile(@Header("x-access-token")String token,@Query("reqType")String reqType,@Query("resType")String resType);
+    Call<ImageData> getProfile(@Header("x-access-token") String token, @Query("reqType") String reqType, @Query("resType") String resType);
 }
