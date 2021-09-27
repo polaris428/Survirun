@@ -3,7 +3,6 @@ package com.example.survirun.activity.account;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
@@ -12,13 +11,11 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.survirun.R;
 import com.example.survirun.activity.MainActivity;
-import com.example.survirun.data.JwtToken;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.TokenData;
 import com.example.survirun.server.ServerClient;
