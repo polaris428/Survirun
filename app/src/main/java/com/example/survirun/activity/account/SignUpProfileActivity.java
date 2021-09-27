@@ -58,42 +58,43 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Multipart;
 
-public class SignUpProfileActivity extends AppCompatActivity implements BottomSheetSignUpFragment.BottomSheetListener{
-
+public class SignUpProfileActivity extends AppCompatActivity implements BottomSheetSignUpFragment.BottomSheetListener {
     public static final String MULTIPART_FORM_DATA = "multipart/form-data";
+
     String name;
     String token;
     String email;
+
     ActivitySignUpProfileBinding binding;
     Uri selectedImageUri;
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    SharedPreferences.Editor editor;
     BottomSheetSignUpFragment signUpFragment;
+
+    SharedPreferences sf;
+    SharedPreferences.Editor editor;
 
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= ActivitySignUpProfileBinding.inflate(getLayoutInflater());
+        binding = ActivitySignUpProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        mAuth = FirebaseAuth.getInstance();
-        SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);
-        editor=sf.edit();
+        sf = getSharedPreferences("Login", MODE_PRIVATE);
+        editor = sf.edit();
         signUpFragment = new BottomSheetSignUpFragment();
 
         binding.profileImageview.setBackground(new ShapeDrawable(new OvalShape()));
         binding.profileImageview.setClipToOutline(true);
         binding.textView.setCharacterDelay(160);
         binding.textView.displayTextWithAnimation("안녕하세요");
-        String story= name+(String) getText(R.string.story_profile);
+        String story = name + (String) getText(R.string.story_profile);
         Handler animationCompleteCallBack = new Handler(msg -> {
             Log.i("Log", "Animation Completed");
             return false;
         });
 
         token = sf.getString("token", "");
-        name=sf.getString("name","");
+        name = sf.getString("name", "");
         email = sf.getString("email", "");
 
         binding.profileImageview.setOnClickListener(v -> {
@@ -101,21 +102,19 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
         });
 
         binding.nextButton.setOnClickListener(v -> {
-            if(selectedImageUri!=null) {
-
-
+            if (selectedImageUri != null) {
                 MultipartBody.Part body1 = prepareFilePart("image", selectedImageUri);
-                Call<ResultData>call= ServerClient.getServerService().postProfile(token,body1);
+                Call<ResultData> call = ServerClient.getServerService().postProfile(token, body1);
 
                 call.enqueue(new Callback<ResultData>() {
                     @Override
                     public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                        if(response.isSuccessful()){
-                            editor.putBoolean("profile",true);
-                            Intent intent =new Intent(SignUpProfileActivity.this, MainActivity.class);
+                        if (response.isSuccessful()) {
+                            editor.putBoolean("profile", true);
+                            Intent intent = new Intent(SignUpProfileActivity.this, MainActivity.class);
                             startActivity(intent);
-                        }else{
-                            Log.d("adsf",response.errorBody().toString());
+                        } else {
+                            Log.d("adsf", response.errorBody().toString());
                         }
                     }
 
@@ -124,22 +123,20 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
                         t.printStackTrace();
                     }
                 });
-            }
-            else{
+            } else {
                 Toast.makeText(getApplicationContext(), R.string.profile_error, Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
     }
 
     @Override
     public void onClickGallery() {//저장소 읽어오는 퍼미션
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
         }//퍼미션이 허용되지 않아 있다면 퍼미션 허용메세지 생성 & 코드0보내기
-        else{
+        else {
             setGallery();//퍼미션이 허용되어 있다면 갤러리불러오기
         }
         signUpFragment.dismiss();
@@ -147,13 +144,11 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
 
     @Override
     public void onClickCamera() {//카메라 퍼미션
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)==PackageManager.PERMISSION_DENIED){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);//코드 1보내기
-        }
-        else{
+        } else {
             setCamera();
         }
-
         signUpFragment.dismiss();
     }
 
@@ -167,7 +162,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
     }
 
     private String getRealPathFromURI(Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
+        String[] proj = {MediaStore.Images.Media.DATA};
         CursorLoader loader = new CursorLoader(this, contentUri, proj, null, null, null);
         Cursor cursor = loader.loadInBackground();
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -176,6 +171,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
         cursor.close();
         return result;
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -184,11 +180,10 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
 
             // requestPermission의 배열의 index가 아래 grantResults index와 매칭
             // 퍼미션이 승인되면
-            if(grantResults.length > 0  && grantResults[0]== PackageManager.PERMISSION_GRANTED){
-                if(requestCode==0){//위에서 코드 0을 보냄
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (requestCode == 0) {//위에서 코드 0을 보냄
                     setGallery();
-                }
-                else if(requestCode==1){//코드 1
+                } else if (requestCode == 1) {//코드 1
                     setCamera();
                 }
 
@@ -199,15 +194,14 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
                         || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
                     //퍼미션 2번까진 아래코드
                     Toast.makeText(SignUpProfileActivity.this, "퍼미션이 거부되었습니다. 다시 눌러 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
-
-
-                }else {
+                } else {
                     Toast.makeText(SignUpProfileActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
                     //2번이후론 알아서
                 }
             }
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -226,29 +220,32 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
                 Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
             }
         }
-        if(requestCode == 1){//코드 1번 카메라
-            if(resultCode == RESULT_OK){
-                try{
+        if (requestCode == 1) {//코드 1번 카메라
+            if (resultCode == RESULT_OK) {
+                try {
                     Bundle extras = data.getExtras();
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
                     selectedImageUri = getImageUri(this, imageBitmap);
                     Glide.with(getApplicationContext()).load(imageBitmap).into(binding.profileImageview);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
         }
     }
-    private void setGallery(){
+
+    private void setGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, 0);
     }
-    private void setCamera(){
+
+    private void setCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 1);
     }
+
     public Uri getImageUri(Context ctx, Bitmap bitmap) {//비트맵 Uri로 변환
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
@@ -264,8 +261,4 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
         RequestBody requestFile = RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), file);
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
-
-
-
-
 }
