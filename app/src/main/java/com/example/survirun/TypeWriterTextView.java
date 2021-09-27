@@ -32,6 +32,7 @@ public class TypeWriterTextView extends androidx.appcompat.widget.AppCompatTextV
 
     /**
      * Display text with type writer animation
+     *
      * @param txt content will be displayed
      */
     public void displayTextWithAnimation(CharSequence txt) {
@@ -45,6 +46,7 @@ public class TypeWriterTextView extends androidx.appcompat.widget.AppCompatTextV
 
     /**
      * Change the delay value with this method
+     *
      * @param m
      */
     public void setCharacterDelay(long m) {

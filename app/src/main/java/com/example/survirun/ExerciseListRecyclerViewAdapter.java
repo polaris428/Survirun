@@ -15,10 +15,10 @@ import com.example.survirun.activity.ExercisePreparationActivity;
 import java.util.ArrayList;
 
 public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseListRecyclerViewAdapter.ViewHolder> {
-    public ArrayList<ExerciseData> items ;
+    public ArrayList<ExerciseData> items;
 
     public ExerciseListRecyclerViewAdapter(ArrayList<ExerciseData> list) {
-        items = list ;
+        items = list;
     }
 
     @NonNull
@@ -32,18 +32,17 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ExerciseData data = items.get(position) ;
-        holder.textView.setText(data.getExName(position)+"   "+data.getHour(position)+"분");
+        ExerciseData data = items.get(position);
+        holder.textView.setText(data.getExName(position) + "   " + data.getHour(position) + "분");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(holder.itemView.getContext(), ExercisePreparationActivity.class);
+                Intent intent = new Intent(holder.itemView.getContext(), ExercisePreparationActivity.class);
                 holder.itemView.getContext().startActivity(intent);
             }
         });
 
     }
-
 
 
     @Override
@@ -54,11 +53,9 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
 
-
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView=itemView.findViewById(R.id.textView);
+            textView = itemView.findViewById(R.id.textView);
 
         }
     }

@@ -3,8 +3,6 @@ package com.example;
 public class ExerciseData {
     String exName;
     int hour;
-
-
     int calorie;
 
     public String getExName(int exName) {
@@ -22,6 +20,7 @@ public class ExerciseData {
     public void setHour(int hour) {
         this.hour = hour;
     }
+
     public int getCalorie(int position) {
         return calorie;
     }
@@ -29,8 +28,5 @@ public class ExerciseData {
     public void setCalorie(int calorie) {
         this.calorie = calorie;
     }
-
-
-
 
 }
