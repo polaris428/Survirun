@@ -14,6 +14,7 @@ import com.example.survirun.databinding.ActivityMapBinding;
 
 public class ExerciseStoryActivity extends AppCompatActivity {
     private ActivityExerciseStoryBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,16 +30,12 @@ public class ExerciseStoryActivity extends AppCompatActivity {
         binding.storyBody.setText(data);
         binding.negativeButton.setText(negativeBtnText);
         binding.positiveButton.setText(positiveBtnText);
-
-
-
-
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         //바깥레이어 클릭시 안닫히게
-        if(event.getAction()==MotionEvent.ACTION_OUTSIDE){
+        if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
             return false;
         }
         return true;
@@ -52,14 +49,14 @@ public class ExerciseStoryActivity extends AppCompatActivity {
 
     public void negativeBtnPressed(View v) {
         Intent i = new Intent();
-        i.putExtra("result",0);
+        i.putExtra("result", 0);
         setResult(RESULT_OK, i);
         finish();
     }
 
     public void positiveBtnPressed(View v) {
         Intent i = new Intent();
-        i.putExtra("result",1);
+        i.putExtra("result", 1);
         setResult(RESULT_OK, i);
         finish();
     }

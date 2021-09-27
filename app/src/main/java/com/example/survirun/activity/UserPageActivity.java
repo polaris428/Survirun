@@ -30,8 +30,10 @@ import retrofit2.Response;
 
 public class UserPageActivity extends AppCompatActivity {
     ActivityUserPageBinding binding;
+
     SharedPreferences sf;
     SharedPreferences.Editor editor;
+    AlertDialog.Builder builder;
     String token;
     String name;
 
@@ -46,7 +48,8 @@ public class UserPageActivity extends AppCompatActivity {
         editor = sf.edit();
         Log.d("adsf", token);
         binding.profileImageview.setImageResource(R.drawable.ic_profile);
-        AlertDialog.Builder builder = new AlertDialog.Builder(UserPageActivity.this);
+        builder = new AlertDialog.Builder(UserPageActivity.this);
+
         Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
         getProfile.enqueue(new Callback<ImageData>() {
             @Override
@@ -57,8 +60,6 @@ public class UserPageActivity extends AppCompatActivity {
                             .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
                             .error(R.drawable.ic_profile)
                             .into(binding.profileImageview);
-
-
                 }
             }
 

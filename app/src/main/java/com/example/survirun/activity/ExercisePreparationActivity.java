@@ -45,7 +45,7 @@ public class ExercisePreparationActivity extends AppCompatActivity {
         });
         binding.zombieSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             isCheckedZombie = isChecked;
-            if(isChecked){
+            if (isChecked) {
                 binding.storySwitch.setChecked(false);
                 binding.gpsSwitch.setChecked(false);
                 binding.noSwitch.setChecked(false);
@@ -53,7 +53,7 @@ public class ExercisePreparationActivity extends AppCompatActivity {
         });
         binding.storySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             isCheckedStory = isChecked;
-            if(isChecked){
+            if (isChecked) {
                 binding.zombieSwitch.setChecked(false);
                 binding.gpsSwitch.setChecked(false);
                 binding.noSwitch.setChecked(false);
@@ -61,7 +61,7 @@ public class ExercisePreparationActivity extends AppCompatActivity {
         });
         binding.gpsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             isCheckedGPS = isChecked;
-            if(isChecked){
+            if (isChecked) {
                 binding.zombieSwitch.setChecked(false);
                 binding.storySwitch.setChecked(false);
                 binding.noSwitch.setChecked(false);
@@ -69,7 +69,7 @@ public class ExercisePreparationActivity extends AppCompatActivity {
         });
         binding.noSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             isCheckedNo = isChecked;
-            if(isChecked){
+            if (isChecked) {
                 binding.zombieSwitch.setChecked(false);
                 binding.storySwitch.setChecked(false);
                 binding.gpsSwitch.setChecked(false);
@@ -77,8 +77,8 @@ public class ExercisePreparationActivity extends AppCompatActivity {
         });
         binding.exerciseStartButton.setOnClickListener(v -> {
             ArrayList<Integer> modeList = new ArrayList();
-            if(isCheckedZombie)modeList.add(MapActivity.ZOMBIE_MODE);
-            else if(isCheckedStory) modeList.add(MapActivity.STORY_MODE);
+            if (isCheckedZombie) modeList.add(MapActivity.ZOMBIE_MODE);
+            else if (isCheckedStory) modeList.add(MapActivity.STORY_MODE);
             else modeList.add(MapActivity.DEFAULT_MODE);
             Intent i = new Intent(ExercisePreparationActivity.this, MapActivity.class);
             i.putExtra("mode", modeList);
