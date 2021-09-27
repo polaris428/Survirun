@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.example.survirun.data.EmileCheck;
 import com.example.survirun.data.ExerciseData;
 import com.example.survirun.data.FindUserData;
+import com.example.survirun.data.JwtToken;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.NewUserData;
 import com.example.survirun.data.ProfileImageData;
@@ -58,5 +59,8 @@ public interface ServiceService {
 
     @POST("/api/v1/friend")
     Call<ResultData>postAddFriend(@Header("x-access-token")String token,@Body String username,String emile);
+
+    @GET("/api/v1/auth/jwt-decode")
+    Call<JwtToken>getJwt(@Header("x-access-token")String token);
 
 }

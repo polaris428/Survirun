@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.survirun.R;
 import com.example.survirun.activity.MainActivity;
+import com.example.survirun.data.JwtToken;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.TokenData;
 import com.example.survirun.server.ServerClient;
@@ -63,6 +64,7 @@ public class SplashActivity extends AppCompatActivity {
             public void onResponse(Call<TokenData> call, Response<TokenData> response) {
 
                 if (response.isSuccessful()) {
+                    Log.d("token", response.body().token);
                     editor.putString("email", email);
                     editor.putString("pwe", pwe);
                     editor.putString("token", response.body().token);
@@ -70,7 +72,7 @@ public class SplashActivity extends AppCompatActivity {
                     Intent intent;
 
                     if (!response.body().username) {
-                        Log.d("token", response.body().token);
+
                         intent = new Intent(SplashActivity.this, SignUpNameActivity.class);
                     } else {
                         if (response.body().profile) {
