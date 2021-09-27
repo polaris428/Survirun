@@ -15,6 +15,7 @@ import android.util.Log;
 import com.bumptech.glide.Glide;
 import com.example.survirun.R;
 import com.example.survirun.activity.account.LoginActivity;
+import com.example.survirun.data.ImageData;
 import com.example.survirun.data.JwtToken;
 import com.example.survirun.data.ProfileImageData;
 import com.example.survirun.databinding.ActivityUserPageBinding;
@@ -41,14 +42,14 @@ public class UserPageActivity extends AppCompatActivity {
         Log.d("adsf",token);
         binding.profileImageview.setImageResource(R.drawable.ic_profile);
         AlertDialog.Builder builder = new AlertDialog.Builder(UserPageActivity.this);
-        Call<JwtToken> call1=ServerClient.getServerService().getJwt(token);
-        call1.enqueue(new Callback<JwtToken>() {
+        Call<ImageData>getProfile=ServerClient.getServerService().getProfile(token,"self","url");
+        getProfile.enqueue(new Callback<ImageData>() {
             @Override
-            public void onResponse(Call<JwtToken> call, Response<JwtToken> response) {
+            public void onResponse(Call<ImageData> call, Response<ImageData> response) {
                 if(response.isSuccessful()){
-                    Log.d("adf",response.body()._id);
+                    Log.d("adf",response.body().img);
                     Glide.with(UserPageActivity.this)
-                            .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id="+response.body()._id)
+                            .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id="+response.body().img)
                             .error(R.drawable.ic_profile)
                             .into(binding.profileImageview);
 
@@ -57,8 +58,8 @@ public class UserPageActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<JwtToken> call, Throwable t) {
-
+            public void onFailure(Call<ImageData> call, Throwable t) {
+                t.printStackTrace();
             }
         });
 

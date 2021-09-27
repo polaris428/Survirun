@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.example.survirun.data.EmileCheck;
 import com.example.survirun.data.ExerciseData;
 import com.example.survirun.data.FindUserData;
+import com.example.survirun.data.ImageData;
 import com.example.survirun.data.JwtToken;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.NewUserData;
@@ -63,4 +64,6 @@ public interface ServiceService {
     @GET("/api/v1/auth/jwt-decode")
     Call<JwtToken>getJwt(@Header("x-access-token")String token);
 
+    @GET("/api/v1/auth/profile")
+    Call<ImageData>getProfile(@Header("x-access-token")String token,@Query("reqType")String reqType,@Query("resType")String resType);
 }
