@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,6 +26,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
+    ProgressDialog customProgressDialog;
 
     String email;
     String id;
@@ -42,6 +44,9 @@ public class LoginActivity extends AppCompatActivity {
         email = sf.getString("email", "");
         pwe = sf.getString("pwe", "");
         name=sf.getString("name","");
+
+        customProgressDialog = new ProgressDialog(this);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
 
         binding.idEdittext.addTextChangedListener(new TextWatcher() {
@@ -112,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                     email = binding.idEdittext.getText().toString().trim();
 
                     if (email.contains("@") == true) {
+                        customProgressDialog.show();
                         pwe = binding.passwordEdittext.getText().toString().trim();
                         LoginData loginData=new LoginData(email,pwe);
                         Call<TokenData> call= ServerClient.getServerService().login(loginData);
@@ -125,16 +131,19 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.commit();
 
                                     if(!response.body().username){
+                                        customProgressDialog.dismiss();
                                         Intent intent=new Intent(LoginActivity.this, SignUpNameActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
                                     }else{
                                         if(!response.body().profile){
+                                            customProgressDialog.dismiss();
                                             Intent intent=new Intent(LoginActivity.this, SignUpProfileActivity.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             startActivity(intent);
 
                                         }else{
+                                            customProgressDialog.dismiss();
                                             Intent intent=new Intent(LoginActivity.this, MainActivity.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             startActivity(intent);
@@ -143,6 +152,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                                 }else{
+                                    customProgressDialog.dismiss();
                                     binding.loginErrMessage.setVisibility(View.VISIBLE);
                                     binding.loginErrMessage.setText("아이디 또는 비밀번호를 확인해주세요");
                                 }
@@ -150,6 +160,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<TokenData> call, Throwable t) {
+                                customProgressDialog.dismiss();
                                 binding.loginErrMessage.setVisibility(View.VISIBLE);
                                 binding.loginErrMessage.setText("서버오류 서비스 이용에 불편을 드려 죄송합니다 ");
                             }
