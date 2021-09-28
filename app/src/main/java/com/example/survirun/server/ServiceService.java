@@ -6,7 +6,7 @@ import com.example.survirun.data.EmileCheck;
 import com.example.survirun.data.ExerciseData;
 import com.example.survirun.data.FindUserData;
 import com.example.survirun.data.ImageData;
-import com.example.survirun.data.JwtToken;
+import com.example.survirun.data.InfoData;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.NewUserData;
 import com.example.survirun.data.ProfileImageData;

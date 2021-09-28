@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -13,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.example.survirun.R;
 import com.example.survirun.activity.account.LoginActivity;
 import com.example.survirun.data.ImageData;
+import com.example.survirun.data.InfoData;
 import com.example.survirun.databinding.ActivityUserPageBinding;
 import com.example.survirun.server.ServerClient;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,11 +38,14 @@ public class UserPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityUserPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         sf = getSharedPreferences("Login", MODE_PRIVATE);
         token = sf.getString("token", "");
         name = sf.getString("name", "");
         editor = sf.edit();
         Log.d("adsf", token);
+        binding.profileImageview.setBackground(new ShapeDrawable(new OvalShape()));
+        binding.profileImageview.setClipToOutline(true);
         binding.profileImageview.setImageResource(R.drawable.ic_profile);
         builder = new AlertDialog.Builder(UserPageActivity.this);
 
@@ -61,7 +67,22 @@ public class UserPageActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+        Call<InfoData>call=ServerClient.getServerService().getInfo(token);
+        call.enqueue(new Callback<InfoData>() {
+            @Override
+            public void onResponse(Call<InfoData> call, Response<InfoData> response) {
+                if(response.isSuccessful()){
+                    editor.putString("name", response.body().username);
+                    editor.commit();
+                    binding.nameTextView.setText(name);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<InfoData> call, Throwable t) {
+
+            }
+        });
         binding.logoutButton.setOnClickListener(v -> {
             builder.setTitle(R.string.logout).setMessage(R.string.logout_user).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
