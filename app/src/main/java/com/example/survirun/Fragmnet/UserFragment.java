@@ -31,18 +31,15 @@ import retrofit2.Response;
 
 public class UserFragment extends Fragment {
     FragmentUserBinding binding;
-    Date currentTime = Calendar.getInstance().getTime();
-
     int progress = 0;
     int goalCalorie;
     int goalTime;
     int goalKm;
     String token;
-    String date;
-
     SharedPreferences goal;
     SharedPreferences sf;
 
+    SharedPreferences.Editor editor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,15 +48,15 @@ public class UserFragment extends Fragment {
         View view = binding.getRoot();
 
         goal = getContext().getSharedPreferences("goal", MODE_PRIVATE);
-        progress = goal.getInt("calorie", 400);
+        goalCalorie = goal.getInt("calorie", 400);
         goalTime = goal.getInt("time", 60);
         goalKm = goal.getInt("km", 5);
-
         sf = getContext().getSharedPreferences("Login", MODE_PRIVATE);
+        editor=sf.edit();
         token = sf.getString("token", "");
 
-        date = new SimpleDateFormat("(yy.MM.dd)", Locale.getDefault()).format(currentTime);
-        binding.dateTextview.setText(date);
+
+
 
 
         binding.userPageButton.setOnClickListener(v -> {
@@ -73,9 +70,12 @@ public class UserFragment extends Fragment {
             @Override
             public void onResponse(Call<ExerciseData> call, Response<ExerciseData> response) {
                 if (response.isSuccessful()) {
-                    binding.kmTextview.setText(response.body().km + "");
+                    binding.dateTextview.setText(response.body().date);
                     binding.calorieTextview.setText(response.body().calorie + "");
                     binding.timeTextview.setText(response.body().time + "");
+                    binding.kmTextview.setText(String.format("%.2f",response.body().km));
+                    editor.putString("data",response.body().date);
+
                     if (goalCalorie / 2 < response.body().calorie) {
                         progress = progress + 25;
                         binding.calorieCardView.setCardBackgroundColor(Color.YELLOW);
