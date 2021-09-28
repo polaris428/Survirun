@@ -2,6 +2,7 @@ package com.example.survirun.server;
 
 import android.net.Uri;
 
+import com.example.survirun.Medel.ScoreModel;
 import com.example.survirun.data.EmileCheck;
 import com.example.survirun.data.ExerciseData;
 import com.example.survirun.data.FindUserData;
@@ -67,4 +68,9 @@ public interface ServiceService {
 
     @GET("/api/v1/auth/profile")
     Call<ImageData> getProfile(@Header("x-access-token") String token, @Query("reqType") String reqType, @Query("resType") String resType);
+
+    @PATCH("/api/v1/exercise")
+    Call<ExerciseData>patchUploadExercise(@Header("x-access-token") String token, @Body ScoreModel scoreModel);
+
+
 }
