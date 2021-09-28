@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.example.survirun.data.FindUserData;
 import com.example.survirun.data.Friends;
 import com.example.survirun.data.ResultData;
+import com.example.survirun.data.getUserData;
 import com.example.survirun.databinding.FragmentFriendBinding;
 import com.example.survirun.server.ServerClient;
 import com.example.survirun.server.ServiceService;
@@ -91,24 +92,41 @@ public class FriendFragment extends Fragment {
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<ResultData> call1 = ServerClient.getServerService().postAddFriend(token, "", binding.emileInputEditText.getText().toString());
-                call1.enqueue(new Callback<ResultData>() {
+                Call<getUserData>call1=ServerClient.getServerService().getUser(token,binding.emileInputEditText.getText().toString());
+                call1.enqueue(new Callback<getUserData>() {
                     @Override
-                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                        if (response.isSuccessful()) {
-                            Log.d("adsf", response.body().result.toString());
-                        } else {
-                            Log.d("asdf", binding.emileInputEditText.getText().toString());
-                            Log.d("adsf", "실패");
-                            Log.d("adsf", token);
+                    public void onResponse(Call<getUserData> call, Response<getUserData> response) {
+                        if(response.isSuccessful()){
+                            Log.d("asfd",response.body().username+"");
+                        }else{
+                            Log.d("adsf","실패");
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<ResultData> call, Throwable t) {
-
+                    public void onFailure(Call<getUserData> call, Throwable t) {
+                        t.printStackTrace();
                     }
                 });
+
+//                Call<ResultData> call1 = ServerClient.getServerService().postAddFriend(token, "", binding.emileInputEditText.getText().toString());
+//                call1.enqueue(new Callback<ResultData>() {
+//                    @Override
+//                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+//                        if (response.isSuccessful()) {
+//                            Log.d("adsf", response.body().result.toString());
+//                        } else {
+//                            Log.d("asdf", binding.emileInputEditText.getText().toString());
+//                            Log.d("adsf", "실패");
+//                            Log.d("adsf", token);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResultData> call, Throwable t) {
+//
+//                    }
+//                });
             }
         });
         return view;

@@ -13,6 +13,7 @@ import com.example.survirun.data.NewUserData;
 import com.example.survirun.data.ProfileImageData;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.data.TokenData;
+import com.example.survirun.data.getUserData;
 
 import java.io.File;
 
@@ -37,7 +38,7 @@ public interface ServiceService {
     @POST("/api/v1/auth/local")
     Call<TokenData> login(@Body LoginData loginData);
 
-    @PATCH("/api/v1/auth/by-username/:{username}")
+    @PATCH("/api/v1/auth/by-username/{username}")
     Call<ResultData> inputName(@Path("username") String name, @Header("x-access-token") String token);
 
     @GET("/api/v1/exercise")
@@ -72,5 +73,6 @@ public interface ServiceService {
     @PATCH("/api/v1/exercise")
     Call<ExerciseData>patchUploadExercise(@Header("x-access-token") String token, @Body ScoreModel scoreModel);
 
-
+    @GET("/api/v1/auth/by-email/{email}")
+    Call<getUserData>getUser(@Header("x-access-token") String token,@Path("email")String email);
 }
