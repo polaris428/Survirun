@@ -1,5 +1,6 @@
 package com.example.survirun.Fragmnet.Friend;
 
+import android.animation.ObjectAnimator;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -11,9 +12,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.survirun.R;
+import com.example.survirun.activity.UserPageActivity;
+import com.example.survirun.data.ExerciseHistory;
 import com.example.survirun.data.FindUserData;
 import com.example.survirun.data.Friends;
+import com.example.survirun.data.ImageData;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.data.getUserData;
 import com.example.survirun.databinding.FragmentFriendBinding;
@@ -97,7 +104,28 @@ public class FriendFragment extends Fragment {
                     @Override
                     public void onResponse(Call<getUserData> call, Response<getUserData> response) {
                         if(response.isSuccessful()){
-                            Log.d("asfd",response.body().username+"");
+                            binding.cardView.setVisibility(View.VISIBLE);
+                            binding.usernameTextview.setText(response.body().username);
+                            ExerciseHistory exerciseHistory=response.body().exerciseHistory.get(0);
+                            binding.exerciseTextview.setText(exerciseHistory.calorie+"칼로리\n"+ exerciseHistory.km+"킬로미터\n"+exerciseHistory.time+"운동시간\n");
+                            Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, response.body().username, "url");
+                            getProfile.enqueue(new Callback<ImageData>() {
+                                @Override
+                                public void onResponse(Call<ImageData> call, Response<ImageData> response) {
+                                    if (response.isSuccessful()) {
+                                        Log.d("adf", response.body().img);
+                                        Glide.with(getContext())
+                                                .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
+                                                .error(R.drawable.ic_profile)
+                                                .into(binding.profileImageview);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ImageData> call, Throwable t) {
+                                    t.printStackTrace();
+                                }
+                            });
                         }else{
                             Log.d("adsf","실패");
                         }
@@ -129,6 +157,20 @@ public class FriendFragment extends Fragment {
 //                });
             }
         });
+
         return view;
+    }
+    void collapseExpandTextView() {
+        if (binding.cardItem.getVisibility() == View.GONE) {
+            // it's collapsed - expand it
+            binding.cardItem.setVisibility(View.VISIBLE);
+        } else {
+            // it's expanded - collapse it
+            binding.cardItem.setVisibility(View.GONE);
+        }
+
+
+        ObjectAnimator animation = ObjectAnimator.ofInt(binding.cardItem, "scaleY", binding.cardItem.getMaxHeight());
+        animation.setDuration(200).start();
     }
 }
