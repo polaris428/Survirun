@@ -1,34 +1,23 @@
 package com.example.survirun.activity.exercise;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.survirun.Medel.ScoreModel;
-import com.example.survirun.Medel.UserModel;
-import com.example.survirun.R;
 import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.ExerciseData;
-import com.example.survirun.databinding.ActivityExercisePreparationBinding;
 import com.example.survirun.databinding.ActivityExerciseResultBinding;
 import com.example.survirun.server.ServerClient;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Headers;
 
 public class ExerciseResultActivity extends AppCompatActivity {
     private ActivityExerciseResultBinding binding;
