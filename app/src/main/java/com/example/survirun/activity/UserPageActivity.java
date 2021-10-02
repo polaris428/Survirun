@@ -72,6 +72,7 @@ public class UserPageActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<InfoData> call, Response<InfoData> response) {
                 if(response.isSuccessful()){
+                    binding.emileText.setText(response.body().emile);
                     editor.putString("name", response.body().username);
                     editor.commit();
                     binding.nameTextView.setText(name);
