@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.ExerciseData;
 import com.example.survirun.R;
-import com.example.survirun.ExerciseListRecyclerViewAdapter;
+import com.example.survirun.activity.exercise.ExerciseListRecyclerViewAdapter;
 import com.example.survirun.databinding.FragmentExerciseBinding;
 
 import java.util.ArrayList;

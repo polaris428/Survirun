@@ -1,4 +1,4 @@
-package com.example.survirun;
+package com.example.survirun.activity.exercise;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ExerciseData;
+import com.example.survirun.R;
 import com.example.survirun.activity.ExercisePreparationActivity;
 
 import java.util.ArrayList;

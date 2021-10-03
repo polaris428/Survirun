@@ -1,4 +1,4 @@
-package com.example.survirun;
+package com.example.survirun.server;
 
 import android.Manifest;
 import android.app.Notification;
@@ -26,7 +26,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.survirun.activity.MainActivity;
 
-public class BAckService extends Service implements SensorEventListener {
+public class BackService extends Service implements SensorEventListener {
 
     private static final String TAG = "서비스";
     SensorManager sensorManager;
