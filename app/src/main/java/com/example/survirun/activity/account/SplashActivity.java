@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.survirun.NetworkStatus;
 import com.example.survirun.R;
 import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.LoginData;
@@ -38,6 +39,18 @@ public class SplashActivity extends AppCompatActivity {
         email = sf.getString("email", "");
         pwe = sf.getString("pwe", "");
         editor = sf.edit();
+        int status = NetworkStatus.getConnectivityStatus(getApplicationContext());
+        if(status == NetworkStatus.TYPE_MOBILE){
+            Log.d("네트워크 연결 상태","모바일로 연결");
+
+
+        }else if (status == NetworkStatus.TYPE_WIFI){
+            Log.d("네트워크 연결 상태","무선랜으로 연결됨");
+
+        }else {
+            Log.d("네트워크 연결 상태","연결안됨");
+        }
+
         /*if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
             requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
