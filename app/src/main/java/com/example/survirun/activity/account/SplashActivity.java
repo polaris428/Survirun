@@ -42,10 +42,20 @@ public class SplashActivity extends AppCompatActivity {
         int status = NetworkStatus.getConnectivityStatus(getApplicationContext());
         if(status == NetworkStatus.TYPE_MOBILE){
             Log.d("네트워크 연결 상태","모바일로 연결");
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACTIVITY_RECOGNITION, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    },
+                    1000);
 
 
         }else if (status == NetworkStatus.TYPE_WIFI){
             Log.d("네트워크 연결 상태","무선랜으로 연결됨");
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACTIVITY_RECOGNITION, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    },
+                    1000);
 
         }else {
             Log.d("네트워크 연결 상태","연결안됨");
@@ -56,11 +66,7 @@ public class SplashActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
         }
         verifyStoragePermissions(this);*/
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACTIVITY_RECOGNITION, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                },
-                1000);
+
         // 0.5초후
     }
 
