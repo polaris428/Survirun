@@ -6,6 +6,8 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -59,6 +61,8 @@ public class SplashActivity extends AppCompatActivity {
 
         }else {
             Log.d("네트워크 연결 상태","연결안됨");
+            showDialog();
+
         }
 
         /*if (ContextCompat.checkSelfPermission(this,
@@ -165,6 +169,18 @@ public class SplashActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+    void showDialog() {
+        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(SplashActivity.this).setTitle("인터넷 연결 오류").setMessage("인터넷 연결을 확인해주세요").setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+        AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.setCanceledOnTouchOutside(false);
+        msgDlg.setCancelable(false);
+        msgDlg.show();
     }
 
 }
