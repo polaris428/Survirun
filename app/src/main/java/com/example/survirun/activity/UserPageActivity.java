@@ -18,7 +18,6 @@ import com.example.survirun.data.ImageData;
 import com.example.survirun.data.InfoData;
 import com.example.survirun.databinding.ActivityUserPageBinding;
 import com.example.survirun.server.ServerClient;
-import com.google.firebase.auth.FirebaseAuth;
 
 import retrofit2.Call;
 import retrofit2.Callback;

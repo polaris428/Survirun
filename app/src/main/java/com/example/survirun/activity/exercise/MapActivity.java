@@ -40,10 +40,7 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Time;
@@ -340,7 +337,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onSnapshotReady(Bitmap snapshot)
             {
-                sendDataToFirebase((int) kcal, walkingDistance / 1000, (int) timeToSec, snapshot);
+                //sendDataToFirebase((int) kcal, walkingDistance / 1000, (int) timeToSec, snapshot);
 
 
 
@@ -585,27 +582,27 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
-    public void sendDataToFirebase(int kcal, double km, int time, Bitmap mapImg) {
-        String uid = FirebaseAuth.getInstance().getUid();
-        ScoreModel scoreModel = new ScoreModel();
-        scoreModel.todayCalorie = kcal;
-        scoreModel.todayKm = km;
-        scoreModel.todayExerciseTime = time;
-        SimpleDateFormat format1 = new SimpleDateFormat( "yyyy-MM-dd/HH:mm:ss");
-        Date t = new Date();
-        String time1 = format1.format(t);
-        StorageReference imgRef = FirebaseStorage.getInstance().getReference().child("exercisePhoto/"+uid+"/"+time1);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        mapImg.compress(Bitmap.CompressFormat.JPEG,50, baos);
-        byte[] d = baos.toByteArray();
-        if (uid != null) {
-            FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(scoreModel);
-            imgRef.putBytes(d);
-        }
-
-
-
-    }
+//    public void sendDataToFirebase(int kcal, double km, int time, Bitmap mapImg) {
+//        String uid = FirebaseAuth.getInstance().getUid();
+//        ScoreModel scoreModel = new ScoreModel();
+//        scoreModel.todayCalorie = kcal;
+//        scoreModel.todayKm = km;
+//        scoreModel.todayExerciseTime = time;
+//        SimpleDateFormat format1 = new SimpleDateFormat( "yyyy-MM-dd/HH:mm:ss");
+//        Date t = new Date();
+//        String time1 = format1.format(t);
+//        StorageReference imgRef = FirebaseStorage.getInstance().getReference().child("exercisePhoto/"+uid+"/"+time1);
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        mapImg.compress(Bitmap.CompressFormat.JPEG,50, baos);
+//        byte[] d = baos.toByteArray();
+//        if (uid != null) {
+//            FirebaseDatabase.getInstance().getReference().child("UserProfile").child(uid).setValue(scoreModel);
+//            imgRef.putBytes(d);
+//        }
+//
+//
+//
+//    }
 
     public void btnVisibilityChange(Button btn) {
         if (btn.getVisibility() == View.VISIBLE) {

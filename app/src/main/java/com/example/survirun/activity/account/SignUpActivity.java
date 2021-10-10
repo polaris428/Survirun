@@ -18,7 +18,6 @@ import com.example.survirun.data.NewUserData;
 import com.example.survirun.data.TokenData;
 import com.example.survirun.databinding.ActivitySignUpBinding;
 import com.example.survirun.server.ServerClient;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 
