@@ -1,10 +1,9 @@
 package com.example.survirun.server;
 
-import android.net.Uri;
-
 import com.example.survirun.Medel.ScoreModel;
 import com.example.survirun.data.EmileCheck;
 import com.example.survirun.data.ExerciseData;
+import com.example.survirun.data.ExerciseRecordData;
 import com.example.survirun.data.FindUserData;
 import com.example.survirun.data.ImageData;
 import com.example.survirun.data.InfoData;
@@ -15,15 +14,11 @@ import com.example.survirun.data.ResultData;
 import com.example.survirun.data.TokenData;
 import com.example.survirun.data.getUserData;
 
-import java.io.File;
-
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -62,7 +57,7 @@ public interface ServiceService {
 
 
     @POST("/api/v1/friend")
-    Call<ResultData> postAddFriend(@Header("x-access-token") String token, @Body String username, String emile);
+    Call<ResultData> postAddFriend(@Header("x-access-token") String token, @Query("reqType")String reqType,@Body String  email);
 
     @GET("/api/v1/auth/jwt-decode")
     Call<InfoData>getInfo(@Header("x-access-token")String token);
@@ -75,4 +70,7 @@ public interface ServiceService {
 
     @GET("/api/v1/auth/by-email/{email}")
     Call<getUserData>getUser(@Header("x-access-token") String token,@Path("email")String email);
+
+    @GET("/api/v1/exercise/list")
+    Call<ExerciseRecordData>getExerciseRecordData(@Header("x-access-token")String token);
 }
