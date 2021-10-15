@@ -16,11 +16,11 @@
         android:layout_marginTop="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/button">
+        app:layout_constraintRight_toLeftOf="@+id/find_friends">
 
     </EditText>
     <Button
-        android:id="@+id/button"
+        android:id="@+id/find_friends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,6 +32,7 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:visibility="invisible"
         app:layout_constraintTop_toBottomOf="@+id/emileInputEditText">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -79,8 +80,10 @@
 
 
             <Button
+                android:id="@+id/add_friend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="친구추가"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
 

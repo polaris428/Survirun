@@ -1,10 +1,8 @@
 package com.example.survirun.Fragmnet.Friend;
 
-import android.animation.ObjectAnimator;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -12,20 +10,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.survirun.R;
-import com.example.survirun.activity.UserPageActivity;
 import com.example.survirun.data.ExerciseHistory;
 import com.example.survirun.data.FindUserData;
-import com.example.survirun.data.Friends;
 import com.example.survirun.data.ImageData;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.data.getUserData;
 import com.example.survirun.databinding.FragmentFriendBinding;
 import com.example.survirun.server.ServerClient;
-import com.example.survirun.server.ServiceService;
 
 
 import java.util.ArrayList;
@@ -69,30 +63,11 @@ public class FriendFragment extends Fragment {
         });
 
 
-        binding.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Call<ResultData> call1 = ServerClient.getServerService().PostFindFriend(token, binding.emileInputEditText.getText().toString());
-                call1.enqueue(new Callback<ResultData>() {
-                    @Override
-                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                        if (response.isSuccessful()) {
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResultData> call, Throwable t) {
-
-                    }
-                });
-            }
-        });
 
         Log.d("토큰", token);
         binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        binding.button.setOnClickListener(new View.OnClickListener() {
+        binding.findFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Call<getUserData>call1=ServerClient.getServerService().getUser(token,binding.emileInputEditText.getText().toString());
@@ -132,41 +107,39 @@ public class FriendFragment extends Fragment {
                         t.printStackTrace();
                     }
                 });
+                //친구 찾는 코드
+                binding.addFriend.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-//                Call<ResultData> call1 = ServerClient.getServerService().postAddFriend(token, "", binding.emileInputEditText.getText().toString());
-//                call1.enqueue(new Callback<ResultData>() {
-//                    @Override
-//                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-//                        if (response.isSuccessful()) {
-//                            Log.d("adsf", response.body().result.toString());
-//                        } else {
-//                            Log.d("asdf", binding.emileInputEditText.getText().toString());
-//                            Log.d("adsf", "실패");
-//                            Log.d("adsf", token);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<ResultData> call, Throwable t) {
-//
-//                    }
-//                });
+                        Call<ResultData> call2 = ServerClient.getServerService().postAddFriend(token, "email", binding.emileInputEditText.getText().toString());
+                        call2.enqueue(new Callback<ResultData>() {
+                            @Override
+                            public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                                if (response.isSuccessful()) {
+                                    //성공시
+                                    Log.d("adsf", response.body().result.toString());
+                                } else {
+                                    //실패시
+                                    Log.d("asdf", binding.emileInputEditText.getText().toString());
+                                    Log.d("adsf",response.code()+"");
+                                    Log.d("adsf", "실패");
+                                    Log.d("adsf", token);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResultData> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                });
+
             }
         });
 
         return view;
     }
-    void collapseExpandTextView() {
-        if (binding.cardItem.getVisibility() == View.GONE) {
-            // it's collapsed - expand it
-            binding.cardItem.setVisibility(View.VISIBLE);
-        } else {
-            // it's expanded - collapse it
-            binding.cardItem.setVisibility(View.GONE);
-        }
 
-
-        ObjectAnimator animation = ObjectAnimator.ofInt(binding.cardItem, "scaleY", binding.cardItem.getMaxHeight());
-        animation.setDuration(200).start();
-    }
 }
