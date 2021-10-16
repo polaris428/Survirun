@@ -71,4 +71,6 @@
     <string name="email_enter">이메일을 입력해주세요</string>
     <string name="email_already">이미 가입된 이메일 입니다</string>
     <string name="email_can_use">사용 가능한 이메일 입니다</string>
+    <string name="check_id_pwd">아이디 또는 비밀번호를 확인해주세요</string>
+    <string name="server_error">서버오류 서비스 이용에 불편을 드려 죄송합니다</string>
 </resources>

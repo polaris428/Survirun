@@ -71,4 +71,6 @@
     <string name="email_enter">Please enter your email.</string>
     <string name="email_already">This email has already been signed up.</string>
     <string name="email_can_use">You can use this email.</string>
+    <string name="check_id_pwd">Please check your ID or password.</string>
+    <string name="server_error">Sorry for the inconvenience caused by the server error.</string>
 </resources>

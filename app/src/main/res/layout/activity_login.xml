@@ -20,9 +20,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:endIconMode="clear_text"
         app:layout_constraintTop_toBottomOf="@+id/logo_imageview">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/id_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,10 +38,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintTop_toBottomOf="@+id/layout1"
         app:passwordToggleEnabled="true">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,8 +51,21 @@
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/sign_up_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:text="@string/no_account"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout2" />
     <TextView
-        android:id="@+id/login_err_message"
+        android:id="@+id/login_error_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
@@ -55,20 +73,7 @@
         android:layout_marginTop="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout2" >
-
-    </TextView>
-    <TextView
-        android:id="@+id/sign_up_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/no_account"
-        android:textSize="15sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_err_message" />
-
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_textview"/>
     <Button
         android:id="@+id/login_button"
         android:layout_width="match_parent"
@@ -78,10 +83,4 @@
         android:text="@string/login"
         android:textColor="@color/text_color"
         app:layout_constraintTop_toBottomOf="@+id/sign_up_textview" />
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/google_login_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/login_button"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

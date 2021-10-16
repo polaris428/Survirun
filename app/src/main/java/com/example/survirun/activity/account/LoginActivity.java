@@ -109,79 +109,75 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //firebaseAuth의 인스턴스를 가져옴
-        binding.loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!pwe.equals("") && !id.equals("")) {
-                    email = binding.idEdittext.getText().toString().trim();
-                    if (email.contains("@") == true) {
-                        customProgressDialog.show();
-                        pwe = binding.passwordEdittext.getText().toString().trim();
-                        LoginData loginData = new LoginData(email, pwe);
-                        Call<TokenData> call = ServerClient.getServerService().login(loginData);
-                        call.enqueue(new Callback<TokenData>() {
-                            @Override
-                            public void onResponse(Call<TokenData> call, Response<TokenData> response) {
-                                if (response.isSuccessful()) {
-                                    editor.putString("email", email);
-                                    editor.putString("pwe", pwe);
-                                    editor.putString("token", response.body().token);
-                                    editor.commit();
+        binding.loginButton.setOnClickListener(v -> {
+            if (!pwe.equals("") && !id.equals("")) {
+                email = binding.idEdittext.getText().toString().trim();
+                if (email.contains("@")) {
+                    customProgressDialog.show();
+                    pwe = binding.passwordEdittext.getText().toString().trim();
+                    LoginData loginData = new LoginData(email, pwe);
+                    Call<TokenData> call = ServerClient.getServerService().login(loginData);
+                    call.enqueue(new Callback<TokenData>() {
+                        @Override
+                        public void onResponse(Call<TokenData> call, Response<TokenData> response) {
+                            if (response.isSuccessful()) {
+                                editor.putString("email", email);
+                                editor.putString("pwe", pwe);
+                                editor.putString("token", response.body().token);
+                                editor.commit();
 
-                                    if (!response.body().username) {
+                                if (!response.body().username) {
+                                    customProgressDialog.dismiss();
+                                    Intent intent = new Intent(LoginActivity.this, SignUpNameActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                } else {
+                                    if (!response.body().profile) {
                                         customProgressDialog.dismiss();
-                                        Intent intent = new Intent(LoginActivity.this, SignUpNameActivity.class);
+                                        Intent intent = new Intent(LoginActivity.this, SignUpProfileActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
+
                                     } else {
-                                        if (!response.body().profile) {
-                                            customProgressDialog.dismiss();
-                                            Intent intent = new Intent(LoginActivity.this, SignUpProfileActivity.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(intent);
-
-                                        } else {
-                                            customProgressDialog.dismiss();
-                                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(intent);
-                                        }
+                                        customProgressDialog.dismiss();
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
                                     }
-
-
-                                } else {
-                                    customProgressDialog.dismiss();
-                                    binding.loginErrMessage.setVisibility(View.VISIBLE);
-                                    binding.loginErrMessage.setText("아이디 또는 비밀번호를 확인해주세요");
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<TokenData> call, Throwable t) {
+
+                            } else {
                                 customProgressDialog.dismiss();
-                                binding.loginErrMessage.setVisibility(View.VISIBLE);
-                                binding.loginErrMessage.setText("서버오류 서비스 이용에 불편을 드려 죄송합니다 ");
+                                binding.loginErrorMessage.setVisibility(View.VISIBLE);
+                                binding.loginErrorMessage.setText(R.string.check_id_pwd);
                             }
-                        });
+                        }
 
-                    } else {
-                        Toast.makeText(LoginActivity.this, R.string.email_error, Toast.LENGTH_SHORT).show();
-                    }
+                        @Override
+                        public void onFailure(Call<TokenData> call, Throwable t) {
+                            customProgressDialog.dismiss();
+                            binding.loginErrorMessage.setVisibility(View.VISIBLE);
+                            binding.loginErrorMessage.setText(R.string.server_error);
+                        }
+                    });
+
                 } else {
-                    Toast.makeText(LoginActivity.this, R.string.fill_error, Toast.LENGTH_SHORT).show();
+
+                    binding.loginErrorMessage.setVisibility(View.VISIBLE);
+                    binding.loginErrorMessage.setText(R.string.email_error);
                 }
+            } else {
 
+                binding.loginErrorMessage.setVisibility(View.VISIBLE);
+                binding.loginErrorMessage.setText(R.string.fill_error);
             }
-
 
         });
 
-        binding.signUpTextview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
+        binding.signUpTextview.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+            startActivity(intent);
         });
 
     }
