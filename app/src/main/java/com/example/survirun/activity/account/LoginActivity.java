@@ -175,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
-        binding.signUpTextview.setOnClickListener(v -> {
+        binding.signUpButton.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
