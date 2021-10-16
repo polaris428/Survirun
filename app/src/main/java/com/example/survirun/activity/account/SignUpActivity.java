@@ -1,9 +1,14 @@
 package com.example.survirun.activity.account;
 
+import static com.example.survirun.R.string.email_enter;
+import static com.example.survirun.R.string.email_error;
+import static com.example.survirun.R.string.pwd_enter;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +25,7 @@ import com.example.survirun.databinding.ActivitySignUpBinding;
 import com.example.survirun.server.ServerClient;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,18 +50,16 @@ public class SignUpActivity extends AppCompatActivity {
 
         binding.idInputEdittext.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String emile = binding.idInputEdittext.getText().toString();
-                if (emile.indexOf("@") != -1) {
-                    binding.idErrorTextview.setVisibility(View.INVISIBLE);
+                if (android.util.Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches() && !s.toString().isEmpty()) {
+                    binding.layout1.setErrorEnabled(false);
                     emailTrue = true;
                 } else {
-                    binding.idErrorTextview.setVisibility(View.VISIBLE);
+                    binding.layout1.setErrorEnabled(true);
+                    binding.layout1.setError(getString(email_error));
                     emailTrue = false;
                 }
             }
@@ -66,46 +70,68 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        binding.duplicateCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.duplicateCheck.setOnClickListener(v -> {
+            email = binding.idInputEdittext.getText().toString().trim();
+            if (email.isEmpty()) {
+                binding.layout1.setErrorEnabled(true);
+                binding.layout1.setError(getString(email_enter));
+            } else {
                 if (emailTrue) {
-                    email = binding.idInputEdittext.getText().toString().trim();
-                    if (email.equals("")) {
-                        binding.idErrorTextview.setVisibility(View.VISIBLE);
-                        binding.idErrorTextview.setText(R.string.email_enter);
-                    } else {
-                        email = binding.idInputEdittext.getText().toString().trim();
-                        Call<EmileCheck> call = ServerClient.getServerService().getEmileCheck(email);
-                        call.enqueue(new Callback<EmileCheck>() {
-                            @Override
-                            public void onResponse(Call<EmileCheck> call, Response<EmileCheck> response) {
-                                if (response.isSuccessful()) {
-                                    Log.d("adsf", response.body() + "");
-                                    if (response.body().exists) {
-                                        Log.d("qwer", response.body().exists + "");
-                                        binding.idErrorTextview.setVisibility(View.VISIBLE);
-                                        Log.d("emile", email);
-                                        binding.idErrorTextview.setText(R.string.email_already);
-                                    } else {
-                                        Log.d("qwer", response.body().exists + "");
-                                        binding.idErrorTextview.setVisibility(View.VISIBLE);
-                                        emileCheck = true;
-                                        Log.d("emile", email);
-                                        binding.idErrorTextview.setText(R.string.email_can_use);
-                                    }
+                    Call<EmileCheck> call = ServerClient.getServerService().getEmileCheck(email);
+                    call.enqueue(new Callback<EmileCheck>() {
+                        @Override
+                        public void onResponse(Call<EmileCheck> call, Response<EmileCheck> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("adsf", response.body() + "");
+                                if (response.body().exists) {
+                                    Log.d("qwer", response.body().exists + "");
+                                    binding.layout1.setErrorEnabled(true);
+                                    Log.d("emile", email);
+                                    binding.layout1.setError(getString(R.string.email_already));
+                                } else {
+                                    Log.d("qwer", response.body().exists + "");
+                                    binding.layout1.setHelperTextEnabled(true);
+                                    binding.layout1.setEndIconDrawable(R.drawable.ic_baseline_check_circle_24);
+                                    binding.layout1.setEndIconTintList(ColorStateList.valueOf(getColor(R.color.green)));
+                                    emileCheck = true;
+                                    Log.d("emile", email);
+                                    binding.layout1.setHelperText(getString(R.string.email_can_use));
                                 }
                             }
+                        }
 
-                            @Override
-                            public void onFailure(Call<EmileCheck> call, Throwable t) {
-                                t.printStackTrace();
-                            }
-                        });
-                    }
+                        @Override
+                        public void onFailure(Call<EmileCheck> call, Throwable t) {
+                            t.printStackTrace();
+                        }
+                    });
                 }
+
             }
         });
+
+        binding.passwordInputEdittext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!Pattern.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#$%^&*])(?=.*[0-9!@#$%^&*]).{8,15}$", s)) {
+                    binding.layout2.setErrorEnabled(true);
+                    binding.layout2.setError(getString(pwd_enter));
+
+                } else {
+                    binding.layout2.setErrorEnabled(false);
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         binding.passwordCheckEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -114,14 +140,22 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String p = binding.passwordInputEdittext.getText().toString();
-                String p1 = binding.passwordCheckEdittext.getText().toString();
-                if (p.equals(p1)) {
-                    binding.passwordErrorTextview.setVisibility(View.INVISIBLE);
-                    pawTrue = true;
-                    Log.d("문자", p + p1);
-                } else {
-                    binding.passwordErrorTextview.setVisibility(View.VISIBLE);
-                    pawTrue = false;
+                if(p.isEmpty()&&!Pattern.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#$%^&*])(?=.*[0-9!@#$%^&*]).{8,15}$", p)){
+                    binding.layout3.setErrorEnabled(true);
+                    binding.layout3.setError(getString(R.string.pwd_condition));
+                }
+                else{
+                    binding.layout3.setErrorEnabled(false);
+                    String p1 = binding.passwordCheckEdittext.getText().toString();
+                    if (p1.equals(p)) {
+                        binding.layout3.setErrorEnabled(false);
+                        pawTrue = true;
+                        Log.d("문자", p + p1);
+                    } else {
+                        binding.layout3.setErrorEnabled(true);
+                        binding.layout3.setError(getString(R.string.pw_error));
+                        pawTrue = false;
+                    }
                 }
             }
 

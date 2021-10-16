@@ -12,7 +12,6 @@
     <string name="sign_up">Sign up</string>
     <string name="email_error">Enter a valid email.</string>
     <string name="pw_error">Those passwords didn\'t match.</string>
-    <string name="login_error">Please check your email or password.</string>
     <string name="fill_error">Please fill in all the blanks.</string>
     <string name="sign_up_error">Registration error</string>
     <string name="format_error">Please check the format.</string>
@@ -73,4 +72,6 @@
     <string name="email_can_use">You can use this email.</string>
     <string name="check_id_pwd">Please check your ID or password.</string>
     <string name="server_error">Sorry for the inconvenience caused by the server error.</string>
+    <string name="pwd_enter">Enter 8 letters including numbers, letters, or special characters.</string>
+    <string name="pwd_condition">Enter the password in the box above according to the conditions.</string>
 </resources>

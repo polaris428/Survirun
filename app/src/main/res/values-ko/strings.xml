@@ -12,7 +12,6 @@
     <string name="sign_up">회원가입</string>
     <string name="email_error">이메일 형식을 확인해주세요</string>
     <string name="pw_error">비밀번호가 다릅니다</string>
-    <string name="login_error">이메일 또는 비밀번호를 확인해주세요</string>
     <string name="fill_error">빈 칸을 채워주세요</string>
     <string name="sign_up_error">등록 에러</string>
     <string name="format_error">형식을 확인해주세요</string>
@@ -73,4 +72,6 @@
     <string name="email_can_use">사용 가능한 이메일 입니다</string>
     <string name="check_id_pwd">아이디 또는 비밀번호를 확인해주세요</string>
     <string name="server_error">서버오류 서비스 이용에 불편을 드려 죄송합니다</string>
+    <string name="pwd_enter">숫자, 문자, 특수문자중 2가지를 포함하여 8글자를 하세요</string>
+    <string name="pwd_condition">위의 칸에 먼저 비밀번호를 조건에 맞게 입력해주세요</string>
 </resources>
