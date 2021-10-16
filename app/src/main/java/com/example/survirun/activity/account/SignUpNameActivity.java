@@ -53,8 +53,8 @@ public class SignUpNameActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() >= 1) {
-                    binding.nameErrMessage.setVisibility(View.INVISIBLE);
+                if (!s.toString().isEmpty()) {
+                    binding.inputLayout.setErrorEnabled(false);
                 }
                 binding.nameSendButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
             }
@@ -67,8 +67,9 @@ public class SignUpNameActivity extends AppCompatActivity {
 
         binding.nameSendButton.setOnClickListener(v -> {
             name = binding.nameInputEdittext.getText().toString();
-            if (name.replace(" ", "").length() == 0) {
-                binding.nameErrMessage.setVisibility(View.VISIBLE);
+            if (name.isEmpty()) {
+                binding.inputLayout.setErrorEnabled(true);
+                binding.inputLayout.setError(getString(R.string.type_name));
             } else {
 
                 Call<ResultData> call = ServerClient.getServerService().inputName(name, token);
