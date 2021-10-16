@@ -25,9 +25,9 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:boxStrokeColor="@color/black"
         app:endIconMode="custom"
         app:hintTextColor="@color/black"
-        app:boxStrokeColor="@color/black"
         app:layout_constraintBottom_toTopOf="@id/layout2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/duplicate_check"
@@ -50,7 +50,7 @@
         app:layout_constraintBottom_toBottomOf="@id/layout1"
         app:layout_constraintLeft_toRightOf="@id/layout1"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/layout1"/>
+        app:layout_constraintTop_toTopOf="@id/layout1" />
 
 
     <TextView
@@ -69,8 +69,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:hintTextColor="@color/black"
         app:boxStrokeColor="@color/black"
+        app:hintTextColor="@color/black"
         app:layout_constraintBottom_toTopOf="@id/layout3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout1"
@@ -101,8 +101,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:hintTextColor="@color/black"
         app:boxStrokeColor="@color/black"
+        app:hintTextColor="@color/black"
         app:layout_constraintBottom_toTopOf="@id/sign_up_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout2"

@@ -47,13 +47,11 @@ public class LoginActivity extends AppCompatActivity {
         customProgressDialog = new ProgressDialog(this);
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-
         binding.idEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 id = binding.idEdittext.getText().toString();
-
-                if (!pwe.equals("") && !id.equals("")) {
+                if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
                     binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
                 } else {
                     binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btn));
@@ -64,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 id = binding.idEdittext.getText().toString();
                 pwe = binding.passwordEdittext.getText().toString();
-                if (!pwe.equals("") && !id.equals("")) {
+                if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
                     binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
                 } else {
                     binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btn));
@@ -82,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 pwe = binding.passwordEdittext.getText().toString();
                 id = binding.idEdittext.getText().toString();
-                if (!pwe.equals("") && !id.equals("")) {
+                if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
                     binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
                 } else {
                     binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btn));
@@ -92,12 +90,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 pwe = binding.passwordEdittext.getText().toString();
-
-                if (!pwe.equals("") && !id.equals("")) {
+                if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
                     binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
-
                 } else {
-
                     binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btn));
                 }
             }
@@ -110,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //firebaseAuth의 인스턴스를 가져옴
         binding.loginButton.setOnClickListener(v -> {
-            if (!pwe.equals("") && !id.equals("")) {
+            if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
                 email = binding.idEdittext.getText().toString().trim();
                 if (email.contains("@")) {
                     customProgressDialog.show();
@@ -179,8 +174,5 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
-
     }
-
-
 }

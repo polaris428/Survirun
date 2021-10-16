@@ -54,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (android.util.Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches() && !s.toString().isEmpty()) {
+                if (android.util.Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches() && !s.toString().replace(" ", "").isEmpty()) {
                     binding.layout1.setErrorEnabled(false);
                     emailTrue = true;
                 } else {
@@ -72,7 +72,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         binding.duplicateCheck.setOnClickListener(v -> {
             email = binding.idInputEdittext.getText().toString().trim();
-            if (email.isEmpty()) {
+            if (email.replace(" ", "").isEmpty()) {
                 binding.layout1.setErrorEnabled(true);
                 binding.layout1.setError(getString(email_enter));
             } else {
@@ -140,7 +140,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String p = binding.passwordInputEdittext.getText().toString();
-                if(p.isEmpty()&&!Pattern.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#$%^&*])(?=.*[0-9!@#$%^&*]).{8,15}$", p)){
+                if(p.replace(" ", "").isEmpty()&&!Pattern.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#$%^&*])(?=.*[0-9!@#$%^&*]).{8,15}$", p)){
                     binding.layout3.setErrorEnabled(true);
                     binding.layout3.setError(getString(R.string.pwd_condition));
                 }
