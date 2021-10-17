@@ -57,7 +57,7 @@ public interface ServiceService {
 
 
     @POST("/api/v1/friend")
-    Call<ResultData> postAddFriend(@Header("x-access-token") String token, @Query("reqType")String reqType,@Body String  email);
+    Call<ResultData> postAddFriend(@Header("x-access-token") String token, @Query("reqType")String reqType,@Query("email") String  email);
 
     @GET("/api/v1/auth/jwt-decode")
     Call<InfoData>getInfo(@Header("x-access-token")String token);
