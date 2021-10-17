@@ -270,12 +270,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void run() {
                 isZombieCreating = false;
                 polylineOptions.color(Color.parseColor("#FA1D25"));
-                for (ZombieModel z : zombieList) {
-                    z.myMarker.remove();
-                    z.thread.interrupt();
-
-
+                if(zombieList.size() != 0) {
+                    for (ZombieModel z : zombieList) {
+                        z.myMarker.remove();
+                        z.thread.interrupt();
+                    }
                 }
+               
 
             }
         });
