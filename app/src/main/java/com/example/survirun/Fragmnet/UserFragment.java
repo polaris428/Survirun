@@ -7,15 +7,25 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.survirun.R;
+import com.example.survirun.activity.NavigateDrawer;
 import com.example.survirun.activity.UserGoalActivity;
 import com.example.survirun.activity.UserPageActivity;
 import com.example.survirun.data.ExerciseData;
+
+import com.example.survirun.data.ImageData;
 import com.example.survirun.databinding.FragmentUserBinding;
 import com.example.survirun.server.ServerClient;
 
@@ -30,7 +40,9 @@ public class UserFragment extends Fragment {
     int goalCalorie;
     int goalTime;
     int goalKm;
+
     String token;
+
     SharedPreferences goal;
     SharedPreferences sf;
 
@@ -41,7 +53,7 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentUserBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
+        binding.drawerLayout.setDrawerListener(listener);
         goal = getContext().getSharedPreferences("goal", MODE_PRIVATE);
         goalCalorie = goal.getInt("calorie", 400);
         goalTime = goal.getInt("time", 60);
@@ -54,9 +66,12 @@ public class UserFragment extends Fragment {
 
 
 
+
         binding.userPageButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), UserPageActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(getActivity(), UserPageActivity.class);
+//            startActivity(intent);
+
+            binding.drawerLayout.openDrawer(binding.drawerView.View);
         });
 
 
@@ -119,5 +134,43 @@ public class UserFragment extends Fragment {
 
         return view;
     }
+    DrawerLayout.DrawerListener listener = new DrawerLayout.DrawerListener() {
+        @Override
+        public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+        }
+
+        @Override
+        public void onDrawerOpened(@NonNull View drawerView) {
+            ImageView imageView=drawerView.findViewById(R.id.profile_imageview);
+            Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
+            getProfile.enqueue(new Callback<ImageData>() {
+                @Override
+                public void onResponse(Call<ImageData> call, Response<ImageData> response) {
+                    if (response.isSuccessful()) {
+                        Log.d("adf", response.body().img);
+                        Glide.with(getContext())
+                                .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
+                                .error(R.drawable.ic_profile)
+                                .into(imageView);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ImageData> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+
+
+        }
+
+        @Override
+        public void onDrawerClosed(@NonNull View drawerView) {
+        }
+
+        @Override
+        public void onDrawerStateChanged(int newState) {
+        }
+    };
 
 }
