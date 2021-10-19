@@ -2,6 +2,8 @@ package com.example.survirun.Fragmnet;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -15,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +26,7 @@ import com.example.survirun.R;
 import com.example.survirun.activity.NavigateDrawer;
 import com.example.survirun.activity.UserGoalActivity;
 import com.example.survirun.activity.UserPageActivity;
+import com.example.survirun.activity.account.LoginActivity;
 import com.example.survirun.data.ExerciseData;
 
 import com.example.survirun.data.ImageData;
@@ -142,6 +146,7 @@ public class UserFragment extends Fragment {
         @Override
         public void onDrawerOpened(@NonNull View drawerView) {
             ImageView imageView=drawerView.findViewById(R.id.profile_imageview);
+            Button logout_button=drawerView.findViewById(R.id.logout_button);
             Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
             getProfile.enqueue(new Callback<ImageData>() {
                 @Override
@@ -160,7 +165,19 @@ public class UserFragment extends Fragment {
                     t.printStackTrace();
                 }
             });
-
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());;
+            logout_button.setOnClickListener(v -> builder.setTitle(R.string.logout).setMessage(R.string.logout_user).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    editor.putString("email", "");
+                    editor.putString("pwe", "");
+                    editor.putString("token", "");
+                    editor.putString("name", "");
+                    editor.commit();
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                }
+            }).setNegativeButton(R.string.no, null).show());
 
         }
 
