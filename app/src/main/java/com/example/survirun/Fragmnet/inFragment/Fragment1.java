@@ -40,7 +40,7 @@ public class Fragment1 extends Fragment {
                     binding.goalBarGraph.clearChart();
                     binding.kmBarGraph.clearChart();
                     binding.exerciseTimeBarGraph.clearChart();
-                    for (int i=0;i<7;i++){
+                    for (int i=0;i<response.body().exerciseHistory.size();i++){
                         int calorie=response.body().exerciseHistory.get(i).calorie;
                         double km= response.body().exerciseHistory.get(i).km;
                         String data= response.body().exerciseHistory.get(i).date;
