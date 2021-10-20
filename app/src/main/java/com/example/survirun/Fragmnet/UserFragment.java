@@ -30,6 +30,7 @@ import com.example.survirun.activity.account.LoginActivity;
 import com.example.survirun.data.ExerciseData;
 
 import com.example.survirun.data.ImageData;
+
 import com.example.survirun.databinding.FragmentUserBinding;
 import com.example.survirun.server.ServerClient;
 
@@ -46,11 +47,12 @@ public class UserFragment extends Fragment {
     int goalKm;
 
     String token;
-
+    String name;
     SharedPreferences goal;
     SharedPreferences sf;
 
     SharedPreferences.Editor editor;
+    String emile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,7 +68,8 @@ public class UserFragment extends Fragment {
         editor=sf.edit();
         token = sf.getString("token", "");
 
-
+        name=sf.getString("name","");
+        emile=sf.getString("email","");
 
 
 
@@ -146,6 +149,11 @@ public class UserFragment extends Fragment {
         @Override
         public void onDrawerOpened(@NonNull View drawerView) {
             ImageView imageView=drawerView.findViewById(R.id.profile_imageview);
+            TextView nameTextView=drawerView.findViewById(R.id.name_text_view);
+            TextView idTextView=drawerView.findViewById(R.id.id_text_view);
+
+            nameTextView.setText(name);
+            idTextView.setText(emile);
             Button logout_button=drawerView.findViewById(R.id.logout_button);
             Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
             getProfile.enqueue(new Callback<ImageData>() {
@@ -155,6 +163,7 @@ public class UserFragment extends Fragment {
                         Log.d("adf", response.body().img);
                         Glide.with(getContext())
                                 .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
+                                .circleCrop()
                                 .error(R.drawable.ic_profile)
                                 .into(imageView);
                     }
