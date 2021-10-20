@@ -629,49 +629,29 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 int min = msg.arg1 / 60;
                 int hour = msg.arg1 / 3600;
                 timeToSec = msg.arg1;
-                if (CURRENT_MODE.contains(DEFAULT_MODE)) {
-                    if (isRunning) {
-                        if ((timeToSec / 60) % 3 == 0 && timeToSec%60 == 0 && timeToSec >= 60) {
-                            String d = String.format(getString(R.string.tts_type), (int) kcal, walkingDistance / 1000.0, hour, min, sec);
-                            playTTS(d);
-                        }
-                        String str = String.format("%02d:%02d:%02d", hour, min, sec);
-                        binding.textviewExerciseTime.setText(str);
-                    } else {
-                        String str = String.format(getString(R.string.pause_text) + "%02d:%02d:%02d", hour, min, sec);
-                        binding.pauseText.setText(str);
+                if(isRunning) {
+                    String str = String.format("%02d:%02d:%02d", hour, min, sec);
+                    binding.textviewExerciseTime.setText(str);
+                    if ((timeToSec / 60) % 3 == 0 && timeToSec%60 == 0 && timeToSec >= 60) {
+                        String d = String.format(getString(R.string.tts_type), (int) kcal, walkingDistance / 1000.0, hour, min, sec);
+                        playTTS(d);
                     }
+                } else {
+                    String str = String.format(getString(R.string.pause_text) + "%02d:%02d:%02d", hour, min, sec);
+                    binding.pauseText.setText(str);
                 }
                 if (CURRENT_MODE.contains(ZOMBIE_MODE)) {
                     if (isRunning) {
-                        if ((timeToSec / 60) % 3 == 0 && timeToSec%60 != 0&& timeToSec >= 60) {
-                            String d = String.format(getString(R.string.tts_type), (int) kcal, walkingDistance / 1000.0, hour, min, sec);
-                            playTTS(d);
-                        }
-                        String str = String.format("%02d:%02d:%02d", hour, min, sec);
-                        binding.textviewExerciseTime.setText(str);
                         if ((timeToSec / 60) % ZOMBIE_CREATE_MINUTES == 0 && timeToSec%60 == 0 && isZombieCreating&& timeToSec >= 60) {
                             createZombie();
                         }
-                    } else {
-                        String str = String.format(getString(R.string.pause_text) + "%02d:%02d:%02d", hour, min, sec);
-                        binding.pauseText.setText(str);
                     }
                 }
                 if (CURRENT_MODE.contains(STORY_MODE)) {
                     if (isRunning) {
-                        if ((timeToSec / 60) % 3 == 0 && timeToSec%60 == 0&& timeToSec >= 60) {
-                            String d = String.format(getString(R.string.tts_type), (int) kcal, walkingDistance / 1000.0, hour, min, sec);
-                            playTTS(d);
-                        }
-                        String str = String.format("%02d:%02d:%02d", hour, min, sec);
-                        binding.textviewExerciseTime.setText(str);
                         if((timeToSec / 60) % STORY_READ_MINUTES == 0 && timeToSec%60 == 0&& timeToSec >= 60) {
                             readStory();
                         }
-                    } else {
-                        String str = String.format(getString(R.string.pause_text) + "%02d:%02d:%02d", hour, min, sec);
-                        binding.pauseText.setText(str);
                     }
                 }
             } catch (Exception e) {
