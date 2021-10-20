@@ -28,8 +28,6 @@ public class SignUpNameActivity extends AppCompatActivity {
     String name;
     String token;
     SharedPreferences.Editor editor;
-
-    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +36,10 @@ public class SignUpNameActivity extends AppCompatActivity {
         setContentView(view);
 
         SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
+        token = sf.getString("token", "ㅇㅅㅇ");
+        Log.d("token",token+"왜 미아임");
         editor = sf.edit();
-        token = sf.getString("token", "");
+
 
         binding.textView.setCharacterDelay(160);
         binding.textView.displayTextWithAnimation("안녕하세요");

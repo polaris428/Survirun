@@ -40,13 +40,17 @@ public class SignUpActivity extends AppCompatActivity {
     boolean emileCheck = false;
     String email;
     String pwe;
-
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
+        editor = sf.edit();
+
+
 
         binding.idInputEdittext.addTextChangedListener(new TextWatcher() {
             @Override
@@ -84,17 +88,13 @@ public class SignUpActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 Log.d("adsf", response.body() + "");
                                 if (response.body().exists) {
-                                    Log.d("qwer", response.body().exists + "");
                                     binding.layout1.setErrorEnabled(true);
-                                    Log.d("emile", email);
                                     binding.layout1.setError(getString(R.string.email_already));
                                 } else {
-                                    Log.d("qwer", response.body().exists + "");
                                     binding.layout1.setHelperTextEnabled(true);
                                     binding.layout1.setEndIconDrawable(R.drawable.ic_baseline_check_circle_24);
                                     binding.layout1.setEndIconTintList(ColorStateList.valueOf(getColor(R.color.green)));
                                     emileCheck = true;
-                                    Log.d("emile", email);
                                     binding.layout1.setHelperText(getString(R.string.email_can_use));
                                 }
                             }
@@ -150,7 +150,6 @@ public class SignUpActivity extends AppCompatActivity {
                     if (p1.equals(p)) {
                         binding.layout3.setErrorEnabled(false);
                         pawTrue = true;
-                        Log.d("문자", p + p1);
                     } else {
                         binding.layout3.setErrorEnabled(true);
                         binding.layout3.setError(getString(R.string.pw_error));
@@ -181,6 +180,9 @@ public class SignUpActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<TokenData> call, Response<TokenData> response) {
                                     if (response.isSuccessful()) {
+                                        editor.putString("token",response.body().token);
+                                        editor.commit();
+                                        Log.d("token",response.body().token);
                                         Intent intent = new Intent(SignUpActivity.this, SignUpNameActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
