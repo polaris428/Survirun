@@ -7,14 +7,17 @@
     android:layout_gravity="start"
     android:id="@+id/View"
     android:background="#ffffff">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageView
             android:id="@+id/profile_imageview"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="70dp"
+            app:layout_constraintBottom_toTopOf="@+id/name_text_view"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -25,11 +28,12 @@
             android:id="@+id/name_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/profile_imageview"
+            android:layout_marginBottom="100dp"
+            app:layout_constraintBottom_toTopOf="@+id/id_text_view"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_imageview">
 
         </TextView>
 
@@ -37,53 +41,65 @@
             android:id="@+id/id_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:textSize="11sp"
-            app:layout_constraintTop_toBottomOf="@+id/name_text_view"
+            android:layout_marginTop="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name_text_view">
 
         </TextView>
+
+        <Button
+            android:id="@+id/goal_edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_goal"
+            app:layout_constraintBottom_toTopOf="@+id/edit_personal_information"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_text_view">
+
+        </Button>
 
         <Button
             android:id="@+id/edit_personal_information"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="개인정보 수정"
-            android:layout_marginBottom="100dp"
+            app:layout_constraintBottom_toTopOf="@+id/edit_profile"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/edit_profile">
+            app:layout_constraintTop_toBottomOf="@+id/goal_edit_button">
 
         </Button>
+
         <Button
             android:id="@+id/edit_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="프로필 수정"
-            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toTopOf="@+id/logout_button"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/logout_button">
+            app:layout_constraintTop_toBottomOf="@+id/edit_personal_information">
 
         </Button>
 
 
-
         <Button
             android:id="@+id/logout_button"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:text="로그아웃"
-            android:layout_marginBottom="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            style="?attr/materialButtonOutlinedStyle"
+            app:layout_constraintTop_toBottomOf="@+id/edit_profile"
 
 
             />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

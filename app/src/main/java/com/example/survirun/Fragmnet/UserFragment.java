@@ -138,10 +138,7 @@ public class UserFragment extends Fragment {
             }
         });
 
-        binding.goalButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), UserGoalActivity.class);
-            startActivity(intent);
-        });
+
 
         return view;
     }
@@ -192,6 +189,11 @@ public class UserFragment extends Fragment {
                     startActivity(intent);
                 }
             }).setNegativeButton(R.string.no, null).show());
+
+            nbinding.goalEditButton.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), UserGoalActivity.class);
+                startActivity(intent);
+            });
 
         }
 
