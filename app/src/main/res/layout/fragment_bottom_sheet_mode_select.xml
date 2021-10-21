@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".BottomSheetModeSelectFragment">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="모드 설정하기"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageButton
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="32dp"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_baseline_clear_24"
+        app:layout_constraintBottom_toBottomOf="@id/textView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textView" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:singleSelection="true">
+            <com.google.android.material.chip.Chip
+                android:id="@+id/zombie_chip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="168dp"
+                android:layout_height="72dp"
+                android:text="@string/zombie_mode"
+                android:textAlignment="center"
+                android:textSize="16sp"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/gps_chip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="168dp"
+                android:layout_height="72dp"
+                android:text="GPS"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"/>
+    </com.google.android.material.chip.ChipGroup>
+
+    <Button
+        android:id="@+id/exercise_start_button"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="8dp"
+        android:text="시작하기"
+        android:backgroundTint="@color/gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chip_group" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
