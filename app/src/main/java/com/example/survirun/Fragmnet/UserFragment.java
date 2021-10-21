@@ -3,6 +3,7 @@ package com.example.survirun.Fragmnet;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.AlertDialog;
+import android.app.NativeActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.survirun.R;
@@ -31,6 +33,8 @@ import com.example.survirun.data.ExerciseData;
 
 import com.example.survirun.data.ImageData;
 
+import com.example.survirun.databinding.ActivityMainBinding;
+import com.example.survirun.databinding.ActivityNavigateDrawerBinding;
 import com.example.survirun.databinding.FragmentUserBinding;
 import com.example.survirun.server.ServerClient;
 
@@ -148,13 +152,14 @@ public class UserFragment extends Fragment {
 
         @Override
         public void onDrawerOpened(@NonNull View drawerView) {
-            ImageView imageView=drawerView.findViewById(R.id.profile_imageview);
-            TextView nameTextView=drawerView.findViewById(R.id.name_text_view);
-            TextView idTextView=drawerView.findViewById(R.id.id_text_view);
+            ActivityNavigateDrawerBinding nbinding ;
+            nbinding= ActivityNavigateDrawerBinding.bind(drawerView);
 
-            nameTextView.setText(name);
-            idTextView.setText(emile);
-            Button logout_button=drawerView.findViewById(R.id.logout_button);
+
+
+            nbinding.nameTextView.setText(name);
+            nbinding.idTextView.setText(emile);
+
             Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
             getProfile.enqueue(new Callback<ImageData>() {
                 @Override
@@ -165,7 +170,7 @@ public class UserFragment extends Fragment {
                                 .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
                                 .circleCrop()
                                 .error(R.drawable.ic_profile)
-                                .into(imageView);
+                                .into(nbinding.profileImageview);
                     }
                 }
 
@@ -175,7 +180,7 @@ public class UserFragment extends Fragment {
                 }
             });
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());;
-            logout_button.setOnClickListener(v -> builder.setTitle(R.string.logout).setMessage(R.string.logout_user).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            nbinding.logoutButton.setOnClickListener(v -> builder.setTitle(R.string.logout).setMessage(R.string.logout_user).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     editor.putString("email", "");
