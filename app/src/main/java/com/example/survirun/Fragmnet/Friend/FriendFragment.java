@@ -49,10 +49,18 @@ public class FriendFragment extends Fragment {
             public void onResponse(Call<FindUserData> call, Response<FindUserData> response) {
                 if (response.isSuccessful()) {
                     Log.d("asdf", response.body().friends.size() + "");
+                    Log.d("asdf", response.body().friends.get(0).username+ "");
 
-                    ArrayList list = new ArrayList();
-                    FriendAdapter adapter = new FriendAdapter(list);
+
+                    // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
+                    FriendAdapter adapter = new FriendAdapter(response.body().friends);
                     binding.friendListRecyclerView.setAdapter(adapter);
+
+
+                    binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+
                 }
             }
 
@@ -79,7 +87,7 @@ public class FriendFragment extends Fragment {
                             binding.usernameTextview.setText(response.body().username);
                             ExerciseHistory exerciseHistory=response.body().exerciseHistory.get(0);
                             binding.exerciseTextview.setText(exerciseHistory.calorie+"칼로리\n"+ exerciseHistory.km+"킬로미터\n"+exerciseHistory.time+"운동시간\n");
-                            Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, response.body().username, "url");
+                            Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url",response.body().username);
                             getProfile.enqueue(new Callback<ImageData>() {
                                 @Override
                                 public void onResponse(Call<ImageData> call, Response<ImageData> response) {
@@ -107,7 +115,7 @@ public class FriendFragment extends Fragment {
                         t.printStackTrace();
                     }
                 });
-                //친구 찾는 코드
+
                 binding.addFriend.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

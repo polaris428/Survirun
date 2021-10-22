@@ -49,11 +49,7 @@ public interface ServiceService {
     @GET("/api/v1/friend/list")
     Call<FindUserData> getFriendList(@Header("x-access-token") String token);
 
-    @POST("/api/v1/friend")
-    Call<ResultData> PostFindFriend(@Header("x-access-token") String token, String emile);
 
-    @GET("/api/v1/auth/profile")
-    Call<ProfileImageData> getProfileImage(@Header("x-access-token") String token);
 
 
     @POST("/api/v1/friend")
@@ -64,7 +60,8 @@ public interface ServiceService {
 
     @GET("/api/v1/auth/profile")
     Call<ImageData> getProfile(@Header("x-access-token") String token, @Query("reqType") String reqType, @Query("resType") String resType);
-
+    @GET("/api/v1/auth/profile")
+    Call<ImageData> getSuchProfile(@Header("x-access-token") String token, @Query("reqType") String reqType, @Query("resType") String resType, @Query("username")String username);
     @PATCH("/api/v1/exercise")
     Call<ExerciseData>patchUploadExercise(@Header("x-access-token") String token, @Body ScoreModel scoreModel);
 
