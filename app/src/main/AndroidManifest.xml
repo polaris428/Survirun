@@ -22,9 +22,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Survirun">
         <activity
-            android:name=".activity.NavigateDrawer"
-            android:exported="true" />
-        <activity
             android:name=".activity.account.ProgressDialog"
             android:exported="true" />
         <activity

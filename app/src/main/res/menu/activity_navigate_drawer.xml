@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_goal_edit"
+            android:title="@string/my_goal" />
+        <item
+            android:id="@+id/nav_edit_personal_information"
+            android:title="개인정보 수정"/>
+        <item
+            android:id="@+id/nav_edit_profile"
+            android:title="프로필 수정"/>
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_help"
+            android:title="도움말"/>
+    </group>
+</menu>
+    <!--<Button
+        android:id="@+id/logout_button"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="로그아웃"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile" />-->

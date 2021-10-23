@@ -2,39 +2,18 @@ package com.example.survirun.Fragmnet;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.app.AlertDialog;
-import android.app.NativeActivity;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.survirun.R;
-import com.example.survirun.activity.NavigateDrawer;
-import com.example.survirun.activity.UserGoalActivity;
-import com.example.survirun.activity.UserPageActivity;
-import com.example.survirun.activity.account.LoginActivity;
 import com.example.survirun.data.ExerciseData;
 
-import com.example.survirun.data.ImageData;
-
-import com.example.survirun.databinding.ActivityMainBinding;
-import com.example.survirun.databinding.ActivityNavigateDrawerBinding;
 import com.example.survirun.databinding.FragmentUserBinding;
 import com.example.survirun.server.ServerClient;
 
@@ -63,7 +42,7 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentUserBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        binding.drawerLayout.setDrawerListener(listener);
+       // binding.drawerLayout.setDrawerListener(listener);
         goal = getContext().getSharedPreferences("goal", MODE_PRIVATE);
         goalCalorie = goal.getInt("calorie", 400);
         goalTime = goal.getInt("time", 60);
@@ -76,13 +55,11 @@ public class UserFragment extends Fragment {
         emile=sf.getString("email","");
 
 
-
-
         binding.userPageButton.setOnClickListener(v -> {
 //            Intent intent = new Intent(getActivity(), UserPageActivity.class);
 //            startActivity(intent);
 
-            binding.drawerLayout.openDrawer(binding.drawerView.View);
+            binding.drawerLayout.openDrawer(binding.navView);
         });
 
 
@@ -141,7 +118,7 @@ public class UserFragment extends Fragment {
 
 
         return view;
-    }
+    }/*
     DrawerLayout.DrawerListener listener = new DrawerLayout.DrawerListener() {
         @Override
         public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
@@ -149,7 +126,7 @@ public class UserFragment extends Fragment {
 
         @Override
         public void onDrawerOpened(@NonNull View drawerView) {
-            ActivityNavigateDrawerBinding nbinding ;
+            /*ActivityNavigateDrawerBinding nbinding ;
             nbinding= ActivityNavigateDrawerBinding.bind(drawerView);
 
 
@@ -205,5 +182,5 @@ public class UserFragment extends Fragment {
         public void onDrawerStateChanged(int newState) {
         }
     };
-
+*/
 }
