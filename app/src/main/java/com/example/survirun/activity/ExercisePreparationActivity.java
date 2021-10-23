@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.survirun.BottomSheetModeSelectFragment;
+import com.example.survirun.R;
 import com.example.survirun.activity.exercise.MapActivity;
 import com.example.survirun.databinding.ActivityExercisePreparationBinding;
 
@@ -55,7 +56,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
             startActivity(i);
         }
         else {
-            Toast.makeText(getApplicationContext(), "모드를 선택해주세요", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.choose_mode, Toast.LENGTH_SHORT).show();
         }
     }
 

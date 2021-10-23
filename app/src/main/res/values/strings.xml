@@ -74,4 +74,5 @@
     <string name="server_error">Sorry for the inconvenience caused by the server error.</string>
     <string name="pwd_enter">Enter 8 letters including numbers, letters, or special characters.</string>
     <string name="pwd_condition">Enter the password in the box above according to the conditions.</string>
+    <string name="choose_mode">Please choose the mode.</string>
 </resources>

@@ -74,4 +74,5 @@
     <string name="server_error">서버오류 서비스 이용에 불편을 드려 죄송합니다</string>
     <string name="pwd_enter">숫자, 문자, 특수문자중 2가지를 포함하여 8글자를 하세요</string>
     <string name="pwd_condition">위의 칸에 먼저 비밀번호를 조건에 맞게 입력해주세요</string>
+    <string name="choose_mode">모드를 선택해주세요</string>
 </resources>
