@@ -37,12 +37,11 @@ public class SignUpNameActivity extends AppCompatActivity {
 
         SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
         token = sf.getString("token", "ㅇㅅㅇ");
-        Log.d("token",token+"왜 미아임");
         editor = sf.edit();
 
 
         binding.textView.setCharacterDelay(160);
-        binding.textView.displayTextWithAnimation("안녕하세요");
+        binding.textView.displayTextWithAnimation("안녕하세요 당신은 좀비 아포칼립스에서 살아남은 생존다 입니다 당신의 이름을 알려주세요");
 
         story = (String) getText(R.string.story_name);
         binding.nameInputEdittext.addTextChangedListener(new TextWatcher() {
