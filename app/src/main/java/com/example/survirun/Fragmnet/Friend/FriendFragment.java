@@ -49,7 +49,7 @@ public class FriendFragment extends Fragment {
             public void onResponse(Call<FindUserData> call, Response<FindUserData> response) {
                 if (response.isSuccessful()) {
                     Log.d("asdf", response.body().friends.size() + "");
-                    Log.d("asdf", response.body().friends.get(0).username+ "");
+                    //Log.d("asdf", response.body().friends.get(0).username+ "");
 
 
                     // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
