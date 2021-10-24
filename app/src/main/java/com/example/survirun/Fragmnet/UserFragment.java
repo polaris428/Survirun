@@ -11,9 +11,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.survirun.R;
 import com.example.survirun.data.ExerciseData;
 
+import com.example.survirun.data.ImageData;
+import com.example.survirun.databinding.ActivityNavHeaderBinding;
 import com.example.survirun.databinding.FragmentUserBinding;
 import com.example.survirun.server.ServerClient;
 
@@ -42,6 +47,8 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentUserBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        ActivityNavHeaderBinding nbinding;
+        nbinding=ActivityNavHeaderBinding.bind(binding.navView.getHeaderView(0));
        // binding.drawerLayout.setDrawerListener(listener);
         goal = getContext().getSharedPreferences("goal", MODE_PRIVATE);
         goalCalorie = goal.getInt("calorie", 400);
@@ -60,9 +67,30 @@ public class UserFragment extends Fragment {
 //            startActivity(intent);
 
             binding.drawerLayout.openDrawer(binding.navView);
+
         });
 
+        nbinding.nameTextView.setText(name);
+        nbinding.idTextView.setText(emile);
+        Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
+        getProfile.enqueue(new Callback<ImageData>() {
+            @Override
+            public void onResponse(Call<ImageData> call, Response<ImageData> response) {
+                if (response.isSuccessful()) {
 
+                    Glide.with(getContext())
+                            .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
+                            .circleCrop()
+                            .error(R.drawable.ic_profile)
+                            .into(nbinding.profileImageview);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ImageData> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
         Call<ExerciseData> call = ServerClient.getServerService().getExercise(token);
         call.enqueue(new Callback<ExerciseData>() {
             @Override
@@ -118,69 +146,6 @@ public class UserFragment extends Fragment {
 
 
         return view;
-    }/*
-    DrawerLayout.DrawerListener listener = new DrawerLayout.DrawerListener() {
-        @Override
-        public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-        }
+    }
 
-        @Override
-        public void onDrawerOpened(@NonNull View drawerView) {
-            /*ActivityNavigateDrawerBinding nbinding ;
-            nbinding= ActivityNavigateDrawerBinding.bind(drawerView);
-
-
-
-            nbinding.nameTextView.setText(name);
-            nbinding.idTextView.setText(emile);
-
-            Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
-            getProfile.enqueue(new Callback<ImageData>() {
-                @Override
-                public void onResponse(Call<ImageData> call, Response<ImageData> response) {
-                    if (response.isSuccessful()) {
-                        Log.d("adf", response.body().img);
-                        Glide.with(getContext())
-                                .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
-                                .circleCrop()
-                                .error(R.drawable.ic_profile)
-                                .into(nbinding.profileImageview);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ImageData> call, Throwable t) {
-                    t.printStackTrace();
-                }
-            });
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());;
-            nbinding.logoutButton.setOnClickListener(v -> builder.setTitle(R.string.logout).setMessage(R.string.logout_user).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    editor.putString("email", "");
-                    editor.putString("pwe", "");
-                    editor.putString("token", "");
-                    editor.putString("name", "");
-                    editor.commit();
-                    Intent intent = new Intent(getContext(), LoginActivity.class);
-                    startActivity(intent);
-                }
-            }).setNegativeButton(R.string.no, null).show());
-
-            nbinding.goalEditButton.setOnClickListener(v -> {
-                Intent intent = new Intent(getActivity(), UserGoalActivity.class);
-                startActivity(intent);
-            });
-
-        }
-
-        @Override
-        public void onDrawerClosed(@NonNull View drawerView) {
-        }
-
-        @Override
-        public void onDrawerStateChanged(int newState) {
-        }
-    };
-*/
 }

@@ -13,6 +13,7 @@
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_main.xml" value="0.27708333333333335" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_map.xml" value="0.16" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_my_marker_view.xml" value="0.2760416666666667" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/activity_nav_header.xml" value="0.1296875" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_navigate_drawer.xml" value="0.25364583333333335" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_progress_dialog.xml" value="0.21920289855072464" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_result.xml" value="0.25364583333333335" />
@@ -37,6 +38,7 @@
         <entry key="..\:/Survirun/app/src/main/res/layout/item_friend.xml" value="0.1296875" />
         <entry key="..\:/Survirun/app/src/main/res/layout/iteme_xercise.xml" value="0.536" />
         <entry key="..\:/Survirun/app/src/main/res/layout/itemexercise.xml" value="0.209375" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/nav_header_main.xml" value="0.1296875" />
         <entry key="..\:/Survirun/app/src/main/res/menu/menu_list.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/iou10/AndroidStudioProjects/Survirun/app/src/main/res/layout/activity_exercise_preparation.xml" value="0.2390625" />
         <entry key="..\:/Users/iou10/AndroidStudioProjects/Survirun/app/src/main/res/layout/activity_login.xml" value="0.25364583333333335" />
@@ -61,5 +63,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.2" />
+      </ProjectState>
+    </option>
   </component>
 </project>
