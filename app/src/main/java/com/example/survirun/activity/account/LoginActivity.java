@@ -170,9 +170,15 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
-        binding.signUpButton.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-            startActivity(intent);
+        binding.signUpButton1.setOnClickListener(v -> {
+            setIntentSignUp();
         });
+        binding.signUpButton2.setOnClickListener(v -> {
+            setIntentSignUp();
+        });
+    }
+    private void setIntentSignUp(){
+        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+        startActivity(intent);
     }
 }
