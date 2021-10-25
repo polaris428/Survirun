@@ -77,8 +77,10 @@ public class UserFragment extends Fragment {
             @Override
             public void onResponse(Call<ImageData> call, Response<ImageData> response) {
                 if (response.isSuccessful()) {
-
-                    Glide.with(getContext())
+                    if (getActivity() == null) {
+                        return;
+                    }
+                    Glide.with(UserFragment.this)
                             .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
                             .circleCrop()
                             .error(R.drawable.ic_profile)
