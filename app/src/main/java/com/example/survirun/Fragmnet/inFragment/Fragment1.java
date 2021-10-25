@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.survirun.data.ExerciseRecordData;
 import com.example.survirun.databinding.Fragment1Binding;
@@ -40,29 +41,39 @@ public class Fragment1 extends Fragment {
                     binding.goalBarGraph.clearChart();
                     binding.kmBarGraph.clearChart();
                     binding.exerciseTimeBarGraph.clearChart();
-                    for (int i=0;i<response.body().exerciseHistory.size();i++){
-                        int calorie=response.body().exerciseHistory.get(i).calorie;
-                        double km= response.body().exerciseHistory.get(i).km;
-                        String data= response.body().exerciseHistory.get(i).date;
-                        int time=response.body().exerciseHistory.get(i).time;
-                        Log.d("adsf",time/60+"");
-                        binding.kmBarGraph.addBar(new BarModel(data, (float) km, 0xFF56B7F1));
-                        binding.calorieBarGraph.addBar(new BarModel(data, calorie, 0xFF56B7F1));
-                        binding.exerciseTimeBarGraph.addBar(new BarModel(data,time,0xFF56B7F1));
+                    if(response.body().exerciseHistory.size()==0){
+                        binding.ExerciseMessage.setVisibility(View.VISIBLE);
+                        binding.ExerciseGraph.setVisibility(View.GONE);
+
+                    }else{
+                        binding.ExerciseMessage.setVisibility(View.GONE);
+                        binding.ExerciseGraph.setVisibility(View.VISIBLE);
+                        for (int i=0;i<response.body().exerciseHistory.size();i++){
+                            int calorie=response.body().exerciseHistory.get(i).calorie;
+                            double km= response.body().exerciseHistory.get(i).km;
+                            String data= response.body().exerciseHistory.get(i).date;
+                            int time=response.body().exerciseHistory.get(i).time;
+                            Log.d("adsf",time/60+"");
+                            binding.kmBarGraph.addBar(new BarModel(data, (float) km, 0xFF56B7F1));
+                            binding.calorieBarGraph.addBar(new BarModel(data, calorie, 0xFF56B7F1));
+                            binding.exerciseTimeBarGraph.addBar(new BarModel(data,time,0xFF56B7F1));
+                        }
+                        binding.calorieBarGraph.startAnimation();
+                        binding.goalBarGraph.startAnimation();
+                        binding.kmBarGraph.startAnimation();
+                        binding.exerciseTimeBarGraph.startAnimation();
                     }
-                    binding.calorieBarGraph.startAnimation();
-                    binding.goalBarGraph.startAnimation();
-                    binding.kmBarGraph.startAnimation();
-                    binding.exerciseTimeBarGraph.startAnimation();
+
 
                 }else{
-                    Log.d("실패","실패");
+                    Toast.makeText(getContext(), "서버오류", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ExerciseRecordData> call, Throwable t) {
-
+                t.printStackTrace();
+                Toast.makeText(getContext(), "서버오류", Toast.LENGTH_SHORT).show();
             }
         });
 
