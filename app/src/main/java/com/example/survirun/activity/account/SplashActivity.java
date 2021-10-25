@@ -92,6 +92,7 @@ public class SplashActivity extends AppCompatActivity {
                     if (!response.body().username) {
 
                         intent = new Intent(SplashActivity.this, SignUpNameActivity.class);
+
                     } else {
                         if (response.body().profile) {
                             intent = new Intent(SplashActivity.this, MainActivity.class);
@@ -99,7 +100,14 @@ public class SplashActivity extends AppCompatActivity {
                             intent = new Intent(SplashActivity.this, SignUpProfileActivity.class);
                         }
                     }
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+
                     startActivity(intent);
+                    overridePendingTransition(0, 0);
+
+
+
 
                 } else {
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
@@ -153,6 +161,7 @@ public class SplashActivity extends AppCompatActivity {
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                    overridePendingTransition(0, 0);
                     finish();
                 }
             }
@@ -165,6 +174,7 @@ public class SplashActivity extends AppCompatActivity {
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                    overridePendingTransition(0, 0);
                     finish();
                 }
             }
