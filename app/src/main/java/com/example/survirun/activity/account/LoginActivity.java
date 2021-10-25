@@ -10,6 +10,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
 import com.example.survirun.R;
 import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.LoginData;
@@ -149,12 +151,14 @@ public class LoginActivity extends AppCompatActivity {
                                                     startActivity(intent);
                                                 }else{
                                                     Log.d("adsf","실패");
+                                                    Toast.makeText(LoginActivity.this,"사버오류 잠시후 다시 실행해주세요",Toast.LENGTH_SHORT);
                                                 }
                                             }
 
                                             @Override
                                             public void onFailure(Call<getUserData> call, Throwable t) {
                                                 t.printStackTrace();
+                                                Toast.makeText(LoginActivity.this,"사버오류 잠시후 다시 실행해주세요",Toast.LENGTH_SHORT);
                                             }
                                         });
 
