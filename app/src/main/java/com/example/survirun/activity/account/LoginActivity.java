@@ -8,16 +8,15 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
-
 import com.example.survirun.R;
 import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.TokenData;
+import com.example.survirun.data.getUserData;
 import com.example.survirun.databinding.ActivityLoginBinding;
 import com.example.survirun.server.ServerClient;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -103,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //firebaseAuth의 인스턴스를 가져옴
+
         binding.loginButton.setOnClickListener(v -> {
             if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
                 email = binding.idEdittext.getText().toString().trim();
@@ -123,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if (!response.body().username) {
                                     customProgressDialog.dismiss();
+
                                     Intent intent = new Intent(LoginActivity.this, SignUpNameActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
@@ -134,10 +134,30 @@ public class LoginActivity extends AppCompatActivity {
                                         startActivity(intent);
 
                                     } else {
-                                        customProgressDialog.dismiss();
-                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
+
+                                        Call<getUserData>call1=ServerClient.getServerService().getUser(response.body().token,email);
+                                        call1.enqueue(new Callback<getUserData>() {
+                                            @Override
+                                            public void onResponse(Call<getUserData> call, Response<getUserData> response) {
+                                                if(response.isSuccessful()){
+                                                    customProgressDialog.dismiss();
+                                                    editor.putString("name",response.body().username);
+                                                    editor.commit();
+
+                                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                    startActivity(intent);
+                                                }else{
+                                                    Log.d("adsf","실패");
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<getUserData> call, Throwable t) {
+                                                t.printStackTrace();
+                                            }
+                                        });
+
                                     }
                                 }
 
