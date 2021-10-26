@@ -35,9 +35,9 @@ public class SignUpActivity extends AppCompatActivity {
     ActivitySignUpBinding binding;
     String id;
 
-    boolean emailTrue = false;
-    boolean pawTrue = false;
-    boolean emileCheck = false;
+    boolean isEmileEnterCheck = false;
+    boolean isPwdCheck = false;
+    boolean isEmileCheck = false;
     String email;
     String pwe;
     SharedPreferences.Editor editor;
@@ -60,11 +60,11 @@ public class SignUpActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (android.util.Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches() && !s.toString().replace(" ", "").isEmpty()) {
                     binding.layout1.setErrorEnabled(false);
-                    emailTrue = true;
+                    isEmileEnterCheck = true;
                 } else {
                     binding.layout1.setErrorEnabled(true);
                     binding.layout1.setError(getString(email_error));
-                    emailTrue = false;
+                    isEmileEnterCheck = false;
                 }
             }
 
@@ -80,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
                 binding.layout1.setErrorEnabled(true);
                 binding.layout1.setError(getString(email_enter));
             } else {
-                if (emailTrue) {
+                if (isEmileEnterCheck) {
                     Call<EmileCheck> call = ServerClient.getServerService().getEmileCheck(email);
                     call.enqueue(new Callback<EmileCheck>() {
                         @Override
@@ -94,7 +94,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     binding.layout1.setHelperTextEnabled(true);
                                     binding.layout1.setEndIconDrawable(R.drawable.ic_baseline_check_circle_24);
                                     binding.layout1.setEndIconTintList(ColorStateList.valueOf(getColor(R.color.green)));
-                                    emileCheck = true;
+                                    isEmileCheck = true;
                                     binding.layout1.setHelperText(getString(R.string.email_can_use));
                                 }
                             }
@@ -149,11 +149,11 @@ public class SignUpActivity extends AppCompatActivity {
                     String p1 = binding.passwordCheckEdittext.getText().toString();
                     if (p1.equals(p)) {
                         binding.layout3.setErrorEnabled(false);
-                        pawTrue = true;
+                        isPwdCheck = true;
                     } else {
                         binding.layout3.setErrorEnabled(true);
                         binding.layout3.setError(getString(R.string.pw_error));
-                        pawTrue = false;
+                        isPwdCheck = false;
                     }
                 }
             }
@@ -165,7 +165,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         binding.signUpButton.setOnClickListener(v -> {
-            if (pawTrue && emailTrue && emileCheck) {
+            if (isEmileCheck && isEmileEnterCheck && isPwdCheck) {
                 pwe = binding.passwordInputEdittext.getText().toString().trim();
                 NewUserData newUserData = new NewUserData(email, pwe, "");
                 Call<TokenData> call = ServerClient.getServerService().signUp(newUserData);
@@ -212,6 +212,18 @@ public class SignUpActivity extends AppCompatActivity {
                         Toast.makeText(SignUpActivity.this, R.string.format_error, Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+            else if(!isEmileEnterCheck && !isPwdCheck){
+                Toast.makeText(getApplicationContext(), "빈칸을 조건에 맞게 채워주세요", Toast.LENGTH_SHORT).show();
+            }
+            else if(!isEmileEnterCheck){
+                Toast.makeText(getApplicationContext(), "이메일을 적어주세요", Toast.LENGTH_SHORT).show();
+            }
+            else if(!isPwdCheck){
+                Toast.makeText(getApplicationContext(), "비밀번호를 조건에 맞게 채워주세요", Toast.LENGTH_SHORT).show();
+            }
+            else if(!isEmileCheck){
+                Toast.makeText(getApplicationContext(), "이메일 유효성 검사를 해주세요", Toast.LENGTH_SHORT).show();
             }
         });
     }
