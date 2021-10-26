@@ -79,12 +79,10 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
         binding.profileImageview.setBackground(new ShapeDrawable(new OvalShape()));
         binding.profileImageview.setClipToOutline(true);
         binding.textView.setCharacterDelay(160);
-        binding.textView.displayTextWithAnimation("안녕하세요");
-        String story = name + (String) getText(R.string.story_profile);
-        Handler animationCompleteCallBack = new Handler(msg -> {
-            Log.i("Log", "Animation Completed");
-            return false;
-        });
+
+        String story = name +  getText(R.string.story_profile);
+        binding.textView.displayTextWithAnimation(story);
+        ;
 
         token = sf.getString("token", "");
         name = sf.getString("name", "");
