@@ -9,13 +9,16 @@
         <group android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_goal_edit"
-                android:title="@string/my_goal" />
+                android:title="@string/my_goal"
+                android:icon="@drawable/ic_goal"/>
             <item
                 android:id="@+id/nav_edit_personal_information"
-                android:title="개인정보 수정"/>
+                android:title="개인정보 수정"
+                android:icon="@drawable/ic_account"/>
             <item
                 android:id="@+id/nav_edit_profile"
-                android:title="프로필 수정"/>
+                android:title="프로필 수정"
+                android:icon="@drawable/ic_editprofile"/>
         </group>
         </menu>
     </item>
@@ -26,7 +29,8 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_help"
-            android:title="도움말"/>
+            android:title="도움말"
+            android:icon="@drawable/ic_help"/>
     </group>
 
 </menu>
