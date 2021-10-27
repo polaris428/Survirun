@@ -28,10 +28,10 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.common_full_open_on_phone));
-        binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.common_google_signin_btn_icon_dark_focused));
-        binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.common_google_signin_btn_icon_dark_normal_background));
-        binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.common_google_signin_btn_icon_dark_normal_background));
+        binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home));
+        binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic__graphicon));
+        binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_walking));
+        binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_friend));
         binding.meowBottomNavigation.show(1, true);
         replace(new UserFragment());
         binding.meowBottomNavigation.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
