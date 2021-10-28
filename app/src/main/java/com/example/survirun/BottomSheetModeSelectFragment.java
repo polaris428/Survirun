@@ -6,14 +6,14 @@ import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.survirun.activity.ExercisePreparationActivity;
 import com.example.survirun.activity.ExplanationActivity;
 import com.example.survirun.databinding.FragmentBottomSheetModeSelectBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -26,7 +26,7 @@ public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentBottomSheetModeSelectBinding.inflate(inflater, container, false);
         View v = binding.getRoot();
@@ -44,6 +44,17 @@ public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
         binding.zombieChip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             mListener.onCheckZombie(isChecked);
             isCheckZombie = isChecked;
+            if(isChecked){
+                if (getActivity() == null) {
+                    return;
+                }
+                binding.zombieChip.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(getActivity(), R.color.red)));
+                binding.zombieChip.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+            }
+            else{
+                binding.zombieChip.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(getActivity(), R.color.brightGray)));
+                binding.zombieChip.setTextColor(ContextCompat.getColor(getActivity(), R.color.black));
+            }
             setButtonColor();
         });
 
@@ -56,6 +67,18 @@ public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
         binding.gpsChip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             mListener.onCheckGps(isChecked);
             isCheckGps = isChecked;
+            if(isChecked){
+                if (getActivity() == null) {
+                    return;
+                }
+                binding.gpsChip.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(getActivity(), R.color.red)));
+                binding.gpsChip.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+            }
+            else{
+                binding.gpsChip.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(getActivity(), R.color.brightGray)));
+                binding.gpsChip.setTextColor(ContextCompat.getColor(getActivity(), R.color.black));
+            }
+            setButtonColor();
         });
 
         binding.gpsChip.setOnLongClickListener(v1 -> {
@@ -71,10 +94,16 @@ public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
     @SuppressLint("ResourceAsColor")
     private void setButtonColor(){
         if(isCheckZombie||isCheckGps){
-            binding.exerciseStartButton.setBackgroundTintList(ColorStateList.valueOf(R.color.red));
+            if (getActivity() == null) {
+                return;
+            }
+            binding.exerciseStartButton.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
         }
         else{
-            binding.exerciseStartButton.setBackgroundTintList(ColorStateList.valueOf(R.color.gray));
+            if (getActivity() == null) {
+                return;
+            }
+            binding.exerciseStartButton.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.gray));
         }
     }
 
