@@ -53,8 +53,8 @@ public class FriendFragment extends Fragment {
 
 
                     // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
-                    //FriendAdapter adapter = new FriendAdapter(response.body().friends);
-                    //binding.friendListRecyclerView.setAdapter(adapter);
+                    FriendAdapter adapter = new FriendAdapter(response.body().friends);
+                    binding.friendListRecyclerView.setAdapter(adapter);
 
 
                     binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

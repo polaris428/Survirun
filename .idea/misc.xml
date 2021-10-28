@@ -3,7 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Survirun/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.24259259259259258" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic__graphicon.xml" value="0.1" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic_account.xml" value="0.1" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic_baseline_check_circle_24.xml" value="0.2462962962962963" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_baseline_dehaze_24.xml" value="0.26979166666666665" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic_goal.xml" value="0.2462962962962963" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic_help.xml" value="0.24259259259259258" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic_human.xml" value="0.24259259259259258" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic_launcher_background.xml" value="0.24259259259259258" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic_left.xml" value="0.2462962962962963" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic_logo_red.xml" value="0.24259259259259258" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic_logo_white.xml" value="0.24259259259259258" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic_profile.xml" value="0.2462962962962963" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic_walking.xml" value="0.2462962962962963" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/progress_bg.xml" value="0.24259259259259258" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/rounded_btn.xml" value="0.20208333333333334" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_exercise_preparation.xml" value="0.264" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_exercise_result.xml" value="0.209375" />
