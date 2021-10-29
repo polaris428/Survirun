@@ -1,37 +1,76 @@
 package com.example.survirun.Fragmnet.Friend;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.survirun.R;
+import com.example.survirun.data.ExerciseHistory;
 import com.example.survirun.data.Friends;
+import com.example.survirun.data.ImageData;
+import com.example.survirun.data.getUserData;
+import com.example.survirun.server.ServerClient;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
     private List<Friends> mData ;
 
+
+    Context context;
+    String token;
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
+        ConstraintLayout constraintLayout1;
+        ConstraintLayout constraintLayout2;
+        ImageView profileImageview;
+        TextView nameTextView;
+        TextView emailTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.item_friend_name);
+            constraintLayout1=itemView.findViewById(R.id.constraint_layout);
+            constraintLayout2=itemView.findViewById(R.id.card_item2);
+            nameTextView=itemView.findViewById(R.id.username_textview);
+           // emailTextView=itemView.findViewById(R.id.emileText);
+            profileImageview=itemView.findViewById(R.id.profile_imageview);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+             context=itemView.getContext();
 
+
+
+
+
+            constraintLayout1.setOnClickListener(v -> {
+
+                if (constraintLayout2.getVisibility() == View.GONE){
+                    constraintLayout2.setVisibility(View.VISIBLE);
+
+                }else{
+                    constraintLayout2.setVisibility(View.GONE);
                 }
+
+
             });
         }
     }
@@ -56,7 +95,46 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     public void onBindViewHolder(@NonNull FriendAdapter.ViewHolder holder, int position) {
 
         holder.textView.setText(mData.get(position).email);
-        Log.d("adfs",mData.get(position).email+"");
+        SharedPreferences sf = context.getSharedPreferences("Login", MODE_PRIVATE);
+
+        token = sf.getString("token", "");
+        Call<getUserData> call1= ServerClient.getServerService().getUser(token,holder.textView.getText().toString());
+        call1.enqueue(new Callback<getUserData>() {
+            @Override
+            public void onResponse(Call<getUserData> call, Response<getUserData> response) {
+                if(response.isSuccessful()){
+
+
+                    ExerciseHistory exerciseHistory=response.body().exerciseHistory.get(0);
+                    Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url",response.body().username);
+                    getProfile.enqueue(new Callback<ImageData>() {
+                        @Override
+                        public void onResponse(Call<ImageData> call, Response<ImageData> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("d",response.body().img);
+                                Glide.with(context)
+                                        .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
+                                        .error(R.drawable.ic_profile)
+                                        .circleCrop()
+                                        .into(holder.profileImageview);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ImageData> call, Throwable t) {
+                            t.printStackTrace();
+                        }
+                    });
+                }else{
+                    Log.d("adsf","실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<getUserData> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
 
 
     }
