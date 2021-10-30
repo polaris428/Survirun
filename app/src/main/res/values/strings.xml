@@ -4,14 +4,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="story_name">You\'re a survivor of zombie apocalypse. What is your name?</string>
-    <string name="pw">Password</string>
+    <string name="pwd">Password</string>
     <string name="login">Login</string>
     <string name="no_account">Sign up</string>
     <string name="email">Email</string>
     <string name="confirm_pw">Confirm Password</string>
     <string name="sign_up">Sign up</string>
     <string name="email_error">Enter a valid email.</string>
-    <string name="pw_error">Those passwords didn\'t match.</string>
+    <string name="pwd_error">Those passwords didn\'t match.</string>
     <string name="fill_error">Please fill in all the blanks.</string>
     <string name="sign_up_error">Registration error</string>
     <string name="format_error">Please check the format.</string>
@@ -72,7 +72,7 @@
     <string name="email_can_use">You can use this email</string>
     <string name="check_id_pwd">Please check your ID or password</string>
     <string name="server_error">Sorry for the inconvenience caused by the server error</string>
-    <string name="pwd_enter">Enter 8 letters including numbers, letters, or special characters</string>
+    <string name="pwd_include">Please include numbers, letters, and special characters</string>
     <string name="pwd_condition">Enter the password in the box above according to the conditions</string>
     <string name="choose_mode">Please choose the mode.</string>
     <string name="setting_mode">Mode setting</string>
@@ -80,4 +80,5 @@
     <string name="fill_condition">Fill in the blanks according to the conditions</string>
     <string name="fill_pwd_condition">Please fill in the password according to the conditions</string>
     <string name="check_email_validity">Please check the email validity</string>
+    <string name="pwd_enter">Please enter it within 8-15 characters</string>
 </resources>

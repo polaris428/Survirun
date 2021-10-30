@@ -8,9 +8,10 @@ import static com.example.survirun.R.string.email_error;
 import static com.example.survirun.R.string.fill_condition;
 import static com.example.survirun.R.string.fill_pwd_condition;
 import static com.example.survirun.R.string.format_error;
-import static com.example.survirun.R.string.pw_error;
+import static com.example.survirun.R.string.pwd_error;
 import static com.example.survirun.R.string.pwd_condition;
 import static com.example.survirun.R.string.pwd_enter;
+import static com.example.survirun.R.string.pwd_include;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -124,13 +125,19 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!Pattern.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#$%^&*])(?=.*[0-9!@#$%^&*]).{8,15}$", s)) {
+                if (!Pattern.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#$%^&*])(?=.*[0-9!@#$%^&*]).*$", s)) {
                     binding.layout2.setErrorEnabled(true);
+                    binding.layout2.setCounterEnabled(false);
+                    binding.layout2.setError(getString(pwd_include));
+                }
+                else if(!Pattern.matches("^.{8,15}$", s)){
+                    binding.layout2.setErrorEnabled(true);
+                    binding.layout2.setCounterEnabled(true);
                     binding.layout2.setError(getString(pwd_enter));
-
-                } else {
+                }
+                else {
                     binding.layout2.setErrorEnabled(false);
-
+                    binding.layout2.setCounterEnabled(false);
                 }
             }
 
@@ -160,7 +167,7 @@ public class SignUpActivity extends AppCompatActivity {
                         isPwdCheck = true;
                     } else {
                         binding.layout3.setErrorEnabled(true);
-                        binding.layout3.setError(getString(pw_error));
+                        binding.layout3.setError(getString(pwd_error));
                         isPwdCheck = false;
                     }
                 }
