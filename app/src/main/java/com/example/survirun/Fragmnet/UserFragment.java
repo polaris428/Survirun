@@ -47,8 +47,7 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentUserBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        ActivityNavHeaderBinding nbinding;
-        nbinding=ActivityNavHeaderBinding.bind(binding.navView.getHeaderView(0));
+
        // binding.drawerLayout.setDrawerListener(listener);
         goal = getContext().getSharedPreferences("goal", MODE_PRIVATE);
         goalCalorie = goal.getInt("calorie", 400);
@@ -62,37 +61,8 @@ public class UserFragment extends Fragment {
         emile=sf.getString("email","");
 
 
-        binding.userPageButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(getActivity(), UserPageActivity.class);
-//            startActivity(intent);
 
-            binding.drawerLayout.openDrawer(binding.navView);
 
-        });
-
-        nbinding.nameTextView.setText(name);
-        nbinding.idTextView.setText(emile);
-        Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
-        getProfile.enqueue(new Callback<ImageData>() {
-            @Override
-            public void onResponse(Call<ImageData> call, Response<ImageData> response) {
-                if (response.isSuccessful()) {
-                    if (getActivity() == null) {
-                        return;
-                    }
-                    Glide.with(UserFragment.this)
-                            .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
-                            .circleCrop()
-                            .error(R.drawable.ic_profile)
-                            .into(nbinding.profileImageview);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ImageData> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
         Call<ExerciseData> call = ServerClient.getServerService().getExercise(token);
         call.enqueue(new Callback<ExerciseData>() {
             @Override
