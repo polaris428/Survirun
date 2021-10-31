@@ -291,42 +291,41 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
             List<LatLng> list = polylineOptions.getPoints();
-            LatLng leftTopLatLng = list.get(0), rightBottomLatLng = list.get(0);
-            for(LatLng i : list) {
 
-                if(leftTopLatLng.latitude > i.latitude) {
-                    leftTopLatLng = new LatLng(i.latitude, leftTopLatLng.longitude);
+
+            if(list.size() > 0) {
+                LatLng leftTopLatLng = list.get(0), rightBottomLatLng = list.get(0);
+                for(LatLng i : list) {
+
+                    if(leftTopLatLng.latitude > i.latitude) {
+                        leftTopLatLng = new LatLng(i.latitude, leftTopLatLng.longitude);
+                    }
+                    if(leftTopLatLng.longitude < i.longitude) {
+                        leftTopLatLng = new LatLng(leftTopLatLng.latitude, i.longitude);
+                    }
+                    if(rightBottomLatLng.latitude < i.latitude ) {
+                        rightBottomLatLng = new LatLng(i.latitude, rightBottomLatLng.longitude);
+                    }
+                    if(rightBottomLatLng.longitude > i.longitude) {
+                        rightBottomLatLng = new LatLng(rightBottomLatLng.latitude, i.longitude);
+                    }
+
                 }
-                if(leftTopLatLng.longitude < i.longitude) {
-                    leftTopLatLng = new LatLng(leftTopLatLng.latitude, i.longitude);
-                }
-                if(rightBottomLatLng.latitude < i.latitude ) {
-                    rightBottomLatLng = new LatLng(i.latitude, rightBottomLatLng.longitude);
-                }
-                if(rightBottomLatLng.longitude > i.longitude) {
-                    rightBottomLatLng = new LatLng(rightBottomLatLng.latitude, i.longitude);
-                }
+
+                LatLng mid = new LatLng((leftTopLatLng.latitude + rightBottomLatLng.latitude)/2 , (leftTopLatLng.longitude + rightBottomLatLng.longitude) /2);
+                Location ltl = new Location("ltl");
+                Location rbl = new Location("rbl");
+                ltl.setLatitude(leftTopLatLng.latitude);
+                ltl.setLongitude(leftTopLatLng.longitude);
+                rbl.setLatitude(rightBottomLatLng.latitude);
+                rbl.setLongitude(rightBottomLatLng.longitude);
+
+                double d  =ltl.distanceTo(rbl);
+                Log.d(">",""+d);
+                int zoomLv = getZoomLevelFromMeters(d);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mid, zoomLv));
 
             }
-            LatLng mid = new LatLng((leftTopLatLng.latitude + rightBottomLatLng.latitude)/2 , (leftTopLatLng.longitude + rightBottomLatLng.longitude) /2);
-            Location ltl = new Location("ltl");
-            Location rbl = new Location("rbl");
-            ltl.setLatitude(leftTopLatLng.latitude);
-            ltl.setLongitude(leftTopLatLng.longitude);
-            rbl.setLatitude(rightBottomLatLng.latitude);
-            rbl.setLongitude(rightBottomLatLng.longitude);
-
-            double d  =ltl.distanceTo(rbl);
-            Log.d(">",""+d);
-            int zoomLv = getZoomLevelFromMeters(d);
-
-
-
-
-
-
-
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mid, zoomLv));
             try {
                 Thread.sleep(1000);
             } catch (Exception e){
