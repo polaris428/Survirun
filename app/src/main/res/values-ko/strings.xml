@@ -81,4 +81,5 @@
     <string name="fill_pwd_condition">비밀번호를 조건에 맞게 채워주세요</string>
     <string name="check_email_validity">이메일 유효성 검사를 해주세요</string>
     <string name="pwd_enter">8~15자 이내로 입력해주세요</string>
+    <string name="reset_goals">목표 초기화</string>
 </resources>
