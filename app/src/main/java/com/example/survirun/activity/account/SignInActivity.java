@@ -1,6 +1,7 @@
 package com.example.survirun.activity.account;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -53,9 +54,9 @@ public class SignInActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 id = binding.idEdittext.getText().toString();
                 if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
-                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btncolor));
                 } else {
-                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btn));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this,R.drawable.rounded_btn));
                 }
             }
 
@@ -64,9 +65,9 @@ public class SignInActivity extends AppCompatActivity {
                 id = binding.idEdittext.getText().toString();
                 pwe = binding.passwordEdittext.getText().toString();
                 if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
-                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this,R.drawable.rounded_btncolor));
                 } else {
-                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btn));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this,R.drawable.rounded_btn));
                 }
 
             }
@@ -82,9 +83,9 @@ public class SignInActivity extends AppCompatActivity {
                 pwe = binding.passwordEdittext.getText().toString();
                 id = binding.idEdittext.getText().toString();
                 if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
-                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this,R.drawable.rounded_btncolor));
                 } else {
-                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btn));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this,R.drawable.rounded_btn));
                 }
             }
 
@@ -151,14 +152,14 @@ public class SignInActivity extends AppCompatActivity {
                                                     startActivity(intent);
                                                 }else{
                                                     Log.d("adsf","실패");
-                                                    Toast.makeText(SignInActivity.this,"사버오류 잠시후 다시 실행해주세요",Toast.LENGTH_SHORT);
+                                                    Toast.makeText(SignInActivity.this,"사버오류 잠시후 다시 실행해주세요",Toast.LENGTH_SHORT).show();
                                                 }
                                             }
 
                                             @Override
                                             public void onFailure(Call<getUserData> call, Throwable t) {
                                                 t.printStackTrace();
-                                                Toast.makeText(SignInActivity.this,"사버오류 잠시후 다시 실행해주세요",Toast.LENGTH_SHORT);
+                                                Toast.makeText(SignInActivity.this,"사버오류 잠시후 다시 실행해주세요",Toast.LENGTH_SHORT).show();
                                             }
                                         });
 
@@ -194,10 +195,10 @@ public class SignInActivity extends AppCompatActivity {
 
         });
 
-        binding.signUpButton1.setOnClickListener(v -> {
+        binding.signUpTextView1.setOnClickListener(v -> {
             setIntentSignUp();
         });
-        binding.signUpButton2.setOnClickListener(v -> {
+        binding.signUpTextView2.setOnClickListener(v -> {
             setIntentSignUp();
         });
     }
