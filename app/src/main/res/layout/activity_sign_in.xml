@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.account.LoginActivity">
+    tools:context=".activity.account.SignInActivity">
 
     <ImageView
         android:id="@+id/logo_imageview"
@@ -21,7 +21,7 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login"
+        android:text="@string/sign_in"
         android:textSize="19sp"
         android:textStyle="bold"
         android:layout_marginBottom="43dp"
@@ -137,7 +137,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_btn"
-        android:text="@string/login"
+        android:text="@string/sign_in"
         android:textColor="@color/white"
         android:layout_marginTop="58dp"
         android:layout_marginHorizontal="72dp"

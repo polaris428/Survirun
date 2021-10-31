@@ -13,7 +13,7 @@ import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.example.survirun.R;
-import com.example.survirun.activity.account.LoginActivity;
+import com.example.survirun.activity.account.SignInActivity;
 import com.example.survirun.data.ImageData;
 import com.example.survirun.data.InfoData;
 import com.example.survirun.databinding.ActivityUserPageBinding;
@@ -84,7 +84,7 @@ public class UserPageActivity extends AppCompatActivity {
             }
         });
         binding.logoutButton.setOnClickListener(v -> {
-            builder.setTitle(R.string.logout).setMessage(R.string.logout_user).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            builder.setTitle(R.string.sign_out).setMessage(R.string.sign_out_user).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     editor.putString("email", "");
@@ -92,7 +92,7 @@ public class UserPageActivity extends AppCompatActivity {
                     editor.putString("token", "");
                     editor.putString("name", "");
                     editor.commit();
-                    Intent intent = new Intent(UserPageActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(UserPageActivity.this, SignInActivity.class);
                     startActivity(intent);
                 }
             }).setNegativeButton(R.string.no, null).show();

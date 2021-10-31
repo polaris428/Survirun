@@ -59,7 +59,7 @@
             android:exported="true" />
         <activity android:name=".activity.account.SignUpNameActivity" />
         <activity android:name=".activity.account.SignUpActivity" />
-        <activity android:name=".activity.account.LoginActivity" />
+        <activity android:name=".activity.account.SignInActivity" />
         <activity android:name=".activity.account.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

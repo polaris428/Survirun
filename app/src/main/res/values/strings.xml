@@ -5,11 +5,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="story_name">You\'re a survivor of zombie apocalypse. What is your name?</string>
     <string name="pwd">Password</string>
-    <string name="login">Login</string>
-    <string name="no_account">Sign up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="no_account">Don\'t have an account?</string>
     <string name="email">Email</string>
     <string name="confirm_pw">Confirm Password</string>
-    <string name="sign_up">Sign up</string>
+    <string name="sign_up">Sign Up</string>
     <string name="email_error">Enter a valid email.</string>
     <string name="pwd_error">Those passwords didn\'t match.</string>
     <string name="fill_error">Please fill in all the blanks.</string>
@@ -62,8 +62,8 @@
     <string name="story_mode">Story Mode</string>
     <string name="start">Start</string>
     <string name="story">Story #</string>
-    <string name="logout">Logout</string>
-    <string name="logout_user">Do you want to log out?</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="sign_out_user">Do you want to sign out?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="duplicate_check">Check</string>
