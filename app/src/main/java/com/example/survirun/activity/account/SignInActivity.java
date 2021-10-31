@@ -1,6 +1,7 @@
 package com.example.survirun.activity.account;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,15 +18,15 @@ import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.TokenData;
 import com.example.survirun.data.getUserData;
-import com.example.survirun.databinding.ActivityLoginBinding;
+import com.example.survirun.databinding.ActivitySignInBinding;
 import com.example.survirun.server.ServerClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class LoginActivity extends AppCompatActivity {
-    ActivityLoginBinding binding;
+public class SignInActivity extends AppCompatActivity {
+    ActivitySignInBinding binding;
     ProgressDialog customProgressDialog;
 
     String email;
@@ -37,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        binding = ActivitySignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
         editor = sf.edit();
@@ -53,9 +54,9 @@ public class LoginActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 id = binding.idEdittext.getText().toString();
                 if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
-                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btncolor));
                 } else {
-                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btn));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this,R.drawable.rounded_btn));
                 }
             }
 
@@ -64,9 +65,9 @@ public class LoginActivity extends AppCompatActivity {
                 id = binding.idEdittext.getText().toString();
                 pwe = binding.passwordEdittext.getText().toString();
                 if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
-                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this,R.drawable.rounded_btncolor));
                 } else {
-                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btn));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this,R.drawable.rounded_btn));
                 }
 
             }
@@ -82,9 +83,9 @@ public class LoginActivity extends AppCompatActivity {
                 pwe = binding.passwordEdittext.getText().toString();
                 id = binding.idEdittext.getText().toString();
                 if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
-                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this,R.drawable.rounded_btncolor));
                 } else {
-                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btn));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this,R.drawable.rounded_btn));
                 }
             }
 
@@ -125,13 +126,13 @@ public class LoginActivity extends AppCompatActivity {
                                 if (!response.body().username) {
                                     customProgressDialog.dismiss();
 
-                                    Intent intent = new Intent(LoginActivity.this, SignUpNameActivity.class);
+                                    Intent intent = new Intent(SignInActivity.this, SignUpNameActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
                                 } else {
                                     if (!response.body().profile) {
                                         customProgressDialog.dismiss();
-                                        Intent intent = new Intent(LoginActivity.this, SignUpProfileActivity.class);
+                                        Intent intent = new Intent(SignInActivity.this, SignUpProfileActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
 
@@ -146,19 +147,19 @@ public class LoginActivity extends AppCompatActivity {
                                                     editor.putString("name",response.body().username);
                                                     editor.commit();
 
-                                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                     startActivity(intent);
                                                 }else{
                                                     Log.d("adsf","실패");
-                                                    Toast.makeText(LoginActivity.this,"사버오류 잠시후 다시 실행해주세요",Toast.LENGTH_SHORT);
+                                                    Toast.makeText(SignInActivity.this,"사버오류 잠시후 다시 실행해주세요",Toast.LENGTH_SHORT).show();
                                                 }
                                             }
 
                                             @Override
                                             public void onFailure(Call<getUserData> call, Throwable t) {
                                                 t.printStackTrace();
-                                                Toast.makeText(LoginActivity.this,"사버오류 잠시후 다시 실행해주세요",Toast.LENGTH_SHORT);
+                                                Toast.makeText(SignInActivity.this,"사버오류 잠시후 다시 실행해주세요",Toast.LENGTH_SHORT).show();
                                             }
                                         });
 
@@ -194,15 +195,15 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
-        binding.signUpButton1.setOnClickListener(v -> {
+        binding.signUpTextView1.setOnClickListener(v -> {
             setIntentSignUp();
         });
-        binding.signUpButton2.setOnClickListener(v -> {
+        binding.signUpTextView2.setOnClickListener(v -> {
             setIntentSignUp();
         });
     }
     private void setIntentSignUp(){
-        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+        Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
         startActivity(intent);
     }
 }

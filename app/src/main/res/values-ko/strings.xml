@@ -4,14 +4,14 @@
     <string name="story_name">당신은 좀비아포칼립스의 생존자입니다당신의이름은무엇인가요.</string>
     <string name="story_profile">...멋진 이름이군여 딩신의 사진을 등록해주세요</string>
     <string name="hello_blank_fragment">안뇽</string>
-    <string name="pw">비밀번호</string>
-    <string name="login">로그인</string>
+    <string name="pwd">비밀번호</string>
+    <string name="sign_in">로그인</string>
     <string name="no_account">아직 회원이 아니신가요?</string>
     <string name="email">이메일</string>
     <string name="confirm_pw">비밀번호 확인</string>
     <string name="sign_up">회원가입</string>
     <string name="email_error">이메일 형식을 확인해주세요</string>
-    <string name="pw_error">비밀번호가 다릅니다</string>
+    <string name="pwd_error">비밀번호가 다릅니다</string>
     <string name="fill_error">빈 칸을 채워주세요</string>
     <string name="sign_up_error">등록 에러</string>
     <string name="format_error">형식을 확인해주세요</string>
@@ -62,8 +62,8 @@
     <string name="story_mode">스토리모드</string>
     <string name="start">시작하기</string>
     <string name="story">Story #</string>
-    <string name="logout">로그아웃</string>
-    <string name="logout_user">로그아웃을 하시겠습니까?</string>
+    <string name="sign_out">로그아웃</string>
+    <string name="sign_out_user">로그아웃을 하시겠습니까?</string>
     <string name="yes">예</string>
     <string name="no">아니오</string>
     <string name="duplicate_check">중복확인</string>
@@ -72,7 +72,14 @@
     <string name="email_can_use">사용 가능한 이메일 입니다</string>
     <string name="check_id_pwd">아이디 또는 비밀번호를 확인해주세요</string>
     <string name="server_error">서버오류 서비스 이용에 불편을 드려 죄송합니다</string>
-    <string name="pwd_enter">숫자, 문자, 특수문자중 2가지를 포함하여 8글자를 하세요</string>
+    <string name="pwd_include">숫자, 문자, 특수문자중 2가지를 포함해주세요</string>
     <string name="pwd_condition">위의 칸에 먼저 비밀번호를 조건에 맞게 입력해주세요</string>
     <string name="choose_mode">모드를 선택해주세요</string>
+    <string name="setting_mode">모드 설정</string>
+    <string name="tip_mode">Tip. 모드를 꾹 누르면 설명을 볼 수 있어요</string>
+    <string name="fill_condition">빈칸을 조건에 맞게 채워주세요</string>
+    <string name="fill_pwd_condition">비밀번호를 조건에 맞게 채워주세요</string>
+    <string name="check_email_validity">이메일 유효성 검사를 해주세요</string>
+    <string name="pwd_enter">8~15자 이내로 입력해주세요</string>
+    <string name="reset_goals">목표 초기화</string>
 </resources>

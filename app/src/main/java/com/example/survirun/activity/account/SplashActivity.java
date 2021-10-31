@@ -42,25 +42,25 @@ public class SplashActivity extends AppCompatActivity {
         pwe = sf.getString("pwe", "");
         editor = sf.edit();
         int status = NetworkStatus.getConnectivityStatus(getApplicationContext());
-        if(status == NetworkStatus.TYPE_MOBILE){
-            Log.d("네트워크 연결 상태","모바일로 연결");
+        if (status == NetworkStatus.TYPE_MOBILE) {
+            Log.d("네트워크 연결 상태", "모바일로 연결");
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACTIVITY_RECOGNITION, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
+                            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
                     },
                     1000);
 
 
-        }else if (status == NetworkStatus.TYPE_WIFI){
-            Log.d("네트워크 연결 상태","무선랜으로 연결됨");
+        } else if (status == NetworkStatus.TYPE_WIFI) {
+            Log.d("네트워크 연결 상태", "무선랜으로 연결됨");
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACTIVITY_RECOGNITION, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
+                            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
                     },
                     1000);
 
-        }else {
-            Log.d("네트워크 연결 상태","연결안됨");
+        } else {
+            Log.d("네트워크 연결 상태", "연결안됨");
             showDialog();
 
         }
@@ -107,10 +107,8 @@ public class SplashActivity extends AppCompatActivity {
                     overridePendingTransition(0, 0);
 
 
-
-
                 } else {
-                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
                     startActivity(intent);
                 }
             }
@@ -144,6 +142,7 @@ public class SplashActivity extends AppCompatActivity {
                     activity,
                     PERMISSIONS_STORAGE,
                     REQUEST_EXTERNAL_STORAGE
+
             );
         }
     }
@@ -158,7 +157,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (!email.equals("")) {
                     login();
                 } else {
-                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     overridePendingTransition(0, 0);
@@ -171,7 +170,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (!email.equals("")) {
                     login();
                 } else {
-                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     overridePendingTransition(0, 0);
@@ -180,6 +179,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         }
     }
+
     void showDialog() {
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(SplashActivity.this).setTitle("인터넷 연결 오류").setMessage("인터넷 연결을 확인해주세요").setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override

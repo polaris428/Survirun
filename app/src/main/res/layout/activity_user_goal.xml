@@ -4,113 +4,189 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".activity.user.UserGoalActivity">
-    
+
     <ImageButton
         android:id="@+id/back_button"
-        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
-        android:background="@color/transparent"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_margin="16dp"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--<ImageView
+        android:id="@+id/image"
+        android:layout_width="38dp"
+        android:layout_height="26.9dp"
+        android:src="@drawable/ic_logo_red"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv"/>-->
+
     <TextView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="16dp"
         android:text="@string/my_goal"
-        android:textSize="23sp"/>
-    <LinearLayout
-        android:id="@+id/layout1"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_marginLeft="30dp"
-        app:layout_constraintBottom_toTopOf="@id/retouch_button"
-        app:layout_constraintTop_toBottomOf="@id/tv"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintBottom_toTopOf="@id/proverb_textView"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/layout2"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/calorie_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="26sp"/>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/time_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="26sp"/>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/km_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="26sp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout2"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_marginRight="30dp"
-        app:layout_constraintTop_toBottomOf="@id/tv"
-        app:layout_constraintBottom_toTopOf="@id/retouch_button"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/layout1"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/calorie"
-            android:textColor="@color/black"
-            android:textSize="25sp"/>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/exercise_time_br"
-            android:textColor="@color/black"
-            android:textSize="25sp"/>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Km"
-            android:textColor="@color/black"
-            android:textSize="25sp"/>
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/proverb_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="48dp"
+        android:text="가는말이 고우면 오는 말은 더럽다"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@id/calorie_cardView"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/proverb_name_textView"
+        app:layout_constraintTop_toBottomOf="@id/tv" />
+
+    <TextView
+        android:id="@+id/proverb_name_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="미상"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@id/proverb_textView"
+        app:layout_constraintLeft_toRightOf="@id/proverb_textView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/proverb_textView" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/calorie_cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="28dp"
+        app:layout_constraintBottom_toTopOf="@id/exercise_time_cardView"
+        app:layout_constraintTop_toBottomOf="@id/proverb_textView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="108dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/calorie"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/calorie_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="40sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+
+        android:id="@+id/exercise_time_cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        app:layout_constraintBottom_toTopOf="@id/km_cardView"
+        app:layout_constraintTop_toBottomOf="@id/calorie_cardView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="108dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exercise_time"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/time_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="40sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/km_cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintBottom_toTopOf="@id/retouch_button"
+        app:layout_constraintTop_toBottomOf="@id/exercise_time_cardView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="108dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Km"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/km_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="40sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/retouch_button"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/modify_goals"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/modify_goals"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/reset_button"
+        app:layout_constraintTop_toBottomOf="@id/km_cardView" />
 
-
+    <Button
+        android:id="@+id/reset_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/reset_goals"
+        app:layout_constraintLeft_toRightOf="@id/retouch_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/retouch_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
