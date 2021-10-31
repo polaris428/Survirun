@@ -1,4 +1,4 @@
-package com.example.survirun.activity;
+package com.example.survirun.activity.user;
 
 import androidx.appcompat.app.AppCompatActivity;
 

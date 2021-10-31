@@ -1,4 +1,4 @@
-package com.example.survirun.activity;
+package com.example.survirun.activity.user;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.widget.Toast;
 
 import com.example.survirun.R;
+import com.example.survirun.activity.MainActivity;
 import com.example.survirun.databinding.ActivityUserGoalModifyBinding;
 
 public class UserGoalModifyActivity extends AppCompatActivity {

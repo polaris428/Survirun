@@ -1,4 +1,4 @@
-package com.example.survirun.activity;
+package com.example.survirun.activity.user;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.survirun.activity.MainActivity;
 import com.example.survirun.databinding.ActivityUserGoalBinding;
 
 public class UserGoalActivity extends AppCompatActivity {

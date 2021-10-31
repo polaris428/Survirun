@@ -68,6 +68,7 @@ public class UserFragment extends Fragment {
             @Override
             public void onResponse(Call<ExerciseData> call, Response<ExerciseData> response) {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     binding.dateTextview.setText(response.body().date);
                     binding.calorieTextview.setText(response.body().calorie + "");
                     binding.timeTextview.setText(response.body().time + "");
@@ -75,6 +76,7 @@ public class UserFragment extends Fragment {
                     editor.putString("data",response.body().date);
 
                     if (goalCalorie / 2 < response.body().calorie) {
+
                         progress = progress + 25;
                         binding.calorieCardView.setCardBackgroundColor(Color.YELLOW);
                     }
