@@ -10,6 +10,7 @@ import android.view.View;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.survirun.Fragmnet.ExerciseFragment;
 import com.example.survirun.Fragmnet.Friend.FriendFragment;
+import com.example.survirun.Fragmnet.SettingFragment;
 import com.example.survirun.R;
 import com.example.survirun.Fragmnet.StatisticsFragment;
 import com.example.survirun.Fragmnet.UserFragment;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic__graphicon));
         binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_walking));
         binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_friend));
+        binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(5, R.drawable.ic_friend));
         binding.meowBottomNavigation.show(1, true);
         replace(new UserFragment());
         binding.meowBottomNavigation.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
@@ -50,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
                     case 4:
                         replace(new FriendFragment());
+                        break;
+                    case 5:
+                        replace(new SettingFragment());
                         break;
                 }
                 return null;
