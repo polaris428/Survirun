@@ -20,6 +20,7 @@ import com.example.survirun.data.TokenData;
 import com.example.survirun.data.getUserData;
 import com.example.survirun.databinding.ActivitySignInBinding;
 import com.example.survirun.server.ServerClient;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,7 +57,7 @@ public class SignInActivity extends AppCompatActivity {
                 if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
                     binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btncolor));
                 } else {
-                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this,R.drawable.rounded_btn));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btn));
                 }
             }
 
@@ -65,9 +66,9 @@ public class SignInActivity extends AppCompatActivity {
                 id = binding.idEdittext.getText().toString();
                 pwe = binding.passwordEdittext.getText().toString();
                 if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
-                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this,R.drawable.rounded_btncolor));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btncolor));
                 } else {
-                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this,R.drawable.rounded_btn));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btn));
                 }
 
             }
@@ -83,9 +84,9 @@ public class SignInActivity extends AppCompatActivity {
                 pwe = binding.passwordEdittext.getText().toString();
                 id = binding.idEdittext.getText().toString();
                 if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
-                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this,R.drawable.rounded_btncolor));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btncolor));
                 } else {
-                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this,R.drawable.rounded_btn));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btn));
                 }
             }
 
@@ -93,9 +94,9 @@ public class SignInActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 pwe = binding.passwordEdittext.getText().toString();
                 if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
-                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btncolor));
                 } else {
-                    binding.loginButton.setBackground(getDrawable(R.drawable.rounded_btn));
+                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btn));
                 }
             }
 
@@ -138,28 +139,28 @@ public class SignInActivity extends AppCompatActivity {
 
                                     } else {
 
-                                        Call<getUserData>call1=ServerClient.getServerService().getUser(response.body().token,email);
+                                        Call<getUserData> call1 = ServerClient.getServerService().getUser(response.body().token, email);
                                         call1.enqueue(new Callback<getUserData>() {
                                             @Override
                                             public void onResponse(Call<getUserData> call, Response<getUserData> response) {
-                                                if(response.isSuccessful()){
+                                                if (response.isSuccessful()) {
                                                     customProgressDialog.dismiss();
-                                                    editor.putString("name",response.body().username);
+                                                    editor.putString("name", response.body().username);
                                                     editor.commit();
 
                                                     Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                     startActivity(intent);
-                                                }else{
-                                                    Log.d("adsf","실패");
-                                                    Toast.makeText(SignInActivity.this,"사버오류 잠시후 다시 실행해주세요",Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Log.d("adsf", "실패");
+                                                    Toast.makeText(SignInActivity.this, "사버오류 잠시후 다시 실행해주세요", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
 
                                             @Override
                                             public void onFailure(Call<getUserData> call, Throwable t) {
                                                 t.printStackTrace();
-                                                Toast.makeText(SignInActivity.this,"사버오류 잠시후 다시 실행해주세요",Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(SignInActivity.this, "사버오류 잠시후 다시 실행해주세요", Toast.LENGTH_SHORT).show();
                                             }
                                         });
 
@@ -202,7 +203,8 @@ public class SignInActivity extends AppCompatActivity {
             setIntentSignUp();
         });
     }
-    private void setIntentSignUp(){
+
+    private void setIntentSignUp() {
         Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
         startActivity(intent);
     }
