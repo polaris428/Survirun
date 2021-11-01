@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -158,11 +159,17 @@ public class SplashActivity extends AppCompatActivity {
                 if (!email.equals("")) {
                     login();
                 } else {
-                    Intent intent = new Intent(SplashActivity.this, SplashActivity2.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
-                    finish();
+                    Handler handler = new Handler();
+                    handler.postDelayed(() -> {
+
+                        Intent intent = new Intent(SplashActivity.this, SplashActivity2.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    }, 2000); //딜레이 타임 조절
+
+
                 }
             }
             // 퍼미션이 승인 거부되면
