@@ -2,6 +2,7 @@ package com.example.survirun.Fragmnet;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.survirun.R;
+import com.example.survirun.UserSettingActivity;
 import com.example.survirun.data.ImageData;
 import com.example.survirun.databinding.FragmentSettingBinding;
 import com.example.survirun.server.ServerClient;
@@ -45,6 +47,11 @@ public class SettingFragment extends Fragment {
 
         binding.nameTextView.setText(name);
         binding.emileText.setText(emile);
+
+        binding.userSettingButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), UserSettingActivity.class);
+            startActivity(intent);
+        });
 
         Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
         getProfile.enqueue(new Callback<ImageData>() {
