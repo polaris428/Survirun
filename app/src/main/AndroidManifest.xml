@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.survirun">
+    package="com.example.survirun" >
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
@@ -20,7 +20,10 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Survirun">
+        android:theme="@style/Theme.Survirun" >
+        <activity
+            android:name=".SplashActivity2"
+            android:exported="false" />
         <activity
             android:name=".NavHeader"
             android:exported="false" />
@@ -60,7 +63,7 @@
         <activity android:name=".activity.account.SignUpNameActivity" />
         <activity android:name=".activity.account.SignUpActivity" />
         <activity android:name=".activity.account.SignInActivity" />
-        <activity android:name=".activity.account.SplashActivity">
+        <activity android:name=".activity.account.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

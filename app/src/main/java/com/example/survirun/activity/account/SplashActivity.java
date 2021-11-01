@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.survirun.NetworkStatus;
 import com.example.survirun.R;
+import com.example.survirun.SplashActivity2;
 import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.TokenData;
@@ -108,7 +109,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
                 } else {
-                    Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, SplashActivity2.class);
                     startActivity(intent);
                 }
             }
@@ -157,7 +158,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (!email.equals("")) {
                     login();
                 } else {
-                    Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, SplashActivity2.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     overridePendingTransition(0, 0);
