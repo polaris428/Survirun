@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -19,6 +21,7 @@ import com.example.survirun.Fragmnet.SettingFragment;
 import com.example.survirun.R;
 import com.example.survirun.Fragmnet.StatisticsFragment;
 import com.example.survirun.Fragmnet.UserFragment;
+import com.example.survirun.WelcomeActivity;
 import com.example.survirun.databinding.ActivityMainBinding;
 
 import kotlin.Unit;
@@ -34,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        checkFirst();
 
         dialog = new Dialog(MainActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -71,6 +76,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void checkFirst(){
+        SharedPreferences sharedPreferences = getSharedPreferences("checkFirstAccess", MODE_PRIVATE);
+        boolean checkFirstAccess = sharedPreferences.getBoolean("checkFirstAccess", false);
+
+        if (!checkFirstAccess) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("checkFirstAccess", true);
+            editor.apply();
+
+            Intent tutorialIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+            startActivity(tutorialIntent);
+            finish();
+        }
     }
 
     private void replace(Fragment fragment) {
