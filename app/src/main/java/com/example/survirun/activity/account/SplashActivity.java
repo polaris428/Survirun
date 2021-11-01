@@ -6,8 +6,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -15,6 +14,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.survirun.NetworkStatus;
@@ -34,6 +36,7 @@ public class SplashActivity extends AppCompatActivity {
     String email;
     String pwe;
     SharedPreferences.Editor editor;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,23 @@ public class SplashActivity extends AppCompatActivity {
         email = sf.getString("email", "");
         pwe = sf.getString("pwe", "");
         editor = sf.edit();
+
+        dialog = new Dialog(SplashActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog);
+
+        network();
+
+        /*if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
+            requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
+        }
+        verifyStoragePermissions(this);*/
+
+        // 0.5초후
+    }
+
+    private void network() {
         int status = NetworkStatus.getConnectivityStatus(getApplicationContext());
         if (status == NetworkStatus.TYPE_MOBILE) {
             Log.d("네트워크 연결 상태", "모바일로 연결");
@@ -66,14 +86,6 @@ public class SplashActivity extends AppCompatActivity {
             showDialog();
 
         }
-
-        /*if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
-            requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
-        }
-        verifyStoragePermissions(this);*/
-
-        // 0.5초후
     }
 
     public void login() {
@@ -189,16 +201,20 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     void showDialog() {
-        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(SplashActivity.this).setTitle("인터넷 연결 오류").setMessage("인터넷 연결을 확인해주세요").setPositiveButton("확인", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                finish();
-            }
-        });
-        AlertDialog msgDlg = msgBuilder.create();
-        msgDlg.setCanceledOnTouchOutside(false);
-        msgDlg.setCancelable(false);
-        msgDlg.show();
+        TextView explain = dialog.findViewById(R.id.explain_textView);
+        Button finishButton = dialog.findViewById(R.id.cancel_button);
+        Button retryButton = dialog.findViewById(R.id.yes_button);
+        explain.setText("네트워크 오류가 발생하였습니다.");
+        finishButton.setText("종료");
+        retryButton.setText("재시도");
+        dialog.show();
+        dialog.setCancelable(false);
+        finishButton.setOnClickListener(v -> finish());
+        retryButton.setOnClickListener(v -> {
+                    dialog.dismiss();
+                    network();
+                }
+        );
     }
 
 }
