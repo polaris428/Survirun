@@ -107,9 +107,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void showDialog() {
         TextView explain = dialog.findViewById(R.id.explain_textView);
-        explain.setText("앱을 종료하시겠습니까?");
+        explain.setText(R.string.shut_down_app);
         dialog.show();
         dialog.findViewById(R.id.cancel_button).setOnClickListener(v -> dialog.dismiss());
-        dialog.findViewById(R.id.yes_button).setOnClickListener(v -> finish());
+        dialog.findViewById(R.id.yes_button).setOnClickListener(v -> finishAffinity());
     }
 }

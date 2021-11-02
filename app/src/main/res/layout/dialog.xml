@@ -8,7 +8,6 @@
         android:id="@+id/explain_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="먁먁"
         android:layout_marginVertical="40dp"
         app:layout_constraintBottom_toTopOf="@id/layout"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,13 +25,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="아니요"/>
+            android:text="@string/no"/>
 
         <Button
             android:id="@+id/yes_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="예"/>
+            android:text="@string/yes"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

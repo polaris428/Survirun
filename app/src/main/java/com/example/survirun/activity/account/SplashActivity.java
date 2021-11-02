@@ -186,7 +186,6 @@ public class SplashActivity extends AppCompatActivity {
             }
             // 퍼미션이 승인 거부되면
             else {
-                Toast.makeText(getApplicationContext(), "퍼미션 거부", Toast.LENGTH_SHORT).show();
                 if (!email.equals("")) {
                     login();
                 } else {
@@ -204,9 +203,9 @@ public class SplashActivity extends AppCompatActivity {
         TextView explain = dialog.findViewById(R.id.explain_textView);
         Button finishButton = dialog.findViewById(R.id.cancel_button);
         Button retryButton = dialog.findViewById(R.id.yes_button);
-        explain.setText("네트워크 오류가 발생하였습니다.");
-        finishButton.setText("종료");
-        retryButton.setText("재시도");
+        explain.setText(R.string.network_error);
+        finishButton.setText(R.string.close);
+        retryButton.setText(R.string.retry);
         dialog.show();
         dialog.setCancelable(false);
         finishButton.setOnClickListener(v -> finish());
