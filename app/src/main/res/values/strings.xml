@@ -85,4 +85,7 @@
     <string name="close">Close</string>
     <string name="retry">Retry</string>
     <string name="network_error">A network error has occurred.</string>
+    <string name="survive_zombie">Survive from\nzombies chasing you.</string>
+    <string name="sign_in_">Sign In</string>
+    <string name="sign_up_">Sign Up</string>
 </resources>

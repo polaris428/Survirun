@@ -85,4 +85,7 @@
     <string name="close">종료</string>
     <string name="retry">재시도</string>
     <string name="network_error">네트워크 오류가 발생하였습니다.</string>
+    <string name="survive_zombie">당신을 쫓아오는\n좀비로부터 살아 남으세요</string>
+    <string name="sign_in_">로그인 하기</string>
+    <string name="sign_up_">회원가입 하기</string>
 </resources>

@@ -20,7 +20,7 @@ public class SplashActivity2 extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        binding.SignInButton.setOnClickListener(v -> {
+        binding.signInButton.setOnClickListener(v -> {
             Intent intent=new Intent(SplashActivity2.this, SignInActivity.class);
             startActivity(intent);
         });
