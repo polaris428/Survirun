@@ -11,14 +11,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.example.survirun.R;
 import com.example.survirun.data.ExerciseData;
 
-import com.example.survirun.data.ImageData;
-import com.example.survirun.databinding.ActivityNavHeaderBinding;
 import com.example.survirun.databinding.FragmentUserBinding;
 import com.example.survirun.server.ServerClient;
 

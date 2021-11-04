@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:text="Welcome!"
-        android:textSize="50sp"
+        android:textSize="45sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/title"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -23,8 +23,9 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="26dp"
         android:text="Survirun"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcome_message" />
@@ -39,39 +40,59 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
-
     <ImageView
-        android:id="@+id/lend"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:background="@drawable/lend"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/zombie_hands"
+        app:layout_constraintBottom_toTopOf="@id/layout"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_human"
+        android:layout_marginBottom="-16dp"
+        app:layout_constraintBottom_toTopOf="@id/layout"
+        app:layout_constraintRight_toRightOf="@id/image"/>
 
-    <Button
-        android:id="@+id/sign_in_button"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginHorizontal="60dp"
-        android:layout_marginTop="100dp"
-        android:backgroundTint="#ffffff"
-        android:text="@string/sign_in_"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/lend" />
+        android:layout_height="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/lend">
+        <Button
+            android:id="@+id/sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="60dp"
+            android:backgroundTint="#ffffff"
+            android:text="@string/sign_in_"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/sign_up_button"/>
 
-    <Button
-        android:id="@+id/sign_up_button"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginHorizontal="60dp"
-        android:layout_marginTop="15dp"
-        android:backgroundTint="#ffffff"
-        android:text="@string/sign_up_"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sign_in_button" />
+        <Button
+            android:id="@+id/sign_up_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="60dp"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="#ffffff"
+            android:text="@string/sign_up_"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sign_in_button"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
