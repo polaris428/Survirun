@@ -17,6 +17,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.ModelLoader;
 import com.example.survirun.R;
 import com.example.survirun.data.ExerciseHistory;
 import com.example.survirun.data.Friends;
@@ -27,6 +28,7 @@ import com.example.survirun.server.ServerClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,8 +36,6 @@ import retrofit2.Response;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
     private List<Friends> mData ;
-
-
     Context context;
     String token;
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -44,7 +44,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         ConstraintLayout constraintLayout2;
         ImageView profileImageview;
         TextView nameTextView;
-        TextView emailTextView;
+        TextView exerciseTextview;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -52,16 +52,11 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             constraintLayout1=itemView.findViewById(R.id.constraint_layout);
             constraintLayout2=itemView.findViewById(R.id.card_item2);
             nameTextView=itemView.findViewById(R.id.username_textview);
-           // emailTextView=itemView.findViewById(R.id.emileText);
             profileImageview=itemView.findViewById(R.id.profile_imageview);
-
+            exerciseTextview=itemView.findViewById(R.id.exercise_textview);
              context=itemView.getContext();
 
-
-
-
-
-            constraintLayout1.setOnClickListener(v -> {
+             constraintLayout1.setOnClickListener(v -> {
 
                 if (constraintLayout2.getVisibility() == View.GONE){
                     constraintLayout2.setVisibility(View.VISIBLE);
@@ -105,7 +100,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 if(response.isSuccessful()){
 
 
-                    ExerciseHistory exerciseHistory=response.body().exerciseHistory.get(0);
+                    ExerciseHistory exerciseHistory= Objects.requireNonNull(response.body()).exerciseHistory.get(0);
+                    holder.exerciseTextview.setText(exerciseHistory.calorie+"칼로리"+exerciseHistory.km+"킬로미터"+ exerciseHistory.time+"운동시간");
+                    Log.d("adsf",exerciseHistory.km+"");
                     Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url",response.body().username);
                     getProfile.enqueue(new Callback<ImageData>() {
                         @Override
