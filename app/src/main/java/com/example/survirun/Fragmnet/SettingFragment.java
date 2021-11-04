@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.survirun.EditProfileActivity;
 import com.example.survirun.R;
 import com.example.survirun.UserSettingActivity;
 import com.example.survirun.data.ImageData;
@@ -48,8 +49,8 @@ public class SettingFragment extends Fragment {
         binding.nameTextView.setText(name);
         binding.emileText.setText(emile);
 
-        binding.userSettingButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), UserSettingActivity.class);
+        binding.editProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), EditProfileActivity.class);
             startActivity(intent);
         });
 

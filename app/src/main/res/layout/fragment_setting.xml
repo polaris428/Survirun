@@ -49,7 +49,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/name_text_view" />
 
             <ImageButton
-                android:id="@+id/user_setting_button"
+                android:id="@+id/edit_profile"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="50dp"

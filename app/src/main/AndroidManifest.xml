@@ -22,6 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Survirun">
         <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".WelcomeActivity"
             android:exported="false" />
         <activity
@@ -29,9 +32,6 @@
             android:exported="true" />
         <activity
             android:name=".SplashActivity2"
-            android:exported="false" />
-        <activity
-            android:name=".NavHeader"
             android:exported="false" />
         <activity
             android:name=".activity.account.ProgressDialog"
