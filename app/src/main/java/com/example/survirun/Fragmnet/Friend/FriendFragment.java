@@ -92,10 +92,14 @@ public class FriendFragment extends Fragment {
                                 @Override
                                 public void onResponse(Call<ImageData> call, Response<ImageData> response) {
                                     if (response.isSuccessful()) {
+                                        if (getActivity() == null) {
+                                            return;
+                                        }
                                         Log.d("adf", response.body().img);
-                                        Glide.with(getContext())
+                                        Glide.with(FriendFragment.this)
                                                 .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
                                                 .error(R.drawable.ic_profile)
+                                                .circleCrop()
                                                 .into(binding.profileImageview);
                                     }
                                 }
