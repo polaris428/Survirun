@@ -3,6 +3,7 @@ package com.example.survirun.activity.exercise;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -107,7 +108,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(view);
 
         CURRENT_MODE = getIntent().getIntegerArrayListExtra("mode");
+        binding.dragButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams)binding.group.getLayoutParams();
+                if (lp.height==1){
+                    lp.height=100;
 
+                }else{
+                    lp.height=1;
+                }
+            }
+        });
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -128,7 +140,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         try {
             init(MapActivity.this);
-            mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
             if (mapFragment != null) {
                 mapFragment.getMapAsync(this);
             }
@@ -183,9 +195,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 btnVisibilityChange(binding.pause);
-                btnVisibilityChange(binding.resume);
-                btnVisibilityChange(binding.stop);
-                binding.viewPause.setVisibility(View.VISIBLE);
+                btnVisibilityChange(binding.resumeButton);
+                btnVisibilityChange(binding.stopButton);
+                binding.pauseText.setVisibility(View.VISIBLE);
                 waitZombie();
                 isFirst = true;
                 isRunning = false;
@@ -193,13 +205,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-        binding.resume.setOnClickListener(new View.OnClickListener() {
+        binding.resumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btnVisibilityChange(binding.pause);
-                btnVisibilityChange(binding.resume);
-                btnVisibilityChange(binding.stop);
-                binding.viewPause.setVisibility(View.GONE);
+                btnVisibilityChange(binding.resumeButton);
+                btnVisibilityChange(binding.stopButton);
+                binding.pauseText.setVisibility(View.GONE);
                 resumeZombie();
                 isRunning = true;
                 isFirst = false;
@@ -207,7 +219,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-        binding.stop.setOnClickListener(new View.OnClickListener() {
+        binding.stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stop();

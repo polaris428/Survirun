@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.survirun.EditProfileActivity;
 import com.example.survirun.R;
 import com.example.survirun.UserSettingActivity;
+import com.example.survirun.WelcomeFragment;
 import com.example.survirun.data.ImageData;
 import com.example.survirun.databinding.FragmentSettingBinding;
 import com.example.survirun.server.ServerClient;
@@ -53,6 +54,15 @@ public class SettingFragment extends Fragment {
             Intent intent = new Intent(getActivity(), EditProfileActivity.class);
             startActivity(intent);
         });
+         binding.helpButton.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+
+                 Intent intent =new Intent(getActivity(), WelcomeFragment.class);
+                 startActivity(intent);
+                 getActivity().finish();
+             }
+         });
 
         Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
         getProfile.enqueue(new Callback<ImageData>() {
