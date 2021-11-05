@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,12 +27,15 @@ import android.os.Message;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.survirun.Medel.ScoreModel;
 import com.example.survirun.Medel.ZombieModel;
 import com.example.survirun.R;
+import com.example.survirun.activity.account.SplashActivity;
 import com.example.survirun.databinding.ActivityMapBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -98,7 +102,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     public static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
     private int zombieListCurrentPos = 0; // +1 해서 좀데 리스트 요소 개수 ㄱㄴ
-
+    Dialog dialog;
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +110,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         binding = ActivityMapBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        dialog = new Dialog(MapActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog);
 
         CURRENT_MODE = getIntent().getIntegerArrayListExtra("mode");
         binding.dragButton.setOnClickListener(new View.OnClickListener() {
@@ -743,6 +751,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         ZombieModel mZombie = new ZombieModel(new LatLng(currentLat, currentLng), zombieListCurrentPos);
         zombieListCurrentPos++;
         zombieList.add(mZombie);
+    }
+    void showDialog() {
+        TextView explain = dialog.findViewById(R.id.explain_textView);
+        Button finishButton = dialog.findViewById(R.id.cancel_button);
+        Button retryButton = dialog.findViewById(R.id.yes_button);
+        explain.setText("운동을 종료 하시겠습니까?");
+        finishButton.setText("확인");
+        retryButton.setText("취소");
+        dialog.show();
+        finishButton.setOnClickListener(v -> finish());
+        retryButton.setOnClickListener(v -> {
+                    dialog.dismiss();
+
+                }
+        );
+    }
+    @Override
+    public void onBackPressed() {
+        showDialog();
+
     }
 
 
