@@ -12,34 +12,24 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:text="Welcome!"
-        android:textSize="45sp"
+        android:textSize="40sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/title"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
-        android:text="@string/app_name"
-        android:textSize="20sp"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:text="@string/survive_zombie"
+        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcome_message" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:text="@string/survive_zombie"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
     <ImageView
         android:id="@+id/image"
         android:layout_width="wrap_content"
@@ -64,7 +54,7 @@
         <Button
             android:id="@+id/sign_in_button"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_marginHorizontal="60dp"
             android:backgroundTint="#ffffff"
             android:text="@string/sign_in_"
@@ -80,7 +70,7 @@
         <Button
             android:id="@+id/sign_up_button"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_marginHorizontal="60dp"
             android:layout_marginTop="15dp"
             android:backgroundTint="#ffffff"
