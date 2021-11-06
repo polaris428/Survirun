@@ -19,8 +19,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="100dp"
-        android:text="기록을 확인하세요"
-        android:textSize="24dp"/>
+        android:text="@string/welcome_title_3"
+        android:textSize="24sp"/>
     <TextView
         android:id="@+id/tv2"
         android:layout_width="wrap_content"
@@ -30,13 +30,13 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="당신이 지금껏 달렷던\n기록들을 저장하고 확인하세요"
+        android:text="@string/welcome_text_3"
         android:textSize="16sp"/>
     <Button
         android:id="@+id/start_button"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="시작하기"
+        android:text="@string/start"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@id/icon"
         app:layout_constraintLeft_toLeftOf="parent"
