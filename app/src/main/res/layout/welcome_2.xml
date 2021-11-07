@@ -19,8 +19,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="100dp"
-        android:text="동료를 구하세요"
-        android:textSize="24dp"/>
+        android:text="@string/welcome_title_2"
+        android:textSize="24sp"/>
     <TextView
         android:id="@+id/tv2"
         android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="동료와 함께\n달리고 공유하세요"
+        android:text="@string/welcome_text_2"
         android:textSize="16sp"/>
     <ImageView
         android:id="@+id/icon"

@@ -88,4 +88,10 @@
     <string name="survive_zombie">당신을 쫓아오는\n좀비로부터 살아 남으세요</string>
     <string name="sign_in_">로그인 하기</string>
     <string name="sign_up_">회원가입 하기</string>
+    <string name="welcome_title_1">달리세요</string>
+    <string name="welcome_text_1">좀비들이 당신을 쫓아옵니다</string>
+    <string name="welcome_title_2">동료를 구하세요</string>
+    <string name="welcome_text_2">동료와 함께\n달리고 공유하세요</string>
+    <string name="welcome_title_3">기록을 확인하세요</string>
+    <string name="welcome_text_3">당신이 지금껏 달렷던\n기록들을 저장하고 확인하세요</string>
 </resources>

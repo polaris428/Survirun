@@ -88,4 +88,10 @@
     <string name="survive_zombie">Survive from\nzombies chasing you.</string>
     <string name="sign_in_">Sign In</string>
     <string name="sign_up_">Sign Up</string>
+    <string name="welcome_title_1">Run</string>
+    <string name="welcome_text_1">Zombies are chasing you</string>
+    <string name="welcome_title_2">Get your colleagues</string>
+    <string name="welcome_text_2">Run and share\nwith your colleagues</string>
+    <string name="welcome_title_3">Check the record</string>
+    <string name="welcome_text_3">Save and check\nthe records you\'ve been running on</string>
 </resources>
