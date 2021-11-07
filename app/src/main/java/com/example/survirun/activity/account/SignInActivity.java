@@ -27,7 +27,7 @@ import retrofit2.Response;
 
 
 public class SignInActivity extends AppCompatActivity {
-    ActivitySignInBinding binding;
+    private ActivitySignInBinding binding;
     ProgressDialog customProgressDialog;
 
     String email;
