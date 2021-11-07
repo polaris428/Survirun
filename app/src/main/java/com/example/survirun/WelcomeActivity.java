@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.survirun.activity.exercise.MapActivity;
 import com.example.survirun.databinding.ActivityWelcomeBinding;
 
 import java.util.ArrayList;
@@ -28,5 +30,11 @@ public class WelcomeActivity extends FragmentActivity {
 
         FragmentStateAdapter welcomePagerAdapter = new ScreenSlidePagerAdapter(this, welcomeLayouts);
         binding.welcomeViewPager.setAdapter(welcomePagerAdapter);
+
+        binding.nextButton.setOnClickListener(v -> {
+            Intent intent=new Intent(WelcomeActivity.this, MapActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
 }
