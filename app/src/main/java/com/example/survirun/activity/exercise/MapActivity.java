@@ -28,6 +28,8 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -116,18 +118,32 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         dialog.setContentView(R.layout.dialog);
 
         CURRENT_MODE = getIntent().getIntegerArrayListExtra("mode");
-        binding.dragButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams)binding.group.getLayoutParams();
-                if (lp.height==1){
-                    lp.height=100;
+        binding.dragButton.setOnClickListener(v -> {
+            Animation animationDown = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.sliding_down);
+            Animation animationUp = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.sliding_up);
+            Handler handler = new Handler();
+               // ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams)binding.group.getLayoutParams();
+//                if (lp.height==1){
+//                    lp.height=100;
+//
+//                }else{
+//                    lp.height=1;
+//                }
 
-                }else{
-                    lp.height=1;
+                if(binding.group.getVisibility()==View.VISIBLE){
+                    binding.layout.startAnimation(animationUp);
+                    handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        binding.group.setVisibility(View.GONE);
+                    }
+                }, 1500);
+                }else {
+                    binding.group.setVisibility(View.VISIBLE);
+                    binding.layout.startAnimation(animationDown);
                 }
-            }
         });
+
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
