@@ -94,4 +94,5 @@
     <string name="welcome_text_2">동료와 함께\n달리고 공유하세요</string>
     <string name="welcome_title_3">기록을 확인하세요</string>
     <string name="welcome_text_3">당신이 지금껏 달렷던\n기록들을 저장하고 확인하세요</string>
+    <string name="skip">건너뛰기</string>
 </resources>

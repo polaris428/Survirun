@@ -94,4 +94,5 @@
     <string name="welcome_text_2">Run and share\nwith your colleagues</string>
     <string name="welcome_title_3">Check the record</string>
     <string name="welcome_text_3">Save and check\nthe records you\'ve been running on</string>
+    <string name="skip">Skip</string>
 </resources>
