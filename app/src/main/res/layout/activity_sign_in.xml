@@ -65,6 +65,7 @@
             android:layout_height="wrap_content"
             app:endIconMode="clear_text"
             app:hintEnabled="false"
+            android:background="@color/transparent"
             android:layout_marginHorizontal="48dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@id/layout2"
@@ -97,6 +98,7 @@
             android:layout_height="wrap_content"
             app:hintEnabled="false"
             app:passwordToggleEnabled="true"
+            android:background="@color/transparent"
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="28dp"
             app:layout_constraintBottom_toTopOf="@id/sign_up_textView2"
@@ -110,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/pwd"
                 android:textSize="18sp"
-             />
+                android:inputType="textPassword"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

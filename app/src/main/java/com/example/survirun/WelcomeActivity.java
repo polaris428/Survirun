@@ -7,6 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.survirun.activity.MainActivity;
 import com.example.survirun.activity.exercise.MapActivity;
 import com.example.survirun.databinding.ActivityWelcomeBinding;
 
@@ -32,7 +33,7 @@ public class WelcomeActivity extends FragmentActivity {
         binding.welcomeViewPager.setAdapter(welcomePagerAdapter);
 
         binding.nextButton.setOnClickListener(v -> {
-            Intent intent=new Intent(WelcomeActivity.this, MapActivity.class);
+            Intent intent=new Intent(WelcomeActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         });
