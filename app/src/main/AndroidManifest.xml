@@ -56,7 +56,10 @@
             android:exported="true" />
         <activity android:name=".activity.account.ResultActivity" />
         <activity android:name=".activity.user.UserGoalModifyActivity" />
-        <activity android:name=".activity.user.UserGoalActivity" />
+        <activity android:name=".activity.user.UserGoalActivity"
+            android:parentActivityName=".activity.MainActivity">
+
+        </activity>
         <activity android:name=".activity.exercise.MapActivity" />
 
         <meta-data
