@@ -10,7 +10,6 @@
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_background1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/layout"/>
 
@@ -61,7 +60,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout1"
-            style="out"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="35dp"

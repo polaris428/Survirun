@@ -112,6 +112,7 @@ public class SignInActivity extends AppCompatActivity {
                 email = binding.idEdittext.getText().toString().trim();
                 if (email.contains("@")) {
                     customProgressDialog.show();
+                    customProgressDialog.setCancelable(false);
                     pwe = binding.passwordEdittext.getText().toString().trim();
                     LoginData loginData = new LoginData(email, pwe);
                     Call<TokenData> call = ServerClient.getServerService().login(loginData);
