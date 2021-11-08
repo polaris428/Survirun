@@ -3,11 +3,13 @@ package com.example.survirun.Fragmnet.Friend;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,6 +47,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         ImageView profileImageview;
         TextView nameTextView;
         TextView exerciseTextview;
+        Button detailButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -54,6 +57,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             nameTextView=itemView.findViewById(R.id.username_textview);
             profileImageview=itemView.findViewById(R.id.profile_imageview);
             exerciseTextview=itemView.findViewById(R.id.exercise_textview);
+            detailButton=itemView.findViewById(R.id.detail_button);
              context=itemView.getContext();
 
              constraintLayout1.setOnClickListener(v -> {
@@ -90,6 +94,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     public void onBindViewHolder(@NonNull FriendAdapter.ViewHolder holder, int position) {
 
         holder.textView.setText(mData.get(position).email);
+        holder.detailButton.setOnClickListener(v -> {
+
+        });
         SharedPreferences sf = context.getSharedPreferences("Login", MODE_PRIVATE);
 
         token = sf.getString("token", "");
