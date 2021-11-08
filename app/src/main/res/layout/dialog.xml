@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="문의하기"
         android:textSize="11sp"
+        app:icon="@drawable/ic_information"
         app:layout_constraintTop_toBottomOf="@+id/explain_textView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
