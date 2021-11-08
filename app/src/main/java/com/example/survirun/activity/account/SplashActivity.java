@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
@@ -203,11 +204,26 @@ public class SplashActivity extends AppCompatActivity {
         TextView explain = dialog.findViewById(R.id.explain_textView);
         Button finishButton = dialog.findViewById(R.id.cancel_button);
         Button retryButton = dialog.findViewById(R.id.yes_button);
+        Button helpButton=dialog.findViewById(R.id.help_button);
         explain.setText(R.string.network_error);
         finishButton.setText(R.string.close);
         retryButton.setText(R.string.retry);
         dialog.show();
         dialog.setCancelable(false);
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent email = new Intent(Intent.ACTION_SEND);
+                    email.setType("plain/text");
+                    String[] address = {"email@address.com"};
+                    email.putExtra(Intent.EXTRA_EMAIL, address);
+                    email.putExtra(Intent.EXTRA_SUBJECT, "네트워크 에러");
+                    email.setPackage("com.google.android.gm");
+                    email.putExtra(Intent.EXTRA_TEXT, "오류 내용을 자세히 작아주세요");
+                    startActivity(email);
+
+            }
+        });
         finishButton.setOnClickListener(v -> finish());
         retryButton.setOnClickListener(v -> {
                     dialog.dismiss();
