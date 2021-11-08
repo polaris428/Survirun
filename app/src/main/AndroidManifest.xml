@@ -38,7 +38,7 @@
             android:exported="true" />
         <activity
             android:name=".Fragmnet.Friend.FriendInformationActivity"
-            android:exported="true" />
+            android:theme="@android:style/Theme.Dialog"/>
         <activity
             android:name=".activity.user.UserPageActivity"
             android:exported="true" />

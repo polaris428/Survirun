@@ -95,7 +95,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
         holder.textView.setText(mData.get(position).email);
         holder.detailButton.setOnClickListener(v -> {
-
+            Intent intent = new Intent(context, FriendInformationActivity.class);
+            intent.putExtra("list", "값");
+            context.startActivity(intent);
         });
         SharedPreferences sf = context.getSharedPreferences("Login", MODE_PRIVATE);
 
