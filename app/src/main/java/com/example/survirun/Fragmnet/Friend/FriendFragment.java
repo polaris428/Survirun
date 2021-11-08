@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.survirun.R;
@@ -42,7 +43,7 @@ public class FriendFragment extends Fragment {
         View view = binding.getRoot();
         SharedPreferences sf = getContext().getSharedPreferences("Login", getContext().MODE_PRIVATE);
         String token = sf.getString("token", "");
-
+        String name=sf.getString("name","");
         Call<FindUserData> call = ServerClient.getServerService().getFriendList(token);
         call.enqueue(new Callback<FindUserData>() {
             @Override
@@ -78,47 +79,54 @@ public class FriendFragment extends Fragment {
         binding.findFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<getUserData>call1=ServerClient.getServerService().getUser(token,binding.emileInputEditText.getText().toString());
-                call1.enqueue(new Callback<getUserData>() {
-                    @Override
-                    public void onResponse(Call<getUserData> call, Response<getUserData> response) {
-                        if(response.isSuccessful()){
-                            binding.cardView.setVisibility(View.VISIBLE);
-                            binding.usernameTextview.setText(response.body().username);
-                            ExerciseHistory exerciseHistory=response.body().exerciseHistory.get(0);
-                            binding.exerciseTextview.setText(exerciseHistory.calorie+"칼로리\n"+ exerciseHistory.km+"킬로미터\n"+exerciseHistory.time+"운동시간\n");
-                            Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url",response.body().username);
-                            getProfile.enqueue(new Callback<ImageData>() {
-                                @Override
-                                public void onResponse(Call<ImageData> call, Response<ImageData> response) {
-                                    if (response.isSuccessful()) {
-                                        if (getActivity() == null) {
-                                            return;
+                if(name.equals(binding.emileInputEditText.getText().toString())){
+                    Toast.makeText(getContext(),"자기 자신의 이미 최고의 친구입니다",Toast.LENGTH_LONG).show();
+
+
+                }else {
+                    Call<getUserData>call1=ServerClient.getServerService().getUser(token,binding.emileInputEditText.getText().toString());
+                    call1.enqueue(new Callback<getUserData>() {
+                        @Override
+                        public void onResponse(Call<getUserData> call, Response<getUserData> response) {
+                            if(response.isSuccessful()){
+                                binding.cardView.setVisibility(View.VISIBLE);
+                                binding.usernameTextview.setText(response.body().username);
+                                ExerciseHistory exerciseHistory=response.body().exerciseHistory.get(0);
+                                binding.exerciseTextview.setText(exerciseHistory.calorie+"칼로리\n"+ exerciseHistory.km+"킬로미터\n"+exerciseHistory.time+"운동시간\n");
+                                Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url",response.body().username);
+                                getProfile.enqueue(new Callback<ImageData>() {
+                                    @Override
+                                    public void onResponse(Call<ImageData> call, Response<ImageData> response) {
+                                        if (response.isSuccessful()) {
+                                            if (getActivity() == null) {
+                                                return;
+                                            }
+                                            Log.d("adf", response.body().img);
+                                            Glide.with(FriendFragment.this)
+                                                    .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
+                                                    .error(R.drawable.ic_profile)
+                                                    .circleCrop()
+                                                    .into(binding.profileImageview);
                                         }
-                                        Log.d("adf", response.body().img);
-                                        Glide.with(FriendFragment.this)
-                                                .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
-                                                .error(R.drawable.ic_profile)
-                                                .circleCrop()
-                                                .into(binding.profileImageview);
                                     }
-                                }
 
-                                @Override
-                                public void onFailure(Call<ImageData> call, Throwable t) {
-                                    t.printStackTrace();
-                                }
-                            });
-                        }else{
-                            Log.d("adsf","실패");
+                                    @Override
+                                    public void onFailure(Call<ImageData> call, Throwable t) {
+                                        t.printStackTrace();
+                                    }
+                                });
+                            }else{
+                                Log.d("adsf","실패");
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<getUserData> call, Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<getUserData> call, Throwable t) {
+                            t.printStackTrace();
+                        }
+                    });
+                }
+
 
                 binding.addFriend.setOnClickListener(new View.OnClickListener() {
                     @Override
