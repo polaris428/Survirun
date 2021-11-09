@@ -40,6 +40,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     private List<Friends> mData ;
     Context context;
     String token;
+    String friendName;
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
         ConstraintLayout constraintLayout1;
@@ -51,10 +52,10 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.item_friend_name);
+            textView = itemView.findViewById(R.id.item_friend_email);
             constraintLayout1=itemView.findViewById(R.id.constraint_layout);
             constraintLayout2=itemView.findViewById(R.id.card_item2);
-            nameTextView=itemView.findViewById(R.id.username_textview);
+            nameTextView=itemView.findViewById(R.id.item_friend_name);
             profileImageview=itemView.findViewById(R.id.profile_imageview);
             exerciseTextview=itemView.findViewById(R.id.exercise_textview);
             detailButton=itemView.findViewById(R.id.detail_button);
@@ -92,18 +93,41 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull FriendAdapter.ViewHolder holder, int position) {
+        SharedPreferences sf = context.getSharedPreferences("Login", MODE_PRIVATE);
 
-        holder.textView.setText(mData.get(position).email);
+        token = sf.getString("token", "");
+        friendName=mData.get(position).email;
+        holder.textView.setText(friendName);
+        Call<getUserData>call1=ServerClient.getServerService().getUser(token,friendName);
+        call1.enqueue(new Callback<getUserData>() {
+            @Override
+            public void onResponse(Call<getUserData> call, Response<getUserData> response) {
+                if(response.isSuccessful()){
+
+                    ExerciseHistory exerciseHistory=response.body().exerciseHistory.get(0);
+                    holder.nameTextView.setText(response.body().username);
+                    Log.d("ad",response.body().username);
+
+                }else{
+                    Log.e("adsf","실패"+ response.code());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<getUserData> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
         holder.detailButton.setOnClickListener(v -> {
             Intent intent = new Intent(context, FriendInformationActivity.class);
             intent.putExtra("list", "값");
             context.startActivity(intent);
         });
-        SharedPreferences sf = context.getSharedPreferences("Login", MODE_PRIVATE);
 
-        token = sf.getString("token", "");
-        Call<getUserData> call1= ServerClient.getServerService().getUser(token,holder.textView.getText().toString());
-        call1.enqueue(new Callback<getUserData>() {
+        Call<getUserData> call2= ServerClient.getServerService().getUser(token,holder.textView.getText().toString());
+        call2.enqueue(new Callback<getUserData>() {
             @Override
             public void onResponse(Call<getUserData> call, Response<getUserData> response) {
                 if(response.isSuccessful()){

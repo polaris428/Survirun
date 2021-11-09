@@ -8,6 +8,8 @@
     tools:context=".Fragmnet.Friend.FriendInformationActivity"
     android:background="@color/white">
 
+
+
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
