@@ -72,13 +72,13 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/find_friends_card_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:visibility="gone">
 
             <ImageView
                 android:id="@+id/profile_imageview"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_marginLeft="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -96,21 +96,14 @@
                 android:id="@+id/exercise_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="30dp"
+                android:textSize="15sp"
+                android:textColor="#525252"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintLeft_toRightOf="@+id/profile_imageview"
                 app:layout_constraintTop_toBottomOf="@+id/username_textview" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/card_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
 
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <Button
@@ -118,6 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="친구추가"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

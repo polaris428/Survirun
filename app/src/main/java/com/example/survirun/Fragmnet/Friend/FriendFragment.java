@@ -72,7 +72,7 @@ public class FriendFragment extends Fragment {
                                 binding.findFriendsCardView.setVisibility(View.VISIBLE);
                                 binding.usernameTextview.setText(response.body().username);
                                 ExerciseHistory exerciseHistory = response.body().exerciseHistory.get(0);
-                                binding.exerciseTextview.setText(exerciseHistory.calorie + "칼로리\n" + exerciseHistory.km + "킬로미터\n" + exerciseHistory.time + "운동시간\n");
+                                binding.exerciseTextview.setText(exerciseHistory.calorie + "칼로리 " + exerciseHistory.km + "킬로미터 " + exerciseHistory.time + "시간 ");
                                 Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url", response.body().username);
                                 getProfile.enqueue(new Callback<ImageData>() {
                                     @Override
