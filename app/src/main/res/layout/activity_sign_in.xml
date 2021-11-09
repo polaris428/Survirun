@@ -149,6 +149,7 @@
             android:layout_height="wrap_content"
             android:textColor="#FF0000"
             android:visibility="invisible"
+            android:textSize="15sp"
             app:layout_constraintBottom_toTopOf="@id/login_button"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
