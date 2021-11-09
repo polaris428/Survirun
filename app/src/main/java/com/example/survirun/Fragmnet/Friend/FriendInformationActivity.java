@@ -10,6 +10,7 @@ import android.view.Window;
 import com.example.survirun.R;
 import com.example.survirun.databinding.ActivityFriendInformationBinding;
 
+
 public class FriendInformationActivity extends Activity {
     private ActivityFriendInformationBinding binding;
     String result;
@@ -23,6 +24,6 @@ public class FriendInformationActivity extends Activity {
         setContentView(binding.getRoot());
         Intent intent = getIntent();
         result = intent.getStringExtra("list");
-        binding.text.setText(result);
+
     }
 }
