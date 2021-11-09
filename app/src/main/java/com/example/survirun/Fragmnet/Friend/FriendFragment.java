@@ -35,15 +35,116 @@ public class FriendFragment extends Fragment {
     public FriendFragment() {
         // Required empty public constructor
     }
-
+    String token;
+    String email;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentFriendBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         SharedPreferences sf = getContext().getSharedPreferences("Login", getContext().MODE_PRIVATE);
-        String token = sf.getString("token", "");
-        String email=sf.getString("email","");
+         token = sf.getString("token", "");
+         email = sf.getString("email", "");
+
+
+        Log.d("토큰", token);
+        binding.backButton.setOnClickListener(v -> {
+            binding.findFriendsCardView.setVisibility(View.GONE);
+            binding.friendsError.setVisibility(View.GONE);
+            binding.cardView.setVisibility(View.GONE);
+        });
+        binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        getFriend();
+        binding.findFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (email.equals(binding.emileInputEditText.getText().toString())) {
+                    Toast.makeText(getContext(), "자기 자신의 이미 최고의 친구입니다", Toast.LENGTH_LONG).show();
+
+
+                } else {
+                    Call<getUserData> call1 = ServerClient.getServerService().getUser(token, binding.emileInputEditText.getText().toString());
+                    call1.enqueue(new Callback<getUserData>() {
+                        @Override
+                        public void onResponse(Call<getUserData> call, Response<getUserData> response) {
+                            if (response.isSuccessful()) {
+                                binding.cardView.setVisibility(View.VISIBLE);
+                                binding.findFriendsCardView.setVisibility(View.VISIBLE);
+                                binding.usernameTextview.setText(response.body().username);
+                                ExerciseHistory exerciseHistory = response.body().exerciseHistory.get(0);
+                                binding.exerciseTextview.setText(exerciseHistory.calorie + "칼로리\n" + exerciseHistory.km + "킬로미터\n" + exerciseHistory.time + "운동시간\n");
+                                Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url", response.body().username);
+                                getProfile.enqueue(new Callback<ImageData>() {
+                                    @Override
+                                    public void onResponse(Call<ImageData> call, Response<ImageData> response) {
+                                        if (response.isSuccessful()) {
+                                            if (getActivity() == null) {
+                                                return;
+                                            }
+                                            Log.d("adf", response.body().img);
+                                            Glide.with(FriendFragment.this)
+                                                    .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
+                                                    .error(R.drawable.ic_profile)
+                                                    .circleCrop()
+                                                    .into(binding.profileImageview);
+                                        }else {
+                                            binding.cardView.setVisibility(View.VISIBLE);
+                                            binding.friendsError.setVisibility(View.VISIBLE);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ImageData> call, Throwable t) {
+                                        t.printStackTrace();
+                                    }
+                                });
+                            } else {
+
+                                binding.cardView.setVisibility(View.VISIBLE);
+                                binding.friendsError.setVisibility(View.VISIBLE);
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<getUserData> call, Throwable t) {
+                            t.printStackTrace();
+                        }
+                    });
+                }
+
+
+                binding.addFriend.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Call<ResultData> call2 = ServerClient.getServerService().postAddFriend(token, "email", binding.emileInputEditText.getText().toString());
+                        call2.enqueue(new Callback<ResultData>() {
+                            @Override
+                            public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                                if (response.isSuccessful()) {
+                                    getFriend();
+                                    Log.d("성공", response.body().result.toString());
+                                } else {
+                                    //실패시
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResultData> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                });
+
+            }
+        });
+
+        return view;
+    }
+    void getFriend(){
         Call<FindUserData> call = ServerClient.getServerService().getFriendList(token);
         call.enqueue(new Callback<FindUserData>() {
             @Override
@@ -72,94 +173,5 @@ public class FriendFragment extends Fragment {
         });
 
 
-
-        Log.d("토큰", token);
-        binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        binding.findFriends.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(email.equals(binding.emileInputEditText.getText().toString())){
-                    Toast.makeText(getContext(),"자기 자신의 이미 최고의 친구입니다",Toast.LENGTH_LONG).show();
-
-
-                }else {
-                    Call<getUserData>call1=ServerClient.getServerService().getUser(token,binding.emileInputEditText.getText().toString());
-                    call1.enqueue(new Callback<getUserData>() {
-                        @Override
-                        public void onResponse(Call<getUserData> call, Response<getUserData> response) {
-                            if(response.isSuccessful()){
-                                binding.cardView.setVisibility(View.VISIBLE);
-                                binding.usernameTextview.setText(response.body().username);
-                                ExerciseHistory exerciseHistory=response.body().exerciseHistory.get(0);
-                                binding.exerciseTextview.setText(exerciseHistory.calorie+"칼로리\n"+ exerciseHistory.km+"킬로미터\n"+exerciseHistory.time+"운동시간\n");
-                                Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url",response.body().username);
-                                getProfile.enqueue(new Callback<ImageData>() {
-                                    @Override
-                                    public void onResponse(Call<ImageData> call, Response<ImageData> response) {
-                                        if (response.isSuccessful()) {
-                                            if (getActivity() == null) {
-                                                return;
-                                            }
-                                            Log.d("adf", response.body().img);
-                                            Glide.with(FriendFragment.this)
-                                                    .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
-                                                    .error(R.drawable.ic_profile)
-                                                    .circleCrop()
-                                                    .into(binding.profileImageview);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<ImageData> call, Throwable t) {
-                                        t.printStackTrace();
-                                    }
-                                });
-                            }else{
-                                Log.d("adsf","실패");
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<getUserData> call, Throwable t) {
-                            t.printStackTrace();
-                        }
-                    });
-                }
-
-
-                binding.addFriend.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Call<ResultData> call2 = ServerClient.getServerService().postAddFriend(token, "email", binding.emileInputEditText.getText().toString());
-                        call2.enqueue(new Callback<ResultData>() {
-                            @Override
-                            public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                                if (response.isSuccessful()) {
-                                    //성공시
-                                    Log.d("adsf", response.body().result.toString());
-                                } else {
-                                    //실패시
-                                    Log.d("asdf", binding.emileInputEditText.getText().toString());
-                                    Log.d("adsf",response.code()+"");
-                                    Log.d("adsf", "실패");
-                                    Log.d("adsf", token);
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResultData> call, Throwable t) {
-
-                            }
-                        });
-                    }
-                });
-
-            }
-        });
-
-        return view;
     }
-
 }
