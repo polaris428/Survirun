@@ -13,7 +13,7 @@
         android:layout_height="40dp"
         android:layout_margin="16dp"
         android:background="@color/transparent"
-        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+        android:src="@drawable/ic_back"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
