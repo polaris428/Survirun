@@ -57,7 +57,7 @@
             android:layout_height="30dp"
             android:layout_marginTop="50dp"
             android:background="@drawable/circle"
-            android:backgroundTint="#E4E4E4">
+            android:backgroundTint="?attr/colorCardViewInLayout">
 
             <TextView
                 android:id="@+id/comparisonCalorie"
@@ -116,7 +116,7 @@
             android:layout_height="30dp"
             android:layout_marginTop="50dp"
             android:background="@drawable/circle"
-            android:backgroundTint="#E4E4E4">
+            android:backgroundTint="?attr/colorCardViewInLayout">
 
             <TextView
                 android:id="@+id/comparisonExerciseTime"
@@ -173,7 +173,7 @@
             android:layout_height="30dp"
             android:layout_marginTop="50dp"
             android:background="@drawable/circle"
-            android:backgroundTint="#E4E4E4">
+            android:backgroundTint="?attr/colorCardViewInLayout">
 
             <TextView
                 android:id="@+id/comparisonKm"
