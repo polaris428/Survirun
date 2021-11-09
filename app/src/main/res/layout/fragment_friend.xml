@@ -26,10 +26,12 @@
             android:hint="@string/email_enter" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <ImageButton
         android:id="@+id/find_friends"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_search"
+        android:background="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="@id/emile_input_layout"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/emile_input_layout" />
@@ -97,6 +99,7 @@
         android:id="@+id/friendListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>
