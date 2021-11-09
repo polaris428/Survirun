@@ -60,9 +60,12 @@ public class FriendFragment extends Fragment {
             public void onClick(View v) {
                 if (email.equals(binding.emileInputEditText.getText().toString())) {
                     Toast.makeText(getContext(), "자기 자신의 이미 최고의 친구입니다", Toast.LENGTH_LONG).show();
-
-
+                }else if(binding.emileInputEditText.getText().toString().equals("")){
+                    Toast.makeText(getContext(), "공백을 채워주세요", Toast.LENGTH_LONG).show();
                 } else {
+                    binding.findFriendsCardView.setVisibility(View.GONE);
+                    binding.friendsError.setVisibility(View.GONE);
+                    binding.cardView.setVisibility(View.GONE);
                     Call<getUserData> call1 = ServerClient.getServerService().getUser(token, binding.emileInputEditText.getText().toString());
                     call1.enqueue(new Callback<getUserData>() {
                         @Override
@@ -70,6 +73,7 @@ public class FriendFragment extends Fragment {
                             if (response.isSuccessful()) {
                                 binding.cardView.setVisibility(View.VISIBLE);
                                 binding.findFriendsCardView.setVisibility(View.VISIBLE);
+                                binding.friendsError.setVisibility(View.GONE);
                                 binding.usernameTextview.setText(response.body().username);
                                 ExerciseHistory exerciseHistory = response.body().exerciseHistory.get(0);
                                 binding.exerciseTextview.setText(exerciseHistory.calorie + "칼로리 " + exerciseHistory.km + "킬로미터 " + exerciseHistory.time + "시간 ");
