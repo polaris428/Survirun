@@ -17,6 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:mbn_selectedIconColor="#FF0000"
+        app:mbn_countBackgroundColor="?attr/colorBottom"
+        app:mbn_backgroundBottomColor="?attr/colorBottom"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

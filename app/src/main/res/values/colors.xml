@@ -13,5 +13,6 @@
     <color name="transparent">#00ff0000</color>
     <color name="gray">#989898</color>
     <color name="red">#b71c1c</color>
-    <color name="brightGray">#E1E1E1</color>
+    <color name="brightGray">#E4E4E4</color>
+    <color name="darkGray">#292929</color>
 </resources>
