@@ -43,7 +43,7 @@ public class FriendFragment extends Fragment {
         View view = binding.getRoot();
         SharedPreferences sf = getContext().getSharedPreferences("Login", getContext().MODE_PRIVATE);
         String token = sf.getString("token", "");
-        String name=sf.getString("name","");
+        String email=sf.getString("email","");
         Call<FindUserData> call = ServerClient.getServerService().getFriendList(token);
         call.enqueue(new Callback<FindUserData>() {
             @Override
@@ -79,7 +79,7 @@ public class FriendFragment extends Fragment {
         binding.findFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(name.equals(binding.emileInputEditText.getText().toString())){
+                if(email.equals(binding.emileInputEditText.getText().toString())){
                     Toast.makeText(getContext(),"자기 자신의 이미 최고의 친구입니다",Toast.LENGTH_LONG).show();
 
 
