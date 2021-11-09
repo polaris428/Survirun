@@ -96,7 +96,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public static boolean isRunning = true; //일시정지시 false로
     private boolean isFirst = false;
     private Thread timeThread = null;
-    public static ActivityMapBinding binding;
+    public   static ActivityMapBinding binding;
     private ArrayList<Integer> CURRENT_MODE;
 
 
@@ -135,12 +135,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        binding.dragButton.setImageResource(R.drawable.ic_down);
                         binding.group.setVisibility(View.GONE);
+
                     }
-                }, 1500);
+                }, 1000);
                 }else {
+                    binding.dragButton.setImageResource(R.drawable.ic_up);
                     binding.group.setVisibility(View.VISIBLE);
                     binding.layout.startAnimation(animationDown);
+
                 }
         });
 

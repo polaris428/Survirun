@@ -105,14 +105,25 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textview_exercise_time" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <Button
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#555353"
+            app:layout_constraintTop_toBottomOf="@+id/group">
+
+        </View>
+        <ImageButton
             android:id="@+id/drag_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_up"
+            android:background="#555353"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/group"/>
+            app:layout_constraintTop_toBottomOf="@id/view"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
