@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic__graphicon));
         binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_walking));
         binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_friend));
-        binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(5, R.drawable.ic_friend));
+        binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(5, R.drawable.ic_seetting));
         binding.meowBottomNavigation.show(1, true);
         replace(new UserFragment());
         binding.meowBottomNavigation.setOnClickMenuListener(new Function1<MeowBottomNavigation.Model, Unit>() {
