@@ -780,7 +780,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         finishButton.setText("확인");
         retryButton.setText("취소");
         dialog.show();
-        finishButton.setOnClickListener(v -> finish());
+        finishButton.setOnClickListener(v -> {
+            stop();
+
+
+
+        });
         retryButton.setOnClickListener(v -> {
                     dialog.dismiss();
 
