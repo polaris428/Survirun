@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -121,9 +122,12 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         });
 
         holder.detailButton.setOnClickListener(v -> {
-            Intent intent = new Intent(context, FriendInformationActivity.class);
-            intent.putExtra("list", "값");
-            context.startActivity(intent);
+
+
+
+//            Intent intent = new Intent(context, FriendInformationActivity.class);
+//            intent.putExtra("list", "값");
+//            context.startActivity(intent);
         });
 
         Call<getUserData> call2= ServerClient.getServerService().getUser(token,holder.textView.getText().toString());

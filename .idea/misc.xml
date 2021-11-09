@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Survirun/app/src/main/res/drawable-v24/circle.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.24259259259259258" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/dialog_background.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic__graphicon.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_account.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.16872964169381108" />
@@ -33,7 +35,7 @@
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_exercise_preparation.xml" value="0.264" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_exercise_result.xml" value="0.209375" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_explanation.xml" value="0.21041666666666667" />
-        <entry key="..\:/Survirun/app/src/main/res/layout/activity_friend_information.xml" value="0.128" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/activity_friend_information.xml" value="0.4" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_login.xml" value="0.24947916666666667" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_main.xml" value="0.27708333333333335" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_map.xml" value="0.16" />
@@ -54,6 +56,7 @@
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_user_goal.xml" value="0.2765625" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_user_goal_modify.xml" value="0.24365942028985507" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_user_page.xml" value="0.2" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/activity_user_setting.xml" value="0.1557377049180328" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_welcome.xml" value="0.152" />
         <entry key="..\:/Survirun/app/src/main/res/layout/dialog.xml" value="0.264" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_1.xml" value="0.264" />
