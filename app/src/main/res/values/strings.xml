@@ -81,7 +81,7 @@
     <string name="check_email_validity">Please check the email validity</string>
     <string name="pwd_enter">Please enter it within 8-15 characters</string>
     <string name="reset_goals">Reset Goals</string>
-    <string name="shut_down_app">Are you sure you want to shut down the app?</string>
+    <string name="shut_down_app">Are you sure you want\nto shut down the app?</string>
     <string name="close">Close</string>
     <string name="retry">Retry</string>
     <string name="network_error">A network error has occurred.</string>
