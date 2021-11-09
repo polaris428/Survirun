@@ -1,12 +1,15 @@
 package com.example.survirun.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -22,6 +25,7 @@ import com.example.survirun.R;
 import com.example.survirun.Fragmnet.StatisticsFragment;
 import com.example.survirun.Fragmnet.UserFragment;
 import com.example.survirun.WelcomeActivity;
+import com.example.survirun.activity.account.SplashActivity;
 import com.example.survirun.databinding.ActivityMainBinding;
 
 import kotlin.Unit;
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         dialog = new Dialog(MainActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog);
 
         binding.meowBottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home));
