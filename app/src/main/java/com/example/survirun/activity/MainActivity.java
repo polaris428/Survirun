@@ -25,7 +25,6 @@ import com.example.survirun.R;
 import com.example.survirun.Fragmnet.StatisticsFragment;
 import com.example.survirun.Fragmnet.UserFragment;
 import com.example.survirun.WelcomeActivity;
-import com.example.survirun.activity.account.SplashActivity;
 import com.example.survirun.databinding.ActivityMainBinding;
 
 import kotlin.Unit;

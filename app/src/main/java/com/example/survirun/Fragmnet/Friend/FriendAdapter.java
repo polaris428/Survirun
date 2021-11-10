@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.ModelLoader;
 import com.example.survirun.R;
 import com.example.survirun.data.ExerciseHistory;
+import com.example.survirun.data.FriendRoom;
 import com.example.survirun.data.Friends;
 import com.example.survirun.data.ImageData;
 import com.example.survirun.data.getUserData;
@@ -38,11 +40,104 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
-    private List<Friends> mData ;
+    private List<Friends> mData;
+    private List<FriendRoom> friendRoomList;
+
     Context context;
     String token;
     String friendName;
+
+    public FriendAdapter(List<FriendRoom> list) {
+        friendRoomList = list;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View view = inflater.inflate(R.layout.item_friend, parent, false);
+        FriendAdapter.ViewHolder viewHolder = new FriendAdapter.ViewHolder(view);
+
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        FriendRoom item = friendRoomList.get(position);
+        holder.email.setText(item.email);
+        holder.name.setText(item.name);
+        holder.profile.setImageURI(Uri.parse(item.profile));
+        Glide.with(context).load(item.profile)
+                .error(R.drawable.userdefaultprofile)
+                .circleCrop()
+                .into(holder.profile);
+
+        Call<getUserData> call2 = ServerClient.getServerService().getUser(token, holder.email.getText().toString());
+        call2.enqueue(new Callback<getUserData>() {
+            @Override
+            public void onResponse(Call<getUserData> call, Response<getUserData> response) {
+                if (response.isSuccessful()) {
+
+
+                    ExerciseHistory exerciseHistory = Objects.requireNonNull(response.body()).exerciseHistory.get(0);
+                    holder.exerciseTextview.setText(exerciseHistory.calorie + "칼로리" + exerciseHistory.km + "킬로미터" + exerciseHistory.time + "운동시간");
+                } else {
+                    Log.d("adsf", "실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<getUserData> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return friendRoomList.size();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView name;
+        TextView email;
+        ImageView profile;
+        TextView exerciseTextview;
+        ConstraintLayout constraintLayout1;
+        ConstraintLayout constraintLayout2;
+        Button detailButton;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+
+            name = itemView.findViewById(R.id.item_friend_name);
+            email = itemView.findViewById(R.id.item_friend_email);
+            profile = itemView.findViewById(R.id.profile_imageview);
+            constraintLayout1=itemView.findViewById(R.id.constraint_layout);
+            constraintLayout2=itemView.findViewById(R.id.card_item2);
+            exerciseTextview = itemView.findViewById(R.id.exercise_textview);
+            detailButton=itemView.findViewById(R.id.detail_button);
+            context=itemView.getContext();
+
+            constraintLayout1.setOnClickListener(v -> {
+
+                if (constraintLayout2.getVisibility() == View.GONE){
+                    constraintLayout2.setVisibility(View.VISIBLE);
+
+                }else{
+                    constraintLayout2.setVisibility(View.GONE);
+                }
+
+
+            });
+
+        }
+    }
+
+
+    /*public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
         ConstraintLayout constraintLayout1;
         ConstraintLayout constraintLayout2;
@@ -178,5 +273,5 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         return mData.size();
     }
 
-
+*/
 }
