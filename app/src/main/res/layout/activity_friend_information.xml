@@ -16,7 +16,7 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="60dp"
-                android:src="@drawable/ic_userpforile"
+                android:src="@drawable/userdefaultprofile"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">

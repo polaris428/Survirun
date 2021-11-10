@@ -88,7 +88,7 @@ public class FriendFragment extends Fragment {
                                             Log.d("adf", response.body().img);
                                             Glide.with(FriendFragment.this)
                                                     .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
-                                                    .error(R.drawable.ic_profile)
+                                                    .error(R.drawable.userdefaultprofile)
                                                     .circleCrop()
                                                     .into(binding.profileImageview);
                                         }else {
