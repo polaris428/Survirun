@@ -48,6 +48,7 @@ public class StatisticsFragment extends Fragment {
         SharedPreferences sf = getContext().getSharedPreferences("Login", getContext().MODE_PRIVATE);
         String token = sf.getString("token", "");
         binding.goalBarGraph.clearChart();
+        binding.ExerciseGraph.setVisibility(View.VISIBLE);
         Call<ExerciseRecordData> call= ServerClient.getServerService().getExerciseRecordData(token);
         call.enqueue(new Callback<ExerciseRecordData>() {
             @Override
@@ -57,13 +58,13 @@ public class StatisticsFragment extends Fragment {
                     binding.goalBarGraph.clearChart();
                     binding.kmBarGraph.clearChart();
                     binding.exerciseTimeBarGraph.clearChart();
-                    if(response.body().exerciseHistory.get(0).time==0){
+                    if(response.body().exerciseHistory.size()==1&&response.body().exerciseHistory.get(0).time==0){
                         binding.ExerciseMessage.setVisibility(View.VISIBLE);
                         binding.ExerciseGraph.setVisibility(View.GONE);
 
                     }else{
                         binding.ExerciseMessage.setVisibility(View.GONE);
-                        binding.ExerciseGraph.setVisibility(View.VISIBLE);
+
                         for (int i=0;i<response.body().exerciseHistory.size();i++){
                             int calorie=response.body().exerciseHistory.get(i).calorie;
                             double km= response.body().exerciseHistory.get(i).km;
