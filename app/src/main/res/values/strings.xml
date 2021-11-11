@@ -95,4 +95,14 @@
     <string name="welcome_title_3">Check the record</string>
     <string name="welcome_text_3">Save and check\nthe records you\'ve been running on</string>
     <string name="skip">Skip</string>
+    <string name="saying_1">Humor and health, the staples of wealth</string>
+    <string name="saying_2">Your body can do it, it\'s time to convince your mind</string>
+    <string name="saying_3">The hard days are what make you stronger</string>
+    <string name="saying_4">Energy and persistence conquer all things</string>
+    <string name="saying_5">The future depends on what we do in the present</string>
+    <string name="saying_6">Pain is temporary. Quitting lasts forever</string>
+    <string name="saying_7">One of these days is none of these days</string>
+    <string name="saying_8">There is no substitute for hard work</string>
+    <string name="saying_9">Never, Never, Never, Never give up</string>
+    <string name="saying_10">Begin anywhere</string>
 </resources>
