@@ -27,7 +27,7 @@ public class UserFragment extends Fragment {
     int progress = 0;
     int goalCalorie;
     int goalTime;
-    int goalKm;
+    double goalKm;
 
     String token;
     String name;
