@@ -36,7 +36,7 @@ public class SignUpNameActivity extends AppCompatActivity {
         setContentView(view);
 
         SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
-        token = sf.getString("token", "ㅇㅅㅇ");
+        token = sf.getString("token", "");
         editor = sf.edit();
 
 
