@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -43,6 +44,7 @@ import retrofit2.Response;
 public class SignUpActivity extends AppCompatActivity {
     ActivitySignUpBinding binding;
     String id;
+    ProgressDialog customProgressDialog;
 
     boolean isEmileEnterCheck = false;
     boolean isPwdCheck = false;
@@ -50,6 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
     String email;
     String pwe;
     SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +62,14 @@ public class SignUpActivity extends AppCompatActivity {
         SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
         editor = sf.edit();
 
-
+        customProgressDialog = new ProgressDialog(this);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        customProgressDialog.setCancelable(false);
 
         binding.idInputEdittext.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -133,7 +139,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         binding.passwordInputEdittext.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -141,13 +148,11 @@ public class SignUpActivity extends AppCompatActivity {
                     binding.layout2.setErrorEnabled(true);
                     binding.layout2.setCounterEnabled(false);
                     binding.layout2.setError(getString(pwd_include));
-                }
-                else if(!Pattern.matches("^.{8,15}$", s)){
+                } else if (!Pattern.matches("^.{8,15}$", s)) {
                     binding.layout2.setErrorEnabled(true);
                     binding.layout2.setCounterEnabled(true);
                     binding.layout2.setError(getString(pwd_enter));
-                }
-                else {
+                } else {
                     binding.layout2.setErrorEnabled(false);
                     binding.layout2.setCounterEnabled(false);
                 }
@@ -167,11 +172,10 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String p = binding.passwordInputEdittext.getText().toString();
-                if(p.replace(" ", "").isEmpty()||!Pattern.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#$%^&*])(?=.*[0-9!@#$%^&*]).{8,15}$", p)){
+                if (p.replace(" ", "").isEmpty() || !Pattern.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#$%^&*])(?=.*[0-9!@#$%^&*]).{8,15}$", p)) {
                     binding.layout3.setErrorEnabled(true);
                     binding.layout3.setError(getString(pwd_condition));
-                }
-                else{
+                } else {
                     binding.layout3.setErrorEnabled(false);
                     String p1 = binding.passwordCheckEdittext.getText().toString();
                     if (p1.equals(p)) {
@@ -193,6 +197,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         binding.signUpButton.setOnClickListener(v -> {
             if (isEmileCheck && isEmileEnterCheck && isPwdCheck) {
+                customProgressDialog.show();
                 pwe = binding.passwordInputEdittext.getText().toString().trim();
                 NewUserData newUserData = new NewUserData(email, pwe, "");
                 Call<TokenData> call = ServerClient.getServerService().signUp(newUserData);
@@ -207,9 +212,10 @@ public class SignUpActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<TokenData> call, Response<TokenData> response) {
                                     if (response.isSuccessful()) {
-                                        editor.putString("token",response.body().token);
+                                        customProgressDialog.dismiss();
+                                        editor.putString("token", response.body().token);
                                         editor.commit();
-                                        Log.d("token",response.body().token);
+                                        Log.d("token", response.body().token);
                                         Intent intent = new Intent(SignUpActivity.this, SignUpNameActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
@@ -218,15 +224,16 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(Call<TokenData> call, Throwable t) {
-
+                                    customProgressDialog.dismiss();
                                 }
                             });
                         } else {
                             try {
-
+                                customProgressDialog.dismiss();
                                 Log.e("SignUpActivity", response.errorBody().string());
 
                             } catch (IOException e) {
+                                customProgressDialog.dismiss();
                                 Toast.makeText(SignUpActivity.this, format_error, Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                             }
@@ -235,21 +242,18 @@ public class SignUpActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<TokenData> call, Throwable t) {
+                        customProgressDialog.dismiss();
                         t.printStackTrace();
                         Toast.makeText(SignUpActivity.this, R.string.format_error, Toast.LENGTH_SHORT).show();
                     }
                 });
-            }
-            else if(!isEmileEnterCheck && !isPwdCheck){
+            } else if (!isEmileEnterCheck && !isPwdCheck) {
                 Toast.makeText(getApplicationContext(), fill_condition, Toast.LENGTH_SHORT).show();
-            }
-            else if(!isEmileEnterCheck){
+            } else if (!isEmileEnterCheck) {
                 Toast.makeText(getApplicationContext(), email_enter, Toast.LENGTH_SHORT).show();
-            }
-            else if(!isPwdCheck){
+            } else if (!isPwdCheck) {
                 Toast.makeText(getApplicationContext(), fill_pwd_condition, Toast.LENGTH_SHORT).show();
-            }
-            else if(!isEmileCheck){
+            } else if (!isEmileCheck) {
                 Toast.makeText(getApplicationContext(), check_email_validity, Toast.LENGTH_SHORT).show();
             }
         });
