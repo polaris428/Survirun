@@ -105,4 +105,5 @@
     <string name="saying_8">There is no substitute for hard work</string>
     <string name="saying_9">Never, Never, Never, Never give up</string>
     <string name="saying_10">Begin anywhere</string>
+    <string name="error_server">Server error. Please run it again soon.</string>
 </resources>

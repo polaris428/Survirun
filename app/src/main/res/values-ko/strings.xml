@@ -105,4 +105,5 @@
     <string name="saying_8">노력을 대신할 수 있는 것은 없다</string>
     <string name="saying_9">절대로, 절대로, 절대로 포기하지 마라</string>
     <string name="saying_10">어디서든지 간에 시작해라</string>
+    <string name="error_server">서버오류 잠시후 다시 실행해주세요</string>
 </resources>
