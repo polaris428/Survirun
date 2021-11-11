@@ -75,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
                     case 5:
                         replace(new SettingFragment());
                         break;
+                    default:
+                        replace(new UserFragment());
+                        break;
+
                 }
                 return null;
             }
