@@ -13,6 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        app:hintEnabled="false"
         app:boxStrokeColor="@color/black"
         app:hintTextColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -31,7 +32,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/ic_search"
-        android:background="#00FFFFFF"
+        android:background="@color/transparent"
+        android:layout_marginRight="8dp"
         app:layout_constraintBottom_toBottomOf="@id/emile_input_layout"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/emile_input_layout" />
