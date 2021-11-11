@@ -43,7 +43,7 @@ public class FriendFragment extends Fragment {
     String name;
     String friendEmail;
     String profile;
-
+    int friendsNumber;
     private List<FriendRoom> friendRoomList;
     private FriendDB friendDB = null;
     private Context mContext = null;
@@ -70,6 +70,38 @@ public class FriendFragment extends Fragment {
             binding.friendsError.setVisibility(View.GONE);
             binding.cardView.setVisibility(View.GONE);
         });
+        Call<FindUserData> call = ServerClient.getServerService().getFriendList(token);
+        call.enqueue(new Callback<FindUserData>() {
+            @Override
+            public void onResponse(Call<FindUserData> call, Response<FindUserData> response) {
+                if (response.isSuccessful()) {
+
+                    int friendsNumber=response.body().friends.size();
+                    Log.d("asdf", String.valueOf(friendsNumber));
+                    //여기서 부터 작성
+
+
+//                    //Log.d("asdf", response.body().friends.get(0).username+ "");
+//
+//
+//                    // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
+//                    FriendAdapter adapter = new FriendAdapter(response.body().friends);
+//                    binding.friendListRecyclerView.setAdapter(adapter);
+//
+//
+//                    binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FindUserData> call, Throwable t) {
+
+            }
+        });
+
+
         binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         getFriend();
         binding.findFriends.setOnClickListener(v -> {
@@ -200,31 +232,6 @@ public class FriendFragment extends Fragment {
         InsertRunnable insertRunnable = new InsertRunnable();
         Thread t = new Thread(insertRunnable);
         t.start();
-        /*Call<FindUserData> call = ServerClient.getServerService().getFriendList(token);
-        call.enqueue(new Callback<FindUserData>() {
-            @Override
-            public void onResponse(Call<FindUserData> call, Response<FindUserData> response) {
-                if (response.isSuccessful()) {
-                    Log.d("asdf", response.body().friends.size() + "");
-                    //Log.d("asdf", response.body().friends.get(0).username+ "");
-
-
-                    // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
-                    FriendAdapter adapter = new FriendAdapter(response.body().friends);
-                    binding.friendListRecyclerView.setAdapter(adapter);
-
-
-                    binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<FindUserData> call, Throwable t) {
-
-            }
-        });*/
 
 
     }
