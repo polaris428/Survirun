@@ -11,6 +11,7 @@
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.16872964169381108" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_baseline_check_circle_24.xml" value="0.2462962962962963" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_baseline_dehaze_24.xml" value="0.26979166666666665" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic_bug.xml" value="0.17039473684210527" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_down.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_editprofile.xml" value="0.16872964169381108" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_floor.xml" value="0.16872964169381108" />
@@ -23,6 +24,7 @@
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_left.xml" value="0.2462962962962963" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_logo_red.xml" value="0.24259259259259258" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_logo_white.xml" value="0.24259259259259258" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic_logout.xml" value="0.17039473684210527" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_profile.xml" value="0.2462962962962963" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_trashcan.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_up.xml" value="0.1" />
@@ -71,7 +73,7 @@
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_friend.xml" value="0.136" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_home.xml" value="0.20199275362318841" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_satting.xml" value="0.18697916666666667" />
-        <entry key="..\:/Survirun/app/src/main/res/layout/fragment_setting.xml" value="0.152" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/fragment_setting.xml" value="0.176" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_statistics.xml" value="0.2765625" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_user.xml" value="0.2" />
         <entry key="..\:/Survirun/app/src/main/res/layout/header.xml" value="0.1" />
