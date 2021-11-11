@@ -155,7 +155,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String p = binding.passwordInputEdittext.getText().toString();
-                if(p.replace(" ", "").isEmpty()&&!Pattern.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#$%^&*])(?=.*[0-9!@#$%^&*]).{8,15}$", p)){
+                if(p.replace(" ", "").isEmpty()||!Pattern.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#$%^&*])(?=.*[0-9!@#$%^&*]).{8,15}$", p)){
                     binding.layout3.setErrorEnabled(true);
                     binding.layout3.setError(getString(pwd_condition));
                 }
