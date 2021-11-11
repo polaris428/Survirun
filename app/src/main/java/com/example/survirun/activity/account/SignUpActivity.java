@@ -82,40 +82,52 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
+        binding.idInputEdittext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        binding.duplicateCheck.setOnClickListener(v -> {
-            email = binding.idInputEdittext.getText().toString().trim();
-            if (email.replace(" ", "").isEmpty()) {
-                binding.layout1.setErrorEnabled(true);
-                binding.layout1.setError(getString(email_enter));
-            } else {
-                if (isEmileEnterCheck) {
-                    Call<EmileCheck> call = ServerClient.getServerService().getEmileCheck(email);
-                    call.enqueue(new Callback<EmileCheck>() {
-                        @Override
-                        public void onResponse(Call<EmileCheck> call, Response<EmileCheck> response) {
-                            if (response.isSuccessful()) {
-                                Log.d("adsf", response.body() + "");
-                                if (response.body().exists) {
-                                    binding.layout1.setErrorEnabled(true);
-                                    binding.layout1.setError(getString(email_already));
-                                } else {
-                                    binding.layout1.setHelperTextEnabled(true);
-                                    binding.layout1.setEndIconDrawable(R.drawable.ic_baseline_check_circle_24);
-                                    binding.layout1.setEndIconTintList(ColorStateList.valueOf(getColor(R.color.green)));
-                                    isEmileCheck = true;
-                                    binding.layout1.setHelperText(getString(email_can_use));
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                email = binding.idInputEdittext.getText().toString().trim();
+                if (email.replace(" ", "").isEmpty()) {
+                    binding.layout1.setErrorEnabled(true);
+                    binding.layout1.setError(getString(email_enter));
+                } else {
+                    if (isEmileEnterCheck) {
+                        Call<EmileCheck> call = ServerClient.getServerService().getEmileCheck(email);
+                        call.enqueue(new Callback<EmileCheck>() {
+                            @Override
+                            public void onResponse(Call<EmileCheck> call, Response<EmileCheck> response) {
+                                if (response.isSuccessful()) {
+                                    Log.d("adsf", response.body() + "");
+                                    if (response.body().exists) {
+                                        binding.layout1.setErrorEnabled(true);
+                                        binding.layout1.setError(getString(email_already));
+                                    } else {
+                                        binding.layout1.setHelperTextEnabled(true);
+                                        binding.layout1.setEndIconDrawable(R.drawable.ic_baseline_check_circle_24);
+                                        binding.layout1.setEndIconTintList(ColorStateList.valueOf(getColor(R.color.green)));
+                                        isEmileCheck = true;
+                                        binding.layout1.setHelperText(getString(email_can_use));
+                                    }
                                 }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<EmileCheck> call, Throwable t) {
-                            t.printStackTrace();
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<EmileCheck> call, Throwable t) {
+                                t.printStackTrace();
+                            }
+                        });
+                    }
+
                 }
-
             }
         });
 

@@ -73,7 +73,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout1"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:boxBackgroundColor="?attr/colorBox"
             app:endIconMode="custom"
@@ -81,7 +81,6 @@
             android:layout_marginBottom="24dp"
             app:layout_constraintBottom_toTopOf="@id/layout2"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/duplicate_check"
             app:layout_constraintTop_toBottomOf="@id/textView1">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -93,15 +92,7 @@
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/duplicate_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/duplicate_check"
-            app:layout_constraintBottom_toBottomOf="@id/layout1"
-            app:layout_constraintLeft_toRightOf="@id/layout1"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/layout1" />
+
 
 
         <TextView
