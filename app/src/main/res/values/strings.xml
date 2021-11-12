@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Survirun</string>
-    <string name="story_profile">...that\'s a nice name. Please register your photo.</string>
+    <string name="story_profile">...\nthat\'s a nice name.\nPlease register your photo.</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="story_name">You\'re a survivor of zombie apocalypse. What is your name?</string>
+    <string name="story_name">Hi\nYou\'re a survivor of zombie apocalypse.\nWhat is your name?</string>
     <string name="pwd">Password</string>
     <string name="sign_in">Sign In</string>
     <string name="no_account">Don\'t have an account?</string>
@@ -15,7 +15,7 @@
     <string name="sign_up_error">Registration error</string>
     <string name="format_error">Please check the format.</string>
     <string name="calorie">Calorie</string>
-    <string name="exercise_time">Exercise \nTime</string>
+    <string name="exercise_time">Exercise Time</string>
     <string name="daily_target">Daily Target</string>
     <string name="my_goal">My Goal</string>
     <string name="modify_goals">Modify Goals</string>
@@ -34,8 +34,8 @@
     <string name="setting">Setting</string>
     <string name="cancel">Cancel</string>
     <string name="need_location">You need location access to run this app.</string>
-    <string name="permission_error_re_run">Permission denied. Please re-run the app to allow permission.</string>
-    <string name="permission_error_allow_setting">Permission denied. Permissions must be allowed in settings (app information).</string>
+    <string name="permission_error_re_run">Permission denied.\nPlease re-run the app to allow permission.</string>
+    <string name="permission_error_allow_setting">Permission denied.\nPermissions must be allowed in settings (app information).</string>
     <string name="tts_type">Now you burned %d kilocalories and ran a total of %.2f kilometers. So far, you\'ve exercised %d hour, %d minute and %d second.</string>
     <string name="pause_text">Since you starting resting,\n</string>
     <string name="total_exercise">Total Exercise</string>
@@ -109,4 +109,6 @@
     <string name="sign_in_account">Sign in to account</string>
     <string name="create_account">create a new account</string>
     <string name="end_exercise">Do you want to end the exercise?</string>
+    <string name="enter_name">Enter name</string>
+    <string name="permission_error_again">Permission denied.\nPress it again to allow the permitting.</string>
 </resources>

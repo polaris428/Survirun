@@ -3,14 +3,18 @@ package com.example.survirun.activity.account;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 
 import com.example.survirun.R;
@@ -28,6 +32,10 @@ public class SignUpNameActivity extends AppCompatActivity {
     String name;
     String token;
     SharedPreferences.Editor editor;
+
+    ProgressDialog customProgressDialog;
+    Dialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +48,12 @@ public class SignUpNameActivity extends AppCompatActivity {
         editor = sf.edit();
 
 
+        customProgressDialog = new ProgressDialog(this);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        customProgressDialog.setCancelable(false);
+
         binding.textView.setCharacterDelay(160);
-        binding.textView.displayTextWithAnimation("안녕하세요 당신은 좀비 아포칼립스에서 살아남은 생존다 입니다 당신의 이름을 알려주세요");
+        binding.textView.displayTextWithAnimation(getText(R.string.story_name));
 
         story = (String) getText(R.string.story_name);
         binding.nameInputEdittext.addTextChangedListener(new TextWatcher() {
@@ -70,7 +82,7 @@ public class SignUpNameActivity extends AppCompatActivity {
                 binding.inputLayout.setErrorEnabled(true);
                 binding.inputLayout.setError(getString(R.string.type_name));
             } else {
-
+                customProgressDialog.show();
                 Call<ResultData> call = ServerClient.getServerService().inputName(name, token);
                 call.enqueue(new Callback<ResultData>() {
                     @Override
@@ -78,17 +90,20 @@ public class SignUpNameActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             editor.putString("name", name);
                             editor.commit();
+                            customProgressDialog.dismiss();
                             Intent intent = new Intent(SignUpNameActivity.this, SignUpProfileActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         } else {
                             response.errorBody();
+                            customProgressDialog.dismiss();
                             Log.d("adsf", response.errorBody().toString());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResultData> call, Throwable t) {
+                        customProgressDialog.dismiss();
                         t.printStackTrace();
                     }
                 });
@@ -100,5 +115,18 @@ public class SignUpNameActivity extends AppCompatActivity {
             Log.i("Log", "Animation Completed");
             return false;
         });
+    }
+    @Override
+    public void onBackPressed() {
+        showDialog();
+    }
+
+    public void showDialog() {
+        Button yesButton = dialog.findViewById(R.id.yes_button);
+        Button cancelButton = dialog.findViewById(R.id.cancel_button);
+        dialog.findViewById(R.id.help_button).setVisibility(View.GONE);
+        dialog.show();
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
+        yesButton.setOnClickListener(v -> finishAffinity());
     }
 }

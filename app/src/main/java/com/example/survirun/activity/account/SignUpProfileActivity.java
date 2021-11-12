@@ -9,6 +9,7 @@ import androidx.loader.content.CursorLoader;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
@@ -28,6 +30,8 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -65,6 +69,9 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
     SharedPreferences sf;
     SharedPreferences.Editor editor;
 
+    ProgressDialog customProgressDialog;
+    Dialog dialog;
+
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +87,10 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
         binding.profileImageview.setClipToOutline(true);
         binding.textView.setCharacterDelay(160);
 
+        customProgressDialog = new ProgressDialog(this);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        customProgressDialog.setCancelable(false);
+
         String story = name +  getText(R.string.story_profile);
         binding.textView.displayTextWithAnimation(story);
         ;
@@ -94,6 +105,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
 
         binding.nextButton.setOnClickListener(v -> {
             if (selectedImageUri != null) {
+                customProgressDialog.show();
                 MultipartBody.Part body1 = prepareFilePart("image", selectedImageUri);
                 Call<ResultData> call = ServerClient.getServerService().postProfile(token, body1);
 
@@ -102,15 +114,18 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
                     public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                         if (response.isSuccessful()) {
                             editor.putBoolean("profile", true);
+                            customProgressDialog.dismiss();
                             Intent intent = new Intent(SignUpProfileActivity.this, MainActivity.class);
                             startActivity(intent);
                         } else {
+                            customProgressDialog.dismiss();
                             Log.d("adsf", response.errorBody().toString());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResultData> call, Throwable t) {
+                        customProgressDialog.dismiss();
                         t.printStackTrace();
                     }
                 });
@@ -141,15 +156,6 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
             setCamera();
         }
         signUpFragment.dismiss();
-    }
-
-    @Override
-    public void onClickBasics() {//기본이미지 선택했을때 drawable에 있는거 불러오기
-        /*Glide.with(getApplicationContext()).load(R.drawable.ic_profile).into(binding.profileImageview);
-        selectedImageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
-                "://" + getResources().getResourcePackageName(R.drawable.ic_profile)
-                + '/' + getResources().getResourceTypeName(R.drawable.ic_profile) + '/' + getResources().getResourceEntryName(R.drawable.ic_profile) );
-        signUpFragment.dismiss();*/
     }
 
     private String getRealPathFromURI(Uri contentUri) {
@@ -184,9 +190,9 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                         || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
                     //퍼미션 2번까진 아래코드
-                    Toast.makeText(SignUpProfileActivity.this, "퍼미션이 거부되었습니다. 다시 눌러 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUpProfileActivity.this, R.string.permission_error_again, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(SignUpProfileActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUpProfileActivity.this, R.string.permission_error_allow_setting, Toast.LENGTH_LONG).show();
                     //2번이후론 알아서
                 }
             }
@@ -251,5 +257,19 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
         File file = new File(getRealPathFromURI(fileUri));
         RequestBody requestFile = RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), file);
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+    }
+
+    @Override
+    public void onBackPressed() {
+        showDialog();
+    }
+
+    public void showDialog() {
+        Button yesButton = dialog.findViewById(R.id.yes_button);
+        Button cancelButton = dialog.findViewById(R.id.cancel_button);
+        dialog.findViewById(R.id.help_button).setVisibility(View.GONE);
+        dialog.show();
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
+        yesButton.setOnClickListener(v -> finishAffinity());
     }
 }

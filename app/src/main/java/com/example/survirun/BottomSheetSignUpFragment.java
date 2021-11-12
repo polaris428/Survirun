@@ -26,9 +26,6 @@ public class BottomSheetSignUpFragment extends BottomSheetDialogFragment {
         binding.camera.setOnClickListener(view -> {
             mListener.onClickCamera();
         });
-        binding.basics.setOnClickListener(view -> {
-            mListener.onClickBasics();
-        });
         return v;
     }
 
@@ -36,7 +33,5 @@ public class BottomSheetSignUpFragment extends BottomSheetDialogFragment {
         void onClickGallery();
 
         void onClickCamera();
-
-        void onClickBasics();
     }
 }

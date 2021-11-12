@@ -79,15 +79,16 @@ public class FriendFragment extends Fragment {
 
         //binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.findFriends.setOnClickListener(v -> {
-            if (email.equals(binding.emileInputEditText.getText().toString())) {
+            friendEmail = binding.emileInputEditText.getText().toString();
+            if (email.equals(friendEmail)) {
                 Toast.makeText(getContext(), "자기 자신의 이미 최고의 친구입니다", Toast.LENGTH_LONG).show();
-            } else if (binding.emileInputEditText.getText().toString().equals("")) {
+            } else if (friendEmail.equals("")) {
                 Toast.makeText(getContext(), "공백을 채워주세요", Toast.LENGTH_LONG).show();
             } else {
                 binding.findFriendsCardView.setVisibility(View.GONE);
                 binding.friendsError.setVisibility(View.GONE);
                 binding.cardView.setVisibility(View.GONE);
-                Call<getUserData> call1 = ServerClient.getServerService().getUser(token, binding.emileInputEditText.getText().toString());
+                Call<getUserData> call1 = ServerClient.getServerService().getUser(token, friendEmail);
                 call1.enqueue(new Callback<getUserData>() {
                     @Override
                     public void onResponse(Call<getUserData> call, Response<getUserData> response) {
@@ -250,15 +251,11 @@ public class FriendFragment extends Fragment {
 
 
                                     }
+                                    if (!friend) {
+                                        Log.d("이메일", response.body().friends.get(i).email);
+                                        addFriend(response.body().friends.get(i).email);
+                                    }
 
-
-                                }
-                                if (!friend) {
-                                    Log.d("이메일", response.body().friends.get(i).email);
-                                    addFriend(response.body().friends.get(i).email);
-
-                                }else {
-                                    friend=true;
                                 }
                             }
                             Log.d("반복된 횟수", i + "");
@@ -283,40 +280,34 @@ public class FriendFragment extends Fragment {
             public void onResponse(Call<getUserData> call, Response<getUserData> response) {
                 if (response.isSuccessful()) {
                     name = response.body().username;
-                    Log.d("name", name);
-                    Call<getUserData> call2= ServerClient.getServerService().getUser(token,friendEmail);
-                    call2.enqueue(new Callback<getUserData>() {
+                    Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
+                    getProfile.enqueue(new Callback<ImageData>() {
                         @Override
-                        public void onResponse(Call<getUserData> call, Response<getUserData> response) {
-                            if(response.isSuccessful()){
-
-                                Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url",response.body().username);
-                                getProfile.enqueue(new Callback<ImageData>() {
+                        public void onResponse(Call<ImageData> call, Response<ImageData> response) {
+                            if (response.isSuccessful()) {
+                                profile = "https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img;
+                                class InsertRunnable implements Runnable {
                                     @Override
-                                    public void onResponse(Call<ImageData> call, Response<ImageData> response) {
-                                        if (response.isSuccessful()) {
-                                            Log.d("d",response.body().img);
-
-                                            asdf(email,"https://dicon21.2tle.io/api/v1/image?reqType=profile&id="+response.body().img,name);
-                                        }
+                                    public void run() {
+                                        FriendRoom friendRoom = new FriendRoom();
+                                        friendRoom.email = friendEmail;
+                                        friendRoom.profile = profile;
+                                        friendRoom.name = name;
+                                        FriendDB.getInstance(mContext).friendDao().insertAll(friendRoom);
                                     }
-
-                                    @Override
-                                    public void onFailure(Call<ImageData> call, Throwable t) {
-                                        t.printStackTrace();
-                                    }
-                                });
-                            }else{
-                                Log.d("adsf","실패");
+                                }
+                                InsertRunnable insertRunnable = new InsertRunnable();
+                                Thread addThread = new Thread(insertRunnable);
+                                addThread.start();
+                                getFriend();
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<getUserData> call, Throwable t) {
-                            t.printStackTrace();
+                        public void onFailure(Call<ImageData> call, Throwable t) {
+
                         }
                     });
-
 
 
                 }
@@ -328,22 +319,5 @@ public class FriendFragment extends Fragment {
             }
         });
 
-    }
-    public void asdf(String friendEmail,String friendProfile,String friendName){
-        class InsertRunnable implements Runnable {
-            @Override
-            public void run() {
-                Log.d("저장값",name);
-                FriendRoom friendRoom = new FriendRoom();
-                friendRoom.email = friendEmail;
-                friendRoom.profile = friendProfile;
-                friendRoom.name = friendName;
-
-                FriendDB.getInstance(mContext).friendDao().insertAll(friendRoom);
-            }
-        }
-        InsertRunnable insertRunnable = new InsertRunnable();
-        Thread addThread = new Thread(insertRunnable);
-        addThread.start();
     }
 }

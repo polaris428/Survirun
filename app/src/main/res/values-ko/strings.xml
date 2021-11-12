@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Survirun</string>
-    <string name="story_name">당신은 좀비아포칼립스의 생존자입니다당신의이름은무엇인가요.</string>
-    <string name="story_profile">...멋진 이름이군여 딩신의 사진을 등록해주세요</string>
+    <string name="story_name">안녕하세요\n당신은 좀비 아포칼립스에서\n살아남은 생존자입니다.\n당신의 이름을 알려주세요.</string>
+    <string name="story_profile">...\n멋진 이름이군요\n딩신의 사진을 등록해주세요</string>
     <string name="pwd">비밀번호</string>
     <string name="sign_in">로그인</string>
     <string name="no_account">아직 회원이 아니신가요?</string>
@@ -34,8 +34,8 @@
     <string name="setting">설정</string>
     <string name="cancel">취소</string>
     <string name="need_location">이 앱을 실행하려면 위치 접근 권한이 필요합니다.</string>
-    <string name="permission_error_re_run">퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.</string>
-    <string name="permission_error_allow_setting">퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다.</string>
+    <string name="permission_error_re_run">퍼미션이 거부되었습니다.\n앱을 다시 실행하여 퍼미션을 허용해주세요.</string>
+    <string name="permission_error_allow_setting">퍼미션이 거부되었습니다.\n설정(앱 정보)에서 퍼미션을 허용해야 합니다.</string>
     <string name="tts_type">현재 소비 칼로리는 %d며, 총 %.2f킬로미터 달렸습니다. 지금까지 운동한 시간은 %d시간 %d분 %d초입니다.</string>
     <string name="pause_text">쉬기 시작한지\n</string>
     <string name="total_exercise">운동량</string>
@@ -109,4 +109,6 @@
     <string name="sign_in_account">자신의 계정에 로그인하세요</string>
     <string name="create_account">새로운 계정을 만드세요</string>
     <string name="end_exercise">운동을 종료 하시겠습니까?</string>
+    <string name="enter_name">이름입력</string>
+    <string name="permission_error_again">퍼미션이 거부되었습니다.\n다시 눌러 퍼미션을 허용해주세요.</string>
 </resources>
