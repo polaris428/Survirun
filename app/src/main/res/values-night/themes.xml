@@ -19,6 +19,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">20dp</item>
 
     </style>
 </resources>
