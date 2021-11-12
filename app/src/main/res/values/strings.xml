@@ -2,7 +2,7 @@
     <string name="app_name">Survirun</string>
     <string name="story_profile">...that\'s a nice name. Please register your photo.</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="story_name">You\'re a survivor of zombie apocalypse. What is your name?</string>
+    <string name="story_name">Hi\nYou\'re a survivor of zombie apocalypse.\nWhat is your name?</string>
     <string name="pwd">Password</string>
     <string name="sign_in">Sign In</string>
     <string name="no_account">Don\'t have an account?</string>
@@ -109,4 +109,5 @@
     <string name="sign_in_account">Sign in to account</string>
     <string name="create_account">create a new account</string>
     <string name="end_exercise">Do you want to end the exercise?</string>
+    <string name="enter_name">Enter name</string>
 </resources>

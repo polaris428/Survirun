@@ -10,23 +10,23 @@
         android:id="@+id/text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="380dp"
         android:layout_centerInParent="true"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="100dp"
-        android:textColor="#000000"
+        android:textColor="?attr/colorBlackToWhite"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="이름입력"
+        android:text="@string/enter_name"
+        android:textColor="?attr/colorBlackToWhite"
         android:layout_marginBottom="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/input_layout">
-
-    </TextView>
+        app:layout_constraintBottom_toTopOf="@+id/input_layout"/>
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout"
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
         app:hintEnabled="false"
         android:layout_marginHorizontal="40dp"
         android:layout_marginBottom="50dp"
-        app:boxBackgroundColor="?attr/colorBox"
+        app:boxBackgroundColor="@color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -43,19 +43,20 @@
             android:id="@+id/name_input_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="이름을 입력해주세요"
-            android:textSize="18sp" />
+            android:hint="@string/type_name"
+            android:textSize="18sp"
+            android:inputType="text"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/name_send_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
         android:text="@string/next"
-        android:textSize="18sp"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@color/white"
+        android:textSize="17sp"
         android:layout_marginTop="10dp"
+        app:layout_constraintRight_toRightOf="@id/input_layout"
         app:layout_constraintTop_toBottomOf="@+id/input_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

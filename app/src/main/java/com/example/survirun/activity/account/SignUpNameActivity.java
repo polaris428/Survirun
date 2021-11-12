@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -28,6 +29,8 @@ public class SignUpNameActivity extends AppCompatActivity {
     String name;
     String token;
     SharedPreferences.Editor editor;
+    ProgressDialog customProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +43,12 @@ public class SignUpNameActivity extends AppCompatActivity {
         editor = sf.edit();
 
 
+        customProgressDialog = new ProgressDialog(this);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        customProgressDialog.setCancelable(false);
+
         binding.textView.setCharacterDelay(160);
-        binding.textView.displayTextWithAnimation("안녕하세요 당신은 좀비 아포칼립스에서 살아남은 생존다 입니다 당신의 이름을 알려주세요");
+        binding.textView.displayTextWithAnimation(getText(R.string.story_name));
 
         story = (String) getText(R.string.story_name);
         binding.nameInputEdittext.addTextChangedListener(new TextWatcher() {
@@ -70,7 +77,7 @@ public class SignUpNameActivity extends AppCompatActivity {
                 binding.inputLayout.setErrorEnabled(true);
                 binding.inputLayout.setError(getString(R.string.type_name));
             } else {
-
+                customProgressDialog.show();
                 Call<ResultData> call = ServerClient.getServerService().inputName(name, token);
                 call.enqueue(new Callback<ResultData>() {
                     @Override
@@ -78,17 +85,20 @@ public class SignUpNameActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             editor.putString("name", name);
                             editor.commit();
+                            customProgressDialog.dismiss();
                             Intent intent = new Intent(SignUpNameActivity.this, SignUpProfileActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         } else {
                             response.errorBody();
+                            customProgressDialog.dismiss();
                             Log.d("adsf", response.errorBody().toString());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResultData> call, Throwable t) {
+                        customProgressDialog.dismiss();
                         t.printStackTrace();
                     }
                 });
