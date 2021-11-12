@@ -21,6 +21,7 @@ import com.example.survirun.R;
 import com.example.survirun.data.ExerciseHistory;
 import com.example.survirun.data.FindUserData;
 import com.example.survirun.data.FriendRoom;
+import com.example.survirun.data.Friends;
 import com.example.survirun.data.ImageData;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.data.getUserData;
@@ -43,7 +44,8 @@ public class FriendFragment extends Fragment {
     String name;
     String friendEmail;
     String profile;
-    int friendsNumber;
+    String fEmail;
+    int friendsServerNumber, friendsRoomNumber;
     private List<FriendRoom> friendRoomList;
     private FriendDB friendDB = null;
     private Context mContext = null;
@@ -63,6 +65,8 @@ public class FriendFragment extends Fragment {
         mContext = getContext().getApplicationContext();
         friendAdapter = new FriendAdapter(friendRoomList);
 
+        checkFriends();
+
 
         Log.d("토큰", token);
         binding.backButton.setOnClickListener(v -> {
@@ -70,40 +74,9 @@ public class FriendFragment extends Fragment {
             binding.friendsError.setVisibility(View.GONE);
             binding.cardView.setVisibility(View.GONE);
         });
-        Call<FindUserData> call = ServerClient.getServerService().getFriendList(token);
-        call.enqueue(new Callback<FindUserData>() {
-            @Override
-            public void onResponse(Call<FindUserData> call, Response<FindUserData> response) {
-                if (response.isSuccessful()) {
-
-                    int friendsNumber=response.body().friends.size();
-                    Log.d("asdf", String.valueOf(friendsNumber));
-                    //여기서 부터 작성
 
 
-//                    //Log.d("asdf", response.body().friends.get(0).username+ "");
-//
-//
-//                    // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
-//                    FriendAdapter adapter = new FriendAdapter(response.body().friends);
-//                    binding.friendListRecyclerView.setAdapter(adapter);
-//
-//
-//                    binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<FindUserData> call, Throwable t) {
-
-            }
-        });
-
-
-        binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        getFriend();
+        //binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.findFriends.setOnClickListener(v -> {
             if (email.equals(binding.emileInputEditText.getText().toString())) {
                 Toast.makeText(getContext(), "자기 자신의 이미 최고의 친구입니다", Toast.LENGTH_LONG).show();
@@ -235,10 +208,88 @@ public class FriendFragment extends Fragment {
 
 
     }
+
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
+        checkFriends();
         FriendDB.destroyInstance();
         friendDB = null;
+    }
+
+    public void checkFriends(){//여기부터 비교해서 룸에 값넣는 코드
+        Call<FindUserData> call = ServerClient.getServerService().getFriendList(token);
+        call.enqueue(new Callback<FindUserData>() {
+            @Override
+            public void onResponse(Call<FindUserData> call, Response<FindUserData> response) {
+                if (response.isSuccessful()) {
+                    friendsServerNumber = response.body().friends.size();
+                    friendsRoomNumber = friendRoomList.size();
+                    Log.d("asdf", String.valueOf(friendsServerNumber));
+                    Log.d("asdf", String.valueOf(friendsRoomNumber));
+                    if (friendsServerNumber != friendsRoomNumber) {
+                        for (int i = 0; i < friendsServerNumber; i++) {
+                            fEmail = response.body().friends.get(i).email;
+                            Log.d("asdf", fEmail);
+                            Call<getUserData> call1 = ServerClient.getServerService().getUser(token, fEmail);
+                            call1.enqueue(new Callback<getUserData>() {
+                                @Override
+                                public void onResponse(Call<getUserData> call, Response<getUserData> response) {
+                                    if (response.isSuccessful()) {
+                                        name = response.body().username;
+                                        friendEmail = binding.emileInputEditText.getText().toString();
+                                        Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url", name);
+                                        getProfile.enqueue(new Callback<ImageData>() {
+                                            @Override
+                                            public void onResponse(Call<ImageData> call, Response<ImageData> response) {
+                                                if (response.isSuccessful()) {
+                                                    if (getActivity() == null) {
+                                                        return;
+                                                    }
+                                                    profile = "https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img;
+                                                    class InsertRunnable implements Runnable {
+                                                        @Override
+                                                        public void run() {
+                                                            FriendRoom friendRoom = new FriendRoom();
+                                                            friendRoom.email = fEmail;
+                                                            friendRoom.profile = profile;
+                                                            friendRoom.name = name;
+                                                            FriendDB.getInstance(mContext).friendDao().insertAll(friendRoom);//룸에게 값 넣는 코드
+                                                            Log.d("asdf", friendRoom.email+friendRoom.profile+friendRoom.name);
+                                                        }
+                                                    }
+                                                    InsertRunnable insertRunnable = new InsertRunnable();
+                                                    Thread addThread = new Thread(insertRunnable);
+                                                    addThread.start();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<ImageData> call, Throwable t) {
+                                                t.printStackTrace();
+                                            }
+                                        });
+
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<getUserData> call, Throwable t) {
+                                    t.printStackTrace();
+                                }
+                            });
+
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FindUserData> call, Throwable t) {
+            }
+
+        });
+        getFriend();
     }
 }

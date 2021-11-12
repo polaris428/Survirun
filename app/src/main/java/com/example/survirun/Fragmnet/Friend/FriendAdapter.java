@@ -56,7 +56,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         View view = inflater.inflate(R.layout.item_friend, parent, false);
         FriendAdapter.ViewHolder viewHolder = new FriendAdapter.ViewHolder(view);
 
@@ -68,7 +67,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         FriendRoom item = friendRoomList.get(position);
         holder.email.setText(item.email);
         holder.name.setText(item.name);
-        holder.profile.setImageURI(Uri.parse(item.profile));
         Glide.with(context).load(item.profile)
                 .error(R.drawable.userdefaultprofile)
                 .circleCrop()
