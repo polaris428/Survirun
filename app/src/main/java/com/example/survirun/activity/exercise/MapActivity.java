@@ -114,8 +114,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         CURRENT_MODE = getIntent().getIntegerArrayListExtra("mode");
         binding.dragButton.setOnClickListener(v -> {
-            Animation animationDown = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.map_sliding_down);
-            Animation animationUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.map_sliding_up);
+            Animation animationDown = AnimationUtils.loadAnimation(binding.layout.getContext(), R.anim.map_sliding_down);
+            Animation animationUp = AnimationUtils.loadAnimation(binding.layout.getContext(), R.anim.map_sliding_up);
             Handler handler = new Handler();
             // ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams)binding.group.getLayoutParams();
 //                if (lp.height==1){
@@ -132,14 +132,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     public void run() {
                         binding.dragButton.setImageResource(R.drawable.ic_down);
                         binding.group.setVisibility(View.GONE);
-
                     }
-                }, 1000);
+                }, 1500);
             } else {
-                binding.dragButton.setImageResource(R.drawable.ic_up);
                 binding.group.setVisibility(View.VISIBLE);
                 binding.layout.startAnimation(animationDown);
-
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        binding.dragButton.setImageResource(R.drawable.ic_up);
+                    }
+                },1500);
             }
         });
 
@@ -768,7 +771,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         dialog.show();
 
         yesButton.setOnClickListener(v -> stop());
-        yesButton.setOnClickListener(v -> dialog.dismiss());
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
     }
 
     @Override
