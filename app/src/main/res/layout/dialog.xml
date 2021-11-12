@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="55dp"
         android:gravity="center"
+        android:text="@string/shut_down_app"
         android:textSize="17sp"
         app:layout_constraintBottom_toTopOf="@id/layout2"
         app:layout_constraintTop_toTopOf="parent"

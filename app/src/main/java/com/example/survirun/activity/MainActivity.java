@@ -114,11 +114,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showDialog() {
-        TextView explain = dialog.findViewById(R.id.explain_textView);
         Button yesButton = dialog.findViewById(R.id.yes_button);
         Button cancelButton = dialog.findViewById(R.id.cancel_button);
         dialog.findViewById(R.id.help_button).setVisibility(View.GONE);
-        explain.setText(R.string.shut_down_app);
         dialog.show();
         cancelButton.setOnClickListener(v -> dialog.dismiss());
         yesButton.setOnClickListener(v -> finishAffinity());

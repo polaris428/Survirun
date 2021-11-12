@@ -3,6 +3,7 @@ package com.example.survirun.activity.account;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +13,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 
 import com.example.survirun.R;
@@ -29,7 +32,9 @@ public class SignUpNameActivity extends AppCompatActivity {
     String name;
     String token;
     SharedPreferences.Editor editor;
+
     ProgressDialog customProgressDialog;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,5 +115,18 @@ public class SignUpNameActivity extends AppCompatActivity {
             Log.i("Log", "Animation Completed");
             return false;
         });
+    }
+    @Override
+    public void onBackPressed() {
+        showDialog();
+    }
+
+    public void showDialog() {
+        Button yesButton = dialog.findViewById(R.id.yes_button);
+        Button cancelButton = dialog.findViewById(R.id.cancel_button);
+        dialog.findViewById(R.id.help_button).setVisibility(View.GONE);
+        dialog.show();
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
+        yesButton.setOnClickListener(v -> finishAffinity());
     }
 }
