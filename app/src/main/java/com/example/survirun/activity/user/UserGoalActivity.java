@@ -69,8 +69,7 @@ public class UserGoalActivity extends AppCompatActivity {
             }
         });
         binding.backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(UserGoalActivity.this, MainActivity.class);
-            startActivity(intent);
+           finish();
         });
 
         binding.retouchButton.setOnClickListener(v -> {

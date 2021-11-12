@@ -119,8 +119,7 @@ public class UserGoalModifyActivity extends AppCompatActivity {
         });
 
         binding.backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(UserGoalModifyActivity.this, UserGoalActivity.class);
-            startActivity(intent);
+            finish();
         });
 
     }
