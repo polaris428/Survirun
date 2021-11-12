@@ -46,7 +46,6 @@ public class FriendFragment extends Fragment {
     String name;
     String friendEmail;
     String profile;
-    String fEmail;
     int friendsServerNumber, friendsRoomNumber;
     private List<FriendRoom> friendRoomList;
     private FriendDB friendDB = null;
@@ -219,7 +218,7 @@ public class FriendFragment extends Fragment {
         friendDB = null;
     }
 
-    public void checkFriends(){//여기부터 비교해서 룸에 값넣는 코드
+    public void checkFriends() {//여기부터 비교해서 룸에 값넣는 코드
         Call<FindUserData> call = ServerClient.getServerService().getFriendList(token);
         call.enqueue(new Callback<FindUserData>() {
             @Override
@@ -229,37 +228,36 @@ public class FriendFragment extends Fragment {
                     friendsRoomNumber = friendRoomList.size();
                     Log.d("asdf", String.valueOf(friendsServerNumber));
                     Log.d("asdf", String.valueOf(friendsRoomNumber));
-                    int i=0;
-                    if(friendsRoomNumber==0){
-                        for (i=0;i<friendsServerNumber;i++){
-                            Log.d("일차하지않음","일치하지않음"+response.body().friends.get(i).email);
+                    int i = 0;
+                    if (friendsRoomNumber == 0) {
+                        for (i = 0; i < friendsServerNumber; i++) {
+                            Log.d("일차하지않음", "일치하지않음" + response.body().friends.get(i).email);
                             addFriend(response.body().friends.get(i).email);
                         }
-                    }else {
-                        Boolean friend=false;
-                        if(friendsServerNumber!=friendsRoomNumber){
-                            for(i=0;i<friendsServerNumber;i++){
-                                for(int j=0;j<friendsRoomNumber;j++){
-                                    if(response.body().friends.get(i).email.equals(friendRoomList.get(j).email)){
-                                        Log.d("반복중",i+"");
-                                        Log.d("일치함","일치함"+j);
-                                        friend=true;
+                    } else {
+                        Boolean friend = false;
+                        if (friendsServerNumber != friendsRoomNumber) {
+                            for (i = 0; i < friendsServerNumber; i++) {
+                                for (int j = 0; j < friendsRoomNumber; j++) {
+                                    if (response.body().friends.get(i).email.equals(friendRoomList.get(j).email)) {
+                                        Log.d("반복중", i + "");
+                                        Log.d("일치함", "일치함" + j);
+                                        friend = true;
                                         break;
-                                    }else{
-                                        Log.d("반복중",i+"");
-                                        Log.d("일차하지않음","일치하지않음"+j);
-
+                                    } else {
+                                        Log.d("반복중", i + "");
+                                        Log.d("일차하지않음", "일치하지않음" + j);
 
 
                                     }
-                                    if(!friend){
-                                        Log.d("이메일",response.body().friends.get(i).email);
+                                    if (!friend) {
+                                        Log.d("이메일", response.body().friends.get(i).email);
                                         addFriend(response.body().friends.get(i).email);
                                     }
 
                                 }
                             }
-                            Log.d("반복된 횟수",i+"");
+                            Log.d("반복된 횟수", i + "");
                         }
                     }
 
@@ -273,21 +271,34 @@ public class FriendFragment extends Fragment {
         });
         getFriend();
     }
-    public void addFriend(String friendEmail){
-        Call<getUserData>getUserDataCall=ServerClient.getServerService().getUser(token,friendEmail);
+
+    public void addFriend(String friendEmail) {
+        Call<getUserData> getUserDataCall = ServerClient.getServerService().getUser(token, friendEmail);
         getUserDataCall.enqueue(new Callback<getUserData>() {
             @Override
             public void onResponse(Call<getUserData> call, Response<getUserData> response) {
-                if (response.isSuccessful()){
-
-
+                if (response.isSuccessful()) {
+                    name = response.body().username;
                     Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
                     getProfile.enqueue(new Callback<ImageData>() {
                         @Override
                         public void onResponse(Call<ImageData> call, Response<ImageData> response) {
                             if (response.isSuccessful()) {
-
-
+                                profile = "https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img;
+                                class InsertRunnable implements Runnable {
+                                    @Override
+                                    public void run() {
+                                        FriendRoom friendRoom = new FriendRoom();
+                                        friendRoom.email = friendEmail;
+                                        friendRoom.profile = profile;
+                                        friendRoom.name = name;
+                                        FriendDB.getInstance(mContext).friendDao().insertAll(friendRoom);
+                                    }
+                                }
+                                InsertRunnable insertRunnable = new InsertRunnable();
+                                Thread addThread = new Thread(insertRunnable);
+                                addThread.start();
+                                getFriend();
                             }
                         }
 
