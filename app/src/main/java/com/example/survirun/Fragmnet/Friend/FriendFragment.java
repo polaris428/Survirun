@@ -232,25 +232,27 @@ public class FriendFragment extends Fragment {
                         for (i=0;friendsServerNumber<i;i++){
                             Log.d("일차하지않음","일치하지않음"+i);
                         }
-                    }
-                    if(friendsServerNumber!=friendsRoomNumber){
-                        for(i=0;i<friendsServerNumber;i++){
-                            for(int j=0;j<friendsRoomNumber;j++){
-                                if(response.body().friends.get(i).email.equals(friendRoomList.get(j).email)){
-                                    Log.d("반복중",i+"");
-                                    Log.d("일차하지않음","일치함"+j);
-                                    break;
-                                }else{
-                                    Log.d("반복중",i+"");
-                                    Log.d("일차하지않음","일치하지않음"+j);
+                    }else {
+                        if(friendsServerNumber!=friendsRoomNumber){
+                            for(i=0;i<friendsServerNumber;i++){
+                                for(int j=0;j<friendsRoomNumber;j++){
+                                    if(response.body().friends.get(i).email.equals(friendRoomList.get(j).email)){
+                                        Log.d("반복중",i+"");
+                                        Log.d("일차하지않음","일치함"+j);
+                                        break;
+                                    }else{
+                                        Log.d("반복중",i+"");
+                                        Log.d("일차하지않음","일치하지않음"+j);
 
+
+                                    }
 
                                 }
-
                             }
+                            Log.d("반복된 횟수",i+"");
                         }
-                        Log.d("반복된 횟수",i+"");
                     }
+
                 }
             }
 
