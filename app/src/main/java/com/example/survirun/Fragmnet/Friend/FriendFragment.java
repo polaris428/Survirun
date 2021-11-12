@@ -229,7 +229,7 @@ public class FriendFragment extends Fragment {
                     Log.d("asdf", String.valueOf(friendsRoomNumber));
                     int i=0;
                     if(friendsRoomNumber==0){
-                        for (i=0;friendsServerNumber<i;i++){
+                        for (i=0;i<friendsRoomNumber;i++){
                             Log.d("일차하지않음","일치하지않음"+i);
                         }
                     }else {
