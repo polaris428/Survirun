@@ -3,7 +3,6 @@ package com.example.survirun.activity.exercise;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -34,10 +33,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.survirun.Medel.ScoreModel;
 import com.example.survirun.Medel.ZombieModel;
 import com.example.survirun.R;
-import com.example.survirun.activity.account.SplashActivity;
 import com.example.survirun.databinding.ActivityMapBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -49,14 +46,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 
-import java.io.ByteArrayOutputStream;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -119,8 +111,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         CURRENT_MODE = getIntent().getIntegerArrayListExtra("mode");
         binding.dragButton.setOnClickListener(v -> {
-            Animation animationDown = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.sliding_down);
-            Animation animationUp = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.sliding_up);
+            Animation animationDown = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.map_sliding_down);
+            Animation animationUp = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.map_sliding_up);
             Handler handler = new Handler();
                // ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams)binding.group.getLayoutParams();
 //                if (lp.height==1){

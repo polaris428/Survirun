@@ -1,13 +1,17 @@
 package com.example.survirun.activity.exercise;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,7 +31,7 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     @NonNull
     @Override
     public ExerciseListRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.iteme_xercise, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_exercise, parent, false);
         ExerciseListRecyclerViewAdapter.ViewHolder viewHolder = new ExerciseListRecyclerViewAdapter.ViewHolder(itemView);
 
         return viewHolder;
@@ -36,17 +40,29 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExerciseData data = items.get(position);
-        holder.exerciseTitleTextview.setText(data.getExName(position) +"");
-        holder.calorieTextView.setText(data.getCalorie(position)+"kcal");
-        holder.timeTextView.setText(data.getHour(position)+"시간");
-        holder.kmTextView.setText(data.getKm(position)+"km");
+        Animation animationDown = AnimationUtils.loadAnimation(holder.cardView.getContext(),R.anim.sliding_down);
+        Animation animationUp = AnimationUtils.loadAnimation(holder.cardView.getContext(),R.anim.sliding_up);
+        Handler handler = new Handler();
+        holder.exerciseTitleTextview.setText(data.getExName(position) + "   " + data.getHour(position) + "분");
+        holder.calorieTextView.setText(data.getCalorie(position)+"");
+        holder.timeTextView.setText(data.getHour(position)+"");
+        holder.kmTextView.setText(data.getKm(position)+"");
+
         holder.expandImageButton.setOnClickListener(view -> {
             if(holder.constraintLayout.getVisibility()==View.GONE){
+                holder.constraintLayout.startAnimation(animationDown);
                 holder.expandImageButton.setImageResource(R.drawable.ic_upblack);
                 holder.constraintLayout.setVisibility(View.VISIBLE);
             }else {
-                holder.expandImageButton.setImageResource(R.drawable.ic_downblack);
-                holder.constraintLayout.setVisibility(View.GONE);
+                holder.constraintLayout.startAnimation(animationUp);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        holder.expandImageButton.setImageResource(R.drawable.ic_downblack);
+                        holder.constraintLayout.setVisibility(View.GONE);
+
+                    }
+                },1000);
 
             }
         });
@@ -75,6 +91,7 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
         TextView timeTextView;
         TextView kmTextView;
         ImageButton expandImageButton;
+        CardView  cardView;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -85,7 +102,7 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
             timeTextView=itemView.findViewById(R.id.item_time_text_view);
             kmTextView=itemView.findViewById(R.id.item_km_text_view);
             expandImageButton=itemView.findViewById(R.id.expand_image_button);
-
+            cardView = itemView.findViewById(R.id.card_view);
         }
     }
 }
