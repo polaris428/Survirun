@@ -154,16 +154,14 @@ public class SignInActivity extends AppCompatActivity {
                                                     startActivity(intent);
                                                 } else {
                                                     Log.d("adsf", "실패");
-                                                    customProgressDialog.dismiss();
-                                                    Toast.makeText(SignInActivity.this, R.string.error_server, Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(SignInActivity.this, "사버오류 잠시후 다시 실행해주세요", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
 
                                             @Override
                                             public void onFailure(Call<getUserData> call, Throwable t) {
                                                 t.printStackTrace();
-                                                customProgressDialog.dismiss();
-                                                Toast.makeText(SignInActivity.this, R.string.error_server, Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(SignInActivity.this, "사버오류 잠시후 다시 실행해주세요", Toast.LENGTH_SHORT).show();
                                             }
                                         });
 

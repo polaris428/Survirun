@@ -2,8 +2,13 @@ package com.example;
 
 public class ExerciseData {
     String exName;
+
+
+
+    int km;
     int hour;
     int calorie;
+
 
     public String getExName(int exName) {
         return this.exName;
@@ -11,6 +16,13 @@ public class ExerciseData {
 
     public void setExName(String exName) {
         this.exName = exName;
+    }
+    public int getKm(int km) {
+        return this.km;
+    }
+
+    public void setKm(int km) {
+        this.km = km;
     }
 
     public int getHour(int position) {
