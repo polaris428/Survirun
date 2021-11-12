@@ -184,9 +184,9 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                         || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
                     //퍼미션 2번까진 아래코드
-                    Toast.makeText(SignUpProfileActivity.this, "퍼미션이 거부되었습니다. 다시 눌러 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUpProfileActivity.this, R.string.permission_error_again, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(SignUpProfileActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUpProfileActivity.this, R.string.permission_error_allow_setting, Toast.LENGTH_LONG).show();
                     //2번이후론 알아서
                 }
             }
