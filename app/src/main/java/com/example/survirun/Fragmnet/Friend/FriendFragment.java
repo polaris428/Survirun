@@ -229,22 +229,27 @@ public class FriendFragment extends Fragment {
                     Log.d("asdf", String.valueOf(friendsRoomNumber));
                     int i=0;
                     if(friendsRoomNumber==0){
-                        for (i=0;i<friendsRoomNumber;i++){
-                            Log.d("일차하지않음","일치하지않음"+i);
+                        for (i=0;i<friendsServerNumber;i++){
+                            Log.d("일차하지않음","일치하지않음"+response.body().friends.get(i).email);
                         }
                     }else {
+                        Boolean friend=false;
                         if(friendsServerNumber!=friendsRoomNumber){
                             for(i=0;i<friendsServerNumber;i++){
                                 for(int j=0;j<friendsRoomNumber;j++){
                                     if(response.body().friends.get(i).email.equals(friendRoomList.get(j).email)){
                                         Log.d("반복중",i+"");
                                         Log.d("일차하지않음","일치함"+j);
+                                        friend=true;
                                         break;
                                     }else{
                                         Log.d("반복중",i+"");
                                         Log.d("일차하지않음","일치하지않음"+j);
 
 
+                                    }
+                                    if(!friend){
+                                        Log.d("이메일",response.body().friends.get(i).email);
                                     }
 
                                 }
