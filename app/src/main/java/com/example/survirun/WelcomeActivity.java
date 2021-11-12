@@ -32,7 +32,7 @@ public class WelcomeActivity extends FragmentActivity {
         FragmentStateAdapter welcomePagerAdapter = new ScreenSlidePagerAdapter(this, welcomeLayouts);
         binding.welcomeViewPager.setAdapter(welcomePagerAdapter);
 
-        binding.nextButton.setOnClickListener(v -> {
+        binding.skipButton.setOnClickListener(v -> {
             Intent intent=new Intent(WelcomeActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
