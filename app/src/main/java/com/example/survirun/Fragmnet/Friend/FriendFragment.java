@@ -227,60 +227,24 @@ public class FriendFragment extends Fragment {
                     friendsRoomNumber = friendRoomList.size();
                     Log.d("asdf", String.valueOf(friendsServerNumber));
                     Log.d("asdf", String.valueOf(friendsRoomNumber));
-                    if (friendsServerNumber != friendsRoomNumber) {
-                        for (int i = 0; i < friendsServerNumber; i++) {
-                            fEmail = response.body().friends.get(i).email;
-                            Log.d("asdf", fEmail);
-                            Call<getUserData> call1 = ServerClient.getServerService().getUser(token, fEmail);
-                            call1.enqueue(new Callback<getUserData>() {
-                                @Override
-                                public void onResponse(Call<getUserData> call, Response<getUserData> response) {
-                                    if (response.isSuccessful()) {
-                                        name = response.body().username;
-                                        friendEmail = binding.emileInputEditText.getText().toString();
-                                        Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url", name);
-                                        getProfile.enqueue(new Callback<ImageData>() {
-                                            @Override
-                                            public void onResponse(Call<ImageData> call, Response<ImageData> response) {
-                                                if (response.isSuccessful()) {
-                                                    if (getActivity() == null) {
-                                                        return;
-                                                    }
-                                                    profile = "https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img;
-                                                    class InsertRunnable implements Runnable {
-                                                        @Override
-                                                        public void run() {
-                                                            FriendRoom friendRoom = new FriendRoom();
-                                                            friendRoom.email = fEmail;
-                                                            friendRoom.profile = profile;
-                                                            friendRoom.name = name;
-                                                            FriendDB.getInstance(mContext).friendDao().insertAll(friendRoom);//룸에게 값 넣는 코드
-                                                            Log.d("asdf", friendRoom.email+friendRoom.profile+friendRoom.name);
-                                                        }
-                                                    }
-                                                    InsertRunnable insertRunnable = new InsertRunnable();
-                                                    Thread addThread = new Thread(insertRunnable);
-                                                    addThread.start();
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onFailure(Call<ImageData> call, Throwable t) {
-                                                t.printStackTrace();
-                                            }
-                                        });
+                    int i=0;
+                    if(friendsServerNumber!=friendsRoomNumber){
+                        for(i=0;i<friendsServerNumber;i++){
+                            for(int j=0;j<friendsRoomNumber;j++){
+                                if(response.body().friends.get(i).email.equals(friendRoomList.get(j).email)){
+                                    Log.d("반복중",i+"");
+                                    Log.d("일차하지않음","일치함"+j);
+                                    break;
+                                }else{
+                                    Log.d("반복중",i+"");
+                                    Log.d("일차하지않음","일치하지않음"+j);
 
 
-                                    }
                                 }
 
-                                @Override
-                                public void onFailure(Call<getUserData> call, Throwable t) {
-                                    t.printStackTrace();
-                                }
-                            });
-
+                            }
                         }
+                        Log.d("반복된 횟수",i+"");
                     }
                 }
             }
