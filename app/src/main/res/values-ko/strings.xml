@@ -106,4 +106,6 @@
     <string name="saying_9">절대로, 절대로, 절대로 포기하지 마라</string>
     <string name="saying_10">어디서든지 간에 시작해라</string>
     <string name="error_server">서버오류 잠시후 다시 실행해주세요</string>
+    <string name="sign_in_account">자신의 계정에 로그인하세요</string>
+    <string name="create_account">새로운 계정을 만드세요</string>
 </resources>
