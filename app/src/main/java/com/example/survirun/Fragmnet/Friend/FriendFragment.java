@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.survirun.Fragmnet.SettingFragment;
 import com.example.survirun.FriendDB;
 import com.example.survirun.FriendDao;
 import com.example.survirun.R;
@@ -231,6 +233,7 @@ public class FriendFragment extends Fragment {
                     if(friendsRoomNumber==0){
                         for (i=0;i<friendsServerNumber;i++){
                             Log.d("일차하지않음","일치하지않음"+response.body().friends.get(i).email);
+                            addFriend(response.body().friends.get(i).email);
                         }
                     }else {
                         Boolean friend=false;
@@ -239,7 +242,7 @@ public class FriendFragment extends Fragment {
                                 for(int j=0;j<friendsRoomNumber;j++){
                                     if(response.body().friends.get(i).email.equals(friendRoomList.get(j).email)){
                                         Log.d("반복중",i+"");
-                                        Log.d("일차하지않음","일치함"+j);
+                                        Log.d("일치함","일치함"+j);
                                         friend=true;
                                         break;
                                     }else{
@@ -247,9 +250,11 @@ public class FriendFragment extends Fragment {
                                         Log.d("일차하지않음","일치하지않음"+j);
 
 
+
                                     }
                                     if(!friend){
                                         Log.d("이메일",response.body().friends.get(i).email);
+                                        addFriend(response.body().friends.get(i).email);
                                     }
 
                                 }
@@ -267,5 +272,40 @@ public class FriendFragment extends Fragment {
 
         });
         getFriend();
+    }
+    public void addFriend(String friendEmail){
+        Call<getUserData>getUserDataCall=ServerClient.getServerService().getUser(token,friendEmail);
+        getUserDataCall.enqueue(new Callback<getUserData>() {
+            @Override
+            public void onResponse(Call<getUserData> call, Response<getUserData> response) {
+                if (response.isSuccessful()){
+
+
+                    Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
+                    getProfile.enqueue(new Callback<ImageData>() {
+                        @Override
+                        public void onResponse(Call<ImageData> call, Response<ImageData> response) {
+                            if (response.isSuccessful()) {
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ImageData> call, Throwable t) {
+
+                        }
+                    });
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<getUserData> call, Throwable t) {
+
+            }
+        });
+
     }
 }
