@@ -20,9 +20,6 @@ import java.util.ArrayList;
 public class ExerciseFragment extends Fragment {
     FragmentExerciseBinding binding;
 
-    public ExerciseFragment() {
-        // Required empty public constructor
-    }
 
     ArrayList<ExerciseData> mList;
     int count = 1;
@@ -60,42 +57,40 @@ public class ExerciseFragment extends Fragment {
             case 1: {
                 binding.exerciseTypeTextview.setText(R.string.pace_goal);
                 mList = new ArrayList<>();
-                UpData(getString(R.string.walking_lightly), 30, 0,0);
-                UpData(getString(R.string.walking_steadily), 50, 0,0);
-                UpData(getString(R.string.running_lightly), 30, 0,0);
-                UpData(getString(R.string.running_vigorously), 30, 0,0);
-                UpData(getString(R.string.walking_briskly), 40, 0,0);
-                UpData(getString(R.string.burning_fat), 60, 0,0);
+                UpData(getString(R.string.walking_lightly), 15, 50,1,1);
+                UpData(getString(R.string.walking_briskly), 30, 100,2,1);
+                UpData(getString(R.string.walking_steadily), 60, 200,3,2);
+                UpData(getString(R.string.burning_fat), 90, 300,4,3);
                 break;
 
             }
             case 2: {
                 ListChange(getString(R.string.exercise_time_goal));
-                UpData("30" + getString(R.string.minute_exercise), 30, 0,0);
-                UpData("1" + getString(R.string.hour_exercise), 60, 0,0);
-                UpData("1" + getString(R.string.hour) + "30" + getString(R.string.minute_exercise), 90, 0,0);
-                UpData("2" + getString(R.string.hour_exercise), 120, 0,0);
-                UpData("2" + getString(R.string.hour) + "30" + getString(R.string.minute_exercise), 150, 0,0);
+                UpData("30" + getString(R.string.minute_exercise), 30, 0,0,1);
+                UpData("1" + getString(R.string.hour_exercise), 60, 0,0,2);
+                UpData("1" + getString(R.string.hour) + "30" + getString(R.string.minute_exercise), 90, 0,0,3);
+                UpData("2" + getString(R.string.hour_exercise), 120, 0,0,4);
+                UpData("2" + getString(R.string.hour) + "30" + getString(R.string.minute_exercise), 150, 0,0,4);
                 break;
 
             }
             case 3: {
                 ListChange(getString(R.string.exercise_distance_goal));
-                UpData("1Km", 0, 0,1);
-                UpData("2Km", 0, 0,2);
-                UpData("3Km", 0, 0,3);
-                UpData("4km", 0, 0,4);
-                UpData("5km", 0, 0,5);
+                UpData("1Km", 0, 0,1,1);
+                UpData("2Km", 0, 0,2,1);
+                UpData("3Km", 0, 0,3,2);
+                UpData("4km", 0, 0,4,3);
+                UpData("5km", 0, 0,5,3);
                 break;
 
             }
             case 4: {
                 ListChange(getString(R.string.calorie_burning_goal));
-                UpData("300kcal", 0, 300,0);
-                UpData("400kcal", 0, 400,0);
-                UpData("500kcal", 0, 500,0);
-                UpData("600kcal", 0, 600,0);
-                UpData("700kcal", 0, 700,0);
+                UpData("300kcal", 0, 300,0,3);
+                UpData("400kcal", 0, 400,0,3);
+                UpData("500kcal", 0, 500,0,4);
+                UpData("600kcal", 0, 600,0,4);
+                UpData("700kcal", 0, 700,0,5);
                 break;
 
             }
@@ -116,12 +111,13 @@ public class ExerciseFragment extends Fragment {
         binding.recyclerView.setAdapter(exerciseListRecyclerViewAdapter);
     }
 
-    void UpData(String exerciseName, int hour, int calorie, int km) {
+    void UpData(String exerciseName, int hour, int calorie, int km ,int level) {
         ExerciseData exerciseData = new ExerciseData();
         exerciseData.setExName(exerciseName);
         exerciseData.setHour(hour);
-        exerciseData.getCalorie(calorie);
-        exerciseData.getKm(km);
+        exerciseData.setCalorie(calorie);
+        exerciseData.setKm(km);
+        exerciseData.setLevel(level);
         mList.add(exerciseData);
     }
 

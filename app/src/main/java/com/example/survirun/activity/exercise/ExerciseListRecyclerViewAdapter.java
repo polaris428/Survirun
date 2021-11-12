@@ -36,10 +36,10 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExerciseData data = items.get(position);
-        holder.exerciseTitleTextview.setText(data.getExName(position) + "   " + data.getHour(position) + "분");
-        holder.calorieTextView.setText(data.getCalorie(position)+"");
-        holder.timeTextView.setText(data.getHour(position)+"");
-        holder.kmTextView.setText(data.getKm(position)+"");
+        holder.exerciseTitleTextview.setText(data.getExName(position) +"");
+        holder.calorieTextView.setText(data.getCalorie(position)+"kcal");
+        holder.timeTextView.setText(data.getHour(position)+"시간");
+        holder.kmTextView.setText(data.getKm(position)+"km");
         holder.expandImageButton.setOnClickListener(view -> {
             if(holder.constraintLayout.getVisibility()==View.GONE){
                 holder.expandImageButton.setImageResource(R.drawable.ic_upblack);

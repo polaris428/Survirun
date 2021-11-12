@@ -2,12 +2,19 @@ package com.example;
 
 public class ExerciseData {
     String exName;
-
-
-
     int km;
     int hour;
     int calorie;
+
+    public int getLevel(int level) {
+        return this.level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    int level;
 
 
     public String getExName(int exName) {
