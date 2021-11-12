@@ -40,12 +40,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
-    private List<Friends> mData;
     private List<FriendRoom> friendRoomList;
 
     Context context;
     String token;
-    String friendName;
 
     public FriendAdapter(List<FriendRoom> list) {
         friendRoomList = list;

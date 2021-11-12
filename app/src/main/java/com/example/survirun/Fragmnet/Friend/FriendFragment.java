@@ -79,21 +79,21 @@ public class FriendFragment extends Fragment {
 
         //binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.findFriends.setOnClickListener(v -> {
-            if (email.equals(binding.emileInputEditText.getText().toString())) {
+            friendEmail = binding.emileInputEditText.getText().toString();
+            if (email.equals(friendEmail)) {
                 Toast.makeText(getContext(), "자기 자신의 이미 최고의 친구입니다", Toast.LENGTH_LONG).show();
-            } else if (binding.emileInputEditText.getText().toString().equals("")) {
+            } else if (friendEmail.equals("")) {
                 Toast.makeText(getContext(), "공백을 채워주세요", Toast.LENGTH_LONG).show();
             } else {
                 binding.findFriendsCardView.setVisibility(View.GONE);
                 binding.friendsError.setVisibility(View.GONE);
                 binding.cardView.setVisibility(View.GONE);
-                Call<getUserData> call1 = ServerClient.getServerService().getUser(token, binding.emileInputEditText.getText().toString());
+                Call<getUserData> call1 = ServerClient.getServerService().getUser(token, friendEmail);
                 call1.enqueue(new Callback<getUserData>() {
                     @Override
                     public void onResponse(Call<getUserData> call, Response<getUserData> response) {
                         if (response.isSuccessful()) {
                             name = response.body().username;
-                            friendEmail = binding.emileInputEditText.getText().toString();
                             binding.cardView.setVisibility(View.VISIBLE);
                             binding.findFriendsCardView.setVisibility(View.VISIBLE);
                             binding.friendsError.setVisibility(View.GONE);
@@ -147,25 +147,12 @@ public class FriendFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    Call<ResultData> call2 = ServerClient.getServerService().postAddFriend(token, "email", binding.emileInputEditText.getText().toString());
+                    Call<ResultData> call2 = ServerClient.getServerService().postAddFriend(token, "email", friendEmail);
                     call2.enqueue(new Callback<ResultData>() {
                         @Override
                         public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                             if (response.isSuccessful()) {
-                                class InsertRunnable implements Runnable {
-                                    @Override
-                                    public void run() {
-                                        FriendRoom friendRoom = new FriendRoom();
-                                        friendRoom.email = friendEmail;
-                                        friendRoom.profile = profile;
-                                        friendRoom.name = name;
-                                        FriendDB.getInstance(mContext).friendDao().insertAll(friendRoom);
-                                    }
-                                }
-                                InsertRunnable insertRunnable = new InsertRunnable();
-                                Thread addThread = new Thread(insertRunnable);
-                                addThread.start();
-                                getFriend();
+                                setRoom();
                                 Log.d("성공", response.body().result.toString());
                             } else {
                                 //실패시
@@ -285,20 +272,7 @@ public class FriendFragment extends Fragment {
                         public void onResponse(Call<ImageData> call, Response<ImageData> response) {
                             if (response.isSuccessful()) {
                                 profile = "https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img;
-                                class InsertRunnable implements Runnable {
-                                    @Override
-                                    public void run() {
-                                        FriendRoom friendRoom = new FriendRoom();
-                                        friendRoom.email = friendEmail;
-                                        friendRoom.profile = profile;
-                                        friendRoom.name = name;
-                                        FriendDB.getInstance(mContext).friendDao().insertAll(friendRoom);
-                                    }
-                                }
-                                InsertRunnable insertRunnable = new InsertRunnable();
-                                Thread addThread = new Thread(insertRunnable);
-                                addThread.start();
-                                getFriend();
+                                setRoom();
                             }
                         }
 
@@ -318,5 +292,22 @@ public class FriendFragment extends Fragment {
             }
         });
 
+    }
+
+    void setRoom(){
+        class InsertRunnable implements Runnable {
+            @Override
+            public void run() {
+                FriendRoom friendRoom = new FriendRoom();
+                friendRoom.email = friendEmail;
+                friendRoom.profile = profile;
+                friendRoom.name = name;
+                FriendDB.getInstance(mContext).friendDao().insertAll(friendRoom);
+            }
+        }
+        InsertRunnable insertRunnable = new InsertRunnable();
+        Thread addThread = new Thread(insertRunnable);
+        addThread.start();
+        getFriend();
     }
 }
