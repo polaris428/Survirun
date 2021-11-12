@@ -108,4 +108,5 @@
     <string name="error_server">Server error. Please run it again soon.</string>
     <string name="sign_in_account">Sign in to account</string>
     <string name="create_account">create a new account</string>
+    <string name="end_exercise">Do you want to end the exercise?</string>
 </resources>

@@ -117,8 +117,7 @@ public class MainActivity extends AppCompatActivity {
         TextView explain = dialog.findViewById(R.id.explain_textView);
         Button yesButton = dialog.findViewById(R.id.yes_button);
         Button cancelButton = dialog.findViewById(R.id.cancel_button);
-        Button helpButton = dialog.findViewById(R.id.help_button);
-        helpButton.setVisibility(View.GONE);
+        dialog.findViewById(R.id.help_button).setVisibility(View.GONE);
         explain.setText(R.string.shut_down_app);
         dialog.show();
         cancelButton.setOnClickListener(v -> dialog.dismiss());

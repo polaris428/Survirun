@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -88,7 +89,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public static boolean isRunning = true; //일시정지시 false로
     private boolean isFirst = false;
     private Thread timeThread = null;
-    public   static ActivityMapBinding binding;
+    public static ActivityMapBinding binding;
     private ArrayList<Integer> CURRENT_MODE;
 
 
@@ -97,6 +98,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
     private int zombieListCurrentPos = 0; // +1 해서 좀데 리스트 요소 개수 ㄱㄴ
     Dialog dialog;
+
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,14 +109,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         dialog = new Dialog(MapActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog);
 
         CURRENT_MODE = getIntent().getIntegerArrayListExtra("mode");
         binding.dragButton.setOnClickListener(v -> {
-            Animation animationDown = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.map_sliding_down);
-            Animation animationUp = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.map_sliding_up);
+            Animation animationDown = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.map_sliding_down);
+            Animation animationUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.map_sliding_up);
             Handler handler = new Handler();
-               // ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams)binding.group.getLayoutParams();
+            // ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams)binding.group.getLayoutParams();
 //                if (lp.height==1){
 //                    lp.height=100;
 //
@@ -122,9 +125,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //                    lp.height=1;
 //                }
 
-                if(binding.group.getVisibility()==View.VISIBLE){
-                    binding.layout.startAnimation(animationUp);
-                    handler.postDelayed(new Runnable() {
+            if (binding.group.getVisibility() == View.VISIBLE) {
+                binding.layout.startAnimation(animationUp);
+                handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         binding.dragButton.setImageResource(R.drawable.ic_down);
@@ -132,12 +135,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                     }
                 }, 1000);
-                }else {
-                    binding.dragButton.setImageResource(R.drawable.ic_up);
-                    binding.group.setVisibility(View.VISIBLE);
-                    binding.layout.startAnimation(animationDown);
+            } else {
+                binding.dragButton.setImageResource(R.drawable.ic_up);
+                binding.group.setVisibility(View.VISIBLE);
+                binding.layout.startAnimation(animationDown);
 
-                }
+            }
         });
 
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
@@ -269,6 +272,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         }
     }
+
     @MainThread
     public static void updateMarkerPos(int idx) {
         //
@@ -293,8 +297,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
 
-
-
     @MainThread
     public static void stopZombie() {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -302,13 +304,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void run() {
                 isZombieCreating = false;
                 polylineOptions.color(Color.parseColor("#FA1D25"));
-                if(zombieList.size() != 0) {
+                if (zombieList.size() != 0) {
                     for (ZombieModel z : zombieList) {
                         z.myMarker.remove();
                         z.thread.interrupt();
                     }
                 }
-               
+
 
             }
         });
@@ -317,7 +319,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void stop() {
         try {
             timeThread.interrupt();
-            if(CURRENT_MODE.contains(ZOMBIE_MODE)) {
+            if (CURRENT_MODE.contains(ZOMBIE_MODE)) {
                 stopZombie();
             }
 
@@ -325,26 +327,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             List<LatLng> list = polylineOptions.getPoints();
 
 
-            if(list.size() > 0) {
+            if (list.size() > 0) {
                 LatLng leftTopLatLng = list.get(0), rightBottomLatLng = list.get(0);
-                for(LatLng i : list) {
+                for (LatLng i : list) {
 
-                    if(leftTopLatLng.latitude > i.latitude) {
+                    if (leftTopLatLng.latitude > i.latitude) {
                         leftTopLatLng = new LatLng(i.latitude, leftTopLatLng.longitude);
                     }
-                    if(leftTopLatLng.longitude < i.longitude) {
+                    if (leftTopLatLng.longitude < i.longitude) {
                         leftTopLatLng = new LatLng(leftTopLatLng.latitude, i.longitude);
                     }
-                    if(rightBottomLatLng.latitude < i.latitude ) {
+                    if (rightBottomLatLng.latitude < i.latitude) {
                         rightBottomLatLng = new LatLng(i.latitude, rightBottomLatLng.longitude);
                     }
-                    if(rightBottomLatLng.longitude > i.longitude) {
+                    if (rightBottomLatLng.longitude > i.longitude) {
                         rightBottomLatLng = new LatLng(rightBottomLatLng.latitude, i.longitude);
                     }
 
                 }
 
-                LatLng mid = new LatLng((leftTopLatLng.latitude + rightBottomLatLng.latitude)/2 , (leftTopLatLng.longitude + rightBottomLatLng.longitude) /2);
+                LatLng mid = new LatLng((leftTopLatLng.latitude + rightBottomLatLng.latitude) / 2, (leftTopLatLng.longitude + rightBottomLatLng.longitude) / 2);
                 Location ltl = new Location("ltl");
                 Location rbl = new Location("rbl");
                 ltl.setLatitude(leftTopLatLng.latitude);
@@ -352,26 +354,23 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 rbl.setLatitude(rightBottomLatLng.latitude);
                 rbl.setLongitude(rightBottomLatLng.longitude);
 
-                double d  =ltl.distanceTo(rbl);
-                Log.d(">",""+d);
+                double d = ltl.distanceTo(rbl);
+                Log.d(">", "" + d);
                 int zoomLv = getZoomLevelFromMeters(d);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mid, zoomLv));
 
             }
             try {
                 Thread.sleep(1000);
-            } catch (Exception e){
-                Log.d("ERR",e.getMessage());
+            } catch (Exception e) {
+                Log.d("ERR", e.getMessage());
             }
 
-            GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback()
-            {
+            GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback() {
 
                 @Override
-                public void onSnapshotReady(Bitmap snapshot)
-                {
+                public void onSnapshotReady(Bitmap snapshot) {
                     //sendDataToFirebase((int) kcal, walkingDistance / 1000, (int) timeToSec, snapshot);
-
 
 
                 }
@@ -381,21 +380,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.snapshot(callback);
             try {
                 Thread.sleep(10);
-            } catch (Exception e){
-                Log.d("ERR",e.getMessage());
+            } catch (Exception e) {
+                Log.d("ERR", e.getMessage());
             }
 
             Intent intent = new Intent(MapActivity.this, ExerciseResultActivity.class); //main말고 다른걸로 변경
-            intent.putExtra("kcal",(int)kcal);
+            intent.putExtra("kcal", (int) kcal);
             intent.putExtra("walkedDistanceToKm", walkingDistance / 1000);
-            intent.putExtra("timeToSec",(int) timeToSec);
+            intent.putExtra("timeToSec", (int) timeToSec);
             mMap.clear();
             polylineOptions = new PolylineOptions();
             pausePolylineOpt = new PolylineOptions();
             startActivity(intent);
-        } catch(Exception e) {
-            Toast.makeText(this, "오류발생",Toast.LENGTH_SHORT).show();
-            Log.d("<MapActivity, func stop>",e.getMessage());
+        } catch (Exception e) {
+            Toast.makeText(this, "오류발생", Toast.LENGTH_SHORT).show();
+            Log.d("<MapActivity, func stop>", e.getMessage());
         }
 
 
@@ -404,8 +403,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private int getZoomLevelFromMeters(double distanceTo) {
         int dis = 24576000;
         int ret = 21;
-        for(int i = 1; i<=21; i++) {
-            if(distanceTo >= dis) {
+        for (int i = 1; i <= 21; i++) {
+            if (distanceTo >= dis) {
                 ret = i;
                 break;
             } else {
@@ -415,10 +414,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return ret;
 
     }
-
-
-
-
 
 
     public void init(Context ctx) {
@@ -610,9 +605,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
             }
         }
-        if(requestCode == 1000) {
-            if(resultCode==RESULT_OK) {
-                storyUserSelect = data.getIntExtra("result",-1);
+        if (requestCode == 1000) {
+            if (resultCode == RESULT_OK) {
+                storyUserSelect = data.getIntExtra("result", -1);
             } else {
                 storyUserSelect = -1;
             }
@@ -666,10 +661,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 int min = msg.arg1 / 60;
                 int hour = msg.arg1 / 3600;
                 timeToSec = msg.arg1;
-                if(isRunning) {
+                if (isRunning) {
                     String str = String.format("%02d:%02d:%02d", hour, min, sec);
                     binding.textviewExerciseTime.setText(str);
-                    if ((timeToSec / 60) % 3 == 0 && timeToSec%60 == 0 && timeToSec >= 60) {
+                    if ((timeToSec / 60) % 3 == 0 && timeToSec % 60 == 0 && timeToSec >= 60) {
                         String d = String.format(getString(R.string.tts_type), (int) kcal, walkingDistance / 1000.0, hour, min, sec);
                         playTTS(d);
                     }
@@ -679,14 +674,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
                 if (CURRENT_MODE.contains(ZOMBIE_MODE)) {
                     if (isRunning) {
-                        if ((timeToSec / 60) % ZOMBIE_CREATE_MINUTES == 0 && timeToSec%60 == 0 && isZombieCreating&& timeToSec >= 60) {
+                        if ((timeToSec / 60) % ZOMBIE_CREATE_MINUTES == 0 && timeToSec % 60 == 0 && isZombieCreating && timeToSec >= 60) {
                             createZombie();
                         }
                     }
                 }
                 if (CURRENT_MODE.contains(STORY_MODE)) {
                     if (isRunning) {
-                        if((timeToSec / 60) % STORY_READ_MINUTES == 0 && timeToSec%60 == 0&& timeToSec >= 60) {
+                        if ((timeToSec / 60) % STORY_READ_MINUTES == 0 && timeToSec % 60 == 0 && timeToSec >= 60) {
                             readStory();
                         }
                     }
@@ -700,9 +695,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     };
 
     public static void minusHPAndCheck() {
-        MapActivity.HP = MapActivity.HP -  MapActivity.minusHp;
+        MapActivity.HP = MapActivity.HP - MapActivity.minusHp;
         updateHpUI();
-        if(HP <= 0 ){
+        if (HP <= 0) {
             stopZombie();
             //종료하고 싶으면 stop();
         }
@@ -723,16 +718,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         /* Write Story to read */
         /* playTTS(String d) */
         Intent u = new Intent(MapActivity.this, ExerciseStoryActivity.class);
-        u.putExtra("storyBody","TEST STORY");
-        u.putExtra("negative","NO");
-        u.putExtra("positive","YES");
-        startActivityForResult(u,1000);
+        u.putExtra("storyBody", "TEST STORY");
+        u.putExtra("negative", "NO");
+        u.putExtra("positive", "YES");
+        startActivityForResult(u, 1000);
     }
 
     private void afterReadStory() {
 
     }
-
 
 
     public class timeThread implements Runnable {
@@ -764,33 +758,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         zombieListCurrentPos++;
         zombieList.add(mZombie);
     }
+
     void showDialog() {
         TextView explain = dialog.findViewById(R.id.explain_textView);
-        Button finishButton = dialog.findViewById(R.id.cancel_button);
-        Button retryButton = dialog.findViewById(R.id.yes_button);
-        explain.setText("운동을 종료 하시겠습니까?");
-        finishButton.setText("확인");
-        retryButton.setText("취소");
+        Button cancelButton = dialog.findViewById(R.id.cancel_button);
+        Button yesButton = dialog.findViewById(R.id.yes_button);
+        explain.setText(R.string.end_exercise);
+        dialog.findViewById(R.id.help_button).setVisibility(View.GONE);
         dialog.show();
-        finishButton.setOnClickListener(v -> {
-            stop();
 
-
-
-        });
-        retryButton.setOnClickListener(v -> {
-                    dialog.dismiss();
-
-                }
-        );
+        yesButton.setOnClickListener(v -> stop());
+        yesButton.setOnClickListener(v -> dialog.dismiss());
     }
+
     @Override
     public void onBackPressed() {
         showDialog();
-
     }
-
-
-
-
 }

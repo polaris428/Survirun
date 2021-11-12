@@ -108,4 +108,5 @@
     <string name="error_server">서버오류 잠시후 다시 실행해주세요</string>
     <string name="sign_in_account">자신의 계정에 로그인하세요</string>
     <string name="create_account">새로운 계정을 만드세요</string>
+    <string name="end_exercise">운동을 종료 하시겠습니까?</string>
 </resources>
