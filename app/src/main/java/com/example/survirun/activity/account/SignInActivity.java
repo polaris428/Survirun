@@ -110,10 +110,11 @@ public class SignInActivity extends AppCompatActivity {
         binding.loginButton.setOnClickListener(v -> {
             if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
                 email = binding.idEdittext.getText().toString().trim();
+                pwe = binding.passwordEdittext.getText().toString().trim();
+                Log.d("asfd",email+pwe);
                 if (email.contains("@")) {
                     customProgressDialog.show();
                     customProgressDialog.setCancelable(false);
-                    pwe = binding.passwordEdittext.getText().toString().trim();
                     LoginData loginData = new LoginData(email, pwe);
                     Call<TokenData> call = ServerClient.getServerService().login(loginData);
                     call.enqueue(new Callback<TokenData>() {
@@ -127,7 +128,6 @@ public class SignInActivity extends AppCompatActivity {
 
                                 if (!response.body().username) {
                                     customProgressDialog.dismiss();
-
                                     Intent intent = new Intent(SignInActivity.this, SignUpNameActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
@@ -140,30 +140,12 @@ public class SignInActivity extends AppCompatActivity {
 
                                     } else {
 
-                                        Call<getUserData> call1 = ServerClient.getServerService().getUser(response.body().token, email);
-                                        call1.enqueue(new Callback<getUserData>() {
-                                            @Override
-                                            public void onResponse(Call<getUserData> call, Response<getUserData> response) {
-                                                if (response.isSuccessful()) {
-                                                    customProgressDialog.dismiss();
-                                                    editor.putString("name", response.body().username);
-                                                    editor.commit();
+                                        customProgressDialog.dismiss();
 
-                                                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                    startActivity(intent);
-                                                } else {
-                                                    Log.d("adsf", "실패");
-                                                    Toast.makeText(SignInActivity.this, "사버오류 잠시후 다시 실행해주세요", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
 
-                                            @Override
-                                            public void onFailure(Call<getUserData> call, Throwable t) {
-                                                t.printStackTrace();
-                                                Toast.makeText(SignInActivity.this, "사버오류 잠시후 다시 실행해주세요", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
+                                        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
 
                                     }
                                 }
