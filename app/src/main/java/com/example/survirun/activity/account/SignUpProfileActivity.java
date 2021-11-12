@@ -143,15 +143,6 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
         signUpFragment.dismiss();
     }
 
-    @Override
-    public void onClickBasics() {//기본이미지 선택했을때 drawable에 있는거 불러오기
-        /*Glide.with(getApplicationContext()).load(R.drawable.ic_profile).into(binding.profileImageview);
-        selectedImageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
-                "://" + getResources().getResourcePackageName(R.drawable.ic_profile)
-                + '/' + getResources().getResourceTypeName(R.drawable.ic_profile) + '/' + getResources().getResourceEntryName(R.drawable.ic_profile) );
-        signUpFragment.dismiss();*/
-    }
-
     private String getRealPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Images.Media.DATA};
         CursorLoader loader = new CursorLoader(this, contentUri, proj, null, null, null);
