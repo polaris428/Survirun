@@ -50,7 +50,7 @@
     <string name="burning_fat">Burning Fat</string>
     <string name="exercise_time_goal">Exercise Time Goal</string>
     <string name="exercise_distance_goal">Exercise Distance Goal</string>
-    <string name="hour">"-hour "</string>
+    <string name="hour_">"-hour "</string>
     <string name="minute_exercise">-minute Exercise</string>
     <string name="hour_exercise">-hour Exercise</string>
     <string name="calorie_burning_goal">Calorie Burning Goal</string>
@@ -120,4 +120,5 @@
     <string name="edit_informaiton">Edit personal info</string>
     <string name="exercise_record_yet">There is no exercise record yet.\nPlease start working out.</string>
     <string name="min">min</string>
+    <string name="hour">hr</string>
 </resources>

@@ -25,7 +25,8 @@ import java.util.ArrayList;
 
 public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseListRecyclerViewAdapter.ViewHolder> {
     public ArrayList<ExerciseData> items;
-    String min;
+    String min, hr;
+    String hour, minute;
     public ExerciseListRecyclerViewAdapter(ArrayList<ExerciseData> list) {
         items = list;
     }
@@ -35,13 +36,26 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_exercise, parent, false);
         min = itemView.getContext().getString(R.string.min);
+        hr = itemView.getContext().getString(R.string.hour);
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExerciseData data = items.get(position);
-        holder.exerciseTitleTextview.setText(data.getExName(position) + "   " + data.getHour(position) + min);
+        if(data.getHour(position)>60){
+            hour = String.valueOf(data.getHour(position)/60);
+            minute = String.valueOf(data.getHour(position)%60);
+            holder.exerciseTitleTextview.setText(data.getExName(position) + "   " + hour + hr + " " + minute + min);
+        }
+        else if(data.getHour(position)==60){
+            hour = String.valueOf(data.getHour(position)/60);
+            holder.exerciseTitleTextview.setText(data.getExName(position) + "   " + hour + hr);
+        }
+        else{
+            holder.exerciseTitleTextview.setText(data.getExName(position) + "   " + data.getHour(position) + min);
+        }
+
         holder.calorieTextView.setText(data.getCalorie(position)+"");
         holder.timeTextView.setText(data.getHour(position)+"");
         holder.kmTextView.setText(data.getKm(position)+"");

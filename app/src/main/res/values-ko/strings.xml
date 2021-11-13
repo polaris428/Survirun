@@ -50,7 +50,7 @@
     <string name="burning_fat">지방태우기</string>
     <string name="exercise_time_goal">운동 시간 목표</string>
     <string name="exercise_distance_goal">운동 거리 목표</string>
-    <string name="hour">"시간 "</string>
+    <string name="hour_">"시간 "</string>
     <string name="minute_exercise">분 운동</string>
     <string name="hour_exercise">시간 운동</string>
     <string name="calorie_burning_goal">칼로리 소모 목표</string>
@@ -120,4 +120,5 @@
     <string name="edit_informaiton">개인정보 수정</string>
     <string name="exercise_record_yet">아직 운동 기록이 없습니다\n운동을 시작해주세요</string>
     <string name="min">분</string>
+    <string name="hour">시간</string>
 </resources>

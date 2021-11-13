@@ -69,9 +69,9 @@ public class ExerciseFragment extends Fragment {
                 ListChange(getString(R.string.exercise_time_goal));
                 UpData("30" + getString(R.string.minute_exercise), 30, 0,0,1);
                 UpData("1" + getString(R.string.hour_exercise), 60, 0,0,2);
-                UpData("1" + getString(R.string.hour) + "30" + getString(R.string.minute_exercise), 90, 0,0,3);
+                UpData("1" + getString(R.string.hour_) + "30" + getString(R.string.minute_exercise), 90, 0,0,3);
                 UpData("2" + getString(R.string.hour_exercise), 120, 0,0,4);
-                UpData("2" + getString(R.string.hour) + "30" + getString(R.string.minute_exercise), 150, 0,0,4);
+                UpData("2" + getString(R.string.hour_) + "30" + getString(R.string.minute_exercise), 150, 0,0,4);
                 break;
 
             }
