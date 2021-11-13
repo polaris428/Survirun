@@ -2,10 +2,12 @@ package com.example.survirun.Fragmnet.Friend;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -117,19 +119,39 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             detailButton=itemView.findViewById(R.id.detail_button);
             context=itemView.getContext();
 
+            Handler handler = new Handler();
             constraintLayout1.setOnClickListener(v -> {
-
                 if (constraintLayout2.getVisibility() == View.GONE){
                     constraintLayout2.setVisibility(View.VISIBLE);
+                    ValueAnimator anim = ValueAnimator.ofInt(1,400);
+                    setAnimation(anim, constraintLayout2);
 
                 }else{
-                    constraintLayout2.setVisibility(View.GONE);
+                    ValueAnimator anim = ValueAnimator.ofInt(400,1);
+                    setAnimation(anim, constraintLayout2);
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            constraintLayout2.setVisibility(View.GONE);
+
+                        }
+                    },800);
                 }
 
 
             });
 
         }
+    }
+
+    private void setAnimation(ValueAnimator anim, ConstraintLayout constraintLayout){
+        anim.setDuration(800);
+        anim.addUpdateListener(animation -> {
+            Integer value = (Integer) animation.getAnimatedValue();
+            constraintLayout.getLayoutParams().height = value.intValue();
+            constraintLayout.requestLayout();
+        });
+        anim.start();
     }
 
 
