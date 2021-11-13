@@ -58,7 +58,6 @@ import retrofit2.http.Multipart;
 public class SignUpProfileActivity extends AppCompatActivity implements BottomSheetSignUpFragment.BottomSheetListener {
     public static final String MULTIPART_FORM_DATA = "multipart/form-data";
 
-    String name;
     String token;
     String email;
 
@@ -85,18 +84,18 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
 
         binding.profileImageview.setBackground(new ShapeDrawable(new OvalShape()));
         binding.profileImageview.setClipToOutline(true);
-        binding.textView.setCharacterDelay(160);
+        binding.textView.setCharacterDelay(120);
 
         customProgressDialog = new ProgressDialog(this);
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         customProgressDialog.setCancelable(false);
 
-        String story = name +  getText(R.string.story_profile);
+        String story =  ""+getText(R.string.story_profile);
         binding.textView.displayTextWithAnimation(story);
         ;
 
         token = sf.getString("token", "");
-        name = sf.getString("name", "");
+
         email = sf.getString("email", "");
 
         binding.profileImageview.setOnClickListener(v -> {
@@ -130,7 +129,31 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
                     }
                 });
             } else {
-                Toast.makeText(getApplicationContext(), R.string.profile_error, Toast.LENGTH_SHORT).show();
+                customProgressDialog.show();
+                Call<ResultData>postDefaultImage=ServerClient.getServerService().postDefaultImage(token);
+                postDefaultImage.enqueue(new Callback<ResultData>() {
+                    @Override
+                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                        if(response.isSuccessful()){
+                            editor.putBoolean("profile", true);
+                            customProgressDialog.dismiss();
+                            Intent intent = new Intent(SignUpProfileActivity.this, MainActivity.class);
+                            startActivity(intent);
+
+                        }else{
+                            customProgressDialog.dismiss();
+                            Toast.makeText(SignUpProfileActivity.this,R.string.profile_error,Toast.LENGTH_LONG).show();
+                            Log.d("에러",response.errorBody().toString());
+                            Log.d("adf",token);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResultData> call, Throwable t) {
+                        customProgressDialog.dismiss();
+                        Toast.makeText(SignUpProfileActivity.this,R.string.profile_error,Toast.LENGTH_LONG);
+                    }
+                });
             }
         });
 

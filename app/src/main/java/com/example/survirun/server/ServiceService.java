@@ -43,6 +43,10 @@ public interface ServiceService {
     @POST("/api/v1/auth/profile")
     Call<ResultData> postProfile(@Header("x-access-token") String token, @Part MultipartBody.Part file);
 
+    @POST("/api/v1/auth/defaultProfile")
+    Call<ResultData>postDefaultImage(@Header("x-access-token") String token);
+
+
     @GET("/api/v1/auth/by-email/{email}/exists")
     Call<EmileCheck> getEmileCheck(@Path("email") String email);
 

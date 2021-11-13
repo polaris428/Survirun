@@ -6,21 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".activity.account.SignUpProfileActivity">
     <com.example.survirun.TypeWriterTextView
-        android:id="@+id/textView"
+        android:id="@+id/text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        android:maxWidth="380dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="40dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textColor="?attr/colorBlackToWhite"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <ImageView
         android:id="@+id/profile_imageview"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:scaleType="centerCrop"
+        android:layout_marginTop="100dp"
         android:src="@drawable/userdefaultprofile"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:backgroundTint="#00FFFFFF"
+        android:src="@drawable/ic_inputprofile"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_imageview"
+        app:layout_constraintRight_toRightOf="@+id/profile_imageview"
+        >
+
+    </ImageView>
 
     <Button
         android:id="@+id/next_button"
@@ -28,5 +45,7 @@
         android:layout_height="wrap_content"
         android:text="@string/next"
         android:textColor="@color/white"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
