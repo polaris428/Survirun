@@ -48,20 +48,20 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
 
         Handler handler = new Handler();
         holder.expandImageButton.setOnClickListener(view -> {
-            if(holder.cardLayout.getVisibility()==View.GONE){
-                ValueAnimator anim = ValueAnimator.ofInt(230,650);
-                setAnimation(anim, holder.cardView2);
+            if(holder.constraintLayout.getVisibility()==View.GONE){
+                ValueAnimator anim = ValueAnimator.ofInt(1, 450);
+                setAnimation(anim, holder.constraintLayout);
                 holder.expandImageButton.setImageResource(R.drawable.ic_upblack);
-                holder.cardLayout.setVisibility(View.VISIBLE);
+                holder.constraintLayout.setVisibility(View.VISIBLE);
             }else {
-                ValueAnimator anim = ValueAnimator.ofInt(650,230);
-                setAnimation(anim, holder.cardView2);
+                ValueAnimator anim = ValueAnimator.ofInt(450, 1);
+                setAnimation(anim, holder.constraintLayout);
 
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         holder.expandImageButton.setImageResource(R.drawable.ic_downblack);
-                        holder.cardLayout.setVisibility(View.GONE);
+                        holder.constraintLayout.setVisibility(View.GONE);
                     }
                 },800);
 
@@ -90,13 +90,12 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ConstraintLayout layout, cardLayout;
+        ConstraintLayout constraintLayout;
         TextView exerciseTitleTextview;
         TextView calorieTextView;
         TextView timeTextView;
         TextView kmTextView;
         ImageButton expandImageButton;
-        CardView cardView1, cardView2;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -106,19 +105,16 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
             timeTextView=itemView.findViewById(R.id.item_time_text_view);
             kmTextView=itemView.findViewById(R.id.item_km_text_view);
             expandImageButton=itemView.findViewById(R.id.expand_image_button);
-            layout = itemView.findViewById(R.id.layout);
-            cardLayout = itemView.findViewById(R.id.card_layout2);
-            cardView1 = itemView.findViewById(R.id.card_view1);
-            cardView2 = itemView.findViewById(R.id.card_view2);
+            constraintLayout = itemView.findViewById(R.id.constraint);
         }
     }
 
-    private void setAnimation(ValueAnimator anim, CardView cardView){
+    private void setAnimation(ValueAnimator anim, ConstraintLayout constraintLayout){
         anim.setDuration(800);
         anim.addUpdateListener(animation -> {
             Integer value = (Integer) animation.getAnimatedValue();
-            cardView.getLayoutParams().height = value.intValue();
-            cardView.requestLayout();
+            constraintLayout.getLayoutParams().height = value.intValue();
+            constraintLayout.requestLayout();
         });
         anim.start();
     }
