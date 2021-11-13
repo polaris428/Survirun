@@ -1,7 +1,9 @@
 package com.example.survirun.activity.exercise;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Handler;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +42,6 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExerciseData data = items.get(position);
-        Animation animationDown = AnimationUtils.loadAnimation(holder.cardView.getContext(),R.anim.sliding_down);
-        Animation animationUp = AnimationUtils.loadAnimation(holder.cardView.getContext(),R.anim.sliding_up);
         Handler handler = new Handler();
         holder.exerciseTitleTextview.setText(data.getExName(position) + "   " + data.getHour(position) + "분");
         holder.calorieTextView.setText(data.getCalorie(position)+"");
@@ -49,20 +49,22 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
         holder.kmTextView.setText(data.getKm(position)+"");
 
         holder.expandImageButton.setOnClickListener(view -> {
-            if(holder.constraintLayout.getVisibility()==View.GONE){
-                holder.constraintLayout.startAnimation(animationDown);
+            if(holder.cardLayout2.getVisibility()==View.GONE){
+                ValueAnimator anim = ValueAnimator.ofInt(230,650);
+                setAnimation(anim, holder.cardView2);
                 holder.expandImageButton.setImageResource(R.drawable.ic_upblack);
-                holder.constraintLayout.setVisibility(View.VISIBLE);
+                holder.cardLayout2.setVisibility(View.VISIBLE);
             }else {
-                holder.constraintLayout.startAnimation(animationUp);
+                ValueAnimator anim = ValueAnimator.ofInt(650,230);
+                setAnimation(anim, holder.cardView2);
+
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         holder.expandImageButton.setImageResource(R.drawable.ic_downblack);
-                        holder.constraintLayout.setVisibility(View.GONE);
-
+                        holder.cardLayout2.setVisibility(View.GONE);
                     }
-                },1000);
+                },800);
 
             }
         });
@@ -85,24 +87,41 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ConstraintLayout constraintLayout;
+        ConstraintLayout layout, cardLayout1, cardLayout2;
         TextView exerciseTitleTextview;
         TextView calorieTextView;
         TextView timeTextView;
         TextView kmTextView;
         ImageButton expandImageButton;
-        CardView  cardView;
+        CardView cardView1, cardView2;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            constraintLayout=itemView.findViewById(R.id.constraint);
+            //constraintLayout=itemView.findViewById(R.id.constraint);
             exerciseTitleTextview = itemView.findViewById(R.id.exercise_title_textview);
             calorieTextView=itemView.findViewById(R.id.item_calorie_text_view);
             timeTextView=itemView.findViewById(R.id.item_time_text_view);
             kmTextView=itemView.findViewById(R.id.item_km_text_view);
             expandImageButton=itemView.findViewById(R.id.expand_image_button);
-            cardView = itemView.findViewById(R.id.card_view);
+            layout = itemView.findViewById(R.id.layout);
+            cardLayout1 = itemView.findViewById(R.id.card_layout1);
+            cardLayout2 = itemView.findViewById(R.id.card_layout2);
+            cardView1 = itemView.findViewById(R.id.card_view1);
+            cardView2 = itemView.findViewById(R.id.card_view2);
         }
+    }
+
+    private void setAnimation(ValueAnimator anim, CardView cardView){
+        anim.setDuration(800);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Integer value = (Integer) animation.getAnimatedValue();
+                cardView.getLayoutParams().height = value.intValue();
+                cardView.requestLayout();
+            }
+        });
+        anim.start();
     }
 }
