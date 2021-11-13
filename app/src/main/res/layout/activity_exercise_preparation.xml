@@ -154,15 +154,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/calorie"
+                    android:textSize="13sp"
                     android:layout_marginLeft="10dp"
                     app:layout_constraintBaseline_toBaselineOf="@id/calorie_text_view"
                     app:layout_constraintLeft_toRightOf="@+id/calorie_text_view"
                     />
 
                 <TextView
+                    android:id="@+id/hour_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/exercise_time"
+                    android:text="분"
+                    android:textSize="13sp"
                     android:layout_marginLeft="10dp"
                     app:layout_constraintLeft_toRightOf="@+id/time_text_view"
                     app:layout_constraintBaseline_toBaselineOf="@+id/time_text_view">
@@ -173,6 +176,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="Km"
+                    android:textSize="13sp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/km_text_view"
                     app:layout_constraintLeft_toRightOf="@+id/km_text_view">
 
