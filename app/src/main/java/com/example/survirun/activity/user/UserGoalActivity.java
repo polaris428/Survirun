@@ -42,7 +42,7 @@ public class UserGoalActivity extends AppCompatActivity {
         yesterdayCalorie=yesterdaySf.getInt("calorie",0);
         yesterdayTime=yesterdaySf.getInt("time",0);
         yesterdayKm=yesterdaySf.getInt("yesterdayKm",0);
-        binding.yesterdayTextView.setText(yesterdayCalorie+"칼로리"+yesterdayTime+"시간"+yesterdayKm+"Km");
+        binding.yesterdayTextView.setText(yesterdayCalorie+"칼로리 "+yesterdayTime+"시간 "+yesterdayKm+"Km");
 
         LocalDate now = LocalDate.now();
 
