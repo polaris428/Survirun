@@ -3,6 +3,8 @@ package com.example.survirun.activity.exercise;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -31,6 +33,8 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +49,8 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 
 import java.util.ArrayList;
@@ -113,6 +119,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         dialog.setContentView(R.layout.dialog);
 
         CURRENT_MODE = getIntent().getIntegerArrayListExtra("mode");
+
+        showSnackBar(view);
+
         binding.dragButton.setOnClickListener(v -> {
             Animation animationDown = AnimationUtils.loadAnimation(binding.layout.getContext(), R.anim.map_sliding_down);
             Animation animationUp = AnimationUtils.loadAnimation(binding.layout.getContext(), R.anim.map_sliding_up);
@@ -142,7 +151,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     public void run() {
                         binding.dragButton.setImageResource(R.drawable.ic_up);
                     }
-                },1500);
+                }, 1500);
             }
         });
 
@@ -777,5 +786,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onBackPressed() {
         showDialog();
+    }
+
+    private void showSnackBar(View v){
+        final Snackbar snackbar = Snackbar.make(v, "", 10000);
+        View customSnackView = getLayoutInflater().inflate(R.layout.snackbar, null);
+        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackbarLayout.setPadding(0, 0, 0, 0);
+        customSnackView.findViewById(R.id.gotoWebsiteButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                snackbar.dismiss();
+            }
+        });
+        snackbarLayout.addView(customSnackView, 0);
+        snackbar.show();
     }
 }
