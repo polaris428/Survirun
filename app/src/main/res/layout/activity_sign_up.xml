@@ -162,7 +162,6 @@
             android:id="@+id/sign_up_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
             android:text="@string/sign_up"
             android:textColor="@color/white"
             android:textStyle="bold"
