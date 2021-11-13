@@ -119,4 +119,5 @@
     <string name="report_bug">Report bugs</string>
     <string name="edit_informaiton">Edit personal info</string>
     <string name="exercise_record_yet">There is no exercise record yet.\nPlease start working out.</string>
+    <string name="min">min</string>
 </resources>

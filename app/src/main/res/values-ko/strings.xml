@@ -119,4 +119,5 @@
     <string name="report_bug">버그신고</string>
     <string name="edit_informaiton">개인정보 수정</string>
     <string name="exercise_record_yet">아직 운동 기록이 없습니다\n운동을 시작해주세요</string>
+    <string name="min">분</string>
 </resources>

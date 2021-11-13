@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseListRecyclerViewAdapter.ViewHolder> {
     public ArrayList<ExerciseData> items;
-
+    String min;
     public ExerciseListRecyclerViewAdapter(ArrayList<ExerciseData> list) {
         items = list;
     }
@@ -34,14 +34,14 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_exercise, parent, false);
-
+        min = itemView.getContext().getString(R.string.min);
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExerciseData data = items.get(position);
-        holder.exerciseTitleTextview.setText(data.getExName(position) + "   " + data.getHour(position) + "분");
+        holder.exerciseTitleTextview.setText(data.getExName(position) + "   " + data.getHour(position) + min);
         holder.calorieTextView.setText(data.getCalorie(position)+"");
         holder.timeTextView.setText(data.getHour(position)+"");
         holder.kmTextView.setText(data.getKm(position)+"");
