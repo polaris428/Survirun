@@ -98,8 +98,19 @@ public class ExerciseFragment extends Fragment {
             default:
                 if (count == 0) {
                     count=1;
+                    UpData(getString(R.string.walking_lightly), 15, 50,1,1);
+                    UpData(getString(R.string.walking_briskly), 30, 100,2,1);
+                    UpData(getString(R.string.walking_steadily), 60, 200,3,2);
+                    UpData(getString(R.string.burning_fat), 90, 300,4,3);
+
                 } else if (count==5){
                     count=4;
+                    ListChange(getString(R.string.calorie_burning_goal));
+                    UpData("300kcal", 0, 300,0,3);
+                    UpData("400kcal", 0, 400,0,3);
+                    UpData("500kcal", 0, 500,0,4);
+                    UpData("600kcal", 0, 600,0,4);
+                    UpData("700kcal", 0, 700,0,5);
                 }
         }
 
