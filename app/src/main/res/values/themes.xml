@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Survirun" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#b71c1c</item>
+        <item name="colorPrimary">@color/red</item>
         <item name="colorPrimaryVariant">@color/red</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -24,9 +24,9 @@
         <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
         <item name="android:buttonStyle">@style/customTextViewFontStyle</item>
         <item name="android:editTextStyle">@style/customTextViewFontStyle</item>
-        
 
-      
+
+
     </style>
     <style name="customTextViewFontStyle" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:fontFamily">@font/robotoregular</item>

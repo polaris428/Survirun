@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseListRecyclerViewAdapter.ViewHolder> {
     public ArrayList<ExerciseData> items;
-
+    String min;
     public ExerciseListRecyclerViewAdapter(ArrayList<ExerciseData> list) {
         items = list;
     }
@@ -34,34 +34,34 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_exercise, parent, false);
-
+        min = itemView.getContext().getString(R.string.min);
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExerciseData data = items.get(position);
-        holder.exerciseTitleTextview.setText(data.getExName(position) + "   " + data.getHour(position) + "분");
+        holder.exerciseTitleTextview.setText(data.getExName(position) + "   " + data.getHour(position) + min);
         holder.calorieTextView.setText(data.getCalorie(position)+"");
         holder.timeTextView.setText(data.getHour(position)+"");
         holder.kmTextView.setText(data.getKm(position)+"");
 
         Handler handler = new Handler();
         holder.expandImageButton.setOnClickListener(view -> {
-            if(holder.cardLayout.getVisibility()==View.GONE){
-                ValueAnimator anim = ValueAnimator.ofInt(230,650);
-                setAnimation(anim, holder.cardView2);
+            if(holder.constraintLayout.getVisibility()==View.GONE){
+                ValueAnimator anim = ValueAnimator.ofInt(1, 450);
+                setAnimation(anim, holder.constraintLayout);
                 holder.expandImageButton.setImageResource(R.drawable.ic_upblack);
-                holder.cardLayout.setVisibility(View.VISIBLE);
+                holder.constraintLayout.setVisibility(View.VISIBLE);
             }else {
-                ValueAnimator anim = ValueAnimator.ofInt(650,230);
-                setAnimation(anim, holder.cardView2);
+                ValueAnimator anim = ValueAnimator.ofInt(450, 1);
+                setAnimation(anim, holder.constraintLayout);
 
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         holder.expandImageButton.setImageResource(R.drawable.ic_downblack);
-                        holder.cardLayout.setVisibility(View.GONE);
+                        holder.constraintLayout.setVisibility(View.GONE);
                     }
                 },800);
 
@@ -90,13 +90,12 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ConstraintLayout layout, cardLayout;
+        ConstraintLayout constraintLayout;
         TextView exerciseTitleTextview;
         TextView calorieTextView;
         TextView timeTextView;
         TextView kmTextView;
         ImageButton expandImageButton;
-        CardView cardView1, cardView2;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -106,19 +105,16 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
             timeTextView=itemView.findViewById(R.id.item_time_text_view);
             kmTextView=itemView.findViewById(R.id.item_km_text_view);
             expandImageButton=itemView.findViewById(R.id.expand_image_button);
-            layout = itemView.findViewById(R.id.layout);
-            cardLayout = itemView.findViewById(R.id.card_layout2);
-            cardView1 = itemView.findViewById(R.id.card_view1);
-            cardView2 = itemView.findViewById(R.id.card_view2);
+            constraintLayout = itemView.findViewById(R.id.constraint);
         }
     }
 
-    private void setAnimation(ValueAnimator anim, CardView cardView){
+    private void setAnimation(ValueAnimator anim, ConstraintLayout constraintLayout){
         anim.setDuration(800);
         anim.addUpdateListener(animation -> {
             Integer value = (Integer) animation.getAnimatedValue();
-            cardView.getLayoutParams().height = value.intValue();
-            cardView.requestLayout();
+            constraintLayout.getLayoutParams().height = value.intValue();
+            constraintLayout.requestLayout();
         });
         anim.start();
     }

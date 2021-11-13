@@ -1,10 +1,14 @@
 package com.example.survirun.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.survirun.BottomSheetModeSelectFragment;
@@ -34,7 +38,6 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         calorie=exerciseSelection.getStringExtra("calorie");
         km=exerciseSelection.getStringExtra("km");
         time=exerciseSelection.getStringExtra("time");
-        selectFragment = new BottomSheetModeSelectFragment();
         binding.exerciseTitleTextview.setText(title);
         binding.calorieTextView.setText(calorie);
         binding.timeTextView.setText(time);
@@ -47,11 +50,6 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         binding.backButton.setOnClickListener(v -> {
             finish();
         });
-    }
-
-    @Override
-    public void onClickCancel() {
-        selectFragment.dismiss();
     }
 
     @Override
@@ -69,15 +67,5 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         else {
             Toast.makeText(getApplicationContext(), R.string.choose_mode, Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    public void onCheckZombie(boolean isCheck) {
-        isCheckedZombie = isCheck;
-    }
-
-    @Override
-    public void onCheckGps(boolean isCheck) {
-        isCheckedGPS = isCheck;
     }
 }
