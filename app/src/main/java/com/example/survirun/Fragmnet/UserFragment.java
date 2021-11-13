@@ -31,9 +31,10 @@ public class UserFragment extends Fragment {
 
     String token;
     String name;
-    SharedPreferences goal;
     SharedPreferences sf;
+    SharedPreferences goal;
     SharedPreferences exercise;
+    SharedPreferences yesterdayExercise;
 
 
 
@@ -47,6 +48,7 @@ public class UserFragment extends Fragment {
         goalCalorie = goal.getInt("calorie", 400);
         goalTime = goal.getInt("time", 60);
         goalKm = goal.getInt("km", 5);
+
         sf = getContext().getSharedPreferences("Login", MODE_PRIVATE);
         token = sf.getString("token", "");
         name=sf.getString("name","");
@@ -54,6 +56,7 @@ public class UserFragment extends Fragment {
         binding.dateTextview.setText(exercise.getString("data",""));
         score(exercise.getInt("calorie",0),exercise.getInt("time",0),exercise.getFloat("km",0));
 
+        yesterdayExercise= getContext().getSharedPreferences("yesterdayExercise", MODE_PRIVATE);
 
 
 
@@ -64,6 +67,11 @@ public class UserFragment extends Fragment {
         binding.calorieTextview.setText(String.valueOf(calorie));
         binding.timeTextview.setText(String.valueOf(time));
         binding.kmTextview.setText(String.valueOf(km));
+        yesterdayExercise= getContext().getSharedPreferences("yesterdayExercise", MODE_PRIVATE);
+        binding.eveCalorieTextview.setText(String.valueOf(yesterdayExercise.getInt("calorie",0)-calorie));
+        binding.eveKmTextview.setText(String.valueOf(km-yesterdayExercise.getFloat("km",0)));
+        binding.eveTimeTextview.setText(String.valueOf(time-yesterdayExercise.getInt("time",0)));
+
         if (goalCalorie / 2 < calorie) {
 
             progress = progress + 25;
@@ -98,5 +106,6 @@ public class UserFragment extends Fragment {
             binding.arcProgress.setProgress(progress);
         }
     }
+
 
 }

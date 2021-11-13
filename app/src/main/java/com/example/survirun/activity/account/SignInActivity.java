@@ -126,6 +126,7 @@ public class SignInActivity extends AppCompatActivity {
                                 editor.putString("token", response.body().token);
                                 editor.commit();
                                 UserAccount userAccount=new UserAccount();
+                                userAccount.yesterdayExercise( response.body().token,SignInActivity.this);
                                 userAccount.getUser(response.body().token,SignInActivity.this);
                                 if (!response.body().username) {
                                     customProgressDialog.dismiss();

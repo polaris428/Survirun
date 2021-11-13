@@ -43,6 +43,7 @@ public class SplashActivity extends AppCompatActivity {
     String pwe;
     SharedPreferences.Editor editor;
     Dialog dialog;
+    String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,13 +104,15 @@ public class SplashActivity extends AppCompatActivity {
             public void onResponse(Call<TokenData> call, Response<TokenData> response) {
 
                 if (response.isSuccessful()) {
-                    Log.d("token", response.body().token);
+                    token=response.body().token;
+                    Log.d("token",token );
                     editor.putString("email", email);
                     editor.putString("pwe", pwe);
-                    editor.putString("token", response.body().token);
+                    editor.putString("token", token);
                     editor.commit();
                     UserAccount userAccount=new UserAccount();
-                    userAccount.getUser(response.body().token,SplashActivity.this);
+                    userAccount.getUser(token,SplashActivity.this);
+                    userAccount.yesterdayExercise(token,SplashActivity.this);
                     Intent intent;
 
                     if (!response.body().username) {
