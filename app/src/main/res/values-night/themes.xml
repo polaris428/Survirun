@@ -10,6 +10,7 @@
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
+        <item name="colorUserText">@color/brightGray</item>
         <item name="colorCardViewInLayout">#2C2C2C</item>
         <item name="colorBottom">@color/darkGray</item>
         <item name="colorBlackToWhite">@color/white</item>
