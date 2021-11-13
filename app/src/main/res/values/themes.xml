@@ -24,9 +24,9 @@
         <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
         <item name="android:buttonStyle">@style/customTextViewFontStyle</item>
         <item name="android:editTextStyle">@style/customTextViewFontStyle</item>
-        
 
-      
+
+
     </style>
     <style name="customTextViewFontStyle" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:fontFamily">@font/robotoregular</item>
