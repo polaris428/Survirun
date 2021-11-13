@@ -111,4 +111,6 @@
     <string name="end_exercise">운동을 종료 하시겠습니까?</string>
     <string name="enter_name">이름입력</string>
     <string name="permission_error_again">퍼미션이 거부되었습니다.\n다시 눌러 퍼미션을 허용해주세요.</string>
+    <string name="map_tip">Tip. 이어폰을 끼면 더 생동감 있게\n운동을 즐기실 수 있습니다</string>
+    <string name="check">확인</string>
 </resources>

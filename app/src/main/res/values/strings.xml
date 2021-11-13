@@ -111,4 +111,6 @@
     <string name="end_exercise">Do you want to end the exercise?</string>
     <string name="enter_name">Enter name</string>
     <string name="permission_error_again">Permission denied.\nPress it again to allow the permitting.</string>
+    <string name="map_tip">Tip. If you wear earphones,\nyou can enjoy working out more vividly.</string>
+    <string name="check">Check</string>
 </resources>
