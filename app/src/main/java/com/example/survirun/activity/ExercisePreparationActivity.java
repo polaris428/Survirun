@@ -19,14 +19,26 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
     boolean isCheckedZombie = false,
             isCheckedGPS = false;
     BottomSheetModeSelectFragment selectFragment;
+    String title;
+    String calorie;
+    String km;
+    String time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityExercisePreparationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        Intent exerciseSelection = getIntent();
+        title=exerciseSelection.getStringExtra("title");
+        calorie=exerciseSelection.getStringExtra("calorie");
+        km=exerciseSelection.getStringExtra("km");
+        time=exerciseSelection.getStringExtra("time");
         selectFragment = new BottomSheetModeSelectFragment();
+        binding.exerciseTitleTextview.setText(title);
+        binding.calorieTextView.setText(calorie);
+        binding.timeTextView.setText(time);
+        binding.kmTextView.setText(km);
 
         binding.exerciseStartButton.setOnClickListener(v -> {
             selectFragment.show(getSupportFragmentManager(),"bottomSheet");
