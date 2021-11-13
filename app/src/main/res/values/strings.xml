@@ -84,7 +84,7 @@
     <string name="shut_down_app">Are you sure you want\nto shut down the app?</string>
     <string name="close">Close</string>
     <string name="retry">Retry</string>
-    <string name="network_error">A network error has occurred.</string>
+    <string name="network_error_occurred">A network error has occurred.</string>
     <string name="survive_zombie">Survive from\nzombies chasing you.</string>
     <string name="sign_in_">Sign In</string>
     <string name="sign_up_">Sign Up</string>
@@ -113,4 +113,9 @@
     <string name="permission_error_again">Permission denied.\nPress it again to allow the permitting.</string>
     <string name="map_tip">Tip. If you wear earphones,\nyou can enjoy working out more vividly.</string>
     <string name="check">Check</string>
+    <string name="network_error">Network error</string>
+    <string name="error_detail">Please write down the error details.</string>
+    <string name="delete_cache">Delete app cache</string>
+    <string name="report_bug">Report bugs</string>
+    <string name="edit_informaiton">Edit personal info</string>
 </resources>
