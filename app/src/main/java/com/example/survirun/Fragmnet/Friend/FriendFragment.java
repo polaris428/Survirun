@@ -82,13 +82,13 @@ public class FriendFragment extends Fragment {
             friendEmail = binding.emileInputEditText.getText().toString();
             if (email.equals(friendEmail)) {
                 Toast.makeText(getContext(), "자기 자신의 이미 최고의 친구입니다", Toast.LENGTH_LONG).show();
-            } else if (friendEmail.equals("")) {
+            } else if (binding.emileInputEditText.getText().toString().equals("")) {
                 Toast.makeText(getContext(), "공백을 채워주세요", Toast.LENGTH_LONG).show();
             } else {
                 binding.findFriendsCardView.setVisibility(View.GONE);
                 binding.friendsError.setVisibility(View.GONE);
                 binding.cardView.setVisibility(View.GONE);
-                Call<getUserData> call1 = ServerClient.getServerService().getUser(token, friendEmail);
+                Call<getUserData> call1 = ServerClient.getServerService().getUser(token, binding.emileInputEditText.getText().toString());
                 call1.enqueue(new Callback<getUserData>() {
                     @Override
                     public void onResponse(Call<getUserData> call, Response<getUserData> response) {
