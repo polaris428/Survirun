@@ -3,7 +3,6 @@ package com.example.survirun.activity.account;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
@@ -17,12 +16,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.survirun.NetworkStatus;
 import com.example.survirun.R;
@@ -219,24 +216,20 @@ public class SplashActivity extends AppCompatActivity {
         LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
         params1.weight = 0.45f;
         finishButton.setLayoutParams(params1);
-        explain.setText(R.string.network_error);
+        explain.setText(R.string.network_error_occurred);
         finishButton.setText(R.string.close);
         retryButton.setText(R.string.retry);
         dialog.show();
         dialog.setCancelable(false);
-        helpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        helpButton.setOnClickListener(v -> {
                     Intent email = new Intent(Intent.ACTION_SEND);
                     email.setType("plain/text");
                     String[] address = {"suvirun@gmail.com"};
                     email.putExtra(Intent.EXTRA_EMAIL, address);
-                    email.putExtra(Intent.EXTRA_SUBJECT, "네트워크 에러");
+                    email.putExtra(Intent.EXTRA_SUBJECT, R.string.network_error);
                     email.setPackage("com.google.android.gm");
-                    email.putExtra(Intent.EXTRA_TEXT, "오류 내용을 자세히 작아주세요");
+                    email.putExtra(Intent.EXTRA_TEXT, R.string.error_detail);
                     startActivity(email);
-
-            }
         });
         finishButton.setOnClickListener(v -> finish());
         retryButton.setOnClickListener(v -> {
