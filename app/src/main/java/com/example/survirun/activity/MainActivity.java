@@ -1,7 +1,6 @@
 package com.example.survirun.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.survirun.Fragmnet.ExerciseFragment;
@@ -24,7 +22,6 @@ import com.example.survirun.Fragmnet.SettingFragment;
 import com.example.survirun.R;
 import com.example.survirun.Fragmnet.StatisticsFragment;
 import com.example.survirun.Fragmnet.UserFragment;
-import com.example.survirun.WelcomeActivity;
 import com.example.survirun.databinding.ActivityMainBinding;
 
 import kotlin.Unit;
