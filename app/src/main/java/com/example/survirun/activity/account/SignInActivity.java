@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.survirun.R;
+import com.example.survirun.UserAccount;
 import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.TokenData;
@@ -124,7 +125,8 @@ public class SignInActivity extends AppCompatActivity {
                                 editor.putString("pwe", pwe);
                                 editor.putString("token", response.body().token);
                                 editor.commit();
-
+                                UserAccount userAccount=new UserAccount();
+                                userAccount.getUser(response.body().token,SignInActivity.this);
                                 if (!response.body().username) {
                                     customProgressDialog.dismiss();
 
