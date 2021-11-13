@@ -8,6 +8,7 @@
         <entry key="..\:/Survirun/app/src/main/res/drawable/dialog_background.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic__graphicon.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic__test.xml" value="0.22135416666666666" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic__welcomeimg1.xml" value="0.18177083333333333" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_account.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.16872964169381108" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_baseline_check_circle_24.xml" value="0.2462962962962963" />
@@ -87,6 +88,8 @@
         <entry key="..\:/Survirun/app/src/main/res/layout/itemexercise.xml" value="0.209375" />
         <entry key="..\:/Survirun/app/src/main/res/layout/nav_header_main.xml" value="0.1296875" />
         <entry key="..\:/Survirun/app/src/main/res/layout/welcome_1.xml" value="0.16" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/welcome_2.xml" value="0.165625" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/welcome_3.xml" value="0.165625" />
         <entry key="..\:/Survirun/app/src/main/res/menu/activity_navigate_drawer.xml" value="0.25364583333333335" />
         <entry key="..\:/Survirun/app/src/main/res/menu/menu_list.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/iou10/AndroidStudioProjects/Survirun/app/src/main/res/layout/activity_exercise_preparation.xml" value="0.2390625" />
