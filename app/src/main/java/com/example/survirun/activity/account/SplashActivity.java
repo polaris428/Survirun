@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.survirun.NetworkStatus;
 import com.example.survirun.R;
 import com.example.survirun.SplashActivity2;
+import com.example.survirun.UserAccount;
 import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.TokenData;
@@ -107,6 +108,8 @@ public class SplashActivity extends AppCompatActivity {
                     editor.putString("pwe", pwe);
                     editor.putString("token", response.body().token);
                     editor.commit();
+                    UserAccount userAccount=new UserAccount();
+                    userAccount.getUser(response.body().token,SplashActivity.this);
                     Intent intent;
 
                     if (!response.body().username) {
