@@ -73,6 +73,10 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.itemView.getContext(), ExercisePreparationActivity.class);
+                intent.putExtra("title",holder.exerciseTitleTextview.getText());
+                intent.putExtra("calorie",holder.calorieTextView.getText());
+                intent.putExtra("km",holder.kmTextView.getText());
+                intent.putExtra("time",holder.timeTextView.getText());
                 holder.itemView.getContext().startActivity(intent);
             }
         });
