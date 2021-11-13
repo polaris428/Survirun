@@ -164,7 +164,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:text="@string/sign_up"
+            android:textColor="@color/white"
             android:textStyle="bold"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout3" />
