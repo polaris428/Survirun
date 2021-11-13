@@ -54,6 +54,7 @@ public class ExerciseFragment extends Fragment {
 
     void ExerciseList() {
         switch (count) {
+
             case 1: {
                 binding.exerciseTypeTextview.setText(R.string.pace_goal);
                 mList = new ArrayList<>();
@@ -96,9 +97,9 @@ public class ExerciseFragment extends Fragment {
             }
             default:
                 if (count == 0) {
-                    count++;
-                } else {
-                    count--;
+                    count=1;
+                } else if (count==5){
+                    count=4;
                 }
         }
 
