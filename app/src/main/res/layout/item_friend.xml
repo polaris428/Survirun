@@ -67,7 +67,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/card_item2"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
+                android:maxHeight="100dp"
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/constraint_layout1">
                 <TextView

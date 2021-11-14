@@ -64,7 +64,7 @@
                 android:id="@+id/constraint"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingVertical="15dp"
+                android:maxHeight="130dp"
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/card_view2">
 
@@ -75,16 +75,18 @@
                     android:src="@drawable/ic_kcal"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@+id/clock_icon"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@id/clock_icon" />
 
                 <ImageView
                     android:id="@+id/clock_icon"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:src="@drawable/ic_clock"
+                    android:layout_marginTop="15dp"
                     app:layout_constraintLeft_toRightOf="@+id/kcal_icon"
                     app:layout_constraintRight_toLeftOf="@+id/run_icon"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/item_time_text_view"/>
 
                 <ImageView
                     android:id="@+id/run_icon"
@@ -93,34 +95,34 @@
                     android:src="@drawable/ic_run"
                     app:layout_constraintLeft_toRightOf="@+id/clock_icon"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@id/clock_icon" />
 
                 <TextView
                     android:id="@+id/item_calorie_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     app:layout_constraintLeft_toLeftOf="@+id/kcal_icon"
                     app:layout_constraintRight_toRightOf="@+id/kcal_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/kcal_icon" />
+                    app:layout_constraintTop_toTopOf="@id/item_time_text_view"/>
 
                 <TextView
                     android:id="@+id/item_time_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
                     app:layout_constraintLeft_toLeftOf="@+id/clock_icon"
                     app:layout_constraintRight_toRightOf="@+id/clock_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/clock_icon" />
+                    app:layout_constraintTop_toBottomOf="@+id/clock_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <TextView
                     android:id="@+id/item_km_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     app:layout_constraintLeft_toLeftOf="@+id/run_icon"
                     app:layout_constraintRight_toRightOf="@+id/run_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/run_icon" />
+                    app:layout_constraintTop_toTopOf="@id/item_time_text_view" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
