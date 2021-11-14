@@ -22,12 +22,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Survirun">
         <activity
+            android:name=".FriendActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditProfileActivity"
             android:exported="false" />
         <activity
             android:name=".activity.WelcomeActivity"
             android:exported="false"
-            android:parentActivityName=".activity.MainActivity"/>
+            android:parentActivityName=".activity.MainActivity" />
         <activity
             android:name=".activity.UserSettingActivity"
             android:exported="true" />
@@ -39,7 +42,7 @@
             android:exported="true" />
         <activity
             android:name=".Fragmnet.Friend.FriendInformationActivity"
-            android:theme="@android:style/Theme.Dialog"/>
+            android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name=".activity.user.UserPageActivity"
             android:exported="true" />
@@ -57,10 +60,9 @@
             android:exported="true" />
         <activity android:name=".activity.account.ResultActivity" />
         <activity android:name=".activity.user.UserGoalModifyActivity" />
-        <activity android:name=".activity.user.UserGoalActivity"
-            android:parentActivityName=".activity.MainActivity">
-
-        </activity>
+        <activity
+            android:name=".activity.user.UserGoalActivity"
+            android:parentActivityName=".activity.MainActivity"></activity>
         <activity android:name=".activity.exercise.MapActivity" />
 
         <meta-data
