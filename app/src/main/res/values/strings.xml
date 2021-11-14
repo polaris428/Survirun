@@ -121,4 +121,8 @@
     <string name="exercise_record_yet">There is no exercise record yet.\nPlease start working out.</string>
     <string name="min">min</string>
     <string name="hour">hr</string>
+    <string name="user_not_found">The user was not found</string>
+    <string name="add_friend">Add</string>
+    <string name="you_already_friend">You\'re already the best friend of yourself</string>
+    <string name="looking_user">Looking for a user...</string>
 </resources>

@@ -11,7 +11,7 @@
     <string name="sign_up">회원가입</string>
     <string name="email_error">이메일 형식을 확인해주세요</string>
     <string name="pwd_error">비밀번호가 다릅니다</string>
-    <string name="fill_error">빈 칸을 채워주세요</string>
+    <string name="fill_error">공백을 채워주세요</string>
     <string name="sign_up_error">등록 에러</string>
     <string name="format_error">형식을 확인해주세요</string>
     <string name="calorie">칼로리</string>
@@ -121,4 +121,8 @@
     <string name="exercise_record_yet">아직 운동 기록이 없습니다\n운동을 시작해주세요</string>
     <string name="min">분</string>
     <string name="hour">시간</string>
+    <string name="user_not_found">유저를 찾을 수 없습니다</string>
+    <string name="add_friend">친구 추가</string>
+    <string name="you_already_friend">이미 자기 자신의  최고의 친구입니다</string>
+    <string name="looking_user">유저를 찾는 중...</string>
 </resources>
