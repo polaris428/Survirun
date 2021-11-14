@@ -64,12 +64,12 @@ public class StatisticsFragment extends Fragment {
                     binding.exerciseTimeBarGraph.clearChart();
                     if(response.body().exerciseHistory.size()==1&&response.body().exerciseHistory.get(0).time==0){
                         binding.noRecord.setVisibility(View.VISIBLE);
-                        binding.ExerciseGraph.setVisibility(View.GONE);
                         binding.findRecord.setVisibility(View.GONE);
+                        binding.ExerciseGraph.setVisibility(View.GONE);
 
                     }else{
-                        binding.noRecord.setVisibility(View.GONE);
-                        binding.findRecord.setVisibility(View.GONE);
+                        binding.ExerciseGraph.setVisibility(View.VISIBLE);
+                        binding.ExerciseMessage.setVisibility(View.GONE);
 
                         for (int i=0;i<response.body().exerciseHistory.size();i++){
                             int calorie=response.body().exerciseHistory.get(i).calorie;

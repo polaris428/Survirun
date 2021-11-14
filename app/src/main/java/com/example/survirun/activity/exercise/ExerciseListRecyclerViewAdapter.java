@@ -63,12 +63,12 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
         Handler handler = new Handler();
         holder.expandImageButton.setOnClickListener(view -> {
             if(holder.constraintLayout.getVisibility()==View.GONE){
-                ValueAnimator anim = ValueAnimator.ofInt(1, 450);
+                ValueAnimator anim = ValueAnimator.ofInt(1, 420);
                 setAnimation(anim, holder.constraintLayout);
                 holder.expandImageButton.setImageResource(R.drawable.ic_upblack);
                 holder.constraintLayout.setVisibility(View.VISIBLE);
             }else {
-                ValueAnimator anim = ValueAnimator.ofInt(450, 1);
+                ValueAnimator anim = ValueAnimator.ofInt(420, 1);
                 setAnimation(anim, holder.constraintLayout);
 
                 handler.postDelayed(new Runnable() {
