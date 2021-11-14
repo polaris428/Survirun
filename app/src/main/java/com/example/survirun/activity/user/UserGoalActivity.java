@@ -39,10 +39,10 @@ public class UserGoalActivity extends AppCompatActivity {
         km = sf.getInt("km", 5);
 
         SharedPreferences yesterdaySf = getSharedPreferences("yesterday", MODE_PRIVATE);
-        yesterdayCalorie=yesterdaySf.getInt("calorie",0);
-        yesterdayTime=yesterdaySf.getInt("time",0);
-        yesterdayKm=yesterdaySf.getInt("yesterdayKm",0);
-        binding.yesterdayTextView.setText(yesterdayCalorie+"칼로리 "+yesterdayTime+"시간 "+yesterdayKm+"Km");
+        yesterdayCalorie = yesterdaySf.getInt("calorie", 0);
+        yesterdayTime = yesterdaySf.getInt("time", 0);
+        yesterdayKm = yesterdaySf.getInt("yesterdayKm", 0);
+        binding.yesterdayTextView.setText(yesterdayCalorie + "kcal " + yesterdayTime + getString(R.string.hour) + " " + yesterdayKm + "Km");
 
         LocalDate now = LocalDate.now();
 
@@ -50,7 +50,7 @@ public class UserGoalActivity extends AppCompatActivity {
 
         String formatedNow = now.format(formatter);
 
-        binding.dataTextview.setText(formatedNow+"");
+        binding.dataTextview.setText(formatedNow + "");
 
 
         String h = String.valueOf(time / 60);
@@ -59,17 +59,17 @@ public class UserGoalActivity extends AppCompatActivity {
         binding.timeTextview.setText(h + "h " + m + "m");
         binding.kmTextview.setText(String.valueOf(km));
         binding.expandImageButton.setOnClickListener(v -> {
-            if(binding.yesterdayTextView.getVisibility()== View.GONE){
+            if (binding.yesterdayTextView.getVisibility() == View.GONE) {
                 binding.expandImageButton.setImageResource(R.drawable.ic_upblack);
                 binding.yesterdayTextView.setVisibility(View.VISIBLE);
 
-            }else {
+            } else {
                 binding.expandImageButton.setImageResource(R.drawable.ic_downblack);
                 binding.yesterdayTextView.setVisibility(View.GONE);
             }
         });
         binding.backButton.setOnClickListener(v -> {
-           finish();
+            finish();
         });
 
         binding.retouchButton.setOnClickListener(v -> {

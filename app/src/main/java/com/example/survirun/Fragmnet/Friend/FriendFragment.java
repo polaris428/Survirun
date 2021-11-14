@@ -70,7 +70,7 @@ public class FriendFragment extends Fragment {
         friendAdapter = new FriendAdapter(friendRoomList);
         binding.cardView.setVisibility(View.GONE);
 
-        Animation animation = AnimationUtils.loadAnimation(getContext(),R.anim.rotate);
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
         checkFriends();
 
         binding.image.startAnimation(animation);
@@ -111,7 +111,7 @@ public class FriendFragment extends Fragment {
                             binding.backButton.setVisibility(View.VISIBLE);
                             binding.usernameTextview.setText(name);
                             ExerciseHistory exerciseHistory = response.body().exerciseHistory.get(0);
-                            binding.exerciseTextview.setText(exerciseHistory.calorie + "kcal " + exerciseHistory.km + "km " + exerciseHistory.time + getString(R.string.hour));
+                            binding.exerciseTextview.setText(exerciseHistory.calorie + "kcal " + exerciseHistory.time + getString(R.string.hour) + exerciseHistory.km + "km ");
                             Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url", response.body().username);
                             getProfile.enqueue(new Callback<ImageData>() {
                                 @Override
