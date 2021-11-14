@@ -64,6 +64,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        SharedPreferences sf = context.getSharedPreferences("Login", MODE_PRIVATE);
+
+        token = sf.getString("token", "");
         FriendRoom item = friendRoomList.get(position);
         holder.email.setText(item.email);
         holder.name.setText(item.name);
@@ -71,18 +74,28 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 .error(R.drawable.userdefaultprofile)
                 .circleCrop()
                 .into(holder.profile);
+        holder.detailButton.setOnClickListener(v -> {
 
-        Call<getUserData> call2 = ServerClient.getServerService().getUser(token, holder.email.getText().toString());
-        call2.enqueue(new Callback<getUserData>() {
+
+
+         Intent intent = new Intent(context, FriendInformationActivity.class);
+           intent.putExtra("list", "값");
+            context.startActivity(intent);
+        });
+
+        Call<getUserData>call1=ServerClient.getServerService().getUser(token, holder.name.getText().toString());
+        call1.enqueue(new Callback<getUserData>() {
             @Override
             public void onResponse(Call<getUserData> call, Response<getUserData> response) {
-                if (response.isSuccessful()) {
+                if(response.isSuccessful()){
 
+                    ExerciseHistory exerciseHistory=response.body().exerciseHistory.get(0);
+                    holder.name.setText(response.body().username);
+                    Log.d("ad",response.body().username);
 
-                    ExerciseHistory exerciseHistory = Objects.requireNonNull(response.body()).exerciseHistory.get(0);
-                    holder.exerciseTextview.setText(exerciseHistory.calorie + "칼로리" + exerciseHistory.km + "킬로미터" + exerciseHistory.time + "운동시간");
-                } else {
-                    Log.d("adsf", "실패");
+                }else{
+                    Log.e("adsf","실패"+ response.code());
+
                 }
             }
 
@@ -91,6 +104,56 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 t.printStackTrace();
             }
         });
+
+        holder.detailButton.setOnClickListener(v -> {
+
+
+
+//            Intent intent = new Intent(context, FriendInformationActivity.class);
+//            intent.putExtra("list", "값");
+//            context.startActivity(intent);
+        });
+
+        Call<getUserData> call2= ServerClient.getServerService().getUser(token,holder.email.getText().toString());
+        call2.enqueue(new Callback<getUserData>() {
+            @Override
+            public void onResponse(Call<getUserData> call, Response<getUserData> response) {
+                if(response.isSuccessful()){
+
+
+                    ExerciseHistory exerciseHistory= Objects.requireNonNull(response.body()).exerciseHistory.get(0);
+                    holder.exerciseTextview.setText(exerciseHistory.calorie+"칼로리"+exerciseHistory.km+"킬로미터"+ exerciseHistory.time+"운동시간");
+                    Log.d("adsf",exerciseHistory.km+"");
+                    Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url",response.body().username);
+                    getProfile.enqueue(new Callback<ImageData>() {
+                        @Override
+                        public void onResponse(Call<ImageData> call, Response<ImageData> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("d",response.body().img);
+                                Glide.with(context)
+                                        .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
+                                        .error(R.drawable.userdefaultprofile)
+                                        .circleCrop()
+                                        .into(holder.profile);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ImageData> call, Throwable t) {
+                            t.printStackTrace();
+                        }
+                    });
+                }else{
+                    Log.d("adsf","실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<getUserData> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
     }
 
     @Override
