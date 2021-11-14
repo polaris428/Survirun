@@ -125,4 +125,5 @@
     <string name="add_friend">Add</string>
     <string name="you_already_friend">You\'re already the best friend of yourself</string>
     <string name="looking_user">Looking for a user...</string>
+    <string name="looking_record">Looking for records...</string>
 </resources>

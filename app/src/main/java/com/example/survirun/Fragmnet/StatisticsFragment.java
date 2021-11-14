@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.example.survirun.R;
@@ -44,11 +46,13 @@ public class StatisticsFragment extends Fragment {
 //        binding.viewPager.setAdapter(adapter);
 //
 //        new TabLayoutMediator(binding.tabLayout, binding.viewPager, (tab, position) -> tab.setText(titles.get(position))).attach();
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
 
         SharedPreferences sf = getContext().getSharedPreferences("Login", getContext().MODE_PRIVATE);
         String token = sf.getString("token", "");
         binding.goalBarGraph.clearChart();
-        binding.ExerciseGraph.setVisibility(View.VISIBLE);
+        binding.image.startAnimation(animation);
+        binding.findRecord.setVisibility(View.VISIBLE);
         Call<ExerciseRecordData> call= ServerClient.getServerService().getExerciseRecordData(token);
         call.enqueue(new Callback<ExerciseRecordData>() {
             @Override
@@ -59,11 +63,13 @@ public class StatisticsFragment extends Fragment {
                     binding.kmBarGraph.clearChart();
                     binding.exerciseTimeBarGraph.clearChart();
                     if(response.body().exerciseHistory.size()==1&&response.body().exerciseHistory.get(0).time==0){
-                        binding.ExerciseMessage.setVisibility(View.VISIBLE);
+                        binding.noRecord.setVisibility(View.VISIBLE);
                         binding.ExerciseGraph.setVisibility(View.GONE);
+                        binding.findRecord.setVisibility(View.GONE);
 
                     }else{
-                        binding.ExerciseMessage.setVisibility(View.GONE);
+                        binding.noRecord.setVisibility(View.GONE);
+                        binding.findRecord.setVisibility(View.GONE);
 
                         for (int i=0;i<response.body().exerciseHistory.size();i++){
                             int calorie=response.body().exerciseHistory.get(i).calorie;

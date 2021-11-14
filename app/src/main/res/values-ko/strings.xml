@@ -125,4 +125,5 @@
     <string name="add_friend">친구 추가</string>
     <string name="you_already_friend">이미 자기 자신의  최고의 친구입니다</string>
     <string name="looking_user">유저를 찾는 중...</string>
+    <string name="looking_record">기록들을 찾는중...</string>
 </resources>
