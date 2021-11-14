@@ -36,11 +36,15 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         super.onCreate(savedInstanceState);
         binding = ActivityExercisePreparationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        selectFragment = new BottomSheetModeSelectFragment();
+
         Intent exerciseSelection = getIntent();
-        title=exerciseSelection.getStringExtra("title");
-        calorie=exerciseSelection.getStringExtra("calorie");
-        km=exerciseSelection.getStringExtra("km");
-        time=exerciseSelection.getStringExtra("time");
+        title = exerciseSelection.getStringExtra("title");
+        calorie = exerciseSelection.getStringExtra("calorie");
+        km = exerciseSelection.getStringExtra("km");
+        time = exerciseSelection.getStringExtra("time");
+
         binding.exerciseTitleTextview.setText(title);
         binding.calorieTextView.setText(calorie);
         binding.timeTextView.setText(time);
@@ -49,7 +53,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         setAnimation(binding.constraint);
 
         binding.exerciseStartButton.setOnClickListener(v -> {
-            selectFragment.show(getSupportFragmentManager(),"bottomSheet");
+            selectFragment.show(getSupportFragmentManager(), "bottomSheet");
         });
 
         binding.backButton.setOnClickListener(v -> {
@@ -59,7 +63,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
 
     @Override
     public void onClickStart() {
-        if(isCheckedZombie||isCheckedGPS){
+        if (isCheckedZombie || isCheckedGPS) {
             ArrayList<Integer> modeList = new ArrayList();
             if (isCheckedZombie) modeList.add(MapActivity.ZOMBIE_MODE);
                 //else if (isCheckedStory) modeList.add(MapActivity.STORY_MODE);
@@ -68,13 +72,12 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
             i.putExtra("mode", modeList);
             Log.d("asdf", String.valueOf(modeList));
             startActivity(i);
-        }
-        else {
+        } else {
             Toast.makeText(getApplicationContext(), R.string.choose_mode, Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void setAnimation(ConstraintLayout constraintLayout){
+    private void setAnimation(ConstraintLayout constraintLayout) {
         ValueAnimator anim = ValueAnimator.ofInt(1, 1000);
         anim.setDuration(800);
         anim.addUpdateListener(animation -> {

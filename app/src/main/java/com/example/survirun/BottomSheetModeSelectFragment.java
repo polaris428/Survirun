@@ -23,8 +23,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
     FragmentBottomSheetModeSelectBinding binding;
     private BottomSheetListener mListener;
-    boolean isCheckZombie = false,
-            isCheckGps = false;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
@@ -33,7 +31,6 @@ public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
         binding = FragmentBottomSheetModeSelectBinding.inflate(inflater, container, false);
         View v = binding.getRoot();
         mListener = (BottomSheetListener) getContext();
-        Intent intent = new Intent(getContext(), ExplanationActivity.class);
 
 
         binding.exerciseStartButton.setOnClickListener(v1 -> {
