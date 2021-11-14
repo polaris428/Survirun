@@ -3,6 +3,7 @@ package com.example.survirun.Fragmnet;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +70,15 @@ public class SettingFragment extends Fragment {
         binding.emileText.setText(emile);
 
         binding.clearCacheButton.setOnClickListener(v -> {
-            showDialog();
+            setDialog("캐시를 삭제하시겠습니까?");
+            dialog.findViewById(R.id.yes_button).setOnClickListener(v1 -> {
+                deleteDir(getContext().getCacheDir());
+                dialog.dismiss();
+            });
+        });
+
+        binding.logoutButton.setOnClickListener(v -> {
+            setDialog("로그아웃 하시겠습니까?");
         });
 
         binding.goalButton.setOnClickListener(v -> {
@@ -118,26 +128,20 @@ public class SettingFragment extends Fragment {
         });
         return view;
     }
-    public void showDialog() {
+    public void setDialog(String text) {
         TextView explain = dialog.findViewById(R.id.explain_textView);
-        Button yesButton = dialog.findViewById(R.id.yes_button);
-        Button cancelButton = dialog.findViewById(R.id.cancel_button);
         Button helpButton = dialog.findViewById(R.id.help_button);
         helpButton.setVisibility(View.GONE);
-        explain.setText("캐시를 삭제하시겠습니까?");
+        explain.setText(text);
         dialog.show();
-        cancelButton.setOnClickListener(v -> dialog.dismiss());
-        yesButton.setOnClickListener(v -> {
-            deleteDir(getActivity().getApplication().getCacheDir());
-            dialog.dismiss();
-        });
+        dialog.findViewById(R.id.cancel_button).setOnClickListener(v -> dialog.dismiss());
     }
 
-    private static boolean deleteDir(File dir) {
+    private boolean deleteDir(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
+            for (String child : children) {
+                boolean success = deleteDir(new File(dir, child));
                 if (!success) {
                     return false;
                 }
@@ -145,4 +149,5 @@ public class SettingFragment extends Fragment {
         }
         return dir.delete();
     }
+
 }
