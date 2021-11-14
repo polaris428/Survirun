@@ -58,6 +58,8 @@ public class FriendActivity extends AppCompatActivity {
         friendDB = FriendDB.getInstance(this);
         mContext = getApplicationContext();
         friendAdapter = new FriendAdapter(friendRoomList);
+        friendAdapter.setHasStableIds(true);
+
         binding.cardView.setVisibility(View.GONE);
 
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
@@ -156,21 +158,7 @@ public class FriendActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                             if (response.isSuccessful()) {
-                                class InsertRunnable implements Runnable {
-                                    @Override
-                                    public void run() {
-                                        FriendRoom friendRoom = new FriendRoom();
-                                        friendRoom.email = friendEmail;
-                                        friendRoom.profile = profile;
-                                        friendRoom.name = name;
-                                        FriendDB.getInstance(mContext).friendDao().insertAll(friendRoom);
-                                    }
-                                }
-                                InsertRunnable insertRunnable = new InsertRunnable();
-                                Thread addThread = new Thread(insertRunnable);
-                                addThread.start();
-                                getFriend();
-                                Log.d("성공", response.body().result.toString());
+                                refreshRecyclerView(email,name,profile);
                             } else {
                                 //실패시
 
@@ -195,8 +183,6 @@ public class FriendActivity extends AppCompatActivity {
                 try {
                     friendRoomList = FriendDB.getInstance(mContext).friendDao().getAll();
                     friendAdapter = new FriendAdapter(friendRoomList);
-                    friendAdapter.notifyDataSetChanged();
-
                     binding.friendListRecyclerView.setAdapter(friendAdapter);
                     LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
                     binding.friendListRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -233,7 +219,8 @@ public class FriendActivity extends AppCompatActivity {
                     int i = 0;
                     if (friendsRoomNumber == 0) {
                         for (i = 0; i < friendsServerNumber; i++) {
-                            Log.d("일차하지않음", "일치하지않음" + response.body().users.get(i).email);
+                            refreshRecyclerView(response.body().users.get(i).email,response.body().users.get(i).username,response.body().profiles.get(i)._id);
+
                             Log.d("뿜뿜",response.body().profiles.get(i)._id);
 
                         }
@@ -280,5 +267,32 @@ public class FriendActivity extends AppCompatActivity {
         });
         getFriend();
 
+    }
+    public void refreshRecyclerView(String email,String name,String profile){
+        class InsertRunnable implements Runnable {
+            @Override
+            public void run() {
+                FriendRoom friendRoom = new FriendRoom();
+                friendRoom.email = email;
+                friendRoom.profile = profile;
+                friendRoom.name = name;
+                FriendDB.getInstance(mContext).friendDao().insertAll(friendRoom);
+
+            }
+        }
+        InsertRunnable insertRunnable = new InsertRunnable();
+        Thread addThread = new Thread(insertRunnable);
+        addThread.start();
+        getFriend();
+        FriendRoom friendRoom=new FriendRoom();
+        friendRoom.setEmail(email);
+        friendRoom.setName(name);
+        friendRoom.setProfile(profile);
+        friendRoomList.add(friendRoom);
+        friendAdapter = new FriendAdapter(friendRoomList);
+        binding.friendListRecyclerView.setAdapter(friendAdapter);
+        binding.cardView.setVisibility(View.GONE);
+
+        Log.d("성공", "성공");
     }
 }

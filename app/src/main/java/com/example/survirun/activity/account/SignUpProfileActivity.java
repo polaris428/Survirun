@@ -107,13 +107,13 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
                 customProgressDialog.show();
                 MultipartBody.Part body1 = prepareFilePart("image", selectedImageUri);
                 Call<ResultData> call = ServerClient.getServerService().postProfile(token, body1);
-
                 call.enqueue(new Callback<ResultData>() {
                     @Override
                     public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                         if (response.isSuccessful()) {
                             editor.putBoolean("profile", true);
                             customProgressDialog.dismiss();
+
                             Intent intent = new Intent(SignUpProfileActivity.this, MainActivity.class);
                             startActivity(intent);
                         } else {
