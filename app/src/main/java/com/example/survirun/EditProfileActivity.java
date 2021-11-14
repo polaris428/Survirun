@@ -24,6 +24,7 @@ public class EditProfileActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     String token;
     String name;
+    String inputName;
     String comment;
 
     @Override
@@ -38,38 +39,38 @@ public class EditProfileActivity extends AppCompatActivity {
         token = sf.getString("token", "");
         name = sf.getString("name", "");
 
-        binding.nameEditTextview.setText(name);
+        binding.nameInputEdittext.setText(name);
 
         binding.saveButton.setOnClickListener(v -> {
-            name = binding.nameEditTextview.getText().toString();
-            if (name.replace(" ", "").isEmpty()) {
+            inputName = binding.nameInputEdittext.getText().toString();
+            if (!name.equals(inputName)) {
+                    Call<ResultData> call = ServerClient.getServerService().inputName(inputName, token);
+                    call.enqueue(new Callback<ResultData>() {
+                        @Override
+                        public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                            if (response.isSuccessful()) {
+                                editor.putString("name", inputName);
+                                editor.commit();
+                                Intent intent = new Intent(EditProfileActivity.this, SignUpProfileActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+
+                            } else {
+                                response.errorBody();
+                                Log.d("adsf", response.errorBody().toString());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResultData> call, Throwable t) {
+                            t.printStackTrace();
+                        }
+                    });
+
 
             } else {
 
-                Call<ResultData> call = ServerClient.getServerService().inputName(name, token);
-                call.enqueue(new Callback<ResultData>() {
-                    @Override
-                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                        if (response.isSuccessful()) {
-                            editor.putString("name", name);
-                            editor.commit();
-                            Intent intent = new Intent(EditProfileActivity.this, SignUpProfileActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-
-                        } else {
-                            response.errorBody();
-                            Log.d("adsf", response.errorBody().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResultData> call, Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
             }
-
         });
 
     }
