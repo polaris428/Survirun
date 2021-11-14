@@ -58,13 +58,13 @@ public class SettingFragment extends Fragment {
             Intent intent = new Intent(getActivity(), EditProfileActivity.class);
             startActivity(intent);
         });
+
          binding.helpButton.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
 
                  Intent intent =new Intent(getActivity(), WelcomeActivity.class);
                  startActivity(intent);
-                 getActivity().finish();
              }
          });
 
