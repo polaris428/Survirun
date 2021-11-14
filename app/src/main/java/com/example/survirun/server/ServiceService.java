@@ -50,10 +50,11 @@ public interface ServiceService {
     @GET("/api/v1/auth/by-email/{email}/exists")
     Call<EmileCheck> getEmileCheck(@Path("email") String email);
 
-    @GET("/api/v1/friend/list")
-    Call<FindUserData> getFriendList(@Header("x-access-token") String token);
+   // @GET("/api/v1/friend/list")
+    //Call<FindUserData> getFriendList(@Header("x-access-token") String token);
 
-
+    @GET("api/v1/friend/roomList ")
+    Call<FindUserData>getFriendList(@Header("x-access-token") String token);
 
 
     @POST("/api/v1/friend")

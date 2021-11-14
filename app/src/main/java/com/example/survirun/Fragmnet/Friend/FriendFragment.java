@@ -238,35 +238,42 @@ public class FriendFragment extends Fragment {
             @Override
             public void onResponse(Call<FindUserData> call, Response<FindUserData> response) {
                 if (response.isSuccessful()) {
-                    friendsServerNumber = response.body().friends.size();
+                    friendsServerNumber = response.body().users.size();
                     friendsRoomNumber = friendRoomList.size();
                     Log.d("asdf", String.valueOf(friendsServerNumber));
                     Log.d("asdf", String.valueOf(friendsRoomNumber));
                     int i = 0;
                     if (friendsRoomNumber == 0) {
                         for (i = 0; i < friendsServerNumber; i++) {
-                            Log.d("일차하지않음", "일치하지않음" + response.body().friends.get(i).email);
-                            addFriend(response.body().friends.get(i).email);
+                            Log.d("일차하지않음", "일치하지않음" + response.body().users.get(i).email);
+                            Log.d("뿜뿜",response.body().profiles.get(i)._id);
+
                         }
                     } else {
                         Boolean friend = false;
                         if (friendsServerNumber != friendsRoomNumber) {
                             for (i = 0; i < friendsServerNumber; i++) {
                                 for (int j = 0; j < friendsRoomNumber; j++) {
-                                    if (response.body().friends.get(i).email.equals(friendRoomList.get(j).email)) {
+                                    if (response.body().users.get(i).email.equals(friendRoomList.get(j).email)) {
                                         Log.d("반복중", i + "");
                                         Log.d("일치함", "일치함" + j);
                                         friend = true;
                                         break;
                                     } else {
                                         Log.d("반복중", i + "");
-                                        Log.d("일차하지않음", "일치하지않음" + j);
+
 
 
                                     }
                                     if (!friend) {
-                                        Log.d("이메일", response.body().friends.get(i).email);
-                                        addFriend(response.body().friends.get(i).email);
+                                        Log.d("이메일", response.body().users.get(i).email);
+                                        String emile=response.body().users.get(i).email;
+                                        String nmae=response.body().users.get(i).username;
+                                        //String profile=response.body().users.get(i).profiles.get(i)._id;
+                                        Log.d("뿜뿜",profile);
+
+                                    }else {
+                                        friend=false;
                                     }
 
                                 }
@@ -284,53 +291,9 @@ public class FriendFragment extends Fragment {
 
         });
         getFriend();
+
     }
-
-    public void addFriend(String friendEmail) {
-        Call<getUserData> getUserDataCall = ServerClient.getServerService().getUser(token, friendEmail);
-        getUserDataCall.enqueue(new Callback<getUserData>() {
-            @Override
-            public void onResponse(Call<getUserData> call, Response<getUserData> response) {
-                if (response.isSuccessful()) {
-                    name = response.body().username;
-                    Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
-                    getProfile.enqueue(new Callback<ImageData>() {
-                        @Override
-                        public void onResponse(Call<ImageData> call, Response<ImageData> response) {
-                            if (response.isSuccessful()) {
-                                profile = "https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img;
-                                class InsertRunnable implements Runnable {
-                                    @Override
-                                    public void run() {
-                                        FriendRoom friendRoom = new FriendRoom();
-                                        friendRoom.email = friendEmail;
-                                        friendRoom.profile = profile;
-                                        friendRoom.name = name;
-                                        FriendDB.getInstance(mContext).friendDao().insertAll(friendRoom);
-                                    }
-                                }
-                                InsertRunnable insertRunnable = new InsertRunnable();
-                                Thread addThread = new Thread(insertRunnable);
-                                addThread.start();
-                                getFriend();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ImageData> call, Throwable t) {
-
-                        }
-                    });
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<getUserData> call, Throwable t) {
-
-            }
-        });
+    public void addFriend(String email,String username,String profile){
 
     }
 }
