@@ -102,18 +102,18 @@
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/eve_calorie_textview"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/eve_calorie_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
                 android:textColor="?attr/colorUserText"
                 android:textSize="15sp"
+                android:gravity="right"
+                android:layout_marginRight="20dp"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/comparisonCalorie"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -190,18 +190,18 @@
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/eve_time_textview"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/eve_time_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
                 android:textColor="?attr/colorUserText"
                 android:textSize="15sp"
+                android:gravity="right"
+                android:layout_marginRight="20dp"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/comparisonExerciseTime"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -276,18 +276,18 @@
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/eve_km_textview"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/eve_km_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:textColor="?attr/colorUserText"
                 android:textSize="15sp"
+                android:gravity="right"
+                android:layout_marginRight="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/comparisonKm"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
