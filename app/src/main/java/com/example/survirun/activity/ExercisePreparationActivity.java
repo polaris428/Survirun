@@ -1,12 +1,15 @@
 package com.example.survirun.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -43,6 +46,8 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         binding.timeTextView.setText(time);
         binding.kmTextView.setText(km);
 
+        setAnimation(binding.constraint);
+
         binding.exerciseStartButton.setOnClickListener(v -> {
             selectFragment.show(getSupportFragmentManager(),"bottomSheet");
         });
@@ -68,4 +73,16 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
             Toast.makeText(getApplicationContext(), R.string.choose_mode, Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void setAnimation(ConstraintLayout constraintLayout){
+        ValueAnimator anim = ValueAnimator.ofInt(1, 1000);
+        anim.setDuration(800);
+        anim.addUpdateListener(animation -> {
+            Integer value = (Integer) animation.getAnimatedValue();
+            constraintLayout.getLayoutParams().height = value.intValue();
+            constraintLayout.requestLayout();
+        });
+        anim.start();
+    }
+
 }
