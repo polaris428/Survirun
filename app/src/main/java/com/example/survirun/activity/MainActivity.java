@@ -92,10 +92,8 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("checkFirstAccess", true);
             editor.apply();
-
             Intent tutorialIntent = new Intent(MainActivity.this, WelcomeActivity.class);
             startActivity(tutorialIntent);
-            finish();
         }
     }
 
