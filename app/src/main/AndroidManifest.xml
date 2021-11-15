@@ -42,7 +42,8 @@
             android:exported="true" />
         <activity
             android:name=".Fragmnet.Friend.FriendInformationActivity"
-            android:theme="@android:style/Theme.Dialog" />
+            android:exported="true"
+            />
         <activity
             android:name=".activity.user.UserPageActivity"
             android:exported="true" />
