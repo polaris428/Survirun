@@ -41,7 +41,9 @@ public class ExerciseResultActivity extends AppCompatActivity {
         sf = getSharedPreferences("Login", MODE_PRIVATE);
         token = sf.getString("token", "");
         data=sf.getString("data","2021-90-0");
-        title=sf.getString("title","운동");
+        Intent getIntent=getIntent();
+
+        title=getIntent.getStringExtra("title");
         int kcal = getIntent().getIntExtra("kcal", 0);
         double km = getIntent().getDoubleExtra("walkedDistanceToKm", 0);
         int timeToSec = getIntent().getIntExtra("timeToSec", 0);
