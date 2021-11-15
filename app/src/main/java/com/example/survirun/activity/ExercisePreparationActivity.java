@@ -58,10 +58,15 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         ArrayList<Integer> modeList = new ArrayList();
         if (isCheckedZombie) modeList.add(MapActivity.ZOMBIE_MODE);
         else modeList.add(MapActivity.DEFAULT_MODE);
-        Intent i = new Intent(ExercisePreparationActivity.this, MapActivity.class);
-        i.putExtra("mode", modeList);
+        Intent intent = new Intent(ExercisePreparationActivity.this, MapActivity.class);
+
+        intent.putExtra("title",title);
+        intent.putExtra("calorie",calorie);
+        intent.putExtra("km",km);
+        intent.putExtra("time",time);
+        intent.putExtra("mode", modeList);
         Log.d("asdf", String.valueOf(modeList));
-        startActivity(i);
+        startActivity(intent);
     }
 
     @Override

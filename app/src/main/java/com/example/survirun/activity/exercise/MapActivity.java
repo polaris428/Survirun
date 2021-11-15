@@ -104,6 +104,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
     private int zombieListCurrentPos = 0; // +1 해서 좀데 리스트 요소 개수 ㄱㄴ
     Dialog dialog;
+    String title;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -112,7 +113,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         binding = ActivityMapBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        Intent getIntent=new Intent();
+         title=getIntent.getStringExtra("title");
         dialog = new Dialog(MapActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -400,6 +402,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             intent.putExtra("kcal", (int) kcal);
             intent.putExtra("walkedDistanceToKm", walkingDistance / 1000);
             intent.putExtra("timeToSec", (int) timeToSec);
+            intent.putExtra("title",title);
             mMap.clear();
             polylineOptions = new PolylineOptions();
             pausePolylineOpt = new PolylineOptions();

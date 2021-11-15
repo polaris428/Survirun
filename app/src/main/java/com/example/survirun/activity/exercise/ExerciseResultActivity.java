@@ -1,7 +1,9 @@
 package com.example.survirun.activity.exercise;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,7 +31,7 @@ public class ExerciseResultActivity extends AppCompatActivity {
 
     String token;
     String data;
-
+    String title;
     @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +41,20 @@ public class ExerciseResultActivity extends AppCompatActivity {
         sf = getSharedPreferences("Login", MODE_PRIVATE);
         token = sf.getString("token", "");
         data=sf.getString("data","2021-90-0");
-
+        title=sf.getString("title","운동");
         int kcal = getIntent().getIntExtra("kcal", 0);
         double km = getIntent().getDoubleExtra("walkedDistanceToKm", 0);
         int timeToSec = getIntent().getIntExtra("timeToSec", 0);
 
-        binding.endCalorie.setText(String.format("%d", kcal));
-        binding.endKm.setText(String.format("%.2f", km));
+        setAnimation(binding.constraint);
+        binding.calorieTextView.setText(String.format("%d", kcal));
+        binding.kmTextView.setText(String.format("%.2f", km));
+        binding.exerciseTitleTextview.setText(title);
+
         int sec = timeToSec % 60;
         int min = timeToSec / 60;
         int hour = timeToSec / 3600;
-        binding.endTime.setText(String.format("%d:%d:%d", hour, min, sec));
+        binding.timeTextView.setText(String.format("%d:%d:%d", hour, min, sec));
         binding.goMainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,5 +83,15 @@ public class ExerciseResultActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void setAnimation(ConstraintLayout constraintLayout) {
+        ValueAnimator anim = ValueAnimator.ofInt(1, 1000);
+        anim.setDuration(800);
+        anim.addUpdateListener(animation -> {
+            Integer value = (Integer) animation.getAnimatedValue();
+            constraintLayout.getLayoutParams().height = value.intValue();
+            constraintLayout.requestLayout();
+        });
+        anim.start();
     }
 }
