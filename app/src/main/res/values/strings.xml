@@ -133,4 +133,7 @@
     <string name="ranking">Ranking</string>
     <string name="all">All</string>
     <string name="friends">Friends</string>
+    <string name="name">Name</string>
+    <string name="info">Info</string>
+    <string name="edit_profile">Edit profile</string>
 </resources>
