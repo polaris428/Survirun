@@ -35,6 +35,4 @@
         android:drawable="@drawable/ic_run10"
         android:duration="40"/>
 
-
-
 </animation-list>

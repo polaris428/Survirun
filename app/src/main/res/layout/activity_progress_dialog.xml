@@ -12,7 +12,7 @@
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:backgroundTint="@color/white"
-        android:background="@drawable/anim"/>
+        android:background="@drawable/run_anim"/>
 
     <TextView
         android:layout_width="match_parent"

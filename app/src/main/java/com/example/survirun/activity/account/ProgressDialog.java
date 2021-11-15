@@ -14,9 +14,8 @@ public class ProgressDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_progress_dialog);
 
-        ImageView iv = findViewById(R.id.imageView);
         final AnimationDrawable drawable =
-                (AnimationDrawable) iv.getBackground();
+                (AnimationDrawable) findViewById(R.id.imageView).getBackground();
         drawable.start();
     }
 }
