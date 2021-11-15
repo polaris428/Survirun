@@ -405,9 +405,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             intent.putExtra("timeToSec", (int) timeToSec);
             intent.putExtra("title",title);
             intent.putExtra("hp",HP);
-            mMap.clear();
+
             polylineOptions = new PolylineOptions();
             pausePolylineOpt = new PolylineOptions();
+            mMap.clear();
             startActivity(intent);
         } catch (Exception e) {
             Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
