@@ -212,15 +212,8 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                             });
                         } else {
-                            try {
-                                customProgressDialog.dismiss();
-                                Log.e("SignUpActivity", response.errorBody().string());
-
-                            } catch (IOException e) {
-                                customProgressDialog.dismiss();
-                                Toast.makeText(SignUpActivity.this, format_error, Toast.LENGTH_SHORT).show();
-                                e.printStackTrace();
-                            }
+                            customProgressDialog.dismiss();
+                            Toast.makeText(SignUpActivity.this, R.string.error_server, Toast.LENGTH_SHORT).show();
                         }
                     }
 
