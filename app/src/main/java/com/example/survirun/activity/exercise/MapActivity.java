@@ -404,6 +404,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             intent.putExtra("walkedDistanceToKm", walkingDistance / 1000);
             intent.putExtra("timeToSec", (int) timeToSec);
             intent.putExtra("title",title);
+            intent.putExtra("hp",HP);
             mMap.clear();
             polylineOptions = new PolylineOptions();
             pausePolylineOpt = new PolylineOptions();
