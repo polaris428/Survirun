@@ -22,6 +22,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -62,7 +63,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     private static final int DEFAULT_KCAL_WEIGHT = 80;
-
+    public static MediaPlayer mediaPlayer;
     private static final int ZOMBIE_CREATE_MINUTES = 3;
     private static final int STORY_READ_MINUTES = 10;
     public static int HP = 100;
@@ -74,7 +75,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public static final int ZOMBIE_MODE = 1;
     public static final int STORY_MODE = 2;
     public int storyUserSelect = -1;
-
+    public static Context mctx;
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     public static GoogleMap mMap = null;
     private LocationManager lm;
@@ -113,6 +114,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         binding = ActivityMapBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        mctx = this;
         Intent getIntent=getIntent();
          title=getIntent.getStringExtra("title");
          Log.d(title,title);
@@ -280,12 +282,27 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
     public static void resumeZombie() {
         isZombieCreating = true;
         for (ZombieModel z : zombieList) {
             z.isRun = true;
 
         }
+    }
+
+    public static void playZBS() {
+        mediaPlayer = MediaPlayer.create(mctx, R.raw.zombie4);
+        mediaPlayer.setLooping(false);
+        mediaPlayer.start();
     }
 
     @MainThread

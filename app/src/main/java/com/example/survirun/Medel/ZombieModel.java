@@ -21,6 +21,7 @@ public class ZombieModel {
     public boolean isRun;
     public Marker myMarker;
     public int currentIdx;
+    public int timeCnt = 0;
 
     public double getLngWithEq(LatLng f, LatLng s, double xp) { // 두 점의 방정식 구해서 사용!
         double m = (s.longitude - f.longitude) / (s.latitude - f.latitude);
@@ -56,6 +57,18 @@ public class ZombieModel {
         /* 마지막에 거리 검사 */
         if (getZombieToHumanDistance(humanLocation) <= 5) { //단위가 몇이였더라..
             MapActivity.minusHPAndCheck();
+        }
+
+        if(getZombieToHumanDistance(humanLocation) <= 300) {
+            if(timeCnt >= 6) {
+                MapActivity.playZBS();
+                timeCnt = 0;
+            } else {
+                timeCnt++;
+            }
+
+        } else {
+            timeCnt = 0;
         }
 
         if(getZombieToHumanDistance(humanLocation) >= 1000) {
