@@ -129,4 +129,8 @@
     <string name="delete_cache_text">캐시를 삭제하시겠습니까?</string>
     <string name="detail">자세히 보기</string>
     <string name="error">오류 발생</string>
+    <string name="ask">문의하기</string>
+    <string name="ranking">랭킹</string>
+    <string name="all">전체</string>
+    <string name="friends">친구</string>
 </resources>

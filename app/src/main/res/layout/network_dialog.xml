@@ -32,7 +32,7 @@
         android:id="@+id/help_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="문의하기"
+        android:text="@string/ask"
         android:textSize="13sp"
         app:icon="@drawable/ic_information"
         app:iconSize="18dp"
