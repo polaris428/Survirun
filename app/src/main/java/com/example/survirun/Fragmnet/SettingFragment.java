@@ -70,7 +70,7 @@ public class SettingFragment extends Fragment {
         binding.emileText.setText(emile);
 
         binding.clearCacheButton.setOnClickListener(v -> {
-            setDialog("캐시를 삭제하시겠습니까?");
+            setDialog(getString(R.string.delete_cache_text));
             dialog.findViewById(R.id.yes_button).setOnClickListener(v1 -> {
                 deleteDir(getContext().getCacheDir());
                 dialog.dismiss();
@@ -78,7 +78,7 @@ public class SettingFragment extends Fragment {
         });
 
         binding.logoutButton.setOnClickListener(v -> {
-            setDialog("로그아웃 하시겠습니까?");
+            setDialog(getString(R.string.sign_out_user));
         });
 
         binding.goalButton.setOnClickListener(v -> {

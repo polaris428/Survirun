@@ -77,24 +77,23 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         holder.detailButton.setOnClickListener(v -> {
 
 
-
-         Intent intent = new Intent(context, FriendInformationActivity.class);
-           intent.putExtra("list", "값");
+            Intent intent = new Intent(context, FriendInformationActivity.class);
+            intent.putExtra("list", "값");
             context.startActivity(intent);
         });
 
-        Call<getUserData>call1=ServerClient.getServerService().getUser(token, holder.name.getText().toString());
+        Call<getUserData> call1 = ServerClient.getServerService().getUser(token, holder.name.getText().toString());
         call1.enqueue(new Callback<getUserData>() {
             @Override
             public void onResponse(Call<getUserData> call, Response<getUserData> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
 
-                    ExerciseHistory exerciseHistory=response.body().exerciseHistory.get(0);
+                    ExerciseHistory exerciseHistory = response.body().exerciseHistory.get(0);
                     holder.name.setText(response.body().username);
-                    Log.d("ad",response.body().username);
+                    Log.d("ad", response.body().username);
 
-                }else{
-                    Log.e("adsf","실패"+ response.code());
+                } else {
+                    Log.e("adsf", "실패" + response.code());
 
                 }
             }
@@ -106,30 +105,27 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         });
 
         holder.detailButton.setOnClickListener(v -> {
-
-
-
-//            Intent intent = new Intent(context, FriendInformationActivity.class);
-//            intent.putExtra("list", "값");
-//            context.startActivity(intent);
+            Intent intent = new Intent(context, FriendInformationActivity.class);
+            intent.putExtra("list", "값");
+            context.startActivity(intent);
         });
 
-        Call<getUserData> call2= ServerClient.getServerService().getUser(token,holder.email.getText().toString());
+        Call<getUserData> call2 = ServerClient.getServerService().getUser(token, holder.email.getText().toString());
         call2.enqueue(new Callback<getUserData>() {
             @Override
             public void onResponse(Call<getUserData> call, Response<getUserData> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
 
 
-                    ExerciseHistory exerciseHistory= Objects.requireNonNull(response.body()).exerciseHistory.get(0);
-                    holder.exerciseTextview.setText(exerciseHistory.calorie+"칼로리"+exerciseHistory.km+"킬로미터"+ exerciseHistory.time+"운동시간");
-                    Log.d("adsf",exerciseHistory.km+"");
-                    Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url",response.body().username);
+                    ExerciseHistory exerciseHistory = Objects.requireNonNull(response.body()).exerciseHistory.get(0);
+                    holder.exerciseTextview.setText(exerciseHistory.calorie + "칼로리" + exerciseHistory.km + "킬로미터" + exerciseHistory.time + "운동시간");
+                    Log.d("adsf", exerciseHistory.km + "");
+                    Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url", response.body().username);
                     getProfile.enqueue(new Callback<ImageData>() {
                         @Override
                         public void onResponse(Call<ImageData> call, Response<ImageData> response) {
                             if (response.isSuccessful()) {
-                                Log.d("d",response.body().img);
+                                Log.d("d", response.body().img);
                                 Glide.with(context)
                                         .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
                                         .error(R.drawable.userdefaultprofile)
@@ -143,8 +139,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                             t.printStackTrace();
                         }
                     });
-                }else{
-                    Log.d("adsf","실패");
+                } else {
+                    Log.d("adsf", "실패");
                 }
             }
 
@@ -176,21 +172,21 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             name = itemView.findViewById(R.id.item_friend_name);
             email = itemView.findViewById(R.id.item_friend_email);
             profile = itemView.findViewById(R.id.profile_imageview);
-            constraintLayout1=itemView.findViewById(R.id.constraint_layout);
-            constraintLayout2=itemView.findViewById(R.id.card_item2);
+            constraintLayout1 = itemView.findViewById(R.id.constraint_layout);
+            constraintLayout2 = itemView.findViewById(R.id.card_item2);
             exerciseTextview = itemView.findViewById(R.id.exercise_textview);
-            detailButton=itemView.findViewById(R.id.detail_button);
-            context=itemView.getContext();
+            detailButton = itemView.findViewById(R.id.detail_button);
+            context = itemView.getContext();
 
             Handler handler = new Handler();
             constraintLayout1.setOnClickListener(v -> {
-                if (constraintLayout2.getVisibility() == View.GONE){
+                if (constraintLayout2.getVisibility() == View.GONE) {
                     constraintLayout2.setVisibility(View.VISIBLE);
-                    ValueAnimator anim = ValueAnimator.ofInt(1,400);
+                    ValueAnimator anim = ValueAnimator.ofInt(1, 400);
                     setAnimation(anim, constraintLayout2);
 
-                }else{
-                    ValueAnimator anim = ValueAnimator.ofInt(400,1);
+                } else {
+                    ValueAnimator anim = ValueAnimator.ofInt(400, 1);
                     setAnimation(anim, constraintLayout2);
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -198,7 +194,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                             constraintLayout2.setVisibility(View.GONE);
 
                         }
-                    },800);
+                    }, 800);
                 }
 
 
@@ -207,7 +203,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         }
     }
 
-    private void setAnimation(ValueAnimator anim, ConstraintLayout constraintLayout){
+    private void setAnimation(ValueAnimator anim, ConstraintLayout constraintLayout) {
         anim.setDuration(800);
         anim.addUpdateListener(animation -> {
             Integer value = (Integer) animation.getAnimatedValue();
