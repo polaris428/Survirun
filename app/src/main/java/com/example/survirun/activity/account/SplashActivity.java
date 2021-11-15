@@ -62,7 +62,7 @@ public class SplashActivity extends AppCompatActivity {
         dialog = new Dialog(SplashActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setContentView(R.layout.dialog);
+        dialog.setContentView(R.layout.network_dialog);
 
         final AnimationDrawable drawableRun =
                 (AnimationDrawable) binding.runImageView.getBackground();
@@ -227,18 +227,11 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     void showDialog() {
-        TextView explain = dialog.findViewById(R.id.explain_textView);
         Button finishButton = dialog.findViewById(R.id.cancel_button);
         Button retryButton = dialog.findViewById(R.id.yes_button);
         Button helpButton=dialog.findViewById(R.id.help_button);
-        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
-        params1.weight = 0.45f;
-        finishButton.setLayoutParams(params1);
-        explain.setText(R.string.network_error_occurred);
-        finishButton.setText(R.string.close);
-        retryButton.setText(R.string.retry);
-        dialog.show();
         dialog.setCancelable(false);
+        dialog.show();
         helpButton.setOnClickListener(v -> {
                     Intent email = new Intent(Intent.ACTION_SEND);
                     email.setType("plain/text");
