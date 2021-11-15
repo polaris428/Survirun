@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.survirun.activity.MainActivity;
 import com.example.survirun.activity.account.SignUpNameActivity;
 import com.example.survirun.activity.account.SignUpProfileActivity;
 import com.example.survirun.data.ResultData;
@@ -51,9 +52,10 @@ public class EditProfileActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 editor.putString("name", inputName);
                                 editor.commit();
-                                Intent intent = new Intent(EditProfileActivity.this, SignUpProfileActivity.class);
+                                Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
+                                finish();
 
                             } else {
                                 response.errorBody();
@@ -74,4 +76,5 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
     }
+
 }
