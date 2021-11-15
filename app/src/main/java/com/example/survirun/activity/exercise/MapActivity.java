@@ -677,7 +677,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     timeToSec = msg.arg1;
                     String str = String.format("%02d:%02d:%02d", hour, min, sec);
                     binding.textviewExerciseTime.setText(str);
-                    if ((timeToSec / 60) % 3 == 0 && timeToSec % 60 == 0 && timeToSec1 >= 60) {
+                    if ((timeToSec1 / 60) % 3 == 0 && timeToSec1 % 60 == 0 && timeToSec1 >= 60) {
                         String d = String.format(getString(R.string.tts_type), (int) kcal, walkingDistance / 1000.0, hour, min, sec);
                         playTTS(d);
                     }
