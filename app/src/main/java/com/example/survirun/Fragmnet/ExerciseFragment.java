@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +30,14 @@ public class ExerciseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentExerciseBinding.inflate(inflater, container, false);
+         mList = new ArrayList<>();
         ExerciseList();
         binding.plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 count++;
                 ExerciseList();
+                Log.d("count",count+"");
             }
         });
         binding.subtractButton.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +45,7 @@ public class ExerciseFragment extends Fragment {
             public void onClick(View v) {
                 count--;
                 ExerciseList();
+                Log.d("count",count+"");
             }
         });
 
@@ -56,8 +60,8 @@ public class ExerciseFragment extends Fragment {
         switch (count) {
 
             case 1: {
-                binding.exerciseTypeTextview.setText(R.string.pace_goal);
-                mList = new ArrayList<>();
+
+                ListChange(getString(R.string.pace_goal));
                 UpData(getString(R.string.walking_lightly), 15, 50,1,1);
                 UpData(getString(R.string.walking_briskly), 30, 100,2,1);
                 UpData(getString(R.string.walking_steadily), 60, 200,3,2);
@@ -98,10 +102,12 @@ public class ExerciseFragment extends Fragment {
             default:
                 if (count == 0) {
                     count=1;
+                    ListChange(getString(R.string.pace_goal));
                     UpData(getString(R.string.walking_lightly), 15, 50,1,1);
                     UpData(getString(R.string.walking_briskly), 30, 100,2,1);
                     UpData(getString(R.string.walking_steadily), 60, 200,3,2);
                     UpData(getString(R.string.burning_fat), 90, 300,4,3);
+                    break;
 
                 } else if (count==5){
                     count=4;
@@ -111,6 +117,7 @@ public class ExerciseFragment extends Fragment {
                     UpData("500kcal", 0, 500,0,4);
                     UpData("600kcal", 0, 600,0,4);
                     UpData("700kcal", 0, 700,0,5);
+                    break;
                 }
         }
 
