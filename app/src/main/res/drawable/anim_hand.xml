@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item
+        android:drawable="@drawable/ic_hand_1"
+        android:duration="140"/>
+    <item
+        android:drawable="@drawable/ic_hand_2"
+        android:duration="120"/>
+    <item
+        android:drawable="@drawable/ic_hand_3"
+        android:duration="120"/>
+    <item
+        android:drawable="@drawable/ic_hand_4"
+        android:duration="120"/>
+    <item
+        android:drawable="@drawable/ic_hand_5"
+        android:duration="120"/>
+    <item
+        android:drawable="@drawable/ic_hand_6"
+        android:duration="120"/>
+    <item
+        android:drawable="@drawable/ic_hand_7"
+        android:duration="120"/>
+
+</animation-list>
