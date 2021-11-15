@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +32,8 @@ import com.example.survirun.UserAccount;
 import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.TokenData;
+import com.example.survirun.databinding.ActivitySplash2Binding;
+import com.example.survirun.databinding.ActivitySplashBinding;
 import com.example.survirun.server.ServerClient;
 
 import retrofit2.Call;
@@ -38,6 +42,7 @@ import retrofit2.Response;
 
 
 public class SplashActivity extends AppCompatActivity {
+    ActivitySplashBinding binding;
     String email;
     String pwe;
     SharedPreferences.Editor editor;
@@ -47,7 +52,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        binding = ActivitySplashBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
         email = sf.getString("email", "");
         pwe = sf.getString("pwe", "");
@@ -58,9 +64,15 @@ public class SplashActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog);
 
-        final AnimationDrawable drawable =
-                (AnimationDrawable) findViewById(R.id.run_imageView).getBackground();
-        drawable.start();
+        final AnimationDrawable drawableRun =
+                (AnimationDrawable) binding.runImageView.getBackground();
+        drawableRun.start();
+        final AnimationDrawable drawableHands =
+                (AnimationDrawable) binding.handsImageView.getBackground();
+        drawableHands.start();
+
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.run_anim);
+        binding.floor.startAnimation(anim);
 
         network();
 
