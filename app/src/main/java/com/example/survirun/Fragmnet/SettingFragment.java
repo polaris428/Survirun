@@ -98,6 +98,18 @@ public class SettingFragment extends Fragment {
                  startActivity(intent);
              }
          });
+         binding.bugButton.setOnClickListener(view1 -> {
+
+             Intent email = new Intent(Intent.ACTION_SEND);
+             email.setType("plain/text");
+             String[] address = {"suvirun@gmail.com"};
+             email.putExtra(Intent.EXTRA_EMAIL, address);
+             email.putExtra(Intent.EXTRA_SUBJECT, R.string.network_error);
+             email.setPackage("com.google.android.gm");
+             email.putExtra(Intent.EXTRA_TEXT, R.string.error_detail);
+             startActivity(email);
+
+         });
 
         Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
         getProfile.enqueue(new Callback<ImageData>() {
