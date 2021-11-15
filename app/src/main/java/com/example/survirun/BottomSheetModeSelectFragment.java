@@ -23,6 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
     FragmentBottomSheetModeSelectBinding binding;
     private BottomSheetListener mListener;
+    boolean isZombieMode;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
@@ -37,15 +38,18 @@ public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
             mListener.onClickStart();
         });
 
+        binding.zombieSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            mListener.onCheckZombie(isChecked);
+        });
 
-        // Inflate the layout for this fragment
+
         return v;
 
     }
 
 
     public interface BottomSheetListener {
-
         void onClickStart();
+        void onCheckZombie(boolean isCheck);
     }
 }

@@ -33,6 +33,7 @@ public class WelcomeActivity extends FragmentActivity {
         binding.welcomeViewPager.setAdapter(welcomePagerAdapter);
 
         binding.skipButton.setOnClickListener(v -> {
+            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
             finish();
         });
     }

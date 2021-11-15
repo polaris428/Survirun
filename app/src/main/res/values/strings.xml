@@ -127,4 +127,6 @@
     <string name="looking_user">Looking for a user...</string>
     <string name="looking_record">Looking for records...</string>
     <string name="delete_cache_text">Do you want to delete the cache?</string>
+    <string name="detail">"Details"</string>
+    <string name="error">Error</string>
 </resources>

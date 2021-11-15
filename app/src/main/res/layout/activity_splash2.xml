@@ -39,9 +39,10 @@
         app:layout_constraintBottom_toTopOf="@id/layout"
         app:layout_constraintLeft_toLeftOf="parent"/>
     <ImageView
+        android:id="@+id/run_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_human"
+        android:background="@drawable/run_anim"
         android:layout_marginBottom="-16dp"
         android:layout_marginRight="-28dp"
         app:layout_constraintBottom_toTopOf="@id/layout"

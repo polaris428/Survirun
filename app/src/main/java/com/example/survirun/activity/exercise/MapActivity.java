@@ -405,7 +405,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             pausePolylineOpt = new PolylineOptions();
             startActivity(intent);
         } catch (Exception e) {
-            Toast.makeText(this, "오류발생", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
             Log.d("<MapActivity, func stop>", e.getMessage());
         }
 
