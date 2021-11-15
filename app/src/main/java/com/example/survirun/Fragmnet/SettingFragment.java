@@ -142,8 +142,6 @@ public class SettingFragment extends Fragment {
     }
     public void setDialog(String text) {
         TextView explain = dialog.findViewById(R.id.explain_textView);
-        Button helpButton = dialog.findViewById(R.id.help_button);
-        helpButton.setVisibility(View.GONE);
         explain.setText(text);
         dialog.show();
         dialog.findViewById(R.id.cancel_button).setOnClickListener(v -> dialog.dismiss());
