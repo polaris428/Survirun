@@ -68,7 +68,8 @@
                 android:id="@+id/card_item2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="700dp"
+                android:maxHeight="900dp"
+                android:visibility="gone"
 
 
                 app:layout_constraintTop_toBottomOf="@+id/constraint_layout1">
@@ -129,6 +130,15 @@
 
                 </TextView>
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text=" Kcal"
+                    app:layout_constraintLeft_toRightOf="@+id/exercise_kcal_text_view"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/exercise_kcal_text_view">
+
+                </TextView>
+                <TextView
                     android:id="@+id/exercise_time_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -137,6 +147,15 @@
                     app:layout_constraintLeft_toRightOf="@+id/clock_icon"
                     app:layout_constraintTop_toTopOf="@+id/clock_icon"
                     app:layout_constraintBottom_toBottomOf="@+id/clock_icon">
+
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="@string/min"
+                    app:layout_constraintLeft_toRightOf="@+id/exercise_time_text_view"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/exercise_time_text_view">
 
                 </TextView>
 
@@ -151,13 +170,23 @@
                     app:layout_constraintBottom_toBottomOf="@+id/run_icon">
 
                 </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text=" km"
+                    app:layout_constraintLeft_toRightOf="@+id/exercise_km_text_view"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/exercise_km_text_view">
+
+                </TextView>
+
                 <Button
                     android:id="@+id/detail_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="자세히 보기"
                     android:textSize="15sp"
-
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     app:layout_constraintTop_toBottomOf="@+id/run_icon"
                     app:layout_constraintRight_toRightOf="parent"
                     />

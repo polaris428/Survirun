@@ -147,11 +147,11 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             constraintLayout1.setOnClickListener(v -> {
                 if (constraintLayout2.getVisibility() == View.GONE) {
                     constraintLayout2.setVisibility(View.VISIBLE);
-                    ValueAnimator anim = ValueAnimator.ofInt(1, 400);
+                    ValueAnimator anim = ValueAnimator.ofInt(1, 550);
                     setAnimation(anim, constraintLayout2);
 
                 } else {
-                    ValueAnimator anim = ValueAnimator.ofInt(400, 1);
+                    ValueAnimator anim = ValueAnimator.ofInt(550, 1);
                     setAnimation(anim, constraintLayout2);
                     handler.postDelayed(new Runnable() {
                         @Override
