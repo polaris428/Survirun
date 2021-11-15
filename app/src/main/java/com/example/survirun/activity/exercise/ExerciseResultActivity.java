@@ -47,7 +47,7 @@ public class ExerciseResultActivity extends AppCompatActivity {
         int kcal = getIntent().getIntExtra("kcal", 0);
         double km = getIntent().getDoubleExtra("walkedDistanceToKm", 0);
         int timeToSec = getIntent().getIntExtra("timeToSec", 0);
-
+        int hp = getIntent().getIntExtra("hp",0);
         setAnimation(binding.constraint);
         binding.calorieTextView.setText(String.format("%d", kcal));
         binding.kmTextView.setText(String.format("%.2f", km));
@@ -95,5 +95,20 @@ public class ExerciseResultActivity extends AppCompatActivity {
             constraintLayout.requestLayout();
         });
         anim.start();
+    }
+
+    private int calcScore(int exerciseLevel, int nanEdo, int hp,int timeToSec, double km, int kcal, int timeMok, double kmMok, int kcalMok) {
+        int score = 0;
+        score += exerciseLevel*100;
+        score += hp*10*nanEdo;
+        if(timeToSec/timeMok >= 1) score += 500;
+        if(km/kmMok >= 1) score += 500;
+        if(kcal/kcalMok >=1) score+=500;
+        /*this is bonus*/
+        if((timeToSec / timeMok >= 1) && (km / kmMok >= 1) && (kcal / kcalMok >=1)) {
+            score+= 500;
+        }
+        if(hp==100) score+=100;
+        return score;
     }
 }

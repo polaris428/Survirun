@@ -6,12 +6,14 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.survirun.R;
 import com.example.survirun.data.ExerciseData;
 
 import com.example.survirun.databinding.FragmentUserBinding;
@@ -77,31 +79,31 @@ public class UserFragment extends Fragment {
         if (goalCalorie / 2 < calorie) {
 
             progress = progress + 25;
-            binding.calorieCardView.setCardBackgroundColor(Color.YELLOW);
+            binding.calorieCardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.yellow));
         }
         if (goalTime / 2 < time) {
             progress = progress + 25;
-            binding.exerciseTimeCardView.setCardBackgroundColor(Color.YELLOW);
+            binding.exerciseTimeCardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.yellow));
         }
         if (goalKm / 2 < km) {
             progress = progress + 25;
-            binding.kmCardView.setCardBackgroundColor(Color.YELLOW);
+            binding.kmCardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.yellow));
         }
 
         if (goalCalorie <= calorie) {
             progress = progress + 8;
             binding.arcProgress.setProgress(progress);
-            binding.calorieCardView.setCardBackgroundColor(Color.GREEN);
+            binding.calorieCardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
         }
         if (goalTime <= time) {
             progress = progress + 8;
             binding.arcProgress.setProgress(progress);
-            binding.exerciseTimeCardView.setCardBackgroundColor(Color.GREEN);
+            binding.exerciseTimeCardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
         }
-        if (goalKm <= time) {
+        if (goalKm <= km) {
             progress = progress + 8;
             binding.arcProgress.setProgress(progress);
-            binding.kmCardView.setCardBackgroundColor(Color.GREEN);
+            binding.kmCardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
         }
         if (progress >= 99) {
             progress = 100;

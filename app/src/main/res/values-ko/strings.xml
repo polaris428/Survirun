@@ -133,4 +133,7 @@
     <string name="ranking">랭킹</string>
     <string name="all">전체</string>
     <string name="friends">친구</string>
+    <string name="name">이름</string>
+    <string name="info">소개</string>
+    <string name="edit_profile">프로필 수정</string>
 </resources>

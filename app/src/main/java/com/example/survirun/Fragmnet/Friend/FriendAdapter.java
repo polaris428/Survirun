@@ -21,17 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.survirun.R;
-import com.example.survirun.activity.account.SignInActivity;
-import com.example.survirun.activity.account.SignUpProfileActivity;
 import com.example.survirun.data.ExerciseHistory;
 import com.example.survirun.data.FriendRoom;
-import com.example.survirun.data.ImageData;
 import com.example.survirun.data.getUserData;
 import com.example.survirun.server.ServerClient;
 
-
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,36 +62,36 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         FriendRoom item = friendRoomList.get(position);
         holder.email.setText(item.email);
         holder.name.setText(item.name);
-        Glide.with(context).load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id="+item.profile)
+        Glide.with(context).load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + item.profile)
                 .error(R.drawable.userdefaultprofile)
                 .circleCrop()
                 .into(holder.profile);
 
-        Log.d("adsf",item.profile);
+        Log.d("adsf", item.profile);
         holder.detailButton.setOnClickListener(v -> {
 
             Intent intent = new Intent(context, FriendInformationActivity.class);
-            intent.putExtra("userName",holder.name.getText().toString());
-            intent.putExtra("userEmail",holder.email.getText().toString());
-            intent.putExtra("profile",item.profile);
+            intent.putExtra("userName", holder.name.getText().toString());
+            intent.putExtra("userEmail", holder.email.getText().toString());
+            intent.putExtra("profile", item.profile);
 
             context.startActivity(intent);
 
         });
-        Call<getUserData>call1=ServerClient.getServerService().getUser(token, item.email);
+        Call<getUserData> call1 = ServerClient.getServerService().getUser(token, item.email);
         call1.enqueue(new Callback<getUserData>() {
             @Override
             public void onResponse(Call<getUserData> call, Response<getUserData> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
 
-                    ExerciseHistory exerciseHistory=response.body().exerciseHistory.get(0);
+                    ExerciseHistory exerciseHistory = response.body().exerciseHistory.get(0);
                     holder.exerciseKcalTextview.setText(String.valueOf(exerciseHistory.calorie));
                     holder.exerciseTimeTextView.setText(String.valueOf(exerciseHistory.time));
                     holder.exerciseKmTextView.setText(String.valueOf(exerciseHistory.km));
-                    Log.d("ad",response.body().username);
+                    Log.d("ad", response.body().username);
 
-                }else{
-                    Log.e("adsf","실패"+ response.code());
+                } else {
+                    Log.e("adsf", "실패" + response.code());
 
                 }
             }
@@ -106,9 +101,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 t.printStackTrace();
             }
         });
-
-
-
 
 
     }
@@ -138,20 +130,22 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             constraintLayout1 = itemView.findViewById(R.id.constraint_layout);
             constraintLayout2 = itemView.findViewById(R.id.card_item2);
             exerciseKcalTextview = itemView.findViewById(R.id.exercise_kcal_text_view);
-            exerciseTimeTextView=itemView.findViewById(R.id.exercise_time_text_view);
-            exerciseKmTextView=itemView.findViewById(R.id.exercise_km_text_view);
+            exerciseTimeTextView = itemView.findViewById(R.id.exercise_time_text_view);
+            exerciseKmTextView = itemView.findViewById(R.id.exercise_km_text_view);
             detailButton = itemView.findViewById(R.id.detail_button);
             context = itemView.getContext();
 
+
             Handler handler = new Handler();
+            boolean isExpanded = false;
             constraintLayout1.setOnClickListener(v -> {
                 if (constraintLayout2.getVisibility() == View.GONE) {
                     constraintLayout2.setVisibility(View.VISIBLE);
-                    ValueAnimator anim = ValueAnimator.ofInt(1, 550);
+                    ValueAnimator anim = ValueAnimator.ofInt(1, 1200);
                     setAnimation(anim, constraintLayout2);
 
                 } else {
-                    ValueAnimator anim = ValueAnimator.ofInt(550, 1);
+                    ValueAnimator anim = ValueAnimator.ofInt(1200, 1);
                     setAnimation(anim, constraintLayout2);
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -168,7 +162,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         }
     }
 
-    private void setAnimation(ValueAnimator anim, ConstraintLayout constraintLayout) {
+    private void setAnimation(ValueAnimator anim, View constraintLayout) {
         anim.setDuration(800);
         anim.addUpdateListener(animation -> {
             Integer value = (Integer) animation.getAnimatedValue();
