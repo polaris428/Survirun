@@ -50,7 +50,7 @@
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_exercise_preparation.xml" value="0.20516717325227962" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_exercise_result.xml" value="0.209375" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_explanation.xml" value="0.21041666666666667" />
-        <entry key="..\:/Survirun/app/src/main/res/layout/activity_friend_information.xml" value="0.4" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/activity_friend_information.xml" value="0.1874386653581943" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_login.xml" value="0.24947916666666667" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_main.xml" value="0.27708333333333335" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_map.xml" value="0.16" />
@@ -88,10 +88,11 @@
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_user.xml" value="0.2" />
         <entry key="..\:/Survirun/app/src/main/res/layout/header.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/layout/item_exercise.xml" value="0.16452702702702704" />
-        <entry key="..\:/Survirun/app/src/main/res/layout/item_friend.xml" value="0.144" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/item_friend.xml" value="0.264" />
         <entry key="..\:/Survirun/app/src/main/res/layout/iteme_xercise.xml" value="0.264" />
         <entry key="..\:/Survirun/app/src/main/res/layout/itemexercise.xml" value="0.209375" />
         <entry key="..\:/Survirun/app/src/main/res/layout/nav_header_main.xml" value="0.1296875" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/test.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/layout/welcome_1.xml" value="0.16" />
         <entry key="..\:/Survirun/app/src/main/res/layout/welcome_2.xml" value="0.165625" />
         <entry key="..\:/Survirun/app/src/main/res/layout/welcome_3.xml" value="0.165625" />
