@@ -2,15 +2,23 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
-    android:layout_height="500dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
-    tools:context=".Fragmnet.Friend.FriendInformationActivity"
-    android:background="@drawable/dialog_background">
+    tools:context=".Fragmnet.Friend.FriendInformationActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="30dp"
+        android:backgroundTint="#ffffff"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <ImageView
                 android:id="@+id/user_profile_image_view"
                 android:layout_width="120dp"
@@ -28,9 +36,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="암튼 이름"
-                android:textSize="25dp"
-                android:textColor="#000000"
+
+                android:textStyle="bold"
+
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/user_profile_image_view">
@@ -42,15 +50,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textColor="#959595"
+                android:textSize="15sp"
                 android:text="dlapdlf"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/username_textview">
 
             </TextView>
+            <Button
+                android:id="@+id/dialog_d_friendButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="친구 삭제"
+                app:layout_constraintTop_toBottomOf="@+id/user_email_text_view"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
 
-
+            </Button>
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
