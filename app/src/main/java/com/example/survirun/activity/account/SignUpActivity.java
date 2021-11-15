@@ -102,7 +102,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         binding.layout1.setError(getString(email_already));
                                     } else {
                                         binding.layout1.setHelperTextEnabled(true);
-                                        binding.layout1.setEndIconDrawable(R.drawable.ic_baseline_check_circle_24);
+                                        binding.layout1.setEndIconDrawable(R.drawable.ic_check);
                                         binding.layout1.setEndIconTintList(ColorStateList.valueOf(getColor(R.color.green)));
                                         isEmileCheck = true;
                                         binding.layout1.setHelperText(getString(email_can_use));
