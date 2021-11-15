@@ -52,8 +52,10 @@ public interface ServiceService {
 
    // @GET("/api/v1/friend/list")
     //Call<FindUserData> getFriendList(@Header("x-access-token") String token);
+    @PATCH("/api/v1/friend")
+    Call<ResultData>deleteFriend(@Header("x-access-token") String token,@Query("reqType")String reqType,String email);
 
-    @GET("api/v1/friend/roomList ")
+    @GET("api/v1/friend/roomList")
     Call<FindUserData>getFriendList(@Header("x-access-token") String token);
 
 
