@@ -13,11 +13,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.survirun.Fragmnet.ExerciseFragment;
-import com.example.survirun.Fragmnet.Friend.FriendFragment;
+import com.example.survirun.Fragmnet.Friend.RankingFragment;
 import com.example.survirun.Fragmnet.SettingFragment;
 import com.example.survirun.R;
 import com.example.survirun.Fragmnet.StatisticsFragment;
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case 4:
-                        replace(new FriendFragment());
+                        replace(new RankingFragment());
                         break;
                     case 5:
                         replace(new SettingFragment());
