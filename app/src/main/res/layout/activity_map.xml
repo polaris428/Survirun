@@ -132,6 +132,7 @@
         android:background="#66000000"
         android:gravity="center"
         android:text="쉬기 시작한지\n0시간 0분 1초"
+        android:textColor="#ffffff"
         android:textSize="20sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
