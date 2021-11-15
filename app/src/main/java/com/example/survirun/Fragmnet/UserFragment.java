@@ -18,6 +18,8 @@ import com.example.survirun.databinding.FragmentUserBinding;
 import com.example.survirun.server.ServerClient;
 
 
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,10 +68,10 @@ public class UserFragment extends Fragment {
     void score(int calorie,int time ,double km){
         binding.calorieTextview.setText(String.valueOf(calorie));
         binding.timeTextview.setText(String.valueOf(time));
-        binding.kmTextview.setText(String.valueOf(km));
+        binding.kmTextview.setText(String.format(Locale.getDefault(),"%.2f",km));
         yesterdayExercise= getContext().getSharedPreferences("yesterdayExercise", MODE_PRIVATE);
         binding.eveCalorieTextview.setText(String.valueOf(yesterdayExercise.getInt("calorie",0)-calorie));
-        binding.eveKmTextview.setText(String.valueOf(km-yesterdayExercise.getFloat("km",0)));
+        binding.eveKmTextview.setText(String.format(Locale.getDefault(),"%.2f",km-yesterdayExercise.getFloat("km",0)));
         binding.eveTimeTextview.setText(String.valueOf(time-yesterdayExercise.getInt("time",0)));
 
         if (goalCalorie / 2 < calorie) {
