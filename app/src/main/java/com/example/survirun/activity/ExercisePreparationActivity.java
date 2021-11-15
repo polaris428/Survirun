@@ -2,20 +2,13 @@ package com.example.survirun.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.DialogFragment;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.survirun.BottomSheetModeSelectFragment;
-import com.example.survirun.R;
 import com.example.survirun.activity.exercise.MapActivity;
 import com.example.survirun.databinding.ActivityExercisePreparationBinding;
 
@@ -23,8 +16,7 @@ import java.util.ArrayList;
 
 public class ExercisePreparationActivity extends AppCompatActivity implements BottomSheetModeSelectFragment.BottomSheetListener {
     ActivityExercisePreparationBinding binding;
-    boolean isCheckedZombie = false,
-            isCheckedGPS = false;
+    boolean isCheckedZombie = false;
     BottomSheetModeSelectFragment selectFragment;
     String title;
     String calorie;
@@ -63,19 +55,20 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
 
     @Override
     public void onClickStart() {
-        if (isCheckedZombie || isCheckedGPS) {
-            ArrayList<Integer> modeList = new ArrayList();
-            if (isCheckedZombie) modeList.add(MapActivity.ZOMBIE_MODE);
-                //else if (isCheckedStory) modeList.add(MapActivity.STORY_MODE);
-            else modeList.add(MapActivity.DEFAULT_MODE);
-            Intent i = new Intent(ExercisePreparationActivity.this, MapActivity.class);
-            i.putExtra("mode", modeList);
-            Log.d("asdf", String.valueOf(modeList));
-            startActivity(i);
-        } else {
-            Toast.makeText(getApplicationContext(), R.string.choose_mode, Toast.LENGTH_SHORT).show();
-        }
+        ArrayList<Integer> modeList = new ArrayList();
+        if (isCheckedZombie) modeList.add(MapActivity.ZOMBIE_MODE);
+        else modeList.add(MapActivity.DEFAULT_MODE);
+        Intent i = new Intent(ExercisePreparationActivity.this, MapActivity.class);
+        i.putExtra("mode", modeList);
+        Log.d("asdf", String.valueOf(modeList));
+        startActivity(i);
     }
+
+    @Override
+    public void onCheckZombie(boolean isCheck) {
+        isCheckedZombie = isCheck;
+    }
+
 
     private void setAnimation(ConstraintLayout constraintLayout) {
         ValueAnimator anim = ValueAnimator.ofInt(1, 1000);
