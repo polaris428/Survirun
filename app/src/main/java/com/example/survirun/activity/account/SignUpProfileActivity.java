@@ -38,6 +38,7 @@ import com.bumptech.glide.Glide;
 import com.example.survirun.BottomSheetSignUpFragment;
 import com.example.survirun.R;
 import com.example.survirun.activity.MainActivity;
+import com.example.survirun.activity.WelcomeActivity;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.databinding.ActivitySignUpProfileBinding;
 import com.example.survirun.server.ServerClient;
@@ -81,6 +82,9 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
         sf = getSharedPreferences("Login", MODE_PRIVATE);
         editor = sf.edit();
         signUpFragment = new BottomSheetSignUpFragment();
+        SharedPreferences sharedPreferences = getSharedPreferences("checkFirstAccess", MODE_PRIVATE);
+        boolean checkFirstAccess = sharedPreferences.getBoolean("checkFirstAccess", false);
+
 
         binding.profileImageview.setBackground(new ShapeDrawable(new OvalShape()));
         binding.profileImageview.setClipToOutline(true);
@@ -113,9 +117,17 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
                         if (response.isSuccessful()) {
                             editor.putBoolean("profile", true);
                             customProgressDialog.dismiss();
-
-                            Intent intent = new Intent(SignUpProfileActivity.this, MainActivity.class);
-                            startActivity(intent);
+                            if (!checkFirstAccess) {
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putBoolean("checkFirstAccess", true);
+                                editor.apply();
+                                Intent tutorialIntent = new Intent(SignUpProfileActivity.this, WelcomeActivity.class);
+                                startActivity(tutorialIntent);
+                            }
+                            else{
+                                Intent intent = new Intent(SignUpProfileActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
                         } else {
                             customProgressDialog.dismiss();
                             Log.d("adsf", response.errorBody().toString());
