@@ -5,10 +5,12 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.service.autofill.UserData;
 import android.widget.Toast;
 
 import com.example.survirun.data.ExerciseData;
 import com.example.survirun.data.ExerciseRecordData;
+import com.example.survirun.data.getUserData;
 import com.example.survirun.server.ServerClient;
 
 import retrofit2.Call;
@@ -16,7 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UserAccount {
-    public void getUser(String token, Context context){
+    public void getExercise(String token, Context context){
 
 
         Call<ExerciseData> call = ServerClient.getServerService().getExercise(token);
@@ -91,5 +93,29 @@ public class UserAccount {
         });
 
 
+    }
+    public void getUser(String token,String email,Context context) {
+        Call<getUserData> getUser=ServerClient.getServerService().getUser(token,email);
+        getUser.enqueue(new Callback<getUserData>() {
+            @Override
+            public void onResponse(Call<getUserData> call, Response<getUserData> response) {
+                if(response.isSuccessful()){
+                    SharedPreferences sf;
+                    SharedPreferences.Editor editor;
+                    sf = context.getSharedPreferences("yesterdayExercise", MODE_PRIVATE);
+                    editor=sf.edit();
+                    editor.putString("name", response.body().username);
+                    editor.putString("intro",response.body().intro);
+                    editor.putInt("score",response.body().score);
+                    editor.commit();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<getUserData> call, Throwable t) {
+                t.printStackTrace();
+
+            }
+        });
     }
 }

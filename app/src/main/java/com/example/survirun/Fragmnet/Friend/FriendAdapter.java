@@ -83,6 +83,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             @Override
             public void onResponse(Call<getUserData> call, Response<getUserData> response) {
                 if (response.isSuccessful()) {
+                    Log.d(response.body().email,  response.body().score+"");
 
                     ExerciseHistory exerciseHistory = response.body().exerciseHistory.get(0);
                     holder.exerciseKcalTextview.setText(String.valueOf(exerciseHistory.calorie));

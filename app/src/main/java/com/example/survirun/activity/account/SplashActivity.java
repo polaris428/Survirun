@@ -122,7 +122,8 @@ public class SplashActivity extends AppCompatActivity {
                     editor.putString("token", token);
                     editor.commit();
                     UserAccount userAccount=new UserAccount();
-                    userAccount.getUser(token,SplashActivity.this);
+                    userAccount.getExercise(token,SplashActivity.this);
+                    userAccount.getUser(token,email,SplashActivity.this);
                     userAccount.yesterdayExercise(token,SplashActivity.this);
                     Intent intent;
 
@@ -223,6 +224,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     void showDialog() {
+
         Button finishButton = dialog.findViewById(R.id.cancel_button);
         Button retryButton = dialog.findViewById(R.id.yes_button);
         Button helpButton=dialog.findViewById(R.id.help_button);

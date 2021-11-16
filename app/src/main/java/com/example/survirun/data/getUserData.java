@@ -4,12 +4,13 @@ import java.util.List;
 
 public  class getUserData {
 
-
-    public List<ExerciseHistory> exerciseHistory;
-
     public String username;
 
     public String email;
 
-    public String _id;
+    public String intro;
+
+    public int score;
+    public List<ExerciseHistory> exerciseHistory;
+
 }

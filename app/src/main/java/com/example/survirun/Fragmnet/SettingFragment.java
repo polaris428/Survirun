@@ -3,7 +3,6 @@ package com.example.survirun.Fragmnet;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -12,19 +11,16 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.survirun.EditProfileActivity;
+import com.example.survirun.activity.EditProfileActivity;
 import com.example.survirun.R;
-import com.example.survirun.activity.MainActivity;
 import com.example.survirun.activity.WelcomeActivity;
 import com.example.survirun.activity.user.UserGoalActivity;
 import com.example.survirun.data.ImageData;

@@ -127,7 +127,7 @@ public class SignInActivity extends AppCompatActivity {
                                 editor.commit();
                                 UserAccount userAccount=new UserAccount();
                                 userAccount.yesterdayExercise( response.body().token,SignInActivity.this);
-                                userAccount.getUser(response.body().token,SignInActivity.this);
+                                userAccount.getExercise(response.body().token,SignInActivity.this);
                                 if (!response.body().username) {
                                     customProgressDialog.dismiss();
 
@@ -150,6 +150,8 @@ public class SignInActivity extends AppCompatActivity {
                                                 if (response.isSuccessful()) {
                                                     customProgressDialog.dismiss();
                                                     editor.putString("name", response.body().username);
+                                                    editor.putString("intro",response.body().intro);
+                                                    editor.putInt("score",response.body().score);
                                                     editor.commit();
 
                                                     Intent intent = new Intent(SignInActivity.this, MainActivity.class);
