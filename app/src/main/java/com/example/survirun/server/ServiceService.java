@@ -84,4 +84,10 @@ public interface ServiceService {
     @GET("/api/v1/exercise/score/global")
     Call<rankingData>getRanking(@Header("x-access-token")String token);
 
+
+    @PATCH("/api/v1/auth/intro")
+    Call<ResultData>patchEditIntro(@Header("x-access-token")String token ,@Body String intro);
+
+
+
 }
