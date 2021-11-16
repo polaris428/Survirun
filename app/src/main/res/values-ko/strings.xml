@@ -143,4 +143,5 @@
     <string name="mok_cl">목표를 달성했습니다. 운동이 종료됩니다. 결과를 확인해주세요.</string>
     <string name="delete_friend">친구 삭제</string>
     <string name="died">당신은 죽었습니다.</string>
+    <string name="delete_friend_text">친구를 삭제하시겠습니까?</string>
 </resources>
