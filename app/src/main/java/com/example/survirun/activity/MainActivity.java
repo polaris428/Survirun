@@ -16,7 +16,7 @@ import android.widget.Button;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.survirun.Fragmnet.excise.ExerciseFragment;
-import com.example.survirun.Fragmnet.Friend.RankingFragment;
+import com.example.survirun.Fragmnet.ranking.RankingFragment;
 import com.example.survirun.Fragmnet.SettingFragment;
 import com.example.survirun.R;
 import com.example.survirun.Fragmnet.StatisticsFragment;
