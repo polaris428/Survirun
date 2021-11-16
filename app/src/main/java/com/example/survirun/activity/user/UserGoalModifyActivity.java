@@ -1,17 +1,19 @@
 package com.example.survirun.activity.user;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.survirun.R;
 import com.example.survirun.activity.MainActivity;
 import com.example.survirun.databinding.ActivityUserGoalModifyBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserGoalModifyActivity extends AppCompatActivity {
     private ActivityUserGoalModifyBinding binding;
@@ -29,93 +31,45 @@ public class UserGoalModifyActivity extends AppCompatActivity {
         int calorie = sf.getInt("calorie", 400);
         int time = sf.getInt("time", 60);
         int km = sf.getInt("km", 5);
+        List<String> numList = new ArrayList();
 
-        binding.calorieEdittext.setText(String.valueOf(calorie));
-        binding.hourEdittext.setText(String.valueOf(time / 60));
-        binding.minuteEdittext.setText(String.valueOf(time % 60));
-        binding.kmEdittext.setText(String.valueOf(km));
 
-        binding.hourEdittext.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+        binding.calorieNumberPicker.setValue(calorie);
+        binding.hourNumberPicker.setValue(time / 60);
+        binding.minuteNumberPicker.setValue(time % 60);
+        binding.kmNumberPicker.setValue(km);
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                try {
-                    if (Integer.parseInt(binding.hourEdittext.getText().toString()) > 23)
-                        binding.hourEdittext.setText(String.valueOf(23));
-                } catch (Exception e) {
+        binding.calorieNumberPicker.setTextColor(ContextCompat.getColor(this, R.color.transparent));
+        binding.hourNumberPicker.setTextColor(ContextCompat.getColor(this, R.color.transparent));
+        binding.minuteNumberPicker.setTextColor(ContextCompat.getColor(this, R.color.transparent));
 
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (binding.hourEdittext.getText().toString().replace(" ", "").equals(""))
-                    isTimeH = false;
-                else isTimeH = true;
-            }
+        binding.calorieNumberPicker.setOnClickListener(v -> {
+            binding.calorieNumberPicker.setTextColor(ContextCompat.getColor(this, R.color.gray));
+            binding.calorieNumberPicker.setDividerColor(ContextCompat.getColor(this, R.color.red));
         });
 
-        binding.minuteEdittext.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                try {
-                    if (Integer.parseInt(binding.minuteEdittext.getText().toString()) > 59)
-                        binding.minuteEdittext.setText(String.valueOf(59));
-                } catch (Exception e) {
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (binding.minuteEdittext.getText().toString().replace(" ", "").equals(""))
-                    isTimeM = false;
-                else isTimeM = true;
-            }
+        binding.hourNumberPicker.setOnClickListener(v -> {
+            binding.hourNumberPicker.setTextColor(ContextCompat.getColor(this, R.color.gray));
+            binding.hourNumberPicker.setDividerColor(ContextCompat.getColor(this, R.color.red));
         });
 
-        binding.kmEdittext.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (binding.kmEdittext.getText().toString().replace(" ", "").equals(""))
-                    isKm = false;
-                else isKm = true;
-            }
+        binding.minuteNumberPicker.setOnClickListener(v -> {
+            binding.minuteNumberPicker.setTextColor(ContextCompat.getColor(this, R.color.gray));
+            binding.minuteNumberPicker.setDividerColor(ContextCompat.getColor(this, R.color.red));
         });
+
 
         binding.saveButton.setOnClickListener(v -> {
-            if (binding.calorieEdittext.getText().toString().replace(" ", "").equals(""))
-                isCalorie = false;
-            else isCalorie = true;
-            if (isCalorie && isTimeH && isTimeM && isKm) {
-                int inputCalorie = Integer.parseInt(binding.calorieEdittext.getText().toString());
-                int inputTime = Integer.parseInt(binding.hourEdittext.getText().toString()) * 60 + Integer.parseInt(binding.minuteEdittext.getText().toString());
-                int inputKm = Integer.parseInt(binding.kmEdittext.getText().toString());
-                SharedPreferences.Editor editor = sf.edit();
-                editor.putInt("calorie", inputCalorie);
-                editor.putInt("time", inputTime);
-                editor.putInt("km", inputKm);
-                editor.apply();
-                editor.commit();
-                Intent intent = new Intent(UserGoalModifyActivity.this, MainActivity.class);
-                startActivity(intent);
-            } else {
-                Toast.makeText(getApplicationContext(), R.string.fill_error, Toast.LENGTH_SHORT).show();
-            }
+            int inputCalorie = binding.calorieNumberPicker.getValue();
+            int inputTime = binding.hourNumberPicker.getValue() * 60 + binding.minuteNumberPicker.getValue();
+            int inputKm = binding.kmNumberPicker.getValue();
+            SharedPreferences.Editor editor = sf.edit();
+            editor.putInt("calorie", inputCalorie);
+            editor.putInt("time", inputTime);
+            editor.putInt("km", inputKm);
+            editor.apply();
+            editor.commit();
+            finish();
         });
 
         binding.backButton.setOnClickListener(v -> {
