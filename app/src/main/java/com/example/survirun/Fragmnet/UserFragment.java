@@ -72,7 +72,15 @@ public class UserFragment extends Fragment {
 
         int min = time / 60;
         int hour = time / 3600;
-        binding.timeTextview.setText(String.format("%d:%d", hour, min));
+        if (hour >= 1) {
+
+            binding.timeHTextview.setText(String.valueOf(hour));
+        }else{
+            binding.timeHTextview.setVisibility(View.GONE);
+            binding.timeUnitTextview.setVisibility(View.GONE);
+            binding.timeMTextview.setText(String.valueOf(min));
+        }
+
 
         binding.kmTextview.setText(String.format(Locale.getDefault(),"%.2f",km));
         yesterdayExercise= getContext().getSharedPreferences("yesterdayExercise", MODE_PRIVATE);
