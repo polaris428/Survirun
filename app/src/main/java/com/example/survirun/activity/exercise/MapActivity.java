@@ -41,6 +41,7 @@ import android.widget.Toast;
 
 import com.example.survirun.Medel.ZombieModel;
 import com.example.survirun.R;
+import com.example.survirun.activity.MainActivity;
 import com.example.survirun.databinding.ActivityMapBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -99,6 +100,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public static ActivityMapBinding binding;
     private ArrayList<Integer> CURRENT_MODE;
 
+    private static int kcalMok;
+    private static int timeMok; //sec
+    private static double kmMok;
 
     public static SupportMapFragment mapFragment;
 
@@ -124,7 +128,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         dialog.setContentView(R.layout.dialog);
 
         CURRENT_MODE = getIntent().getIntegerArrayListExtra("mode");
-
+        kmMok = getIntent().getDoubleExtra("kmMok",1);
+        timeMok = getIntent().getIntExtra("timeMok",1);
+        kcalMok = getIntent().getIntExtra("kcalMok",1);
         showSnackBar(view);
 
         binding.dragButton.setOnClickListener(v -> {
@@ -342,8 +348,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         z.thread.interrupt();
                     }
                 }
-
-
             }
         });
     }
@@ -728,6 +732,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         }
                     }
                 }
+                /*목표달성체크*/
+                if(kcal >= kcalMok&& walkingDistance >=walkingDistance && timeToSec >= timeMok) {
+                    playTTS(getString(R.string.mok_cl));
+                    stop();
+                }
+
             } catch (Exception e) {
                 //    Log.d("<MapActivity> : " , e.getMessage());
             }
@@ -744,8 +754,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         splayTTS(mctx.getString(R.string.hitted_zb));
         if (HP <= 0) {
             stopZombie();
-            //종료하고 싶으면 stop();
+            //stop(); //종료하고 싶으면
         }
+    }
+
+    public static void sstop() {
+
     }
 
     @MainThread
