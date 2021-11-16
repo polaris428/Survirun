@@ -1,9 +1,5 @@
 package com.example.survirun.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +8,10 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.survirun.Fragmnet.Friend.FriendAdapter;
@@ -97,7 +97,7 @@ public class FriendActivity extends AppCompatActivity {
                     public void onResponse(Call<getUserData> call, Response<getUserData> response) {
                         if (response.isSuccessful()) {
                             friendName = response.body().username;
-                            friendEmile=response.body().email;
+                            friendEmile = response.body().email;
                             friendEmail = binding.emileInputEditText.getText().toString();
                             binding.cardView.setVisibility(View.VISIBLE);
                             binding.findFriendsCardView.setVisibility(View.VISIBLE);
@@ -106,7 +106,7 @@ public class FriendActivity extends AppCompatActivity {
                             binding.backButton.setVisibility(View.VISIBLE);
                             binding.usernameTextview.setText(friendName);
                             ExerciseHistory exerciseHistory = response.body().exerciseHistory.get(0);
-                            binding.exerciseTextview.setText(exerciseHistory.calorie + "kcal " + exerciseHistory.time + getString(R.string.hour) + exerciseHistory.km + "km ");
+                            binding.exerciseTextview.setText(exerciseHistory.calorie + "kcal " + exerciseHistory.time + getString(R.string.hour) + " " + exerciseHistory.km + "km ");
                             Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url", response.body().username);
                             getProfile.enqueue(new Callback<ImageData>() {
                                 @Override
@@ -152,29 +152,26 @@ public class FriendActivity extends AppCompatActivity {
             }
 
 
-            binding.addFriend.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            binding.addFriend.setOnClickListener(v1 -> {
 
-                    Call<ResultData> call2 = ServerClient.getServerService().postAddFriend(token, "email", binding.emileInputEditText.getText().toString());
-                    call2.enqueue(new Callback<ResultData>() {
-                        @Override
-                        public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                            if (response.isSuccessful()) {
-                                Toast.makeText(FriendActivity.this,"친구추가 성공 잠시만 기달려주세요",Toast.LENGTH_LONG).show();
-                                refreshRecyclerView(friendEmile,friendName,profile);
-                            } else {
-                                //실패시
-
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResultData> call, Throwable t) {
+                Call<ResultData> call2 = ServerClient.getServerService().postAddFriend(token, "email", binding.emileInputEditText.getText().toString());
+                call2.enqueue(new Callback<ResultData>() {
+                    @Override
+                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(FriendActivity.this, "친구추가 성공 잠시만 기달려주세요", Toast.LENGTH_LONG).show();
+                            refreshRecyclerView(friendEmile, friendName, profile);
+                        } else {
+                            //실패시
 
                         }
-                    });
-                }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResultData> call, Throwable t) {
+
+                    }
+                });
             });
 
         });
@@ -223,9 +220,9 @@ public class FriendActivity extends AppCompatActivity {
                     int i = 0;
                     if (friendsRoomNumber == 0) {
                         for (i = 0; i < friendsServerNumber; i++) {
-                            refreshRecyclerView(response.body().users.get(i).email,response.body().users.get(i).username,response.body().profiles.get(i)._id);
+                            refreshRecyclerView(response.body().users.get(i).email, response.body().users.get(i).username, response.body().profiles.get(i)._id);
 
-                            Log.d("뿜뿜",response.body().profiles.get(i)._id);
+                            Log.d("뿜뿜", response.body().profiles.get(i)._id);
 
                         }
                     } else {
@@ -242,15 +239,14 @@ public class FriendActivity extends AppCompatActivity {
                                         Log.d("반복중", i + "");
 
 
-
                                     }
                                     if (!friend) {
-                                        refreshRecyclerView(response.body().users.get(i).email,response.body().users.get(i).username,response.body().profiles.get(i)._id);
+                                        refreshRecyclerView(response.body().users.get(i).email, response.body().users.get(i).username, response.body().profiles.get(i)._id);
                                         //String profile=response.body().users.get(i).profiles.get(i)._id;
 
 
-                                    }else {
-                                        friend=false;
+                                    } else {
+                                        friend = false;
                                     }
 
                                 }
@@ -270,7 +266,8 @@ public class FriendActivity extends AppCompatActivity {
         getFriend();
 
     }
-    public void refreshRecyclerView(String email,String name,String profile){
+
+    public void refreshRecyclerView(String email, String name, String profile) {
         class InsertRunnable implements Runnable {
             @Override
             public void run() {
@@ -286,7 +283,7 @@ public class FriendActivity extends AppCompatActivity {
         Thread addThread = new Thread(insertRunnable);
         addThread.start();
         getFriend();
-        FriendRoom friendRoom=new FriendRoom();
+        FriendRoom friendRoom = new FriendRoom();
         friendRoom.setEmail(email);
         friendRoom.setName(name);
         friendRoom.setProfile(profile);
