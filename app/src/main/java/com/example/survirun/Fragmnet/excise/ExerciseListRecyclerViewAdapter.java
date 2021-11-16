@@ -42,19 +42,19 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
         if(data.getHour(position)>60){
             hour = String.valueOf(data.getHour(position)/60);
             minute = String.valueOf(data.getHour(position)%60);
-            holder.exerciseTitleTextview.setText(data.getExName(position) + "   " + hour + hr + " " + minute + min);
+            holder.exerciseTitleTextview.setText(data.getExName(position));
         }
         else if(data.getHour(position)==60){
             hour = String.valueOf(data.getHour(position)/60);
-            holder.exerciseTitleTextview.setText(data.getExName(position) + "   " + hour + hr);
+            holder.exerciseTitleTextview.setText(data.getExName(position));
         }
         else{
-            holder.exerciseTitleTextview.setText(data.getExName(position) + "   " + data.getHour(position) + min);
+            holder.exerciseTitleTextview.setText(data.getExName(position));
         }
 
-        holder.calorieTextView.setText(data.getCalorie(position)+"");
-        holder.timeTextView.setText(data.getHour(position)+"");
-        holder.kmTextView.setText(data.getKm(position)+"");
+        holder.calorieTextView.setText(String.valueOf(data.getCalorie(position)));
+        holder.timeTextView.setText(String.valueOf(data.getHour(position)+""));
+        holder.kmTextView.setText(String.valueOf(data.getKm(position)));
 
         Handler handler = new Handler();
         holder.expandImageButton.setOnClickListener(view -> {
