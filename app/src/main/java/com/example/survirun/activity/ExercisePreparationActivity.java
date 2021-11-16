@@ -72,8 +72,9 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         intent.putExtra("calorie",calorie);
         intent.putExtra("km",km);
         intent.putExtra("time",time);
-        intent.putExtra("zombieMode",zombieMode);
         intent.putExtra("level",level);
+        intent.putExtra("zombieMode",zombieMode);
+
         Log.d("asdf", String.valueOf(modeList));
         startActivity(intent);
     }

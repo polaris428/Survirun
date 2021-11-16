@@ -79,7 +79,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private LocationManager lm;
     public static PolylineOptions polylineOptions = new PolylineOptions();
 
-    private PolylineOptions pausePolylineOpt = new PolylineOptions();
+    private static PolylineOptions pausePolylineOpt = new PolylineOptions();
     private static TextToSpeech tts;
 
     private double lastLat = 0.0;
@@ -87,13 +87,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public static double currentLat = 0.0;
     public static double currentLng = 0.0;
 
-    private double kcal = 0.0;
-    private double walkingDistance = 0;
-    private double timeToSec = 0.0;
+    private static double kcal = 0.0;
+    private static double walkingDistance = 0;
+    private static double timeToSec = 0.0;
 
     public static boolean isRunning = true; //일시정지시 false로
     private boolean isFirst = false;
-    private Thread timeThread = null;
+    /*if err remove static*/
+    private static Thread timeThread = null;
     public static ActivityMapBinding binding;
 
     private static int kcalMok;
@@ -106,7 +107,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
     private int zombieListCurrentPos = 0; // +1 해서 좀데 리스트 요소 개수 ㄱㄴ
     Dialog dialog;
-    String title;
+    private static String title;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -427,6 +428,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             intent.putExtra("timeToSec", (int) timeToSec);
             intent.putExtra("title",title);
             intent.putExtra("hp",HP);
+            //intent.putExtra()
+            //intent.putExtra("title",title);
+            intent.putExtra("calorie",kcalMok);
+            intent.putExtra("km",kmMok);
+            intent.putExtra("time",timeMok);
+            intent.putExtra("level",levelMok);
 
 
 
@@ -440,6 +447,104 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
 
 
+    }
+
+
+    public static void sstop() {
+        try {
+            timeThread.interrupt();
+            List<LatLng> list = polylineOptions.getPoints();
+
+            if (list.size() > 0) {
+                LatLng leftTopLatLng = list.get(0), rightBottomLatLng = list.get(0);
+                for (LatLng i : list) {
+
+                    if (leftTopLatLng.latitude > i.latitude) {
+                        leftTopLatLng = new LatLng(i.latitude, leftTopLatLng.longitude);
+                    }
+                    if (leftTopLatLng.longitude < i.longitude) {
+                        leftTopLatLng = new LatLng(leftTopLatLng.latitude, i.longitude);
+                    }
+                    if (rightBottomLatLng.latitude < i.latitude) {
+                        rightBottomLatLng = new LatLng(i.latitude, rightBottomLatLng.longitude);
+                    }
+                    if (rightBottomLatLng.longitude > i.longitude) {
+                        rightBottomLatLng = new LatLng(rightBottomLatLng.latitude, i.longitude);
+                    }
+
+                }
+
+                LatLng mid = new LatLng((leftTopLatLng.latitude + rightBottomLatLng.latitude) / 2, (leftTopLatLng.longitude + rightBottomLatLng.longitude) / 2);
+                Location ltl = new Location("ltl");
+                Location rbl = new Location("rbl");
+                ltl.setLatitude(leftTopLatLng.latitude);
+                ltl.setLongitude(leftTopLatLng.longitude);
+                rbl.setLatitude(rightBottomLatLng.latitude);
+                rbl.setLongitude(rightBottomLatLng.longitude);
+
+                double d = ltl.distanceTo(rbl);
+                Log.d(">", "" + d);
+                //int zoomLv = getZoomLevelFromMeters(d);
+                int dis = 24576000;
+                int ret = 21;
+                for (int i = 1; i <= 21; i++) {
+                    if (d >= dis) {
+                        ret = i;
+                        break;
+                    } else {
+                        dis /= 2;
+                    }
+                }
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mid, ret));
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    Log.d("ERR", e.getMessage());
+                }
+
+                GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback() {
+
+                    @Override
+                    public void onSnapshotReady(Bitmap snapshot) {
+                        //sendDataToFirebase((int) kcal, walkingDistance / 1000, (int) timeToSec, snapshot);
+
+
+                    }
+                };
+
+
+                mMap.snapshot(callback);
+                try {
+                    Thread.sleep(10);
+                } catch (Exception e) {
+                    Log.d("ERR", e.getMessage());
+                }
+
+                Intent intent = new Intent(mctx, ExerciseResultActivity.class); //main말고 다른걸로 변경
+                intent.putExtra("kcal", (int) kcal);
+                intent.putExtra("walkedDistanceToKm", walkingDistance / 1000);
+                intent.putExtra("timeToSec", (int) timeToSec);
+                intent.putExtra("title",title);
+                intent.putExtra("hp",HP);
+                intent.putExtra("calorie",kcalMok);
+                intent.putExtra("km",kmMok);
+                intent.putExtra("time",timeMok);
+                intent.putExtra("level",levelMok);
+
+
+                polylineOptions = new PolylineOptions();
+                pausePolylineOpt = new PolylineOptions();
+                mMap.clear();
+                mctx.startActivity(intent);
+
+
+
+            }
+
+
+        } catch(Exception e) {
+            Log.e("<MapActivity, sstop()>",e.getMessage());
+        }
     }
 
     private int getZoomLevelFromMeters(double distanceTo) {
@@ -724,7 +829,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 if (zombieMode) {
                     if (isRunning) {
                         if ((timeToSec1 / 60) % ZOMBIE_CREATE_MINUTES == 0 && timeToSec1 % 60 == 0 && isZombieCreating && timeToSec1 >= 60) {
-                            createZombie();
+                            if (zombieList.size() < MAX_ZB_CNT) createZombie();
                         }
                     }
                 }
@@ -736,7 +841,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
 
             } catch (Exception e) {
-                //    Log.d("<MapActivity> : " , e.getMessage());
+                Log.e("<MapActivity, Time Handler> : " , e.getMessage());
             }
 
 
@@ -751,13 +856,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if (HP <= 0) {
             stopZombie();
             splayTTS(mctx.getString(R.string.died));
-            //stop(); //종료하고 싶으면
+            sstop(); //종료하고 싶으면
         }
     }
 
-    public static void sstop() {
 
-    }
 
     @MainThread
     public static void updateHpUI() {
