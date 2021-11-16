@@ -22,6 +22,8 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
     String calorie;
     String km;
     String time;
+    int level;
+    boolean zombieMode=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         calorie = exerciseSelection.getStringExtra("calorie");
         km = exerciseSelection.getStringExtra("km");
         time = exerciseSelection.getStringExtra("time");
+        level= exerciseSelection.getIntExtra("level",1);
 
         binding.exerciseTitleTextview.setText(title);
         binding.calorieTextView.setText(calorie);
@@ -46,6 +49,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
 
         binding.exerciseStartButton.setOnClickListener(v -> {
             selectFragment.show(getSupportFragmentManager(), "bottomSheet");
+
         });
 
         binding.backButton.setOnClickListener(v -> {
@@ -64,7 +68,8 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         intent.putExtra("calorie",calorie);
         intent.putExtra("km",km);
         intent.putExtra("time",time);
-        intent.putExtra("mode", modeList);
+        intent.putExtra("zombieMode",zombieMode);
+        intent.putExtra("level",level);
         Log.d("asdf", String.valueOf(modeList));
         startActivity(intent);
     }

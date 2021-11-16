@@ -103,7 +103,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static int kcalMok;
     private static int timeMok; //sec
     private static double kmMok;
-
+    private static  int levelMok;
+    private static  boolean zombieMode;
     public static SupportMapFragment mapFragment;
 
     public static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
@@ -120,17 +121,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(view);
         mctx = this;
         Intent getIntent=getIntent();
-         title=getIntent.getStringExtra("title");
+
          Log.d(title,title);
         dialog = new Dialog(MapActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog);
+        title=getIntent.getStringExtra("title");
+        zombieMode=getIntent.getBooleanExtra("zombieMode",true);
+        kmMok = getIntent().getDoubleExtra("km",1);
+        timeMok = getIntent().getIntExtra("time",1);
+        kcalMok = getIntent().getIntExtra("calorie",1);
+        levelMok=getIntent.getIntExtra("level",0);
 
-        CURRENT_MODE = getIntent().getIntegerArrayListExtra("mode");
-        kmMok = getIntent().getDoubleExtra("kmMok",1);
-        timeMok = getIntent().getIntExtra("timeMok",1);
-        kcalMok = getIntent().getIntExtra("kcalMok",1);
         showSnackBar(view);
 
         binding.dragButton.setOnClickListener(v -> {

@@ -23,6 +23,7 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     public ArrayList<ExerciseData> items;
     String min, hr;
     String hour, minute;
+    int level;
     public ExerciseListRecyclerViewAdapter(ArrayList<ExerciseData> list) {
         items = list;
     }
@@ -33,12 +34,14 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_exercise, parent, false);
         min = itemView.getContext().getString(R.string.min);
         hr = itemView.getContext().getString(R.string.hour);
+
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExerciseData data = items.get(position);
+        level=data.getLevel(position);
         if(data.getHour(position)>60){
             hour = String.valueOf(data.getHour(position)/60);
             minute = String.valueOf(data.getHour(position)%60);
@@ -85,6 +88,7 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
                 Intent intent = new Intent(holder.itemView.getContext(), ExercisePreparationActivity.class);
                 intent.putExtra("title",holder.exerciseTitleTextview.getText().toString());
                 intent.putExtra("calorie",holder.calorieTextView.getText().toString());
+                intent.putExtra("level",level);
                 intent.putExtra("km",holder.kmTextView.getText().toString());
                 intent.putExtra("time",holder.timeTextView.getText().toString());
                 holder.itemView.getContext().startActivity(intent);
