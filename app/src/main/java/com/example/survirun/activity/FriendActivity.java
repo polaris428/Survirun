@@ -1,4 +1,4 @@
-package com.example.survirun;
+package com.example.survirun.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.survirun.Fragmnet.Friend.FriendAdapter;
+import com.example.survirun.FriendDB;
+import com.example.survirun.R;
 import com.example.survirun.data.ExerciseHistory;
 import com.example.survirun.data.FindUserData;
 import com.example.survirun.data.FriendRoom;

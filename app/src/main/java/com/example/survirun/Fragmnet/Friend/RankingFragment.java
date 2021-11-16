@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.survirun.FriendActivity;
+import com.example.survirun.activity.FriendActivity;
 import com.example.survirun.databinding.FragmentRankingBinding;
 
 public class RankingFragment extends Fragment {

@@ -1,23 +1,19 @@
-package com.example.survirun.activity.exercise;
+package com.example.survirun.Fragmnet.excise;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Handler;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ExerciseData;
+import com.example.survirun.loom.ExerciseData;
 import com.example.survirun.R;
 import com.example.survirun.activity.ExercisePreparationActivity;
 

@@ -21,18 +21,14 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.example.survirun.NetworkStatus;
+import com.example.survirun.server.NetworkStatus;
 import com.example.survirun.R;
-import com.example.survirun.SplashActivity2;
+import com.example.survirun.activity.exercise.SplashActivity2;
 import com.example.survirun.UserAccount;
 import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.TokenData;
-import com.example.survirun.databinding.ActivitySplash2Binding;
 import com.example.survirun.databinding.ActivitySplashBinding;
 import com.example.survirun.server.ServerClient;
 

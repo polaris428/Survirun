@@ -1,4 +1,4 @@
-package com.example.survirun;
+package com.example.survirun.activity.exercise;
 
 import android.view.View;
 

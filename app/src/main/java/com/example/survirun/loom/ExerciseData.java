@@ -1,4 +1,4 @@
-package com.example;
+package com.example.survirun.loom;
 
 public class ExerciseData {
     String exName;

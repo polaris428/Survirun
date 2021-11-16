@@ -1,4 +1,4 @@
-package com.example.survirun;
+package com.example.survirun.server;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

@@ -1,8 +1,7 @@
-package com.example.survirun;
+package com.example.survirun.activity.exercise;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import com.example.survirun.R;
 import com.example.survirun.activity.account.SignInActivity;
 import com.example.survirun.activity.account.SignUpActivity;
 import com.example.survirun.databinding.ActivitySplash2Binding;
@@ -33,7 +33,7 @@ public class SplashActivity2 extends AppCompatActivity {
 
 
         binding.ground.setMinimumWidth(binding.layout.getWidth()*2);
-        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.run_anim);
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.run_anim);
         binding.ground.startAnimation(anim);
 
         binding.signInButton.setOnClickListener(v -> {

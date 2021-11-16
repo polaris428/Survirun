@@ -1,4 +1,4 @@
-package com.example.survirun;
+package com.example.survirun.Fragmnet;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.survirun.R;
 import com.example.survirun.activity.MainActivity;
 
 public class WelcomeFragment extends Fragment {

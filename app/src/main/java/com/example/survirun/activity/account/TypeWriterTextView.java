@@ -1,4 +1,4 @@
-package com.example.survirun;
+package com.example.survirun.activity.account;
 
 import android.content.Context;
 import android.os.Handler;
