@@ -79,7 +79,7 @@ public class FriendInformationActivity extends Activity {
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate);
 
 
-        binding.goalBarGraph.clearChart();
+
         binding.image.startAnimation(animation);
         binding.findRecord.setVisibility(View.VISIBLE);
         Call<getUserData>call=ServerClient.getServerService().getUser(token,userEmile);
@@ -97,7 +97,7 @@ public class FriendInformationActivity extends Activity {
 
 
                     }else{
-
+                        binding.exerciseGraph.setVisibility(View.VISIBLE);
                         binding.ExerciseMessage.setVisibility(View.GONE);
 
                         for (int i=0;i<response.body().exerciseHistory.size();i++){
@@ -105,7 +105,7 @@ public class FriendInformationActivity extends Activity {
                             double km= response.body().exerciseHistory.get(i).km;
                             String data= response.body().exerciseHistory.get(i).date;
                             int time=response.body().exerciseHistory.get(i).time;
-                            Log.d("adsf",time/60+"");
+                            Log.d("시간",time/60+"");
                             binding.kmBarGraph.addBar(new BarModel(data, (float) km, 0xFF56B7F1));
                             binding.calorieBarGraph.addBar(new BarModel(data, calorie, 0xFF56B7F1));
                             binding.exerciseTimeBarGraph.addBar(new BarModel(data,time,0xFF56B7F1));
