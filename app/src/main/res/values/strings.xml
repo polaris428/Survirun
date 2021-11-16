@@ -136,4 +136,7 @@
     <string name="name">Name</string>
     <string name="info">Info</string>
     <string name="edit_profile">Edit profile</string>
+    <string name="start_tts">Start!</string>
+    <string name="create_zb">Zombie has been created</string>
+    <string name="hitted_zb">You\'re bitten by a zombie.</string>
 </resources>
