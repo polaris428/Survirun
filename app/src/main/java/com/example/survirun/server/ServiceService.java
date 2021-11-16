@@ -72,6 +72,8 @@ public interface ServiceService {
     @PATCH("/api/v1/exercise")
     Call<ExerciseData>patchUploadExercise(@Header("x-access-token") String token, @Body ScoreModel scoreModel);
 
+
+
     @GET("/api/v1/auth/by-email/{email}")
     Call<getUserData>getUser(@Header("x-access-token") String token,@Path("email")String email);
 

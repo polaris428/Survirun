@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.survirun.Medel.ScoreModel;
+import com.example.survirun.UserAccount;
 import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.ExerciseData;
 import com.example.survirun.databinding.ActivityExerciseResultBinding;
@@ -69,6 +70,37 @@ public class ExerciseResultActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ExerciseData> call, Response<ExerciseData> response) {
                         if(response.isSuccessful()){
+                            Call<ExerciseData> call2 = ServerClient.getServerService().getExercise(token);
+                            call2.enqueue(new Callback<ExerciseData>() {
+                                @Override
+                                public void onResponse(Call<ExerciseData> call, Response<ExerciseData> response) {
+                                    if (response.isSuccessful()) {
+                                        assert response.body() != null;
+
+                                        SharedPreferences sf;
+
+                                        SharedPreferences.Editor editor;
+                                        sf = getSharedPreferences("exercise", MODE_PRIVATE);
+                                        editor=sf.edit();
+                                        editor.putString("data", response.body().date);
+                                        editor.putInt("calorie", response.body().calorie);
+                                        editor.putFloat("km", (float) response.body().km);
+                                        editor.putInt("time",response.body().time);
+                                        editor.commit();
+                                        startActivity(new Intent(ExerciseResultActivity.this, MainActivity.class));
+                                        finish();
+
+                                    }
+
+                                }
+
+
+                                @Override
+                                public void onFailure(Call<ExerciseData> call, Throwable t) {
+
+                                }
+                            });
+
 
                         }else {
                             Toast.makeText(ExerciseResultActivity.this, "전송 실패패", Toast.LENGTH_SHORT).show();
@@ -81,7 +113,7 @@ public class ExerciseResultActivity extends AppCompatActivity {
                     }
                 });
 
-                startActivity(new Intent(ExerciseResultActivity.this, MainActivity.class));
+
             }
         });
 
