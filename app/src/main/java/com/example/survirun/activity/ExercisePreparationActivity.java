@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.survirun.BottomSheetModeSelectFragment;
+import com.example.survirun.R;
 import com.example.survirun.activity.exercise.MapActivity;
 import com.example.survirun.databinding.ActivityExercisePreparationBinding;
 
@@ -40,6 +41,9 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         km = exerciseSelection.getStringExtra("km");
         time = exerciseSelection.getStringExtra("time");
         level= exerciseSelection.getIntExtra("level",1);
+        int ran = (int)((Math.random()*10000)%10)+1;
+        if(ran==11) ran=1;
+        binding.proverbTextView.setText(R.string.saying_+ ran);
 
         binding.exerciseTitleTextview.setText(title);
         binding.calorieTextView.setText(calorie);

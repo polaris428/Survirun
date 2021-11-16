@@ -49,7 +49,9 @@ public class UserGoalActivity extends AppCompatActivity {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
 
         String formatedNow = now.format(formatter);
-
+        int ran = (int)((Math.random()*10000)%10)+1;
+        if(ran==11) ran=1;
+        binding.proverbTextView.setText(R.string.saying_+ ran);
         binding.dataTextview.setText(formatedNow + "");
 
 
