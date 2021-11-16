@@ -131,9 +131,9 @@ public class SettingFragment extends Fragment {
             @Override
             public void onFailure(Call<ImageData> call, Throwable t) {
                 Glide.with(SettingFragment.this)
-                        .load(R.drawable.ic_profile)
+                        .load(R.drawable.ic_userprofile)
                         .circleCrop()
-                        .error(R.drawable.ic_profile)
+                        .error(R.drawable.ic_userprofile)
                         .into(binding.profileImageview);
                 t.printStackTrace();
             }
