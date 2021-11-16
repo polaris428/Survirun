@@ -233,7 +233,7 @@ public class SplashActivity extends AppCompatActivity {
         helpButton.setOnClickListener(v -> {
                     Intent email = new Intent(Intent.ACTION_SEND);
                     email.setType("plain/text");
-                    String[] address = {"suvirun@gmail.com"};
+                    String[] address = {"survirun@gmail.com"};
                     email.putExtra(Intent.EXTRA_EMAIL, address);
                     email.putExtra(Intent.EXTRA_SUBJECT, R.string.network_error);
                     email.setPackage("com.google.android.gm");
