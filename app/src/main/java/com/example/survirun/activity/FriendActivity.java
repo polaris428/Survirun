@@ -245,11 +245,9 @@ public class FriendActivity extends AppCompatActivity {
 
                                     }
                                     if (!friend) {
-                                        Log.d("이메일", response.body().users.get(i).email);
-                                        String emile=response.body().users.get(i).email;
-                                        String nmae=response.body().users.get(i).username;
+                                        refreshRecyclerView(response.body().users.get(i).email,response.body().users.get(i).username,response.body().profiles.get(i)._id);
                                         //String profile=response.body().users.get(i).profiles.get(i)._id;
-                                        Log.d("뿜뿜",profile);
+
 
                                     }else {
                                         friend=false;
