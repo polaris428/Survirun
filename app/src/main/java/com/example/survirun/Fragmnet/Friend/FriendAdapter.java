@@ -85,7 +85,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 if (response.isSuccessful()) {
                     Log.d(response.body().email,  response.body().score+"");
 
-                    ExerciseHistory exerciseHistory = response.body().exerciseHistory.get(0);
+                    ExerciseHistory exerciseHistory = response.body().exerciseHistory.get( response.body().exerciseHistory.size()-1);
                     holder.exerciseKcalTextview.setText(String.valueOf(exerciseHistory.calorie));
                     holder.exerciseTimeTextView.setText(String.valueOf(exerciseHistory.time));
                     holder.exerciseKmTextView.setText(String.valueOf(exerciseHistory.km));
