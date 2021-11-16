@@ -65,8 +65,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
     @Override
     public void onClickStart() {
         ArrayList<Integer> modeList = new ArrayList();
-        if (isCheckedZombie) modeList.add(MapActivity.ZOMBIE_MODE);
-        else modeList.add(MapActivity.DEFAULT_MODE);
+        if (isCheckedZombie) zombieMode = true;
         Intent intent = new Intent(ExercisePreparationActivity.this, MapActivity.class);
 
         intent.putExtra("title",title);

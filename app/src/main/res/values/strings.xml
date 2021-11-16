@@ -142,4 +142,5 @@
     <string name="hitted_zb">You\'re bitten by a zombie.</string>
     <string name="mok_cl">You\'ve achieved your goal. The exercise ends. Please check the results.</string>
     <string name="delete_friend">Delete friend</string>
+    <string name="died">You died</string>
 </resources>

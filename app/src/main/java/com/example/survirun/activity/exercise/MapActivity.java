@@ -65,16 +65,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     private static final int DEFAULT_KCAL_WEIGHT = 80;
     public static MediaPlayer mediaPlayer;
-    private static final int ZOMBIE_CREATE_MINUTES = 3;
-    private static final int STORY_READ_MINUTES = 10;
+    private static int ZOMBIE_CREATE_MINUTES = 2;
+    private static int MAX_ZB_CNT = 0;
     public static int HP = 100;
     public static int minusHp = 20;
 
     public static boolean isZombieCreating = true;
 
-    public static final int DEFAULT_MODE = 0;
-    public static final int ZOMBIE_MODE = 1;
-    public static final int STORY_MODE = 2;
     public int storyUserSelect = -1;
     public static Context mctx;
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -122,6 +119,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mctx = this;
         Intent getIntent=getIntent();
 
+
          Log.d(title,title);
         dialog = new Dialog(MapActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -133,6 +131,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         timeMok = getIntent().getIntExtra("time",1);
         kcalMok = getIntent().getIntExtra("calorie",1);
         levelMok=getIntent.getIntExtra("level",0);
+        MAX_ZB_CNT = getIntent().getIntExtra("zombieCount",5);
 
         showSnackBar(view);
 
@@ -358,7 +357,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void stop() {
         try {
             timeThread.interrupt();
-            if (CURRENT_MODE.contains(ZOMBIE_MODE)) {
+            if (zombieMode) {
                 stopZombie();
             }
 
@@ -429,6 +428,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             intent.putExtra("timeToSec", (int) timeToSec);
             intent.putExtra("title",title);
             intent.putExtra("hp",HP);
+
+
 
             polylineOptions = new PolylineOptions();
             pausePolylineOpt = new PolylineOptions();
@@ -721,20 +722,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     String str = String.format(getString(R.string.pause_text) + "%02d:%02d:%02d", hour, min, sec);
                     binding.pauseText.setText(str);
                 }
-                if (CURRENT_MODE.contains(ZOMBIE_MODE)) {
+                if (zombieMode) {
                     if (isRunning) {
                         if ((timeToSec1 / 60) % ZOMBIE_CREATE_MINUTES == 0 && timeToSec1 % 60 == 0 && isZombieCreating && timeToSec1 >= 60) {
                             createZombie();
                         }
                     }
                 }
-                if (CURRENT_MODE.contains(STORY_MODE)) {
-                    if (isRunning) {
-                        if ((timeToSec1 / 60) % STORY_READ_MINUTES == 0 && timeToSec1 % 60 == 0 && timeToSec1 >= 60) {
-                            readStory();
-                        }
-                    }
-                }
+
                 /*목표달성체크*/
                 if(kcal >= kcalMok&& walkingDistance >=walkingDistance && timeToSec >= timeMok) {
                     playTTS(getString(R.string.mok_cl));
@@ -749,7 +744,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     };
 
-
     public static void minusHPAndCheck() {
 
         MapActivity.HP = MapActivity.HP - MapActivity.minusHp;
@@ -757,6 +751,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         splayTTS(mctx.getString(R.string.hitted_zb));
         if (HP <= 0) {
             stopZombie();
+            splayTTS(mctx.getString(R.string.died));
             //stop(); //종료하고 싶으면
         }
     }
@@ -770,21 +765,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
+
                 binding.progress2.setProgress(HP);
             }
         });
     }
 
-
+    /* no use
     private void readStory() {
-        /* Write Story to read */
-        /* playTTS(String d) */
+
         Intent u = new Intent(MapActivity.this, ExerciseStoryActivity.class);
         u.putExtra("storyBody", "TEST STORY");
         u.putExtra("negative", "NO");
         u.putExtra("positive", "YES");
         startActivityForResult(u, 1000);
-    }
+    }*/
 
     private void afterReadStory() {
 
