@@ -141,6 +141,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/ExerciseMessage"/>
 
             <LinearLayout
+                android:id="@+id/exerciseGraph"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="vertical"
