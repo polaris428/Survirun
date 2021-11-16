@@ -37,7 +37,8 @@ public class FriendActivity extends AppCompatActivity {
 
     String token;
     String email;
-    String name;
+    String friendName;
+    String friendEmile;
     String friendEmail;
     String profile;
     int friendsServerNumber, friendsRoomNumber;
@@ -95,14 +96,15 @@ public class FriendActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<getUserData> call, Response<getUserData> response) {
                         if (response.isSuccessful()) {
-                            name = response.body().username;
+                            friendName = response.body().username;
+                            friendEmile=response.body().email;
                             friendEmail = binding.emileInputEditText.getText().toString();
                             binding.cardView.setVisibility(View.VISIBLE);
                             binding.findFriendsCardView.setVisibility(View.VISIBLE);
                             binding.friendsError.setVisibility(View.GONE);
                             binding.findFriendsLoading.setVisibility(View.GONE);
                             binding.backButton.setVisibility(View.VISIBLE);
-                            binding.usernameTextview.setText(name);
+                            binding.usernameTextview.setText(friendName);
                             ExerciseHistory exerciseHistory = response.body().exerciseHistory.get(0);
                             binding.exerciseTextview.setText(exerciseHistory.calorie + "kcal " + exerciseHistory.time + getString(R.string.hour) + exerciseHistory.km + "km ");
                             Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url", response.body().username);
@@ -159,7 +161,8 @@ public class FriendActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                             if (response.isSuccessful()) {
-                                refreshRecyclerView(email,name,profile);
+                                Toast.makeText(FriendActivity.this,"친구추가 성공 자시만 기달려주세요",Toast.LENGTH_LONG);
+                                refreshRecyclerView(email,friendEmile,profile);
                             } else {
                                 //실패시
 
