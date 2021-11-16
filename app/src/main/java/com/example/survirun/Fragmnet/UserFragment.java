@@ -69,7 +69,11 @@ public class UserFragment extends Fragment {
 
     void score(int calorie,int time ,double km){
         binding.calorieTextview.setText(String.valueOf(calorie));
-        binding.timeTextview.setText(String.valueOf(time));
+
+        int min = time / 60;
+        int hour = time / 3600;
+        binding.timeTextview.setText(String.format("%d:%d", hour, min));
+
         binding.kmTextview.setText(String.format(Locale.getDefault(),"%.2f",km));
         yesterdayExercise= getContext().getSharedPreferences("yesterdayExercise", MODE_PRIVATE);
         binding.eveCalorieTextview.setText(String.valueOf(yesterdayExercise.getInt("calorie",0)-calorie));
