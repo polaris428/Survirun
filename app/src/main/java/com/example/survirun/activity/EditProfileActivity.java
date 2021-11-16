@@ -46,6 +46,31 @@ public class EditProfileActivity extends AppCompatActivity {
         }else{
             binding.commentInputEdittext.setText(intro);
         }
+        binding.profileImageview.setOnClickListener(v -> {
+
+        });
+        binding.basicProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<ResultData>call=ServerClient.getServerService().postDefaultImage(token);
+                call.enqueue(new Callback<ResultData>() {
+                    @Override
+                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                        if(response.isSuccessful()){
+                            Toast.makeText(EditProfileActivity.this,"성공적으로 반영되었습니다",Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(EditProfileActivity.this, R.string.server_error,Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResultData> call, Throwable t) {
+                        t.printStackTrace();
+                        Toast.makeText(EditProfileActivity.this, R.string.server_error,Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
 
         binding.saveButton.setOnClickListener(v -> {
             inputName = binding.nameInputEdittext.getText().toString();

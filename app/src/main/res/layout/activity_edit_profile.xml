@@ -65,6 +65,20 @@
             app:layout_constraintBottom_toBottomOf="@id/profile_imageview">
 
         </ImageView>
+        <Button
+            android:id="@+id/basic_profile_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="아바타 제거"
+            android:gravity="top"
+            app:layout_constraintTop_toBottomOf="@+id/profile_imageview"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            >
+
+        </Button>
 
 
         <TextView
