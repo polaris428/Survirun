@@ -23,6 +23,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
     String km;
     String time;
     int level;
+
     boolean zombieMode=true;
 
     @Override
