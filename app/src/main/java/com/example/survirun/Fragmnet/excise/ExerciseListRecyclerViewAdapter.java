@@ -53,7 +53,7 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
         }
 
         holder.calorieTextView.setText(String.valueOf(data.getCalorie(position)));
-        holder.timeTextView.setText(String.valueOf(data.getHour(position)+""));
+        holder.timeTextView.setText(String.valueOf(data.getHour(position)));
         holder.kmTextView.setText(String.valueOf(data.getKm(position)));
 
         Handler handler = new Handler();
