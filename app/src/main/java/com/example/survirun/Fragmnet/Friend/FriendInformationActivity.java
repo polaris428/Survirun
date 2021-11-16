@@ -105,7 +105,6 @@ public class FriendInformationActivity extends AppCompatActivity {
             public void onResponse(Call<getUserData> call, Response<getUserData> response) {
                 if (response.isSuccessful()) {
                     binding.calorieBarGraph.clearChart();
-                    binding.goalBarGraph.clearChart();
                     binding.kmBarGraph.clearChart();
                     binding.exerciseTimeBarGraph.clearChart();
                     if (response.body().exerciseHistory.size() == 1 && response.body().exerciseHistory.get(0).time == 0) {
@@ -121,14 +120,12 @@ public class FriendInformationActivity extends AppCompatActivity {
                             int calorie = response.body().exerciseHistory.get(i).calorie;
                             double km = response.body().exerciseHistory.get(i).km;
                             String data = response.body().exerciseHistory.get(i).date;
-                            int time = response.body().exerciseHistory.get(i).time;
-                            Log.d("시간", time / 60 + "");
+                            int time = response.body().exerciseHistory.get(i).time/60;
                             binding.kmBarGraph.addBar(new BarModel(data, (float) km, 0xFF56B7F1));
                             binding.calorieBarGraph.addBar(new BarModel(data, calorie, 0xFF56B7F1));
                             binding.exerciseTimeBarGraph.addBar(new BarModel(data, time, 0xFF56B7F1));
                         }
                         binding.calorieBarGraph.startAnimation();
-                        binding.goalBarGraph.startAnimation();
                         binding.kmBarGraph.startAnimation();
                         binding.exerciseTimeBarGraph.startAnimation();
                     }
