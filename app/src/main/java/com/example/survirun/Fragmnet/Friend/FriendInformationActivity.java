@@ -18,6 +18,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.MenuRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -83,7 +84,9 @@ public class FriendInformationActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog);
 
-        binding.menuButton.setOnClickListener(this::showPopup);
+        binding.menuButton.setOnClickListener(v -> {
+            showMenu(v, R.menu.friend_menu);
+        });
 
         binding.backButton.setOnClickListener(v -> {
             finish();
@@ -145,24 +148,16 @@ public class FriendInformationActivity extends AppCompatActivity {
 
     }
 
-    private void showPopup(View v) {
+
+    private void showMenu(View v, @MenuRes int menuRes) {
         PopupMenu popup = new PopupMenu(this, v);
         MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.friend_menu, popup.getMenu());
-        popup.show();
-        popup.getMenu().getItem(0).setOnMenuItemClickListener(item -> {
-            onOptionsItemSelected(item);
-            return true;
-        });
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.delete_friend) {
+        inflater.inflate(menuRes, popup.getMenu());
+        popup.setOnMenuItemClickListener(item -> {
             showDialog();
             return true;
-        }
-        return super.onOptionsItemSelected(item);
+        });
+        popup.show();
     }
 
     private void showDialog() {
@@ -172,7 +167,6 @@ public class FriendInformationActivity extends AppCompatActivity {
         dialog.findViewById(R.id.cancel_button).setOnClickListener(v -> dialog.dismiss());
         dialog.findViewById(R.id.yes_button).setOnClickListener(v -> {
             deleteFriend();
-            startActivity(new Intent(this, FriendActivity.class));
             finish();
         });
     }
