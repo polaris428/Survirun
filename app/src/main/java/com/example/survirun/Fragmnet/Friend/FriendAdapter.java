@@ -27,6 +27,7 @@ import com.example.survirun.data.getUserData;
 import com.example.survirun.server.ServerClient;
 
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -88,7 +89,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                     ExerciseHistory exerciseHistory = response.body().exerciseHistory.get( response.body().exerciseHistory.size()-1);
                     holder.exerciseKcalTextview.setText(String.valueOf(exerciseHistory.calorie));
                     holder.exerciseTimeTextView.setText(String.valueOf(exerciseHistory.time));
-                    holder.exerciseKmTextView.setText(String.valueOf(exerciseHistory.km));
+                    holder.exerciseKmTextView.setText(String.format(Locale.getDefault(),"%.2f",exerciseHistory.km));
                     Log.d("ad", response.body().username);
 
                 } else {
