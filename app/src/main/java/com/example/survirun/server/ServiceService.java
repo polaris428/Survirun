@@ -13,6 +13,7 @@ import com.example.survirun.data.ProfileImageData;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.data.TokenData;
 import com.example.survirun.data.getUserData;
+import com.example.survirun.data.rankingData;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -79,4 +80,8 @@ public interface ServiceService {
 
     @GET("/api/v1/exercise/list")
     Call<ExerciseRecordData>getExerciseRecordData(@Header("x-access-token")String token);
+
+    @GET("/api/v1/exercise/score/global")
+    Call<rankingData>getRanking(@Header("x-access-token")String token);
+
 }
