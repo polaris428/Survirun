@@ -67,7 +67,7 @@ public class SettingFragment extends Fragment {
         emile=sf.getString("email","");
 
         binding.nameTextView.setText(name);
-        binding.emileText.setText(emile);
+        binding.emailText.setText(emile);
 
         binding.clearCacheButton.setOnClickListener(v -> {
             setDialog(getString(R.string.delete_cache_text));
