@@ -50,6 +50,7 @@ public class FriendInformationActivity extends AppCompatActivity {
     String token;
 
     Dialog dialog;
+    PopupMenu popup;
 
     private List<FriendRoom> friendRoomList;
     private FriendDB friendDB = null;
@@ -144,13 +145,11 @@ public class FriendInformationActivity extends AppCompatActivity {
                 Toast.makeText(FriendInformationActivity.this, "서버오류", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
 
     private void showMenu(View v, @MenuRes int menuRes) {
-        PopupMenu popup = new PopupMenu(this, v);
+        popup = new PopupMenu(this, v);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(menuRes, popup.getMenu());
         popup.setOnMenuItemClickListener(item -> {
@@ -167,6 +166,8 @@ public class FriendInformationActivity extends AppCompatActivity {
         dialog.findViewById(R.id.cancel_button).setOnClickListener(v -> dialog.dismiss());
         dialog.findViewById(R.id.yes_button).setOnClickListener(v -> {
             deleteFriend();
+            dialog.dismiss();
+            popup.dismiss();
             finish();
         });
     }
