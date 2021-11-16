@@ -95,7 +95,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private boolean isFirst = false;
     private Thread timeThread = null;
     public static ActivityMapBinding binding;
-    private ArrayList<Integer> CURRENT_MODE;
 
     private static int kcalMok;
     private static int timeMok; //sec
@@ -120,7 +119,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Intent getIntent=getIntent();
 
 
-         Log.d(title,title);
+        Log.d(title,title);
         dialog = new Dialog(MapActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
