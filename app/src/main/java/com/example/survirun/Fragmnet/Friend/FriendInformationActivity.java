@@ -121,9 +121,9 @@ public class FriendInformationActivity extends AppCompatActivity {
                             double km = response.body().exerciseHistory.get(i).km;
                             String data = response.body().exerciseHistory.get(i).date;
                             int time = response.body().exerciseHistory.get(i).time/60;
-                            binding.kmBarGraph.addBar(new BarModel(data, (float) km, 0xFF56B7F1));
-                            binding.calorieBarGraph.addBar(new BarModel(data, calorie, 0xFF56B7F1));
-                            binding.exerciseTimeBarGraph.addBar(new BarModel(data, time, 0xFF56B7F1));
+                            binding.kmBarGraph.addBar(new BarModel(data, (int ) km, 0xFFcc4444));
+                            binding.calorieBarGraph.addBar(new BarModel(data, calorie, 0xFFcc4444));
+                            binding.exerciseTimeBarGraph.addBar(new BarModel(data, time, 0xFFcc4444));
                         }
                         binding.calorieBarGraph.startAnimation();
                         binding.kmBarGraph.startAnimation();

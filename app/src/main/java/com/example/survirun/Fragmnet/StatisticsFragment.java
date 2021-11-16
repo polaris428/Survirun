@@ -50,7 +50,6 @@ public class StatisticsFragment extends Fragment {
 
         SharedPreferences sf = getContext().getSharedPreferences("Login", getContext().MODE_PRIVATE);
         String token = sf.getString("token", "");
-        binding.goalBarGraph.clearChart();
         binding.image.startAnimation(animation);
         binding.findRecord.setVisibility(View.VISIBLE);
         Call<ExerciseRecordData> call= ServerClient.getServerService().getExerciseRecordData(token);
@@ -58,8 +57,7 @@ public class StatisticsFragment extends Fragment {
             @Override
             public void onResponse(Call<ExerciseRecordData> call, Response<ExerciseRecordData> response) {
                 if(response.isSuccessful()){
-                    binding.calorieBarGraph.clearChart();
-                    binding.goalBarGraph.clearChart();
+                    binding.calorieBarGraph.clearChart();;
                     binding.kmBarGraph.clearChart();
                     binding.exerciseTimeBarGraph.clearChart();
                     if(response.body().exerciseHistory.size()==1&&response.body().exerciseHistory.get(0).time==0){
@@ -76,13 +74,13 @@ public class StatisticsFragment extends Fragment {
                             double km= response.body().exerciseHistory.get(i).km;
                             String data= response.body().exerciseHistory.get(i).date;
                             int time=response.body().exerciseHistory.get(i).time;
-                            Log.d("adsf",time/60+"");
-                            binding.kmBarGraph.addBar(new BarModel(data, (float) km, 0xFF56B7F1));
-                            binding.calorieBarGraph.addBar(new BarModel(data, calorie, 0xFF56B7F1));
-                            binding.exerciseTimeBarGraph.addBar(new BarModel(data,time,0xFF56B7F1));
+
+
+                            binding.kmBarGraph.addBar(new BarModel(data, (int) km, 0xFFcc4444));
+                            binding.calorieBarGraph.addBar(new BarModel(data, calorie, 0xFFcc4444));
+                            binding.exerciseTimeBarGraph.addBar(new BarModel(data,time/60,0xFFcc4444));
                         }
                         binding.calorieBarGraph.startAnimation();
-                        binding.goalBarGraph.startAnimation();
                         binding.kmBarGraph.startAnimation();
                         binding.exerciseTimeBarGraph.startAnimation();
                     }
