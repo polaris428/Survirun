@@ -45,9 +45,6 @@
             android:exported="true"
             />
         <activity
-            android:name=".activity.user.UserPageActivity"
-            android:exported="true" />
-        <activity
             android:name=".activity.exercise.ExerciseStoryActivity"
             android:exported="true" />
         <activity
