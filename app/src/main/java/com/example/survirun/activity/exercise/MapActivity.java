@@ -82,7 +82,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public static PolylineOptions polylineOptions = new PolylineOptions();
 
     private PolylineOptions pausePolylineOpt = new PolylineOptions();
-    private TextToSpeech tts;
+    private static TextToSpeech tts;
 
     private double lastLat = 0.0;
     private double lastLng = 0.0;
@@ -190,7 +190,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         }
 
-
+        playTTS(getString(R.string.start_tts));
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
@@ -686,6 +686,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, text);
     }
 
+    public static void splayTTS(String text) {
+        tts.setPitch(1.0f);
+        tts.setSpeechRate(1.0f);
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, text);
+    }
+
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @SuppressLint("DefaultLocale")
@@ -730,9 +736,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     };
 
+
     public static void minusHPAndCheck() {
+
         MapActivity.HP = MapActivity.HP - MapActivity.minusHp;
         updateHpUI();
+        splayTTS(mctx.getString(R.string.hitted_zb));
         if (HP <= 0) {
             stopZombie();
             //종료하고 싶으면 stop();
@@ -793,6 +802,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         ZombieModel mZombie = new ZombieModel(new LatLng(currentLat, currentLng), zombieListCurrentPos);
         zombieListCurrentPos++;
         zombieList.add(mZombie);
+        playTTS(getString(R.string.create_zb));
     }
 
     void showDialog() {
