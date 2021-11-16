@@ -84,19 +84,21 @@ public class UserFragment extends Fragment {
 
         binding.kmTextview.setText(String.format(Locale.getDefault(),"%.2f",km));
         yesterdayExercise= getContext().getSharedPreferences("yesterdayExercise", MODE_PRIVATE);
-        binding.eveCalorieTextview.setText(String.valueOf(yesterdayExercise.getInt("calorie",0)-calorie));
+        binding.eveCalorieTextview.setText(String.valueOf(calorie-yesterdayExercise.getInt("calorie",0)));
         binding.eveKmTextview.setText(String.format(Locale.getDefault(),"%.2f",km-yesterdayExercise.getFloat("km",0)));
-        binding.eveTimeTextview.setText(String.valueOf(time-yesterdayExercise.getInt("time",0)));
+        int eveTime=(time-yesterdayExercise.getInt("time",0));
+        binding.eveTimeTextview.setText(String.valueOf(eveTime/60));
 
         if (goalCalorie / 2 < calorie) {
 
             progress = progress + 25;
             binding.calorieCardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.yellow));
         }
-        if (goalTime / 2 < time) {
+        if (goalTime / 2 < min) {
             progress = progress + 25;
             binding.exerciseTimeCardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.yellow));
         }
+
         if (goalKm / 2 < km) {
             progress = progress + 25;
             binding.kmCardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.yellow));
@@ -107,7 +109,7 @@ public class UserFragment extends Fragment {
             binding.arcProgress.setProgress(progress);
             binding.calorieCardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
         }
-        if (goalTime <= time) {
+        if (goalTime <= min) {
             progress = progress + 8;
             binding.arcProgress.setProgress(progress);
             binding.exerciseTimeCardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
