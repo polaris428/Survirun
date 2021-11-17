@@ -75,10 +75,10 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                setCheck();
                 if (android.util.Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches() && !s.toString().replace(" ", "").isEmpty()) {
                     binding.layout1.setErrorEnabled(false);
                     isEmailEnterCheck = true;
+                    setCheck();
                 } else {
                     binding.layout1.setErrorEnabled(true);
                     binding.layout1.setError(getString(email_error));
@@ -110,6 +110,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         binding.layout1.setEndIconTintList(ColorStateList.valueOf(getColor(R.color.green)));
                                         isEmailCheck = true;
                                         binding.layout1.setHelperText(getString(email_can_use));
+                                        setCheck();
                                     }
                                 }
                             }
@@ -149,6 +150,7 @@ public class SignUpActivity extends AppCompatActivity {
                     binding.layout2.setErrorEnabled(false);
                     binding.layout2.setCounterEnabled(false);
                     isPwdEnter = true;
+                    setCheck();
                 }
             }
 
@@ -176,6 +178,7 @@ public class SignUpActivity extends AppCompatActivity {
                     if (p1.equals(p)) {
                         binding.layout3.setErrorEnabled(false);
                         isPwdCheck = true;
+                        setCheck();
                     } else {
                         binding.layout3.setErrorEnabled(true);
                         binding.layout3.setError(getString(pwd_error));
