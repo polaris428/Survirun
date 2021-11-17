@@ -79,9 +79,11 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
         binding = ActivitySignUpProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        signUpFragment = new BottomSheetSignUpFragment();
+
         sf = getSharedPreferences("Login", MODE_PRIVATE);
         editor = sf.edit();
-        signUpFragment = new BottomSheetSignUpFragment();
         SharedPreferences sharedPreferences = getSharedPreferences("checkFirstAccess", MODE_PRIVATE);
         boolean checkFirstAccess = sharedPreferences.getBoolean("checkFirstAccess", false);
 
