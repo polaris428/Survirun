@@ -3,6 +3,7 @@ package com.example.survirun.Fragmnet.excise;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     String min, hr;
     String hour, minute;
     int level;
+    int time;
     public ExerciseListRecyclerViewAdapter(ArrayList<ExerciseData> list) {
         items = list;
     }
@@ -42,21 +44,22 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExerciseData data = items.get(position);
         level=data.getLevel(position);
-        if(data.getHour(position)>60){
+        time=data.getHour(position);
+        if(time>=60){
             hour = String.valueOf(data.getHour(position)/60);
             minute = String.valueOf(data.getHour(position)%60);
-            holder.exerciseTitleTextview.setText(data.getExName(position));
-        }
-        else if(data.getHour(position)==60){
-            hour = String.valueOf(data.getHour(position)/60);
-            holder.exerciseTitleTextview.setText(data.getExName(position));
-        }
-        else{
-            holder.exerciseTitleTextview.setText(data.getExName(position));
-        }
+            holder.HourConstraintLayout.setVisibility(View.VISIBLE);
+            holder.hourConstraintLayoutTextView.setText(hour);
+            holder.hourConstraintLayoutMinTextView.setText(minute);
 
+        } else{
+            Log.d("시간",String.valueOf(data.getHour(position)));
+            holder.MinConstraintLayout.setVisibility(View.VISIBLE);
+            holder.minConstraintLayoutMinTextView.setText(String.valueOf(data.getHour(position)));
+        }
+        holder.exerciseTitleTextview.setText(data.getExName(position));
         holder.calorieTextView.setText(String.valueOf(data.getCalorie(position)));
-        holder.timeTextView.setText(String.valueOf(data.getHour(position)));
+
         holder.kmTextView.setText(String.valueOf(data.getKm(position)));
 
         Handler handler = new Handler();
@@ -90,7 +93,7 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
                 intent.putExtra("calorie",holder.calorieTextView.getText().toString());
                 intent.putExtra("level",level);
                 intent.putExtra("km",holder.kmTextView.getText().toString());
-                intent.putExtra("time",holder.timeTextView.getText().toString());
+                intent.putExtra("time",String.valueOf(time));
                 holder.itemView.getContext().startActivity(intent);
             }
         });
@@ -107,19 +110,29 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
         ConstraintLayout constraintLayout;
         TextView exerciseTitleTextview;
         TextView calorieTextView;
-        TextView timeTextView;
         TextView kmTextView;
         ImageButton expandImageButton;
-
+        TextView hourConstraintLayoutTextView;
+        TextView hourConstraintLayoutMinTextView;
+        TextView minConstraintLayoutMinTextView;
+        ConstraintLayout MinConstraintLayout;
+        ConstraintLayout HourConstraintLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             exerciseTitleTextview = itemView.findViewById(R.id.exercise_title_textview);
             calorieTextView=itemView.findViewById(R.id.item_calorie_text_view);
-            timeTextView=itemView.findViewById(R.id.item_time_text_view);
+
             kmTextView=itemView.findViewById(R.id.item_km_text_view);
             expandImageButton=itemView.findViewById(R.id.expand_image_button);
             constraintLayout = itemView.findViewById(R.id.constraint);
+
+            MinConstraintLayout=itemView.findViewById(R.id.item_min_constraintLayout);
+            HourConstraintLayout=itemView.findViewById(R.id.item_hour_constraintLayout);
+            hourConstraintLayoutTextView=itemView.findViewById(R.id.hour_constraintLayout_hour_text_view);
+            hourConstraintLayoutMinTextView=itemView.findViewById(R.id.hour_constraintLayout_min_text_view);
+
+            minConstraintLayoutMinTextView=itemView.findViewById(R.id.item_min_constraintLayout_min_text_view);
         }
     }
 
