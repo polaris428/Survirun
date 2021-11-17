@@ -79,9 +79,11 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
         binding = ActivitySignUpProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        signUpFragment = new BottomSheetSignUpFragment();
+
         sf = getSharedPreferences("Login", MODE_PRIVATE);
         editor = sf.edit();
-        signUpFragment = new BottomSheetSignUpFragment();
         SharedPreferences sharedPreferences = getSharedPreferences("checkFirstAccess", MODE_PRIVATE);
         boolean checkFirstAccess = sharedPreferences.getBoolean("checkFirstAccess", false);
 
@@ -248,8 +250,6 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
                 } catch (Exception e) {
 
                 }
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
             }
         }
         if (requestCode == 1) {//코드 1번 카메라

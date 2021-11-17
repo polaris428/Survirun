@@ -20,13 +20,24 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="16dp"
         android:text="@string/modify_goals"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/back_button" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tip. 숫자를 스크롤 해보세요"
+        android:textSize="14sp"
+        android:textColor="@color/gray"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_item1"
@@ -35,6 +46,7 @@
         android:layout_marginHorizontal="32dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintBottom_toTopOf="@id/card_item2"
         app:layout_constraintTop_toBottomOf="@id/text"
         app:layout_constraintVertical_chainStyle="packed">
@@ -76,7 +88,7 @@
                 app:np_dividerType="underline"
                 app:np_height="180dp"
                 app:np_itemSpacing="-90dp"
-                app:np_selectedTextColor="#000000"
+                app:np_selectedTextColor="?attr/colorBlackToWhite"
                 app:np_textColor="#CB6A6A6A"
                 app:np_textSize="20sp"
                 app:np_selectedTextSize="20sp"
@@ -136,7 +148,7 @@
 
             <com.shawnlin.numberpicker.NumberPicker
                 android:id="@+id/hour_numberPicker"
-                android:layout_width="50dp"
+                android:layout_width="46dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:dividerPadding="10dp"
@@ -148,7 +160,7 @@
                 app:np_itemSpacing="-90dp"
                 app:np_max="23"
                 app:np_min="0"
-                app:np_selectedTextColor="#000000"
+                app:np_selectedTextColor="?attr/colorBlackToWhite"
                 app:np_textColor="#CB6A6A6A"
                 app:np_textSize="20sp"
                 app:np_selectedTextSize="20sp"
@@ -170,7 +182,7 @@
 
             <com.shawnlin.numberpicker.NumberPicker
                 android:id="@+id/minute_numberPicker"
-                android:layout_width="50dp"
+                android:layout_width="46dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:dividerPadding="10dp"
@@ -182,7 +194,7 @@
                 app:np_itemSpacing="-90dp"
                 app:np_max="59"
                 app:np_min="0"
-                app:np_selectedTextColor="#000000"
+                app:np_selectedTextColor="?attr/colorBlackToWhite"
                 app:np_textColor="#CB6A6A6A"
                 app:np_textSize="20sp"
                 app:np_selectedTextSize="20sp"
@@ -253,7 +265,7 @@
                 app:np_itemSpacing="-90dp"
                 app:np_max="20"
                 app:np_min="0"
-                app:np_selectedTextColor="#000000"
+                app:np_selectedTextColor="?attr/colorBlackToWhite"
                 app:np_textColor="#CB6A6A6A"
                 app:np_textSize="20sp"
                 app:np_selectedTextSize="20sp"
