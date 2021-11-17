@@ -14,6 +14,7 @@ import static com.example.survirun.R.string.pwd_enter;
 import static com.example.survirun.R.string.pwd_include;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -46,9 +47,10 @@ public class SignUpActivity extends AppCompatActivity {
     String id;
     ProgressDialog customProgressDialog;
 
-    boolean isEmileEnterCheck = false;
+    boolean isEmailEnterCheck = false;
     boolean isPwdCheck = false;
-    boolean isEmileCheck = false;
+    boolean isEmailCheck = false;
+    boolean isPwdEnter = false;
     String email;
     String pwe;
     SharedPreferences.Editor editor;
@@ -73,13 +75,15 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                setCheck();
                 if (android.util.Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches() && !s.toString().replace(" ", "").isEmpty()) {
                     binding.layout1.setErrorEnabled(false);
-                    isEmileEnterCheck = true;
+                    isEmailEnterCheck = true;
                 } else {
                     binding.layout1.setErrorEnabled(true);
                     binding.layout1.setError(getString(email_error));
-                    isEmileEnterCheck = false;
+                    isEmailEnterCheck = false;
+                    binding.signUpButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.gray));
                 }
             }
 
@@ -90,7 +94,7 @@ public class SignUpActivity extends AppCompatActivity {
                     binding.layout1.setErrorEnabled(true);
                     binding.layout1.setError(getString(email_enter));
                 } else {
-                    if (isEmileEnterCheck) {
+                    if (isEmailEnterCheck) {
                         Call<EmileCheck> call = ServerClient.getServerService().getEmileCheck(email);
                         call.enqueue(new Callback<EmileCheck>() {
                             @Override
@@ -104,7 +108,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         binding.layout1.setHelperTextEnabled(true);
                                         binding.layout1.setEndIconDrawable(R.drawable.ic_check);
                                         binding.layout1.setEndIconTintList(ColorStateList.valueOf(getColor(R.color.green)));
-                                        isEmileCheck = true;
+                                        isEmailCheck = true;
                                         binding.layout1.setHelperText(getString(email_can_use));
                                     }
                                 }
@@ -128,17 +132,23 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                setCheck();
                 if (!Pattern.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#$%^&*])(?=.*[0-9!@#$%^&*]).*$", s)) {
                     binding.layout2.setErrorEnabled(true);
                     binding.layout2.setCounterEnabled(false);
                     binding.layout2.setError(getString(pwd_include));
+                    isPwdEnter = false;
+                    binding.signUpButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.gray));
                 } else if (!Pattern.matches("^.{8,15}$", s)) {
                     binding.layout2.setErrorEnabled(true);
                     binding.layout2.setCounterEnabled(true);
                     binding.layout2.setError(getString(pwd_enter));
+                    isPwdEnter = false;
+                    binding.signUpButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.gray));
                 } else {
                     binding.layout2.setErrorEnabled(false);
                     binding.layout2.setCounterEnabled(false);
+                    isPwdEnter = true;
                 }
             }
 
@@ -155,8 +165,9 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                setCheck();
                 String p = binding.passwordInputEdittext.getText().toString();
-                if (p.replace(" ", "").isEmpty() || !Pattern.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#$%^&*])(?=.*[0-9!@#$%^&*]).{8,15}$", p)) {
+                if (!isPwdEnter) {
                     binding.layout3.setErrorEnabled(true);
                     binding.layout3.setError(getString(pwd_condition));
                 } else {
@@ -169,6 +180,7 @@ public class SignUpActivity extends AppCompatActivity {
                         binding.layout3.setErrorEnabled(true);
                         binding.layout3.setError(getString(pwd_error));
                         isPwdCheck = false;
+                        binding.signUpButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.gray));
                     }
                 }
             }
@@ -180,7 +192,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         binding.signUpButton.setOnClickListener(v -> {
-            if (isEmileCheck && isEmileEnterCheck && isPwdCheck) {
+            if (isEmailCheck && isEmailEnterCheck && isPwdCheck && isPwdEnter) {
                 customProgressDialog.show();
                 pwe = binding.passwordInputEdittext.getText().toString().trim();
                 NewUserData newUserData = new NewUserData(email, pwe, "");
@@ -224,14 +236,14 @@ public class SignUpActivity extends AppCompatActivity {
                         Toast.makeText(SignUpActivity.this, R.string.format_error, Toast.LENGTH_SHORT).show();
                     }
                 });
-            } else if (!isEmileEnterCheck && !isPwdCheck) {
+            } else if (!isEmailEnterCheck && !isPwdCheck) {
                 Toast.makeText(getApplicationContext(), fill_condition, Toast.LENGTH_SHORT).show();
-            } else if (!isEmileEnterCheck) {
-                Toast.makeText(getApplicationContext(), email_enter, Toast.LENGTH_SHORT).show();
-            } else if (!isPwdCheck) {
-                Toast.makeText(getApplicationContext(), fill_pwd_condition, Toast.LENGTH_SHORT).show();
-            } else if (!isEmileCheck) {
+            } else if (!isEmailCheck) {
                 Toast.makeText(getApplicationContext(), check_email_validity, Toast.LENGTH_SHORT).show();
+            } else if (!isEmailEnterCheck) {
+                Toast.makeText(getApplicationContext(), email_enter, Toast.LENGTH_SHORT).show();
+            } else if (!isPwdCheck || !isPwdEnter) {
+                Toast.makeText(getApplicationContext(), fill_pwd_condition, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -243,5 +255,11 @@ public class SignUpActivity extends AppCompatActivity {
         editor.putString("pwe", pwe);
         editor.putString("email", email);
         editor.commit();
+    }
+
+    private void setCheck() {
+        if (isEmailCheck && isEmailEnterCheck && isPwdEnter && isPwdCheck) {
+            binding.signUpButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+        }
     }
 }

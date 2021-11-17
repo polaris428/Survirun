@@ -18,7 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UserAccount {
-    public void getExercise(String token, Context context){
+    public void getExercise(String token, Context context) {
 
 
         Call<ExerciseData> call = ServerClient.getServerService().getExercise(token);
@@ -32,11 +32,11 @@ public class UserAccount {
 
                     SharedPreferences.Editor editor;
                     sf = context.getSharedPreferences("exercise", MODE_PRIVATE);
-                    editor=sf.edit();
+                    editor = sf.edit();
                     editor.putString("data", response.body().date);
                     editor.putInt("calorie", response.body().calorie);
                     editor.putFloat("km", (float) response.body().km);
-                    editor.putInt("time",response.body().time);
+                    editor.putInt("time", response.body().time);
                     editor.commit();
 
 
@@ -52,31 +52,30 @@ public class UserAccount {
         });
 
 
-
-
     }
-    public void yesterdayExercise(String token,Context context){
-        Call<ExerciseRecordData> call= ServerClient.getServerService().getExerciseRecordData(token);
+
+    public void yesterdayExercise(String token, Context context) {
+        Call<ExerciseRecordData> call = ServerClient.getServerService().getExerciseRecordData(token);
         call.enqueue(new Callback<ExerciseRecordData>() {
             @Override
             public void onResponse(Call<ExerciseRecordData> call, Response<ExerciseRecordData> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     SharedPreferences sf;
                     SharedPreferences.Editor editor;
                     sf = context.getSharedPreferences("yesterdayExercise", MODE_PRIVATE);
-                    editor=sf.edit();
-                    if (response.body().exerciseHistory.size()==1){
+                    editor = sf.edit();
+                    if (response.body().exerciseHistory.size() == 1) {
                         editor.putInt("calorie", 0);
                         editor.putFloat("km", 0);
-                        editor.putInt("time",0);
+                        editor.putInt("time", 0);
                         editor.commit();
-                    }else{
+                    } else {
 
-                        int exSize=response.body().exerciseHistory.size()-2;
+                        int exSize = response.body().exerciseHistory.size() - 2;
 
                         editor.putInt("calorie", response.body().exerciseHistory.get(exSize).calorie);
                         editor.putFloat("km", (float) response.body().exerciseHistory.get(exSize).km);
-                        editor.putInt("time",response.body().exerciseHistory.get(exSize).time);
+                        editor.putInt("time", response.body().exerciseHistory.get(exSize).time);
                         editor.commit();
                     }
 
@@ -87,26 +86,27 @@ public class UserAccount {
             @Override
             public void onFailure(Call<ExerciseRecordData> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(context,"서버오류 잠시후 다시 시도해주세요",Toast.LENGTH_LONG);
+                Toast.makeText(context, R.string.error_server, Toast.LENGTH_LONG);
 
             }
         });
 
 
     }
-    public void getUser(String token,String email,Context context) {
-        Call<getUserData> getUser=ServerClient.getServerService().getUser(token,email);
+
+    public void getUser(String token, String email, Context context) {
+        Call<getUserData> getUser = ServerClient.getServerService().getUser(token, email);
         getUser.enqueue(new Callback<getUserData>() {
             @Override
             public void onResponse(Call<getUserData> call, Response<getUserData> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     SharedPreferences sf;
                     SharedPreferences.Editor editor;
                     sf = context.getSharedPreferences("yesterdayExercise", MODE_PRIVATE);
-                    editor=sf.edit();
+                    editor = sf.edit();
                     editor.putString("name", response.body().username);
-                    editor.putString("intro",response.body().intro);
-                    editor.putInt("score",response.body().score);
+                    editor.putString("intro", response.body().intro);
+                    editor.putInt("score", response.body().score);
                     editor.commit();
                 }
             }

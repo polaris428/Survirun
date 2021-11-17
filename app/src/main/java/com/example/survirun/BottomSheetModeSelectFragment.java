@@ -25,7 +25,7 @@ public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
     FragmentBottomSheetModeSelectBinding binding;
     private BottomSheetListener mListener;
     boolean isZombieMode;
-    int level;
+    int zombieCount;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
@@ -46,15 +46,15 @@ public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
 
         binding.toggleButton.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if(checkedId==R.id.easy_mode_button){
-                level =0;
+                zombieCount =2;
             }
             else if(checkedId==R.id.generally_mode_button){
-                level=1;
+                zombieCount=4;
             }
             else{
-                level=2;
+                zombieCount=6;
             }
-            mListener.onCheckLevel(level, isChecked);
+            mListener.onCheckLevel(zombieCount, isChecked);
             if(isChecked){
                 binding.exerciseStartButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.red));
             }

@@ -88,7 +88,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
     @Override
     public void onClickStart() {
         if (!isCheckLevel){
-            Toast.makeText(getApplicationContext(), "난이도를 선택", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.choose_level, Toast.LENGTH_SHORT).show();
         }
         else {
             ArrayList<Integer> modeList = new ArrayList();
