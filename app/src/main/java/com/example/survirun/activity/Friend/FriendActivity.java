@@ -58,6 +58,7 @@ public class FriendActivity extends AppCompatActivity {
 
         friendDB = FriendDB.getInstance(this);
         mContext = getApplicationContext();
+
         friendAdapter = new FriendAdapter(friendRoomList);
         friendAdapter.setHasStableIds(true);
 
@@ -158,7 +159,7 @@ public class FriendActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                         if (response.isSuccessful()) {
-                            Toast.makeText(FriendActivity.this, "친구추가 성공 잠시만 기달려주세요", Toast.LENGTH_LONG).show();
+                            Toast.makeText(FriendActivity.this, R.string.success_add_friend, Toast.LENGTH_LONG).show();
                             refreshRecyclerView(friendEmile, friendName, profile);
                         } else {
                             //실패시
@@ -196,6 +197,11 @@ public class FriendActivity extends AppCompatActivity {
         t.start();
 
 
+    }
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        getFriend();
     }
 
     @Override
