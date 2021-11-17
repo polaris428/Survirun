@@ -87,14 +87,14 @@ public class StatisticsFragment extends Fragment {
 
 
                 }else{
-                    Toast.makeText(getContext(), "서버오류", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.server_error, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ExerciseRecordData> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(getContext(), "서버오류", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.server_error, Toast.LENGTH_SHORT).show();
             }
         });
 

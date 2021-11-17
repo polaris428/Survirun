@@ -150,4 +150,5 @@
     <string name="introduce">Introduce yourself</string>
     <string name="success_reflected">It was successfully reflected</string>
     <string name="scroll_tip">Tip. Scroll through the numbers.</string>
+    <string name="choose_level">Choose the difficulty level</string>
 </resources>
