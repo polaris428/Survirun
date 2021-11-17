@@ -100,6 +100,7 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
 
                 }else{
                     intent.putExtra("min",holder.minConstraintLayoutMinTextView.getText().toString());
+                    intent.putExtra("hour","0");
                 }
 
                 holder.itemView.getContext().startActivity(intent);
