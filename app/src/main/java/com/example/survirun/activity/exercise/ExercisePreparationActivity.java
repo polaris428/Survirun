@@ -1,4 +1,4 @@
-package com.example.survirun.activity;
+package com.example.survirun.activity.exercise;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -7,11 +7,11 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.survirun.BottomSheetModeSelectFragment;
 import com.example.survirun.R;
-import com.example.survirun.activity.exercise.MapActivity;
 import com.example.survirun.databinding.ActivityExercisePreparationBinding;
 
 import java.util.ArrayList;
@@ -22,9 +22,11 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
     String title;
     String calorie;
     String km;
-    String  time;
+    String  min;
+    String hour;
     int level;
     int zombieCountIntent;
+    int time;
 
     boolean zombieMode=true;
     boolean isCheckLevel=false;
@@ -41,7 +43,8 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         title = exerciseSelection.getStringExtra("title");
         calorie = exerciseSelection.getStringExtra("calorie");
         km = exerciseSelection.getStringExtra("km");
-        time = exerciseSelection.getStringExtra("min");
+        hour=exerciseSelection.getStringExtra("hour");
+        min = exerciseSelection.getStringExtra("min");
         level= exerciseSelection.getIntExtra("level",1);
 
         int ran = (int)((Math.random()*10000)%10)+1;
@@ -50,7 +53,24 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
 
         binding.exerciseTitleTextview.setText(title);
         binding.calorieTextView.setText(calorie);
-        binding.timeTextView.setText(String.valueOf(time));
+        if(hour.equals("0")){
+            binding.hourTextView.setVisibility(View.GONE);
+            binding.hurUnitTextView.setVisibility(View.GONE);
+
+        }else{
+            binding.hourTextView.setText(hour);
+        }
+        if(min.equals("0")&&hour.equals("0")) {
+            binding.minTextView.setText("0");
+        }else if(min.equals("0")){
+            binding.minTextView.setVisibility(View.GONE);
+            binding.minUnitTextView.setVisibility(View.GONE);
+
+        }else{
+            binding.minTextView.setText(min);
+        }
+
+
         binding.kmTextView.setText(km);
 
         setAnimation(binding.constraint);
@@ -63,6 +83,9 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         binding.backButton.setOnClickListener(v -> {
             finish();
         });
+        time=Integer.parseInt(hour);
+        time=time*60+Integer.parseInt(min);
+        Log.d("time",time+"");
     }
 
     @Override
@@ -78,6 +101,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
             intent.putExtra("calorie", calorie);
             intent.putExtra("km", km);
             intent.putExtra("time", time);
+            intent.putExtra("min", min);
             intent.putExtra("level", level);
             intent.putExtra("zombieMode", zombieMode);
 

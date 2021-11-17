@@ -47,19 +47,19 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+         context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.item_friend, parent, false);
         FriendAdapter.ViewHolder viewHolder = new FriendAdapter.ViewHolder(view);
+        SharedPreferences sf = context.getSharedPreferences("Login", MODE_PRIVATE);
 
+        token = sf.getString("token", "");
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        SharedPreferences sf = context.getSharedPreferences("Login", MODE_PRIVATE);
 
-        token = sf.getString("token", "");
         FriendRoom item = friendRoomList.get(position);
         holder.email.setText(item.email);
         holder.name.setText(item.name);
@@ -69,6 +69,29 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 .into(holder.profile);
 
         Log.d("adsf", item.profile);
+        Handler handler = new Handler();
+        boolean isExpanded = false;
+        holder.constraintLayout1.setOnClickListener(v -> {
+            if (holder.constraintLayout2.getVisibility() == View.GONE) {
+                holder.constraintLayout2.setVisibility(View.VISIBLE);
+                ValueAnimator anim = ValueAnimator.ofInt(1, 1200);
+                setAnimation(anim,holder. constraintLayout2);
+
+            } else {
+                ValueAnimator anim = ValueAnimator.ofInt(1200, 1);
+                setAnimation(anim,holder. constraintLayout2);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        holder. constraintLayout2.setVisibility(View.GONE);
+
+                    }
+                }, 800);
+            }
+
+
+        });
+
         holder.detailButton.setOnClickListener(v -> {
 
             Intent intent = new Intent(context, FriendInformationActivity.class);
@@ -138,28 +161,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             context = itemView.getContext();
 
 
-            Handler handler = new Handler();
-            boolean isExpanded = false;
-            constraintLayout1.setOnClickListener(v -> {
-                if (constraintLayout2.getVisibility() == View.GONE) {
-                    constraintLayout2.setVisibility(View.VISIBLE);
-                    ValueAnimator anim = ValueAnimator.ofInt(1, 1200);
-                    setAnimation(anim, constraintLayout2);
-
-                } else {
-                    ValueAnimator anim = ValueAnimator.ofInt(1200, 1);
-                    setAnimation(anim, constraintLayout2);
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            constraintLayout2.setVisibility(View.GONE);
-
-                        }
-                    }, 800);
-                }
-
-
-            });
 
         }
     }

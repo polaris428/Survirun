@@ -54,7 +54,7 @@
             android:name=".activity.ExplanationActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity
-            android:name=".activity.ExercisePreparationActivity"
+            android:name=".activity.exercise.ExercisePreparationActivity"
             android:exported="true" />
         <activity android:name=".activity.account.ResultActivity" />
         <activity android:name=".activity.user.UserGoalModifyActivity" />

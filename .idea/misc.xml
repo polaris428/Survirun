@@ -24,11 +24,13 @@
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_floor.xml" value="0.16872964169381108" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_goal.xml" value="0.2462962962962963" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_help.xml" value="0.24259259259259258" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic_home.xml" value="0.17407407407407408" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_human.xml" value="0.24259259259259258" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_information.xml" value="0.16872964169381108" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_kcal.xml" value="0.17039473684210527" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_launcher_background.xml" value="0.24259259259259258" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_left.xml" value="0.2462962962962963" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable/ic_left_gray.xml" value="0.17407407407407408" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_logo_red.xml" value="0.24259259259259258" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_logo_white.xml" value="0.24259259259259258" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic_logout.xml" value="0.17039473684210527" />
@@ -47,7 +49,7 @@
         <entry key="..\:/Survirun/app/src/main/res/font/font.xml" value="0.17664473684210527" />
         <entry key="..\:/Survirun/app/src/main/res/font/font_style.xml" value="0.17927631578947367" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_edit_profile.xml" value="0.3451834862385321" />
-        <entry key="..\:/Survirun/app/src/main/res/layout/activity_exercise_preparation.xml" value="0.20516717325227962" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/activity_exercise_preparation.xml" value="0.35185185185185186" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_exercise_result.xml" value="0.209375" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_exercise_story.xml" value="0.13148907103825136" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_explanation.xml" value="0.21041666666666667" />
@@ -81,7 +83,7 @@
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_3.xml" value="0.2760416666666667" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_bottom_sheet_mode_select.xml" value="0.16452702702702704" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_bottom_sheet_sign_up.xml" value="0.10833333333333334" />
-        <entry key="..\:/Survirun/app/src/main/res/layout/fragment_exercise.xml" value="0.10400000000000001" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/fragment_exercise.xml" value="0.2" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_friend.xml" value="0.136" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_home.xml" value="0.20199275362318841" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_ranking.xml" value="0.1" />
@@ -90,6 +92,7 @@
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_statistics.xml" value="0.2765625" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_user.xml" value="0.536" />
         <entry key="..\:/Survirun/app/src/main/res/layout/header.xml" value="0.1" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/item_all_ranking.xml" value="0.19746376811594202" />
         <entry key="..\:/Survirun/app/src/main/res/layout/item_exercise.xml" value="0.14570858283433133" />
         <entry key="..\:/Survirun/app/src/main/res/layout/item_friend.xml" value="0.264" />
         <entry key="..\:/Survirun/app/src/main/res/layout/item_ranking.xml" value="0.14947916666666666" />

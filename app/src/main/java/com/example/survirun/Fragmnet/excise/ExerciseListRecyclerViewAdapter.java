@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.survirun.loom.ExerciseData;
 import com.example.survirun.R;
-import com.example.survirun.activity.ExercisePreparationActivity;
+import com.example.survirun.activity.exercise.ExercisePreparationActivity;
 
 import java.util.ArrayList;
 
@@ -100,6 +100,7 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
 
                 }else{
                     intent.putExtra("min",holder.minConstraintLayoutMinTextView.getText().toString());
+                    intent.putExtra("hour","0");
                 }
 
                 holder.itemView.getContext().startActivity(intent);

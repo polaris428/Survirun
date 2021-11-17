@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ExercisePreparationActivity">
+    tools:context=".activity.exercise.ExercisePreparationActivity">
 
     <ImageButton
         android:id="@+id/back_button"
@@ -135,7 +135,7 @@
                     app:layout_constraintTop_toTopOf="@+id/kcal_icon" />
 
                 <TextView
-                    android:id="@+id/time_text_view"
+                    android:id="@+id/hour_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -145,6 +145,45 @@
                     app:layout_constraintBottom_toBottomOf="@+id/clock_icon"
                     app:layout_constraintLeft_toRightOf="@+id/clock_icon"
                     app:layout_constraintTop_toTopOf="@+id/clock_icon" />
+                <TextView
+                    android:id="@+id/hur_unit_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/hour"
+                    android:textSize="13sp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/hour_text_view"
+                    app:layout_constraintLeft_toRightOf="@+id/hour_text_view"/>
+
+                <TextView
+                    android:id="@+id/min_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/clock_icon"
+                    app:layout_constraintTop_toTopOf="@+id/clock_icon"
+                    app:layout_constraintLeft_toRightOf="@+id/hur_unit_text_view"
+
+                    />
+                <TextView
+                    android:id="@+id/min_unit_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/min"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="13sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/min_text_view"
+                    app:layout_constraintLeft_toRightOf="@+id/min_text_view"
+
+
+
+
+                    />
+
+
 
                 <TextView
                     android:id="@+id/km_text_view"
@@ -167,17 +206,7 @@
                     app:layout_constraintBaseline_toBaselineOf="@id/calorie_text_view"
                     app:layout_constraintLeft_toRightOf="@+id/calorie_text_view" />
 
-                <TextView
-                    android:id="@+id/hour_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/min"
-                    android:textSize="13sp"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/time_text_view"
-                    app:layout_constraintLeft_toRightOf="@+id/time_text_view">
 
-                </TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
