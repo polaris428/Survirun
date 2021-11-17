@@ -3,6 +3,7 @@ package com.example.survirun.Fragmnet.ranking;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -58,7 +59,7 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Handler handler = new Handler();
         boolean isExpanded = false;
         holder.constraintLayout1.setOnClickListener(v -> {
