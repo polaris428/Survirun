@@ -28,22 +28,22 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/cancel_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="@drawable/cancel_button_background"
-            android:text="@string/no"
-            android:textColor="@color/white"/>
-
-        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/yes_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
             android:background="@drawable/yes_button_background"
             android:text="@string/yes"
+            android:textColor="@color/white"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancel_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/cancel_button_background"
+            android:text="@string/no"
             android:gravity="center"
             android:textColor="@color/white"/>
     </LinearLayout>
