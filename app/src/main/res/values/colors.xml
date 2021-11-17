@@ -15,6 +15,7 @@
     <color name="red">#cc3333</color>
     <color name="brightGray">#E4E4E4</color>
     <color name="darkGray">#3C3C3C</color>
+    <color name="tooDarkGray">#2C2C2C</color>
     <color name="textGray">#555555</color>
     <color name="yellow">#FFD600</color>
 </resources>

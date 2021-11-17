@@ -145,4 +145,5 @@
     <string name="died">당신은 죽었습니다.</string>
     <string name="delete_friend_text">친구를 삭제하시겠습니까?</string>
     <string name="success_add_friend">친구추가 성공\n잠시만 기달려주세요</string>
+    <string name="best_score">최고 점수</string>
 </resources>

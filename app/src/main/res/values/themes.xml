@@ -15,6 +15,7 @@
         <item name="colorBottom">@color/white</item>
         <item name="colorBlackToWhite">@color/black</item>
         <item name="colorBox">@color/transparent</item>
+        <item name="colorBackground">@color/red</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
@@ -52,4 +53,5 @@
     <attr format="color" name="colorBox"/>
     <attr format="color" name="colorBlackToWhite"/>
     <attr format="color" name="colorUserText"/>
+    <attr format="color" name="colorBackground"/>
 </resources>
