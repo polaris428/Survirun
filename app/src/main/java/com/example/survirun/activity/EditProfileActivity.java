@@ -14,6 +14,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditProfileActivity extends AppCompatActivity implements BottomSheetSignUpFragment.BottomSheetListener{
+public class EditProfileActivity extends AppCompatActivity implements BottomSheetSignUpFragment.BottomSheetListener {
     public static final String MULTIPART_FORM_DATA = "multipart/form-data";
 
     ActivityEditProfileBinding binding;
@@ -63,19 +65,21 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
         setContentView(view);
 
         signUpFragment = new BottomSheetSignUpFragment();
+        binding.profileImageview.setBackground(new ShapeDrawable(new OvalShape()));
+        binding.profileImageview.setClipToOutline(true);
 
         sf = getSharedPreferences("Login", MODE_PRIVATE);
         editor = sf.edit();
 
         token = sf.getString("token", "");
         name = sf.getString("name", "");
-        intro=sf.getString("intro","");
+        intro = sf.getString("intro", "");
 
 
         binding.nameInputEdittext.setText(name);
-        if(intro.equals("")){
-            binding.commentInputEdittext.setHint("본인을 소개해보세요");
-        }else{
+        if (intro.equals("")) {
+            binding.commentInputEdittext.setHint(R.string.introduce);
+        } else {
             binding.commentInputEdittext.setText(intro);
         }
 
@@ -86,21 +90,21 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
         binding.basicProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<ResultData>call=ServerClient.getServerService().postDefaultImage(token);
+                Call<ResultData> call = ServerClient.getServerService().postDefaultImage(token);
                 call.enqueue(new Callback<ResultData>() {
                     @Override
                     public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                        if(response.isSuccessful()){
-                            Toast.makeText(EditProfileActivity.this,"성공적으로 반영되었습니다",Toast.LENGTH_LONG).show();
-                        }else{
-                            Toast.makeText(EditProfileActivity.this, R.string.server_error,Toast.LENGTH_LONG).show();
+                        if (response.isSuccessful()) {
+                            Toast.makeText(EditProfileActivity.this, R.string.success_reflected, Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResultData> call, Throwable t) {
                         t.printStackTrace();
-                        Toast.makeText(EditProfileActivity.this, R.string.server_error,Toast.LENGTH_LONG).show();
+                        Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -109,55 +113,55 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
         binding.saveButton.setOnClickListener(v -> {
             inputName = binding.nameInputEdittext.getText().toString();
             if (!name.equals(inputName)) {
-                    Call<ResultData> call = ServerClient.getServerService().inputName(inputName, token);
-                    call.enqueue(new Callback<ResultData>() {
-                        @Override
-                        public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                            if (response.isSuccessful()) {
-                                editor.putString("name", inputName);
-                                editor.commit();
-                                Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                                finish();
+                Call<ResultData> call = ServerClient.getServerService().inputName(inputName, token);
+                call.enqueue(new Callback<ResultData>() {
+                    @Override
+                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                        if (response.isSuccessful()) {
+                            editor.putString("name", inputName);
+                            editor.commit();
+                            Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finish();
 
-                            } else {
-                                response.errorBody();
-                                Log.d("adsf", response.errorBody().toString());
-                            }
+                        } else {
+                            response.errorBody();
+                            Log.d("adsf", response.errorBody().toString());
                         }
+                    }
 
-                        @Override
-                        public void onFailure(Call<ResultData> call, Throwable t) {
-                            t.printStackTrace();
-                        }
-                    });
+                    @Override
+                    public void onFailure(Call<ResultData> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
 
 
             }
-            if(!intro.equals(binding.commentInputEdittext.getText().toString())){
+            if (!intro.equals(binding.commentInputEdittext.getText().toString())) {
 
-                    Call<ResultData>call =ServerClient.getServerService().patchEditIntro(token,binding.commentInputEdittext.getText().toString());
-                    call.enqueue(new Callback<ResultData>() {
-                        @Override
-                        public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                            if(response.isSuccessful()){
-                                Toast.makeText(EditProfileActivity.this,"성공적으로 반영되었습니다",Toast.LENGTH_LONG).show();
-                                editor.putString("intro",binding.commentInputEdittext.getText().toString());
-                                editor.commit();
+                Call<ResultData> call = ServerClient.getServerService().patchEditIntro(token, binding.commentInputEdittext.getText().toString());
+                call.enqueue(new Callback<ResultData>() {
+                    @Override
+                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(EditProfileActivity.this, R.string.success_reflected, Toast.LENGTH_LONG).show();
+                            editor.putString("intro", binding.commentInputEdittext.getText().toString());
+                            editor.commit();
 
 
-                            }else{
-                                Toast.makeText(EditProfileActivity.this, R.string.server_error,Toast.LENGTH_LONG).show();
-                            }
+                        } else {
+                            Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
                         }
+                    }
 
-                        @Override
-                        public void onFailure(Call<ResultData> call, Throwable t) {
-                            t.printStackTrace();
-                            Toast.makeText(EditProfileActivity.this, R.string.server_error,Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    @Override
+                    public void onFailure(Call<ResultData> call, Throwable t) {
+                        t.printStackTrace();
+                        Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
+                    }
+                });
 
             }
         });
@@ -240,8 +244,6 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
                 } catch (Exception e) {
 
                 }
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
             }
         }
         if (requestCode == 1) {//코드 1번 카메라

@@ -6,34 +6,35 @@
     android:layout_height="match_parent"
     android:background="?attr/colorPrimaryVariant"
     tools:context=".activity.EditProfileActivity">
+
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintVertical_weight="1"
+        app:layout_constraintBottom_toTopOf="@id/layout"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/layout"/>
+        app:layout_constraintVertical_weight="1" />
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_background1"
         android:layout_marginTop="90dp"
+        android:src="@drawable/ic_background1"
+        app:layout_constraintBottom_toTopOf="@id/layout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/layout"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintVertical_weight="2.6"
         android:background="@drawable/sign_in_box"
-        app:layout_constraintTop_toBottomOf="@id/view"
+        android:paddingHorizontal="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:paddingHorizontal="48dp">
+        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintVertical_weight="2.6">
 
         <TextView
             android:id="@+id/textView1"
@@ -43,52 +44,50 @@
             android:textColor="@color/red"
             android:textSize="30sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/profile_imageview"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/profile_imageview"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_marginBottom="48dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/userdefaultprofile"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView1"
             app:layout_constraintBottom_toTopOf="@id/name_layout"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView1" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_inputprofile"
-            app:layout_constraintRight_toRightOf="@id/profile_imageview"
-            app:layout_constraintBottom_toBottomOf="@id/profile_imageview">
+            app:layout_constraintBottom_toBottomOf="@id/profile_imageview"
+            app:layout_constraintRight_toRightOf="@id/profile_imageview" />
 
-        </ImageView>
         <Button
             android:id="@+id/basic_profile_button"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="아바타 제거"
-            android:gravity="top"
-            app:layout_constraintTop_toBottomOf="@+id/profile_imageview"
+            android:text="@string/default_profile"
+            android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            >
-
-        </Button>
+            app:layout_constraintTop_toBottomOf="@+id/profile_imageview" />
 
 
         <TextView
             android:id="@+id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/name"
-            android:textSize="15sp"
-            android:textStyle="bold"
             android:layout_marginTop="30dp"
+            android:text="@string/name"
+            android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/name_layout"
             app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -99,27 +98,29 @@
             app:boxBackgroundColor="?attr/colorBox"
             app:endIconMode="custom"
             app:hintEnabled="false"
-            app:layout_constraintTop_toBottomOf="@id/profile_imageview"
+            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toTopOf="@id/info_layout"
-            app:layout_constraintLeft_toLeftOf="parent">
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_imageview">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name_input_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
             android:id="@+id/comment_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/info"
             android:layout_marginTop="20dp"
-            android:textSize="15sp"
+            android:text="@string/info"
+            android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/info_layout"/>
+            app:layout_constraintBottom_toTopOf="@id/info_layout"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/info_layout"
@@ -128,16 +129,16 @@
             app:boxBackgroundColor="?attr/colorBox"
             app:endIconMode="custom"
             app:hintEnabled="false"
-            app:layout_constraintTop_toBottomOf="@id/name_layout"
             app:layout_constraintBottom_toTopOf="@id/save_button"
-            app:layout_constraintLeft_toLeftOf="parent">
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name_layout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/comment_input_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -149,9 +150,9 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/info_layout"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/info_layout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

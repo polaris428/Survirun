@@ -146,4 +146,7 @@
     <string name="delete_friend_text">Do you want to delete your friend?</string>
     <string name="success_add_friend">Successfully added friends.\nPlease wait.</string>
     <string name="best_score">Best Score</string>
+    <string name="default_profile">Default profile</string>
+    <string name="introduce">Introduce yourself</string>
+    <string name="success_reflected">It was successfully reflected</string>
 </resources>
