@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.survirun.FriendDB;
 import com.example.survirun.R;
+import com.example.survirun.activity.account.ProgressDialog;
 import com.example.survirun.data.FriendRoom;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.data.getUserData;
@@ -39,6 +40,7 @@ import retrofit2.Response;
 
 public class FriendInformationActivity extends AppCompatActivity {
     private ActivityFriendInformationBinding binding;
+    ProgressDialog customProgressDialog;
     String userName;
     String userEmile;
     String userProfile;
@@ -56,6 +58,9 @@ public class FriendInformationActivity extends AppCompatActivity {
         binding = ActivityFriendInformationBinding.inflate(getLayoutInflater());
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(binding.getRoot());
+
+        customProgressDialog = new ProgressDialog(this);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         friendDB = FriendDB.getInstance(this);
 
@@ -160,11 +165,11 @@ public class FriendInformationActivity extends AppCompatActivity {
             deleteFriend();
             dialog.dismiss();
             popup.dismiss();
-            finish();
         });
     }
 
     private void deleteFriend() {
+        customProgressDialog.show();
         Call<ResultData> call = ServerClient.getServerService().deleteFriend(token, "email", userEmile);
         call.enqueue(new Callback<ResultData>() {
             @Override
@@ -176,6 +181,8 @@ public class FriendInformationActivity extends AppCompatActivity {
                             try {
                                 FriendRoom friendRoom = friendDB.friendDao().findById(userEmile);
                                 friendDB.friendDao().delete(friendRoom);
+                                customProgressDialog.dismiss();
+                                finish();
                             } catch (Exception e) {
 
                             }
@@ -190,6 +197,7 @@ public class FriendInformationActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResultData> call, Throwable t) {
                 t.printStackTrace();
+                customProgressDialog.dismiss();
                 Toast.makeText(FriendInformationActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
             }
         });
