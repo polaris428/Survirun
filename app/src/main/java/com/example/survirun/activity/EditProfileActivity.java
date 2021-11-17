@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.survirun.BottomSheetSignUpFragment;
 import com.example.survirun.R;
+import com.example.survirun.activity.account.ProgressDialog;
 import com.example.survirun.activity.account.SignUpProfileActivity;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.databinding.ActivityEditProfileBinding;
@@ -56,6 +58,7 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
 
     Uri selectedImageUri;
     BottomSheetSignUpFragment signUpFragment;
+    ProgressDialog customProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,9 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
         signUpFragment = new BottomSheetSignUpFragment();
         binding.profileImageview.setBackground(new ShapeDrawable(new OvalShape()));
         binding.profileImageview.setClipToOutline(true);
+        customProgressDialog = new ProgressDialog(this);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        customProgressDialog.setCancelable(false);
 
         sf = getSharedPreferences("Login", MODE_PRIVATE);
         editor = sf.edit();
@@ -163,6 +169,32 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
                     }
                 });
 
+            }
+            if (selectedImageUri != null) {
+                customProgressDialog.show();
+                MultipartBody.Part body1 = prepareFilePart("image", selectedImageUri);
+                Call<ResultData> call = ServerClient.getServerService().postProfile(token, body1);
+                call.enqueue(new Callback<ResultData>() {
+                    @Override
+                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                        if (response.isSuccessful()) {
+
+                            customProgressDialog.dismiss();
+                            finish();
+
+
+                        } else {
+                            customProgressDialog.dismiss();
+                            Log.d("adsf", response.errorBody().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResultData> call, Throwable t) {
+                        customProgressDialog.dismiss();
+                        t.printStackTrace();
+                    }
+                });
             }
         });
 
