@@ -23,6 +23,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.survirun.activity.EditProfileActivity;
 import com.example.survirun.R;
 import com.example.survirun.activity.WelcomeActivity;
+import com.example.survirun.activity.exercise.SplashActivity2;
 import com.example.survirun.activity.user.UserGoalActivity;
 import com.example.survirun.data.ImageData;
 import com.example.survirun.databinding.FragmentSettingBinding;
@@ -39,6 +40,7 @@ public class SettingFragment extends Fragment {
 
     FragmentSettingBinding binding;
     SharedPreferences sf;
+    SharedPreferences.Editor editor;
 
     String token;
     String name;
@@ -53,16 +55,18 @@ public class SettingFragment extends Fragment {
         View view=binding.getRoot();
         sf = getContext().getSharedPreferences("Login", MODE_PRIVATE);
 
+
         dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog);
 
         token = sf.getString("token", "");
-
         name=sf.getString("name","");
         emile=sf.getString("email","");
         intro=sf.getString("intro","");
+        editor = sf.edit();
+
         binding.infoText.setText(intro);
         binding.nameTextView.setText(name);
         binding.emailText.setText(emile);
@@ -77,6 +81,16 @@ public class SettingFragment extends Fragment {
 
         binding.logoutButton.setOnClickListener(v -> {
             setDialog(getString(R.string.sign_out_user));
+            dialog.findViewById(R.id.yes_button).setOnClickListener(v1 -> {
+                editor.putString("email", "");
+                editor.putString("pwe", "");
+                editor.putString("token", "");
+                editor.putString("name", "");
+                editor.commit();
+                Intent intent = new Intent(getActivity(), SplashActivity2.class);
+                startActivity(intent);
+                getActivity().finish();
+            });
         });
 
         binding.goalButton.setOnClickListener(v -> {
