@@ -111,7 +111,27 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
                     ExerciseHistory exerciseHistory = response.body().exerciseHistory.get( response.body().exerciseHistory.size()-1);
                     holder.exerciseKcalTextview.setText(String.valueOf(exerciseHistory.calorie));
-                    holder.exerciseTimeTextView.setText(String.valueOf(exerciseHistory.time));
+                    String hour=String.valueOf(exerciseHistory.time/60);
+                    String min=String.valueOf(exerciseHistory.time-Integer.parseInt(hour)*60);
+                    if(hour.equals("0")){
+                        holder.hourTextView.setVisibility(View.GONE);
+                        holder.hurUnitTextView.setVisibility(View.GONE);
+
+                    }else{
+                        holder.hourTextView.setText(hour);
+                    }
+                    if(min.equals("0")&&hour.equals("0")) {
+                        holder.minTextView.setText("0");
+                    }else if(min.equals("0")){
+                        holder.minTextView.setVisibility(View.GONE);
+                        holder.minUnitTextView.setVisibility(View.GONE);
+
+                    }else{
+                        holder.minTextView.setText(min);
+
+
+                    }
+
                     holder.exerciseKmTextView.setText(String.format(Locale.getDefault(),"%.2f",exerciseHistory.km));
                     Log.d("ad", response.body().username);
 
@@ -140,7 +160,12 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         TextView email;
         ImageView profile;
         TextView exerciseKcalTextview;
-        TextView exerciseTimeTextView;
+
+        TextView minTextView;
+        TextView hurUnitTextView;
+        TextView hourTextView;
+        TextView minUnitTextView;
+
         TextView exerciseKmTextView;
         ConstraintLayout constraintLayout1;
         ConstraintLayout constraintLayout2;
@@ -155,7 +180,12 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             constraintLayout1 = itemView.findViewById(R.id.constraint_layout);
             constraintLayout2 = itemView.findViewById(R.id.card_item2);
             exerciseKcalTextview = itemView.findViewById(R.id.exercise_kcal_text_view);
-            exerciseTimeTextView = itemView.findViewById(R.id.exercise_time_text_view);
+
+            hourTextView=itemView.findViewById(R.id.hour_text_view);
+            minTextView=itemView.findViewById(R.id.min_text_view);
+            hurUnitTextView=itemView.findViewById(R.id.hur_unit_text_view);
+            minUnitTextView=itemView.findViewById(R.id.min_unit_text_view);
+
             exerciseKmTextView = itemView.findViewById(R.id.exercise_km_text_view);
             detailButton = itemView.findViewById(R.id.detail_button);
             context = itemView.getContext();

@@ -129,22 +129,53 @@
                     app:layout_constraintLeft_toRightOf="@+id/exercise_kcal_text_view" />
 
                 <TextView
-                    android:id="@+id/exercise_time_text_view"
+                    android:id="@+id/hour_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="25sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/clock_icon"
                     app:layout_constraintLeft_toRightOf="@+id/clock_icon"
                     app:layout_constraintTop_toTopOf="@+id/clock_icon" />
+                <TextView
+                    android:id="@+id/hur_unit_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/hour"
+                    android:textSize="13sp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/hour_text_view"
+                    app:layout_constraintLeft_toRightOf="@+id/hour_text_view"/>
 
                 <TextView
+                    android:id="@+id/min_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/clock_icon"
+                    app:layout_constraintTop_toTopOf="@+id/clock_icon"
+                    app:layout_constraintLeft_toRightOf="@+id/hur_unit_text_view"
+
+                    />
+                <TextView
+                    android:id="@+id/min_unit_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/min"
-                    android:textSize="15sp"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/exercise_time_text_view"
-                    app:layout_constraintLeft_toRightOf="@+id/exercise_time_text_view" />
+                    android:layout_marginLeft="10dp"
+                    android:textSize="13sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/min_text_view"
+                    app:layout_constraintLeft_toRightOf="@+id/min_text_view"
+
+
+
+
+                    />
 
                 <TextView
                     android:id="@+id/exercise_km_text_view"
