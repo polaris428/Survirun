@@ -149,4 +149,5 @@
     <string name="default_profile">Default profile</string>
     <string name="introduce">Introduce yourself</string>
     <string name="success_reflected">It was successfully reflected</string>
+    <string name="scroll_tip">Tip. Scroll through the numbers.</string>
 </resources>
