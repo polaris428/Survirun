@@ -7,6 +7,7 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.survirun.BottomSheetModeSelectFragment;
 import com.example.survirun.R;
@@ -17,15 +18,16 @@ import java.util.ArrayList;
 
 public class ExercisePreparationActivity extends AppCompatActivity implements BottomSheetModeSelectFragment.BottomSheetListener {
     ActivityExercisePreparationBinding binding;
-    boolean isCheckedZombie = false;
     BottomSheetModeSelectFragment selectFragment;
     String title;
     String calorie;
     String km;
     String time;
     int level;
+    int zombieCountIntent;
 
     boolean zombieMode=true;
+    boolean isCheckLevel=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         km = exerciseSelection.getStringExtra("km");
         time = exerciseSelection.getStringExtra("time");
         level= exerciseSelection.getIntExtra("level",1);
+
         int ran = (int)((Math.random()*10000)%10)+1;
         if(ran==11) ran=1;
         binding.proverbTextView.setText(R.string.saying_+ ran);
@@ -64,24 +67,35 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
 
     @Override
     public void onClickStart() {
-        ArrayList<Integer> modeList = new ArrayList();
-        if (isCheckedZombie) zombieMode = true;
-        Intent intent = new Intent(ExercisePreparationActivity.this, MapActivity.class);
+        if (!isCheckLevel){
+            Toast.makeText(getApplicationContext(), "난이도를 선택", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            ArrayList<Integer> modeList = new ArrayList();
+            Intent intent = new Intent(ExercisePreparationActivity.this, MapActivity.class);
 
-        intent.putExtra("title",title);
-        intent.putExtra("calorie",calorie);
-        intent.putExtra("km",km);
-        intent.putExtra("time",time);
-        intent.putExtra("level",level);
-        intent.putExtra("zombieMode",zombieMode);
+            intent.putExtra("title", title);
+            intent.putExtra("calorie", calorie);
+            intent.putExtra("km", km);
+            intent.putExtra("time", time);
+            intent.putExtra("level", level);
+            intent.putExtra("zombieMode", zombieMode);
 
-        Log.d("asdf", String.valueOf(modeList));
-        startActivity(intent);
+            Log.d("asdf", String.valueOf(modeList));
+            startActivity(intent);
+        }
     }
 
     @Override
     public void onCheckZombie(boolean isCheck) {
-        isCheckedZombie = isCheck;
+        zombieMode = isCheck;
+    }
+
+    @Override
+    public void onCheckLevel(int zombieCount, boolean isCheckLed) {
+        zombieCountIntent = zombieCount;
+        isCheckLevel = isCheckLed;
+        Log.d("asdf", String.valueOf(zombieCount));
     }
 
 
