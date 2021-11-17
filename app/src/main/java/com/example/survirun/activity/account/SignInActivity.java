@@ -1,8 +1,5 @@
 package com.example.survirun.activity.account;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +9,9 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.survirun.R;
 import com.example.survirun.UserAccount;
@@ -59,7 +59,6 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 id = binding.idEdittext.getText().toString();
-                pwe = binding.passwordEdittext.getText().toString();
                 if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
                     binding.loginButton.setBackgroundColor(ContextCompat.getColor(SignInActivity.this, R.color.red));
                 } else {
@@ -89,6 +88,7 @@ public class SignInActivity extends AppCompatActivity {
                     binding.loginButton.setBackgroundColor(ContextCompat.getColor(SignInActivity.this, R.color.gray));
                 }
             }
+
             @Override
             public void afterTextChanged(Editable s) {
 
