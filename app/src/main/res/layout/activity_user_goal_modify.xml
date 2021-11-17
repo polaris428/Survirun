@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="@string/my_goal"
+        android:text="@string/modify_goals"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -68,6 +68,7 @@
                 android:id="@+id/calorie_numberPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:dividerPadding="10dp"
                 app:np_dividerColor="@color/black"
                 app:np_dividerDistance="30dp"
@@ -75,15 +76,23 @@
                 app:np_dividerType="underline"
                 app:np_height="180dp"
                 app:np_itemSpacing="-90dp"
-                app:np_max="5000"
-                app:np_min="100"
                 app:np_selectedTextColor="#000000"
                 app:np_textColor="#CB6A6A6A"
                 app:np_textSize="20sp"
                 app:np_selectedTextSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/kcal_text"
                 app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/kcal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="kcal"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -129,6 +138,7 @@
                 android:id="@+id/hour_numberPicker"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:dividerPadding="10dp"
                 app:np_dividerColor="@color/black"
                 app:np_dividerDistance="30dp"
@@ -150,7 +160,10 @@
                 android:id="@+id/h"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="h "
+                android:text="@string/hour"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/minute_numberPicker"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -159,6 +172,7 @@
                 android:id="@+id/minute_numberPicker"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:dividerPadding="10dp"
                 app:np_dividerColor="@color/black"
                 app:np_dividerDistance="30dp"
@@ -180,7 +194,9 @@
                 android:id="@+id/m"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="m"
+                android:text="@string/min"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -227,6 +243,7 @@
                 android:id="@+id/km_numberPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:dividerPadding="10dp"
                 app:np_dividerColor="@color/black"
                 app:np_dividerDistance="30dp"
@@ -240,8 +257,18 @@
                 app:np_textColor="#CB6A6A6A"
                 app:np_textSize="20sp"
                 app:np_selectedTextSize="20sp"
+                app:layout_constraintRight_toLeftOf="@id/km_text"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/km_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Km"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

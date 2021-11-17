@@ -32,6 +32,9 @@ public class UserGoalModifyActivity extends AppCompatActivity {
         int time = sf.getInt("time", 60);
         int km = sf.getInt("km", 5);
         List<String> numList = new ArrayList();
+        for(int i = 100; i<5001; i+=100){
+            numList.add(String.valueOf(i));
+        }
 
 
         binding.calorieNumberPicker.setValue(calorie);
@@ -39,9 +42,14 @@ public class UserGoalModifyActivity extends AppCompatActivity {
         binding.minuteNumberPicker.setValue(time % 60);
         binding.kmNumberPicker.setValue(km);
 
+        binding.calorieNumberPicker.setMinValue(1);
+        binding.calorieNumberPicker.setMaxValue(numList.size());
+        binding.calorieNumberPicker.setDisplayedValues(numList.toArray(new String[numList.size()]));
+
         binding.calorieNumberPicker.setTextColor(ContextCompat.getColor(this, R.color.transparent));
         binding.hourNumberPicker.setTextColor(ContextCompat.getColor(this, R.color.transparent));
         binding.minuteNumberPicker.setTextColor(ContextCompat.getColor(this, R.color.transparent));
+        binding.kmNumberPicker.setTextColor(ContextCompat.getColor(this, R.color.transparent));
 
         binding.calorieNumberPicker.setOnClickListener(v -> {
             binding.calorieNumberPicker.setTextColor(ContextCompat.getColor(this, R.color.gray));
@@ -58,9 +66,14 @@ public class UserGoalModifyActivity extends AppCompatActivity {
             binding.minuteNumberPicker.setDividerColor(ContextCompat.getColor(this, R.color.red));
         });
 
+        binding.kmNumberPicker.setOnClickListener(v -> {
+            binding.kmNumberPicker.setTextColor(ContextCompat.getColor(this, R.color.gray));
+            binding.kmNumberPicker.setDividerColor(ContextCompat.getColor(this, R.color.red));
+        });
+
 
         binding.saveButton.setOnClickListener(v -> {
-            int inputCalorie = binding.calorieNumberPicker.getValue();
+            int inputCalorie = binding.calorieNumberPicker.getValue()*100;
             int inputTime = binding.hourNumberPicker.getValue() * 60 + binding.minuteNumberPicker.getValue();
             int inputKm = binding.kmNumberPicker.getValue();
             SharedPreferences.Editor editor = sf.edit();

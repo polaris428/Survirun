@@ -3,6 +3,7 @@ package com.example.survirun.activity.user;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -27,6 +28,7 @@ public class UserGoalActivity extends AppCompatActivity {
     int yesterdayKm;
 
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +51,23 @@ public class UserGoalActivity extends AppCompatActivity {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
 
         String formatedNow = now.format(formatter);
-        int ran = (int)((Math.random()*10000)%10)+1;
-        if(ran==11) ran=1;
-        binding.proverbTextView.setText(R.string.saying_+ ran);
+        int ran = (int) ((Math.random() * 10000) % 10) + 1;
+        if (ran == 11) ran = 1;
+        binding.proverbTextView.setText(R.string.saying_ + ran);
         binding.dataTextview.setText(formatedNow + "");
 
 
         String h = String.valueOf(time / 60);
         String m = String.valueOf(time % 60);
-        binding.calorieTextview.setText(String.valueOf(calorie));
-        binding.timeTextview.setText(h + "h " + m + "m");
-        binding.kmTextview.setText(String.valueOf(km));
+        binding.calorieTextview.setText(String.valueOf(calorie) + "kcal");
+        if ((time / 60 != 0 && time % 60 != 0) || time == 0) {
+            binding.timeTextview.setText(h + getString(R.string.hour) + " " + m + getString(R.string.min));
+        } else if (time / 60 == 0) {
+            binding.timeTextview.setText(m + getString(R.string.min));
+        } else if (time % 60 == 0) {
+            binding.timeTextview.setText(h + getString(R.string.hour));
+        }
+        binding.kmTextview.setText(String.valueOf(km) + "Km");
         binding.expandImageButton.setOnClickListener(v -> {
             if (binding.yesterdayTextView.getVisibility() == View.GONE) {
                 binding.expandImageButton.setImageResource(R.drawable.ic_upblack);
