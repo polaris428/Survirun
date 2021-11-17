@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class SettingFragment extends Fragment {
     String token;
     String name;
     String emile;
-
+    String intro;
     Dialog dialog;
 
     @Override
@@ -61,7 +62,8 @@ public class SettingFragment extends Fragment {
 
         name=sf.getString("name","");
         emile=sf.getString("email","");
-
+        intro=sf.getString("intro","");
+        binding.infoText.setText(intro);
         binding.nameTextView.setText(name);
         binding.emailText.setText(emile);
 
@@ -115,10 +117,10 @@ public class SettingFragment extends Fragment {
                     if (getActivity() == null) {
                         return;
                     }
+                    Log.d("프로필",response.body().img);
                     Glide.with(SettingFragment.this)
                             .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
                             .circleCrop()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .error(R.drawable.ic_userprofile)
                             .into(binding.profileImageview);
                 }

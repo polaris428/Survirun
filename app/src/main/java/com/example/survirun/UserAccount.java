@@ -102,10 +102,14 @@ public class UserAccount {
                 if (response.isSuccessful()) {
                     SharedPreferences sf;
                     SharedPreferences.Editor editor;
+                    sf = context.getSharedPreferences("Login", MODE_PRIVATE);
+                    editor=sf.edit();
+
+                    editor.putString("intro", response.body().intro);
                     sf = context.getSharedPreferences("yesterdayExercise", MODE_PRIVATE);
                     editor = sf.edit();
                     editor.putString("name", response.body().username);
-                    editor.putString("intro", response.body().intro);
+
                     editor.putInt("score", response.body().score);
                     editor.commit();
                 }
