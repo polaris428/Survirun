@@ -98,7 +98,27 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
 
                     ExerciseHistory exerciseHistory = response.body().exerciseHistory.get( response.body().exerciseHistory.size()-1);
                     holder.kcalTextView.setText(String.valueOf(exerciseHistory.calorie));
-                    holder.timeTextView.setText(String.valueOf(exerciseHistory.time));
+                    String hour=String.valueOf(exerciseHistory.time/60);
+                    String min=String.valueOf(exerciseHistory.time-Integer.parseInt(hour)*60);
+                    if(hour.equals("0")){
+                        holder.hourTextView.setVisibility(View.GONE);
+                        holder.hurUnitTextView.setVisibility(View.GONE);
+
+                    }else{
+                        holder.hourTextView.setText(hour);
+                    }
+                    if(min.equals("0")&&hour.equals("0")) {
+                        holder.minTextView.setText("0");
+                    }else if(min.equals("0")){
+                        holder.minTextView.setVisibility(View.GONE);
+                        holder.minUnitTextView.setVisibility(View.GONE);
+
+                    }else{
+                        holder.minTextView.setText(min);
+
+
+                    }
+
                     holder.kmTextView.setText(String.format(Locale.getDefault(),"%.2f",exerciseHistory.km));
                     Log.d("ad", response.body().username);
 
@@ -215,8 +235,12 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
         TextView scoreTextView;
 
         TextView kcalTextView;
-        TextView timeTextView;
+        TextView hourTextView;
+        TextView minTextView;
+        TextView hurUnitTextView;
         TextView kmTextView;
+        TextView minUnitTextView;
+
 
         Button addFriendButton;
         ConstraintLayout constraintLayout1;
@@ -232,7 +256,11 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
             scoreTextView=itemView.findViewById(R.id.best_score);
 
             kcalTextView=itemView.findViewById(R.id.exercise_kcal_text_view);
-            timeTextView=itemView.findViewById(R.id.exercise_time_text_view);
+            hourTextView=itemView.findViewById(R.id.item_exercise_hour_text_view);
+            minTextView=itemView.findViewById(R.id.item_exercise_min_text_view);
+            hurUnitTextView=itemView.findViewById(R.id.item_exercise_hur_unit_text_view);
+            minUnitTextView=itemView.findViewById(R.id.item_exercise_min_text_view_min_unit_text_view);
+
             kmTextView=itemView.findViewById(R.id.exercise_km_text_view);
 
             addFriendButton=itemView.findViewById(R.id.add_friend_button);
