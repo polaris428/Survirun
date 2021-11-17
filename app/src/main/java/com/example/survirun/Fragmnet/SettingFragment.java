@@ -43,7 +43,7 @@ public class SettingFragment extends Fragment {
     String token;
     String name;
     String emile;
-
+    String intro;
     Dialog dialog;
 
     @Override
@@ -62,7 +62,8 @@ public class SettingFragment extends Fragment {
 
         name=sf.getString("name","");
         emile=sf.getString("email","");
-
+        intro=sf.getString("intro","");
+        binding.infoText.setText(intro);
         binding.nameTextView.setText(name);
         binding.emailText.setText(emile);
 
