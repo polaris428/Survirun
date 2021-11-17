@@ -7,17 +7,32 @@
     android:orientation="vertical"
     tools:context=".Fragmnet.ranking.RankingFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emile_input_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
+    <ImageButton
+        android:id="@+id/main_back_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:boxStrokeColor="@color/black"
+        android:src="@drawable/ic_back"
+        android:background="@color/transparent"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/email_input_layout"
+        app:layout_constraintTop_toTopOf="@id/email_input_layout"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="340dp"
+        android:layout_height="54dp"
+        android:background="@drawable/input_layout"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:hintEnabled="false"
         app:hintTextColor="@color/black"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/find_friends"
+        app:startIconDrawable="@drawable/ic_search"
+        app:startIconTint="?attr/colorBlackToWhite"
+        android:layout_margin="16dp"
+        android:visibility="invisible"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -25,19 +40,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email_enter"
+            android:textSize="18sp"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
         android:id="@+id/find_friends"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
-        android:background="@color/transparent"
-        android:src="@drawable/ic_search"
-        app:layout_constraintBottom_toBottomOf="@id/emile_input_layout"
+        android:background="@drawable/ic_search_circle"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/emile_input_layout" />
+        app:layout_constraintTop_toTopOf="@id/email_input_layout"
+        app:layout_constraintBottom_toBottomOf="@id/email_input_layout" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
@@ -45,7 +60,7 @@
         android:layout_height="150dp"
         android:layout_marginTop="8dp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/emile_input_layout">
+        app:layout_constraintTop_toBottomOf="@id/email_input_layout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/find_friends_loading"
