@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.survirun.loom.ExerciseData;
 import com.example.survirun.R;
-import com.example.survirun.activity.ExercisePreparationActivity;
+import com.example.survirun.activity.exercise.ExercisePreparationActivity;
 
 import java.util.ArrayList;
 

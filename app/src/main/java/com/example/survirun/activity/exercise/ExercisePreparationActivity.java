@@ -1,4 +1,4 @@
-package com.example.survirun.activity;
+package com.example.survirun.activity.exercise;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.example.survirun.BottomSheetModeSelectFragment;
 import com.example.survirun.R;
-import com.example.survirun.activity.exercise.MapActivity;
 import com.example.survirun.databinding.ActivityExercisePreparationBinding;
 
 import java.util.ArrayList;
@@ -57,12 +56,16 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         if(hour.equals("0")){
             binding.hourTextView.setVisibility(View.GONE);
             binding.hurUnitTextView.setVisibility(View.GONE);
+
         }else{
             binding.hourTextView.setText(hour);
         }
-        if(min.equals("0")){
+        if(min.equals("0")&&hour.equals("0")) {
+            binding.minTextView.setText("0");
+        }else if(min.equals("0")){
             binding.minTextView.setVisibility(View.GONE);
             binding.minUnitTextView.setVisibility(View.GONE);
+
         }else{
             binding.minTextView.setText(min);
         }
