@@ -63,7 +63,7 @@
                 android:id="@+id/constraint"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:maxHeight="130dp"
+                android:maxHeight="145dp"
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/card_view2">
 
@@ -80,8 +80,8 @@
                     android:id="@+id/clock_icon"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/ic_clock"
                     android:layout_marginTop="15dp"
+                    android:src="@drawable/ic_clock"
                     app:layout_constraintLeft_toRightOf="@+id/kcal_icon"
                     app:layout_constraintRight_toLeftOf="@+id/run_icon"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -99,36 +99,36 @@
                     android:id="@+id/item_calorie_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:text="adff"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="10dp"
+                    app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintLeft_toLeftOf="@+id/kcal_icon"
                     app:layout_constraintRight_toLeftOf="@+id/item_calorie_unit_text_view"
-                    app:layout_constraintTop_toBottomOf="@+id/kcal_icon"/>
+                    app:layout_constraintTop_toBottomOf="@+id/kcal_icon" />
 
                 <TextView
                     android:id="@+id/item_calorie_unit_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/calorie"
+                    android:layout_marginLeft="5dp"
+                    android:text="kcal"
                     android:textSize="13sp"
-                    android:layout_marginLeft="10dp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/item_calorie_text_view"
-                    app:layout_constraintRight_toRightOf="@+id/kcal_icon"
-                    app:layout_constraintLeft_toRightOf="@+id/item_calorie_text_view">
+                    app:layout_constraintLeft_toRightOf="@+id/item_calorie_text_view"
+                    app:layout_constraintRight_toRightOf="@+id/kcal_icon" />
 
-                </TextView>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/item_min_constraintLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="@+id/clock_icon"
                     app:layout_constraintRight_toRightOf="@+id/clock_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/clock_icon"
-                    app:layout_constraintBottom_toBottomOf="parent">
+                    app:layout_constraintTop_toBottomOf="@+id/clock_icon">
 
                     <TextView
                         android:id="@+id/item_min_constraintLayout_min_text_view"
@@ -136,25 +136,20 @@
                         android:layout_height="wrap_content"
                         android:text="1"
                         android:textStyle="bold"
-                        android:layout_marginLeft="10dp"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    </TextView>
                     <TextView
                         android:id="@+id/item_min_constraintLayout_hour_unit_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/min"
                         android:textSize="13sp"
-                        android:text="분"
-                        android:layout_marginLeft="10dp"
                         app:layout_constraintBaseline_toBaselineOf="@+id/item_min_constraintLayout_min_text_view"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toRightOf="@+id/item_min_constraintLayout_min_text_view">
-
-                    </TextView>
+                        app:layout_constraintLeft_toRightOf="@+id/item_min_constraintLayout_min_text_view"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -162,82 +157,77 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="@+id/clock_icon"
                     app:layout_constraintRight_toRightOf="@+id/clock_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/clock_icon"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    >
+                    app:layout_constraintTop_toBottomOf="@+id/clock_icon">
+
                     <TextView
                         android:id="@+id/hour_constraintLayout_hour_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="1"
                         android:textStyle="bold"
-                        android:layout_marginLeft="10dp"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    </TextView>
                     <TextView
                         android:id="@+id/hour_constraintLayout_hour_unit_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/hour"
                         android:textSize="13sp"
-                        android:text="시"
-                        android:layout_marginLeft="10dp"
                         app:layout_constraintBaseline_toBaselineOf="@+id/hour_constraintLayout_hour_text_view"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toRightOf="@+id/hour_constraintLayout_hour_text_view">
+                        app:layout_constraintLeft_toRightOf="@+id/hour_constraintLayout_hour_text_view"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    </TextView>
                     <TextView
                         android:id="@+id/hour_constraintLayout_min_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:text="7"
                         android:textStyle="bold"
-                        android:layout_marginLeft="10dp"
                         app:layout_constraintBaseline_toBaselineOf="@+id/hour_constraintLayout_hour_unit_text_view"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toRightOf="@+id/hour_constraintLayout_hour_unit_text_view">
+                        app:layout_constraintLeft_toRightOf="@+id/hour_constraintLayout_hour_unit_text_view"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    </TextView>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
                         android:text="@string/min"
                         android:textSize="13sp"
-                        android:layout_marginLeft="10dp"
                         app:layout_constraintBaseline_toBaselineOf="@+id/hour_constraintLayout_min_text_view"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toRightOf="@+id/hour_constraintLayout_min_text_view">
-
-                    </TextView>
+                        app:layout_constraintLeft_toRightOf="@+id/hour_constraintLayout_min_text_view"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <TextView
                     android:id="@+id/item_km_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="sgfd"
-                    android:textStyle="bold"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:text="sgfd"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintLeft_toLeftOf="@+id/run_icon"
                     app:layout_constraintRight_toLeftOf="@+id/item_km_unit_text_view"
-                    app:layout_constraintTop_toBottomOf="@+id/run_icon"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toBottomOf="@+id/run_icon" />
 
                 <TextView
                     android:id="@+id/item_km_unit_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="km"
+                    android:layout_marginLeft="5dp"
+                    android:text="Km"
                     android:textSize="13sp"
-                    android:layout_marginLeft="10dp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/item_km_text_view"
                     app:layout_constraintLeft_toRightOf="@+id/item_km_text_view"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/item_km_text_view">
-
-                </TextView>
+                    app:layout_constraintRight_toRightOf="@id/run_icon" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
