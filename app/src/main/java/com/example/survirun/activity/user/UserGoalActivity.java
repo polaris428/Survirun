@@ -2,13 +2,17 @@ package com.example.survirun.activity.user;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.survirun.R;
 import com.example.survirun.activity.MainActivity;
@@ -68,16 +72,28 @@ public class UserGoalActivity extends AppCompatActivity {
             binding.timeTextview.setText(h + getString(R.string.hour));
         }
         binding.kmTextview.setText(String.valueOf(km) + "Km");
+
+        Handler handler = new Handler();
         binding.expandImageButton.setOnClickListener(v -> {
             if (binding.yesterdayTextView.getVisibility() == View.GONE) {
+                ValueAnimator anim = ValueAnimator.ofInt(binding.constraintLayout.getHeight(), binding.constraintLayout.getMaxHeight());
+                setAnimation(anim, binding.constraintLayout);
                 binding.expandImageButton.setImageResource(R.drawable.ic_upblack);
-                binding.yesterdayTextView.setVisibility(View.VISIBLE);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        binding.yesterdayTextView.setVisibility(View.VISIBLE);
+                    }
+                }, 500);
 
             } else {
                 binding.expandImageButton.setImageResource(R.drawable.ic_downblack);
+                ValueAnimator anim = ValueAnimator.ofInt(binding.constraintLayout.getMaxHeight(), binding.constraintLayout.getMinHeight());
                 binding.yesterdayTextView.setVisibility(View.GONE);
+                setAnimation(anim, binding.constraintLayout);
             }
         });
+
         binding.backButton.setOnClickListener(v -> {
             finish();
         });
@@ -86,5 +102,15 @@ public class UserGoalActivity extends AppCompatActivity {
             Intent intent = new Intent(UserGoalActivity.this, UserGoalModifyActivity.class);
             startActivity(intent);
         });
+    }
+
+    private void setAnimation(ValueAnimator anim, ConstraintLayout constraintLayout) {
+        anim.setDuration(500);
+        anim.addUpdateListener(animation -> {
+            Integer value = (Integer) animation.getAnimatedValue();
+            constraintLayout.getLayoutParams().height = value.intValue();
+            constraintLayout.requestLayout();
+        });
+        anim.start();
     }
 }
