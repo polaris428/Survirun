@@ -1,7 +1,6 @@
-package com.example.survirun.Fragmnet.Friend;
+package com.example.survirun.activity.Friend;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -9,7 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -20,13 +18,10 @@ import android.widget.Toast;
 
 import androidx.annotation.MenuRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.survirun.FriendDB;
 import com.example.survirun.R;
-import com.example.survirun.activity.FriendActivity;
 import com.example.survirun.data.FriendRoom;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.data.getUserData;

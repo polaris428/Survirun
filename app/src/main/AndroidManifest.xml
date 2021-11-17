@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Survirun">
         <activity
-            android:name=".activity.FriendActivity"
+            android:name=".activity.Friend.FriendActivity"
             android:exported="false" />
         <activity
             android:name=".activity.EditProfileActivity"
@@ -41,7 +41,7 @@
             android:name=".activity.account.ProgressDialog"
             android:exported="true" />
         <activity
-            android:name=".Fragmnet.Friend.FriendInformationActivity"
+            android:name=".activity.Friend.FriendInformationActivity"
             android:exported="true"
             />
         <activity

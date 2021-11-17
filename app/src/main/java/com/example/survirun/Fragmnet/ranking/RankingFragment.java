@@ -10,10 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.survirun.activity.FriendActivity;
+import com.example.survirun.activity.Friend.FriendActivity;
 import com.example.survirun.data.rankingData;
 import com.example.survirun.databinding.FragmentRankingBinding;
-import com.example.survirun.loom.ExerciseData;
 import com.example.survirun.server.ServerClient;
 
 import java.util.ArrayList;

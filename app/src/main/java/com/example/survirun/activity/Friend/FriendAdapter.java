@@ -1,4 +1,4 @@
-package com.example.survirun.Fragmnet.Friend;
+package com.example.survirun.activity.Friend;
 
 import static android.content.Context.MODE_PRIVATE;
 
