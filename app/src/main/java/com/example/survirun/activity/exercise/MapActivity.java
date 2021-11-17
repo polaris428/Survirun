@@ -924,7 +924,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Button cancelButton = dialog.findViewById(R.id.cancel_button);
         Button yesButton = dialog.findViewById(R.id.yes_button);
         explain.setText(R.string.end_exercise);
-        dialog.findViewById(R.id.help_button).setVisibility(View.GONE);
+        //dialog.findViewById(R.id.help_button).setVisibility(View.GONE);
         dialog.show();
 
         yesButton.setOnClickListener(v -> stop());
