@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.survirun.activity.ExplanationActivity;
 import com.example.survirun.databinding.FragmentBottomSheetModeSelectBinding;
@@ -24,6 +25,7 @@ public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
     FragmentBottomSheetModeSelectBinding binding;
     private BottomSheetListener mListener;
     boolean isZombieMode;
+    int level;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
@@ -42,6 +44,25 @@ public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
             mListener.onCheckZombie(isChecked);
         });
 
+        binding.toggleButton.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if(checkedId==R.id.easy_mode_button){
+                level =0;
+            }
+            else if(checkedId==R.id.generally_mode_button){
+                level=1;
+            }
+            else{
+                level=2;
+            }
+            mListener.onCheckLevel(level, isChecked);
+            if(isChecked){
+                binding.exerciseStartButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.red));
+            }
+            else binding.exerciseStartButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.gray));
+        });
+
+
+
 
         return v;
 
@@ -51,5 +72,6 @@ public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
     public interface BottomSheetListener {
         void onClickStart();
         void onCheckZombie(boolean isCheck);
+        void onCheckLevel(int zombieCount, boolean isChecked);
     }
 }
