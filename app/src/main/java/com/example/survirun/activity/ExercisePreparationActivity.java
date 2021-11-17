@@ -22,7 +22,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
     String title;
     String calorie;
     String km;
-    String time;
+    String  time;
     int level;
     int zombieCountIntent;
 
@@ -41,7 +41,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         title = exerciseSelection.getStringExtra("title");
         calorie = exerciseSelection.getStringExtra("calorie");
         km = exerciseSelection.getStringExtra("km");
-        time = exerciseSelection.getStringExtra("time");
+        time = exerciseSelection.getStringExtra("min");
         level= exerciseSelection.getIntExtra("level",1);
 
         int ran = (int)((Math.random()*10000)%10)+1;
@@ -50,7 +50,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
 
         binding.exerciseTitleTextview.setText(title);
         binding.calorieTextView.setText(calorie);
-        binding.timeTextView.setText(time);
+        binding.timeTextView.setText(String.valueOf(time));
         binding.kmTextView.setText(km);
 
         setAnimation(binding.constraint);
