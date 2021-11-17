@@ -66,10 +66,13 @@ public class ExerciseFragment extends Fragment {
                 UpData(getString(R.string.walking_briskly), 30, 100,2,1);
                 UpData(getString(R.string.walking_steadily), 60, 200,3,2);
                 UpData(getString(R.string.burning_fat), 90, 300,4,3);
+                binding.subtractButton.setBackgroundResource(R.drawable.ic_left_gray);
+
                 break;
 
             }
             case 2: {
+                binding.subtractButton.setBackgroundResource(R.drawable.ic_select_left);
                 ListChange(getString(R.string.exercise_time_goal));
                 UpData("30" + getString(R.string.minute_exercise), 30, 0,0,1);
                 UpData("1" + getString(R.string.hour_exercise), 60, 0,0,2);
@@ -80,6 +83,7 @@ public class ExerciseFragment extends Fragment {
 
             }
             case 3: {
+                binding.plusButton.setBackgroundResource(R.drawable.ic_select_right);
                 ListChange(getString(R.string.exercise_distance_goal));
                 UpData("1Km", 0, 0,1,1);
                 UpData("2Km", 0, 0,2,1);
@@ -90,6 +94,7 @@ public class ExerciseFragment extends Fragment {
 
             }
             case 4: {
+                binding.plusButton.setBackgroundResource(R.drawable.ic_right_gray);
                 ListChange(getString(R.string.calorie_burning_goal));
                 UpData("300kcal", 0, 300,0,3);
                 UpData("400kcal", 0, 400,0,3);
@@ -101,22 +106,16 @@ public class ExerciseFragment extends Fragment {
             }
             default:
                 if (count == 0) {
+
                     count=1;
-                    ListChange(getString(R.string.pace_goal));
-                    UpData(getString(R.string.walking_lightly), 15, 50,1,1);
-                    UpData(getString(R.string.walking_briskly), 30, 100,2,1);
-                    UpData(getString(R.string.walking_steadily), 60, 200,3,2);
-                    UpData(getString(R.string.burning_fat), 90, 300,4,3);
+                    ExerciseList();
+
+
                     break;
 
                 } else if (count==5){
                     count=4;
-                    ListChange(getString(R.string.calorie_burning_goal));
-                    UpData("300kcal", 0, 300,0,3);
-                    UpData("400kcal", 0, 400,0,3);
-                    UpData("500kcal", 0, 500,0,4);
-                    UpData("600kcal", 0, 600,0,4);
-                    UpData("700kcal", 0, 700,0,5);
+                    ExerciseList();
                     break;
                 }
         }
