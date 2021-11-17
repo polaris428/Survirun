@@ -8,11 +8,10 @@
 
     <ImageButton
         android:id="@+id/subtract_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/transparent"
-        android:src="@drawable/ic_select_left"
-        app:layout_constraintRight_toLeftOf="@id/exercise_type_textview"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/ic_select_left"
+        android:layout_marginLeft="50dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/exercise_type_textview"
         app:layout_constraintBottom_toBottomOf="@id/exercise_type_textview"/>
@@ -32,12 +31,11 @@
 
     <ImageButton
         android:id="@+id/plus_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/transparent"
-        android:src="@drawable/ic_select_right"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/ic_select_right"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/exercise_type_textview"
         app:layout_constraintTop_toTopOf="@id/exercise_type_textview"
         app:layout_constraintBottom_toBottomOf="@id/exercise_type_textview"/>
 
