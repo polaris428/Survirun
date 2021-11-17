@@ -51,7 +51,9 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
          context = parent.getContext();
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_ranking, parent, false);
 
+        SharedPreferences sf = context.getSharedPreferences("Login", MODE_PRIVATE);
 
+        token = sf.getString("token", "");
         return new RinkingAdapter.ViewHolder(itemView);
     }
 
@@ -85,9 +87,7 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
         holder.nameTextView.setText(rankinDataList.get(position).userName);
         holder.scoreTextView.setText(String.valueOf(rankinDataList.get(position).userScore));
         holder.emailTextView.setText(rankinDataList.get(position).userEmail);
-        SharedPreferences sf = context.getSharedPreferences("Login", MODE_PRIVATE);
 
-        token = sf.getString("token", "");
         Call<getUserData> call1 = ServerClient.getServerService().getUser(token,rankinDataList.get(position).userEmail);
         call1.enqueue(new Callback<getUserData>() {
             @Override
