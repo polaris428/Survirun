@@ -75,12 +75,10 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                setCheck();
                 if (android.util.Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches() && !s.toString().replace(" ", "").isEmpty()) {
                     binding.layout1.setErrorEnabled(false);
                     isEmailEnterCheck = true;
-                    if (isEmailCheck && isPwdCheck) {
-                        binding.signUpButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                    }
                 } else {
                     binding.layout1.setErrorEnabled(true);
                     binding.layout1.setError(getString(email_error));
@@ -134,6 +132,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                setCheck();
                 if (!Pattern.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#$%^&*])(?=.*[0-9!@#$%^&*]).*$", s)) {
                     binding.layout2.setErrorEnabled(true);
                     binding.layout2.setCounterEnabled(false);
@@ -150,9 +149,6 @@ public class SignUpActivity extends AppCompatActivity {
                     binding.layout2.setErrorEnabled(false);
                     binding.layout2.setCounterEnabled(false);
                     isPwdEnter = true;
-                    if (isEmailCheck && isEmailEnterCheck && isPwdCheck) {
-                        binding.signUpButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                    }
                 }
             }
 
@@ -169,6 +165,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                setCheck();
                 String p = binding.passwordInputEdittext.getText().toString();
                 if (!isPwdEnter) {
                     binding.layout3.setErrorEnabled(true);
@@ -179,9 +176,6 @@ public class SignUpActivity extends AppCompatActivity {
                     if (p1.equals(p)) {
                         binding.layout3.setErrorEnabled(false);
                         isPwdCheck = true;
-                        if (isEmailCheck && isEmailEnterCheck && isPwdEnter) {
-                            binding.signUpButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                        }
                     } else {
                         binding.layout3.setErrorEnabled(true);
                         binding.layout3.setError(getString(pwd_error));
@@ -244,12 +238,12 @@ public class SignUpActivity extends AppCompatActivity {
                 });
             } else if (!isEmailEnterCheck && !isPwdCheck) {
                 Toast.makeText(getApplicationContext(), fill_condition, Toast.LENGTH_SHORT).show();
+            } else if (!isEmailCheck) {
+                Toast.makeText(getApplicationContext(), check_email_validity, Toast.LENGTH_SHORT).show();
             } else if (!isEmailEnterCheck) {
                 Toast.makeText(getApplicationContext(), email_enter, Toast.LENGTH_SHORT).show();
             } else if (!isPwdCheck || !isPwdEnter) {
                 Toast.makeText(getApplicationContext(), fill_pwd_condition, Toast.LENGTH_SHORT).show();
-            } else if (!isEmailCheck) {
-                Toast.makeText(getApplicationContext(), check_email_validity, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -261,5 +255,11 @@ public class SignUpActivity extends AppCompatActivity {
         editor.putString("pwe", pwe);
         editor.putString("email", email);
         editor.commit();
+    }
+
+    private void setCheck() {
+        if (isEmailCheck && isEmailEnterCheck && isPwdEnter && isPwdCheck) {
+            binding.signUpButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+        }
     }
 }
