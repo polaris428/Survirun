@@ -54,12 +54,6 @@ public class SignInActivity extends AppCompatActivity {
         binding.idEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                id = binding.idEdittext.getText().toString();
-                if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
-                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btncolor));
-                } else {
-                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btn));
-                }
             }
 
             @Override
@@ -67,9 +61,9 @@ public class SignInActivity extends AppCompatActivity {
                 id = binding.idEdittext.getText().toString();
                 pwe = binding.passwordEdittext.getText().toString();
                 if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
-                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btncolor));
+                    binding.loginButton.setBackgroundColor(ContextCompat.getColor(SignInActivity.this, R.color.red));
                 } else {
-                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btn));
+                    binding.loginButton.setBackgroundColor(ContextCompat.getColor(SignInActivity.this, R.color.gray));
                 }
 
             }
@@ -79,28 +73,22 @@ public class SignInActivity extends AppCompatActivity {
 
             }
         });
+
         binding.passwordEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                pwe = binding.passwordEdittext.getText().toString();
-                id = binding.idEdittext.getText().toString();
-                if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
-                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btncolor));
-                } else {
-                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btn));
-                }
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 pwe = binding.passwordEdittext.getText().toString();
                 if (!pwe.replace(" ", "").isEmpty() && !id.replace(" ", "").isEmpty()) {
-                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btncolor));
+                    binding.loginButton.setBackgroundColor(ContextCompat.getColor(SignInActivity.this, R.color.red));
                 } else {
-                    binding.loginButton.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.rounded_btn));
+                    binding.loginButton.setBackgroundColor(ContextCompat.getColor(SignInActivity.this, R.color.gray));
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -125,9 +113,9 @@ public class SignInActivity extends AppCompatActivity {
                                 editor.putString("pwe", pwe);
                                 editor.putString("token", response.body().token);
                                 editor.commit();
-                                UserAccount userAccount=new UserAccount();
-                                userAccount.yesterdayExercise( response.body().token,SignInActivity.this);
-                                userAccount.getExercise(response.body().token,SignInActivity.this);
+                                UserAccount userAccount = new UserAccount();
+                                userAccount.yesterdayExercise(response.body().token, SignInActivity.this);
+                                userAccount.getExercise(response.body().token, SignInActivity.this);
                                 if (!response.body().username) {
                                     customProgressDialog.dismiss();
 
@@ -150,8 +138,8 @@ public class SignInActivity extends AppCompatActivity {
                                                 if (response.isSuccessful()) {
                                                     customProgressDialog.dismiss();
                                                     editor.putString("name", response.body().username);
-                                                    editor.putString("intro",response.body().intro);
-                                                    editor.putInt("score",response.body().score);
+                                                    editor.putString("intro", response.body().intro);
+                                                    editor.putInt("score", response.body().score);
                                                     editor.commit();
 
                                                     Intent intent = new Intent(SignInActivity.this, MainActivity.class);
@@ -159,14 +147,14 @@ public class SignInActivity extends AppCompatActivity {
                                                     startActivity(intent);
                                                 } else {
                                                     Log.d("adsf", "실패");
-                                                    Toast.makeText(SignInActivity.this, "사버오류 잠시후 다시 실행해주세요", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(SignInActivity.this, R.string.error_server, Toast.LENGTH_SHORT).show();
                                                 }
                                             }
 
                                             @Override
                                             public void onFailure(Call<getUserData> call, Throwable t) {
                                                 t.printStackTrace();
-                                                Toast.makeText(SignInActivity.this, "사버오류 잠시후 다시 실행해주세요", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(SignInActivity.this, R.string.error_server, Toast.LENGTH_SHORT).show();
                                             }
                                         });
 
