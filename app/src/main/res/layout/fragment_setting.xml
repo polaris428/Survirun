@@ -195,13 +195,14 @@
                         android:background="@drawable/ic_flag"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toLeftOf="@+id/edit_profile"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@id/edit_profile" />
 
                     <ImageButton
                         android:id="@+id/edit_profile"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:background="@drawable/ic_edit_profile"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintLeft_toRightOf="@+id/goal_button"
                         app:layout_constraintRight_toLeftOf="@+id/help_button"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -213,7 +214,7 @@
                         android:background="@drawable/ic_help"
                         app:layout_constraintLeft_toRightOf="@+id/edit_profile"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@id/edit_profile" />
 
                     <Button
                         android:id="@+id/edit_personal_information"

@@ -1,6 +1,7 @@
 package com.example.survirun.activity.account;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -66,8 +67,11 @@ public class SignUpNameActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!s.toString().replace(" ", "").isEmpty()) {
                     binding.inputLayout.setErrorEnabled(false);
+                    binding.nameSendButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                 }
-                binding.nameSendButton.setBackground(getDrawable(R.drawable.rounded_btncolor));
+                else{
+                    binding.nameSendButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.gray));
+                }
             }
 
             @Override

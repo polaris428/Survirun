@@ -11,6 +11,7 @@ import com.example.survirun.data.LoginData;
 import com.example.survirun.data.NewUserData;
 import com.example.survirun.data.ProfileImageData;
 import com.example.survirun.data.ResultData;
+import com.example.survirun.data.ScoreData;
 import com.example.survirun.data.TokenData;
 import com.example.survirun.data.getUserData;
 import com.example.survirun.data.rankingData;
@@ -87,6 +88,9 @@ public interface ServiceService {
 
     @PATCH("/api/v1/auth/intro")
     Call<ResultData>patchEditIntro(@Header("x-access-token")String token ,@Body String intro);
+
+    @PATCH("/api/v1/exercise/score")
+    Call<ScoreData> patchScore(@Header("x-access-token")String token, @Query("score") int score);
 
 
 
