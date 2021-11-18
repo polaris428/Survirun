@@ -1,8 +1,11 @@
 package com.example.survirun.activity.friend;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -24,6 +27,7 @@ import com.example.survirun.data.ResultData;
 import com.example.survirun.data.getUserData;
 import com.example.survirun.databinding.ActivityFriendBinding;
 import com.example.survirun.server.ServerClient;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 
@@ -70,6 +74,123 @@ public class FriendActivity extends AppCompatActivity {
         binding.image.startAnimation(animation);
 
 
+        binding.findFriends.setOnClickListener(v -> {
+            binding.findFriends.setVisibility(View.INVISIBLE);
+            binding.emailInputLayout.setVisibility(View.VISIBLE);
+            ValueAnimator anim = ValueAnimator.ofInt(binding.findFriends.getWidth(), binding.emailInputLayout.getWidth());
+            setAnimation(anim, binding.emailInputLayout);
+        });
+
+        binding.emileInputEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                friendEmail = binding.emileInputEditText.getText().toString();
+                if (email.equals(friendEmail)) {
+                    Toast.makeText(getApplicationContext(), R.string.you_already_friend, Toast.LENGTH_LONG).show();
+                } else if (binding.emileInputEditText.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), R.string.fill_error, Toast.LENGTH_LONG).show();
+                } else {
+                    binding.findFriendsLoading.setVisibility(View.VISIBLE);
+                    binding.backButton.setVisibility(View.GONE);
+                    binding.findFriendsCardView.setVisibility(View.GONE);
+                    binding.friendsError.setVisibility(View.GONE);
+                    binding.cardView.setVisibility(View.VISIBLE);
+                    Call<getUserData> call1 = ServerClient.getServerService().getUser(token, binding.emileInputEditText.getText().toString());
+                    call1.enqueue(new Callback<getUserData>() {
+                        @Override
+                        public void onResponse(Call<getUserData> call, Response<getUserData> response) {
+                            if (response.isSuccessful()) {
+                                friendName = response.body().username;
+                                friendEmile = response.body().email;
+                                friendEmail = binding.emileInputEditText.getText().toString();
+                                binding.cardView.setVisibility(View.VISIBLE);
+                                binding.findFriendsCardView.setVisibility(View.VISIBLE);
+                                binding.friendsError.setVisibility(View.GONE);
+                                binding.findFriendsLoading.setVisibility(View.GONE);
+                                binding.backButton.setVisibility(View.VISIBLE);
+                                binding.usernameTextview.setText(friendName);
+                                ExerciseHistory exerciseHistory = response.body().exerciseHistory.get(0);
+                                binding.exerciseTextview.setText(exerciseHistory.calorie + "kcal " + exerciseHistory.time + getString(R.string.hour) + " " + exerciseHistory.km + "km ");
+                                Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url", response.body().username);
+                                getProfile.enqueue(new Callback<ImageData>() {
+                                    @Override
+                                    public void onResponse(Call<ImageData> call, Response<ImageData> response) {
+                                        if (response.isSuccessful()) {
+                                            if (getApplicationContext() == null) {
+                                                return;
+                                            }
+                                            Log.d("adf", response.body().img);
+                                            Glide.with(FriendActivity.this)
+                                                    .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
+                                                    .error(R.drawable.userdefaultprofile)
+                                                    .circleCrop()
+                                                    .into(binding.profileImageview);
+                                            profile = "https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img;
+
+                                        } else {
+                                            binding.findFriendsLoading.setVisibility(View.GONE);
+                                            binding.backButton.setVisibility(View.VISIBLE);
+                                            binding.cardView.setVisibility(View.VISIBLE);
+                                            binding.friendsError.setVisibility(View.VISIBLE);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ImageData> call, Throwable t) {
+                                        t.printStackTrace();
+                                    }
+                                });
+                            } else {
+                                binding.findFriendsLoading.setVisibility(View.GONE);
+                                binding.backButton.setVisibility(View.VISIBLE);
+                                binding.cardView.setVisibility(View.VISIBLE);
+                                binding.friendsError.setVisibility(View.VISIBLE);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<getUserData> call, Throwable t) {
+                            t.printStackTrace();
+                        }
+                    });
+                }
+
+
+                binding.addFriend.setOnClickListener(v1 -> {
+
+                    Call<ResultData> call2 = ServerClient.getServerService().postAddFriend(token, "email", binding.emileInputEditText.getText().toString());
+                    call2.enqueue(new Callback<ResultData>() {
+                        @Override
+                        public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(FriendActivity.this, R.string.success_add_friend, Toast.LENGTH_LONG).show();
+                                refreshRecyclerView(friendEmile, friendName, profile);
+                            } else {
+                                //실패시
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResultData> call, Throwable t) {
+
+                        }
+                    });
+                });
+            }
+        });
+
+
         Log.d("토큰", token);
         binding.backButton.setOnClickListener(v -> {
             binding.findFriendsCardView.setVisibility(View.GONE);
@@ -77,104 +198,16 @@ public class FriendActivity extends AppCompatActivity {
             binding.cardView.setVisibility(View.GONE);
         });
 
+        binding.mainBackButton.setOnClickListener(v -> {
+            finish();
+        });
+
 
         //binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.findFriends.setOnClickListener(v -> {
-            friendEmail = binding.emileInputEditText.getText().toString();
-            if (email.equals(friendEmail)) {
-                Toast.makeText(getApplicationContext(), R.string.you_already_friend, Toast.LENGTH_LONG).show();
-            } else if (binding.emileInputEditText.getText().toString().equals("")) {
-                Toast.makeText(getApplicationContext(), R.string.fill_error, Toast.LENGTH_LONG).show();
-            } else {
-                binding.findFriendsLoading.setVisibility(View.VISIBLE);
-                binding.backButton.setVisibility(View.GONE);
-                binding.findFriendsCardView.setVisibility(View.GONE);
-                binding.friendsError.setVisibility(View.GONE);
-                binding.cardView.setVisibility(View.VISIBLE);
-                Call<getUserData> call1 = ServerClient.getServerService().getUser(token, binding.emileInputEditText.getText().toString());
-                call1.enqueue(new Callback<getUserData>() {
-                    @Override
-                    public void onResponse(Call<getUserData> call, Response<getUserData> response) {
-                        if (response.isSuccessful()) {
-                            friendName = response.body().username;
-                            friendEmile = response.body().email;
-                            friendEmail = binding.emileInputEditText.getText().toString();
-                            binding.cardView.setVisibility(View.VISIBLE);
-                            binding.findFriendsCardView.setVisibility(View.VISIBLE);
-                            binding.friendsError.setVisibility(View.GONE);
-                            binding.findFriendsLoading.setVisibility(View.GONE);
-                            binding.backButton.setVisibility(View.VISIBLE);
-                            binding.usernameTextview.setText(friendName);
-                            ExerciseHistory exerciseHistory = response.body().exerciseHistory.get(0);
-                            binding.exerciseTextview.setText(exerciseHistory.calorie + "kcal " + exerciseHistory.time + getString(R.string.hour) + " " + exerciseHistory.km + "km ");
-                            Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url", response.body().username);
-                            getProfile.enqueue(new Callback<ImageData>() {
-                                @Override
-                                public void onResponse(Call<ImageData> call, Response<ImageData> response) {
-                                    if (response.isSuccessful()) {
-                                        if (getApplicationContext() == null) {
-                                            return;
-                                        }
-                                        Log.d("adf", response.body().img);
-                                        Glide.with(FriendActivity.this)
-                                                .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
-                                                .error(R.drawable.userdefaultprofile)
-                                                .circleCrop()
-                                                .into(binding.profileImageview);
-                                        profile = "https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img;
-
-                                    } else {
-                                        binding.findFriendsLoading.setVisibility(View.GONE);
-                                        binding.backButton.setVisibility(View.VISIBLE);
-                                        binding.cardView.setVisibility(View.VISIBLE);
-                                        binding.friendsError.setVisibility(View.VISIBLE);
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<ImageData> call, Throwable t) {
-                                    t.printStackTrace();
-                                }
-                            });
-                        } else {
-                            binding.findFriendsLoading.setVisibility(View.GONE);
-                            binding.backButton.setVisibility(View.VISIBLE);
-                            binding.cardView.setVisibility(View.VISIBLE);
-                            binding.friendsError.setVisibility(View.VISIBLE);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<getUserData> call, Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
-            }
+        /*binding.findFriends.setOnClickListener(v -> {
 
 
-            binding.addFriend.setOnClickListener(v1 -> {
-
-                Call<ResultData> call2 = ServerClient.getServerService().postAddFriend(token, "email", binding.emileInputEditText.getText().toString());
-                call2.enqueue(new Callback<ResultData>() {
-                    @Override
-                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(FriendActivity.this, R.string.success_add_friend, Toast.LENGTH_LONG).show();
-                            refreshRecyclerView(friendEmile, friendName, profile);
-                        } else {
-                            //실패시
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResultData> call, Throwable t) {
-
-                    }
-                });
-            });
-
-        });
+        });*/
     }
 
     void getFriend() {
@@ -198,8 +231,9 @@ public class FriendActivity extends AppCompatActivity {
 
 
     }
+
     @Override
-    public void onRestart(){
+    public void onRestart() {
         super.onRestart();
         getFriend();
     }
@@ -298,5 +332,15 @@ public class FriendActivity extends AppCompatActivity {
         binding.cardView.setVisibility(View.GONE);
 
         Log.d("성공", "성공");
+    }
+
+    private void setAnimation(ValueAnimator anim, TextInputLayout textInputLayout) {
+        anim.setDuration(800);
+        anim.addUpdateListener(animation -> {
+            Integer value = (Integer) animation.getAnimatedValue();
+            textInputLayout.getLayoutParams().width = value.intValue();
+            textInputLayout.requestLayout();
+        });
+        anim.start();
     }
 }
