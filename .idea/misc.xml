@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Survirun/app/src/main/res/drawable-v24/circle.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.24259259259259258" />
+        <entry key="..\:/Survirun/app/src/main/res/drawable-xxxhdpi/ic_run9.xml" value="0.21770833333333334" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/dialog_background.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic__graphicon.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/drawable/ic__test.xml" value="0.22135416666666666" />
@@ -91,7 +92,7 @@
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_satting.xml" value="0.18697916666666667" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_setting.xml" value="0.264" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_statistics.xml" value="0.2765625" />
-        <entry key="..\:/Survirun/app/src/main/res/layout/fragment_user.xml" value="0.536" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/fragment_user.xml" value="0.3892733564013841" />
         <entry key="..\:/Survirun/app/src/main/res/layout/header.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/layout/item_all_ranking.xml" value="0.19746376811594202" />
         <entry key="..\:/Survirun/app/src/main/res/layout/item_exercise.xml" value="0.14570858283433133" />
@@ -121,9 +122,6 @@
         <entry key="..\:/Users/iou10/AndroidStudioProjects/Survirun/app/src/main/res/layout/fragment_statistics.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/iou10/AndroidStudioProjects/Survirun/app/src/main/res/layout/fragment_user.xml" value="0.17407407407407408" />
         <entry key="..\:/Users/iou10/AndroidStudioProjects/Survirun/app/src/main/res/layout/itemexercise.xml" value="0.25364583333333335" />
-        <entry key="app/src/main/res/layout/activity_exercise_preparation.xml" value="0.23867753623188406" />
-        <entry key="app/src/main/res/layout/activity_exercise_result.xml" value="0.23867753623188406" />
-        <entry key="app/src/main/res/layout/activity_explanation.xml" value="0.23867753623188406" />
       </map>
     </option>
   </component>
