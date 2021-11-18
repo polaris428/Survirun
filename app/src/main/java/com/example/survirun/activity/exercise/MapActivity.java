@@ -434,7 +434,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             intent.putExtra("km",kmMok);
             intent.putExtra("time",timeMok);
             intent.putExtra("level",levelMok);
-
+            intent.putExtra("zombieCount",MAX_ZB_CNT);
 
 
             polylineOptions = new PolylineOptions();
@@ -530,6 +530,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 intent.putExtra("km",kmMok);
                 intent.putExtra("time",timeMok);
                 intent.putExtra("level",levelMok);
+                intent.putExtra("zombieCount",MAX_ZB_CNT);
 
 
                 polylineOptions = new PolylineOptions();
