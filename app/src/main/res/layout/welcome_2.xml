@@ -5,21 +5,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/colorOnPrimary">
 
-    <ImageView
-        android:id="@+id/image"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/welcome_image_view"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_marginBottom="70dp"
-        android:src="@drawable/ic__welcomeimg2"
-       app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:lottie_rawRes="@raw/welcome_friend"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false" />
     <TextView
         android:id="@+id/title_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/welcome_title_2"
         android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/welcome_image_view"
         app:layout_constraintBottom_toTopOf="@id/textView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
