@@ -166,10 +166,11 @@
 
             <Button
                 android:id="@+id/add_friend"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add_friend"
-                android:textColor="@color/white"
+                android:textSize="16sp"
                 android:layout_marginRight="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />

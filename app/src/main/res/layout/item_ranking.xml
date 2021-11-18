@@ -9,9 +9,8 @@
         android:id="@+id/card_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="10dp"
-        android:maxHeight="900dp"
         app:cardCornerRadius="30dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,67 +23,65 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/card_item1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingHorizontal="20dp">
+
                 <TextView
                     android:id="@+id/ranking_number_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:text="1"
-                    android:textSize="48sp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginVertical="20dp"
-                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    android:textSize="45sp"
+                    android:layout_marginBottom="6dp"
+                    app:layout_constraintBottom_toBottomOf="@id/profile_imageview"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/profile_imageview"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="@id/profile_imageview" />
 
                 <ImageView
                     android:id="@+id/profile_imageview"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginVertical="22dp"
                     android:src="@drawable/userdefaultprofile"
-                    android:layout_marginLeft="16dp"
-                    app:layout_constraintRight_toLeftOf="@id/item_ranking_name"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/ranking_number_textView"
-                    app:layout_constraintTop_toTopOf="@id/ranking_number_textView"
-                    app:layout_constraintBottom_toBottomOf="@id/ranking_number_textView"/>
+                    app:layout_constraintRight_toLeftOf="@id/item_ranking_name"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/item_ranking_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="12dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="110dp"
-                    app:layout_constraintTop_toTopOf="@id/profile_imageview"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@id/item_ranking_email"
-                    app:layout_constraintRight_toLeftOf="@id/best_score"
-                    app:layout_constraintLeft_toRightOf="@id/profile_imageview"/>
+                    app:layout_constraintLeft_toRightOf="@id/profile_imageview"
+                    app:layout_constraintTop_toTopOf="@id/profile_imageview" />
 
                 <TextView
                     android:id="@+id/item_ranking_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:textColor="#959595"
                     android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@id/profile_imageview"
                     app:layout_constraintLeft_toLeftOf="@id/item_ranking_name"
-                    app:layout_constraintTop_toBottomOf="@id/item_ranking_name"
-                    app:layout_constraintBottom_toBottomOf="@id/profile_imageview"/>
+                    app:layout_constraintTop_toBottomOf="@id/item_ranking_name" />
+
                 <TextView
                     android:id="@+id/best_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="25sp"
+                    android:layout_marginRight="5dp"
                     android:gravity="right"
-                    android:layout_marginRight="16dp"
+                    android:textSize="25sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -104,10 +101,10 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="20dp"
                     android:src="@drawable/ic_kcal"
-                    app:layout_constraintVertical_chainStyle="packed"
+                    app:layout_constraintBottom_toTopOf="@id/clock_icon"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/clock_icon"/>
+                    app:layout_constraintVertical_chainStyle="packed" />
 
                 <ImageView
                     android:id="@+id/clock_icon"
@@ -116,8 +113,8 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="30dp"
                     android:src="@drawable/ic_clock"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/run_icon"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/kcal_icon" />
 
                 <ImageView
@@ -127,8 +124,8 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="30dp"
                     android:src="@drawable/ic_run"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/add_friend_button"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/clock_icon" />
 
                 <TextView
@@ -153,50 +150,51 @@
                     android:id="@+id/item_exercise_hour_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/clock_icon"
                     app:layout_constraintLeft_toRightOf="@+id/clock_icon"
                     app:layout_constraintTop_toTopOf="@+id/clock_icon" />
+
                 <TextView
                     android:id="@+id/item_exercise_hur_unit_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
                     android:text="@string/hour"
                     android:textSize="13sp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/item_exercise_hour_text_view"
-                    app:layout_constraintLeft_toRightOf="@+id/item_exercise_hour_text_view"/>
+                    app:layout_constraintLeft_toRightOf="@+id/item_exercise_hour_text_view" />
 
                 <TextView
                     android:id="@+id/item_exercise_min_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/clock_icon"
-                    app:layout_constraintTop_toTopOf="@+id/clock_icon"
                     app:layout_constraintLeft_toRightOf="@+id/item_exercise_hur_unit_text_view"
+                    app:layout_constraintTop_toTopOf="@+id/clock_icon"
 
                     />
+
                 <TextView
                     android:id="@+id/item_exercise_min_text_view_min_unit_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:text="@string/min"
-                    android:layout_marginLeft="10dp"
                     android:textSize="13sp"
                     app:layout_constraintBaseline_toBaselineOf="@id/item_exercise_min_text_view"
                     app:layout_constraintLeft_toRightOf="@+id/item_exercise_min_text_view"
 
 
-
-
                     />
+
                 <TextView
                     android:id="@+id/exercise_km_text_view"
                     android:layout_width="wrap_content"
@@ -217,15 +215,15 @@
 
                 <Button
                     android:id="@+id/add_friend_button"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_friend"
-                    android:textSize="15sp"
                     android:layout_marginRight="16dp"
-                    app:layout_constraintRight_toRightOf="parent"
+                    android:text="@string/add_friend"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/run_icon"/>
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/run_icon" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
