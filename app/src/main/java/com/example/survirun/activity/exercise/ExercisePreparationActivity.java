@@ -103,6 +103,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
             intent.putExtra("time", time);
             intent.putExtra("min", min);
             intent.putExtra("level", level);
+            intent.putExtra("zombieCount",zombieCountIntent);
             intent.putExtra("zombieMode", zombieMode);
 
             Log.d("asdf", String.valueOf(modeList));
