@@ -66,11 +66,11 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
         holder.constraintLayout1.setOnClickListener(v -> {
             if (holder.constraintLayout2.getVisibility() == View.GONE) {
                 holder.constraintLayout2.setVisibility(View.VISIBLE);
-                ValueAnimator anim = ValueAnimator.ofInt(1, 1200);
+                ValueAnimator anim = ValueAnimator.ofInt(1, holder.constraintLayout2.getMaxHeight());
                 setAnimation(anim, holder.constraintLayout2);
 
             } else {
-                ValueAnimator anim = ValueAnimator.ofInt(1200, 1);
+                ValueAnimator anim = ValueAnimator.ofInt(holder.constraintLayout2.getMaxHeight(), 1);
                 setAnimation(anim, holder.constraintLayout2);
                 handler.postDelayed(new Runnable() {
                     @Override

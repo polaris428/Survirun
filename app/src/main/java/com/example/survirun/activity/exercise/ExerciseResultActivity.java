@@ -149,7 +149,7 @@ public class ExerciseResultActivity extends AppCompatActivity {
         if(km >=kmMok) score += 500;
         if(kcal >=kcalMok) score+=500;
         /*this is bonus*/
-        if((timeToSec / timeMok >= 1) && (km / kmMok >= 1) && (kcal / kcalMok >=1)) {
+        if((timeToSec >= timeMok) && (km >= kmMok) && (kcal >= kcalMok)) {
             score+= 500;
         }
         if(hp==100) score+=100;

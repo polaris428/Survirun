@@ -120,7 +120,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Intent getIntent=getIntent();
 
 
-        Log.d(title,title);
+        //Log.d(title,title);
         dialog = new Dialog(MapActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -131,6 +131,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         timeMok = getIntent().getIntExtra("time",1);
         kcalMok = getIntent().getIntExtra("calorie",1);
         levelMok=getIntent.getIntExtra("level",0);
+        Log.e(">>>>>",kmMok+" "+timeMok+" "+kcalMok);
         MAX_ZB_CNT = getIntent().getIntExtra("zombieCount",5);
 
         showSnackBar(view);
@@ -836,7 +837,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
 
                 /*목표달성체크*/
-                if(kcal >= kcalMok&& walkingDistance >=walkingDistance && timeToSec >= timeMok) {
+                if(kcal >= kcalMok&& (walkingDistance/1000) >=kmMok && timeToSec >= timeMok) {
                     playTTS(getString(R.string.mok_cl));
                     stop();
                 }
