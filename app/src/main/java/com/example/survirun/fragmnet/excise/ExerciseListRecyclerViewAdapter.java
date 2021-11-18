@@ -132,7 +132,6 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
             super(itemView);
             exerciseTitleTextview = itemView.findViewById(R.id.exercise_title_textview);
             calorieTextView=itemView.findViewById(R.id.item_calorie_text_view);
-            timeTextView=itemView.findViewById(R.id.time_text_view);
             kmTextView=itemView.findViewById(R.id.item_km_text_view);
             expandImageButton=itemView.findViewById(R.id.expand_image_button);
             constraintLayout = itemView.findViewById(R.id.constraint);
