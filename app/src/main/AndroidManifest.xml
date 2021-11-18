@@ -39,7 +39,8 @@
             android:exported="false" />
         <activity
             android:name=".activity.account.ProgressDialog"
-            android:exported="true" />
+            android:exported="true"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".activity.friend.FriendInformationActivity"
             android:exported="true"
