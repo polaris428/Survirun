@@ -44,7 +44,6 @@
                     android:layout_height="55dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginVertical="22dp"
-                    android:layout_marginLeft="8dp"
                     android:background="@drawable/userdefaultprofile"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/ranking_number_textView"
