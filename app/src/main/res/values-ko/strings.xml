@@ -156,4 +156,6 @@
     <string name="hard">어려움</string>
     <string name="point">점</string>
     <string name="success_add_friend">친구 추가 성공</string>
+
+    <string name="base_camp">시작 위치</string>
 </resources>
