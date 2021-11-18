@@ -25,7 +25,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.survirun.FriendDB;
 import com.example.survirun.R;
-import com.example.survirun.activity.friend.FriendActivity;
 import com.example.survirun.data.ExerciseHistory;
 import com.example.survirun.data.FriendRoom;
 import com.example.survirun.data.ImageData;
@@ -40,11 +39,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHolder> {
-    private List<RankinData> rankinDataList;
+public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHolder> {
+    private List<RankingData> rankinDataList;
     Context context;
     String token;
-    public RinkingAdapter(List<RankinData> list) {
+    public RankingAdapter(List<RankingData> list) {
         rankinDataList = list;
     }
     @NonNull
@@ -56,7 +55,7 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
         SharedPreferences sf = context.getSharedPreferences("Login", MODE_PRIVATE);
 
         token = sf.getString("token", "");
-        return new RinkingAdapter.ViewHolder(itemView);
+        return new RankingAdapter.ViewHolder(itemView);
     }
 
     @Override
@@ -132,7 +131,7 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
                     String min=String.valueOf(exerciseHistory.time-Integer.parseInt(hour)*60);
                     if(hour.equals("0")){
                         holder.hourTextView.setVisibility(View.GONE);
-                        holder.hurUnitTextView.setVisibility(View.GONE);
+                        holder.hourUnitTextView.setVisibility(View.GONE);
 
                     }else{
                         holder.hourTextView.setText(hour);
@@ -267,7 +266,7 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
         TextView kcalTextView;
         TextView hourTextView;
         TextView minTextView;
-        TextView hurUnitTextView;
+        TextView hourUnitTextView;
         TextView kmTextView;
         TextView minUnitTextView;
 
@@ -288,8 +287,8 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
             kcalTextView=itemView.findViewById(R.id.exercise_kcal_text_view);
             hourTextView=itemView.findViewById(R.id.item_exercise_hour_text_view);
             minTextView=itemView.findViewById(R.id.item_exercise_min_text_view);
-            hurUnitTextView=itemView.findViewById(R.id.item_exercise_hur_unit_text_view);
-            minUnitTextView=itemView.findViewById(R.id.item_exercise_min_text_view_min_unit_text_view);
+            hourUnitTextView=itemView.findViewById(R.id.item_exercise_hour_unit_text_view);
+            minUnitTextView=itemView.findViewById(R.id.item_exercise_min_unit_text_view);
 
             kmTextView=itemView.findViewById(R.id.exercise_km_text_view);
 

@@ -44,7 +44,8 @@
                     android:layout_height="55dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginVertical="22dp"
-                    android:src="@drawable/userdefaultprofile"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/userdefaultprofile"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/ranking_number_textView"
                     app:layout_constraintRight_toLeftOf="@id/item_ranking_name"
@@ -69,7 +70,6 @@
                     android:layout_height="wrap_content"
                     android:textColor="#959595"
                     android:textSize="14sp"
-                    android:maxLength="13"
                     app:layout_constraintBottom_toBottomOf="@id/profile_imageview"
                     app:layout_constraintLeft_toLeftOf="@id/item_ranking_name"
                     app:layout_constraintTop_toBottomOf="@id/item_ranking_name" />
@@ -84,6 +84,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/best_text"
                     app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:id="@+id/best_text"
                     android:layout_width="wrap_content"
@@ -91,7 +92,7 @@
                     android:text="@string/point"
                     android:textSize="13sp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/best_score"
-                    app:layout_constraintRight_toRightOf="parent"/>
+                    app:layout_constraintRight_toRightOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

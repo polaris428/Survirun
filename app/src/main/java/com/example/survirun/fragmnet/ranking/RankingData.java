@@ -1,9 +1,9 @@
 package com.example.survirun.fragmnet.ranking;
 
-public class RankinData {
-    public  String userName;
-    public  String userEmail;
-    public  int userScore;
+public class RankingData {
+    public String userName;
+    public String userEmail;
+    public int userScore;
 
     public String getUsername() {
         return userName;
@@ -28,7 +28,6 @@ public class RankinData {
     public void setScore(int score) {
         this.userScore = score;
     }
-
 
 
 }

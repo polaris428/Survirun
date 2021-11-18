@@ -66,12 +66,12 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
         Handler handler = new Handler();
         holder.expandImageButton.setOnClickListener(view -> {
             if(holder.constraintLayout.getVisibility()==View.GONE){
-                ValueAnimator anim = ValueAnimator.ofInt(1, 500);
+                ValueAnimator anim = ValueAnimator.ofInt(1, holder.constraintLayout.getMaxHeight());
                 setAnimation(anim, holder.constraintLayout);
                 holder.expandImageButton.setImageResource(R.drawable.ic_upblack);
                 holder.constraintLayout.setVisibility(View.VISIBLE);
             }else {
-                ValueAnimator anim = ValueAnimator.ofInt(500, 1);
+                ValueAnimator anim = ValueAnimator.ofInt(holder.constraintLayout.getMaxHeight(), 1);
                 setAnimation(anim, holder.constraintLayout);
 
                 handler.postDelayed(new Runnable() {
@@ -80,7 +80,7 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
                         holder.expandImageButton.setImageResource(R.drawable.ic_downblack);
                         holder.constraintLayout.setVisibility(View.GONE);
                     }
-                },800);
+                },600);
 
             }
         });
@@ -132,7 +132,6 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
             super(itemView);
             exerciseTitleTextview = itemView.findViewById(R.id.exercise_title_textview);
             calorieTextView=itemView.findViewById(R.id.item_calorie_text_view);
-            timeTextView=itemView.findViewById(R.id.time_text_view);
             kmTextView=itemView.findViewById(R.id.item_km_text_view);
             expandImageButton=itemView.findViewById(R.id.expand_image_button);
             constraintLayout = itemView.findViewById(R.id.constraint);
@@ -147,7 +146,7 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     }
 
     private void setAnimation(ValueAnimator anim, ConstraintLayout constraintLayout){
-        anim.setDuration(800);
+        anim.setDuration(600);
         anim.addUpdateListener(animation -> {
             Integer value = (Integer) animation.getAnimatedValue();
             constraintLayout.getLayoutParams().height = value.intValue();

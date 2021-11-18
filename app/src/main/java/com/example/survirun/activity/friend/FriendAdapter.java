@@ -48,7 +48,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-         context = parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.item_friend, parent, false);
         FriendAdapter.ViewHolder viewHolder = new FriendAdapter.ViewHolder(view);
@@ -80,15 +80,15 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             if (holder.constraintLayout2.getVisibility() == View.GONE) {
                 holder.constraintLayout2.setVisibility(View.VISIBLE);
                 ValueAnimator anim = ValueAnimator.ofInt(1, holder.constraintLayout2.getMaxHeight());
-                setAnimation(anim,holder. constraintLayout2);
+                setAnimation(anim, holder.constraintLayout2);
 
             } else {
                 ValueAnimator anim = ValueAnimator.ofInt(holder.constraintLayout2.getMaxHeight(), 1);
-                setAnimation(anim,holder. constraintLayout2);
+                setAnimation(anim, holder.constraintLayout2);
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        holder. constraintLayout2.setVisibility(View.GONE);
+                        holder.constraintLayout2.setVisibility(View.GONE);
 
                     }
                 }, 800);
@@ -112,32 +112,32 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             @Override
             public void onResponse(Call<getUserData> call, Response<getUserData> response) {
                 if (response.isSuccessful()) {
-                    Log.d(response.body().email,  response.body().score+"");
+                    Log.d(response.body().email, response.body().score + "");
 
-                    ExerciseHistory exerciseHistory = response.body().exerciseHistory.get( response.body().exerciseHistory.size()-1);
+                    ExerciseHistory exerciseHistory = response.body().exerciseHistory.get(response.body().exerciseHistory.size() - 1);
                     holder.exerciseKcalTextview.setText(String.valueOf(exerciseHistory.calorie));
-                    String hour=String.valueOf(exerciseHistory.time/60);
-                    String min=String.valueOf(exerciseHistory.time-Integer.parseInt(hour)*60);
-                    if(hour.equals("0")){
+                    String hour = String.valueOf(exerciseHistory.time / 60);
+                    String min = String.valueOf(exerciseHistory.time - Integer.parseInt(hour) * 60);
+                    if (hour.equals("0")) {
                         holder.hourTextView.setVisibility(View.GONE);
-                        holder.hurUnitTextView.setVisibility(View.GONE);
+                        holder.hourUnitTextView.setVisibility(View.GONE);
 
-                    }else{
+                    } else {
                         holder.hourTextView.setText(hour);
                     }
-                    if(min.equals("0")&&hour.equals("0")) {
+                    if (min.equals("0") && hour.equals("0")) {
                         holder.minTextView.setText("0");
-                    }else if(min.equals("0")){
+                    } else if (min.equals("0")) {
                         holder.minTextView.setVisibility(View.GONE);
                         holder.minUnitTextView.setVisibility(View.GONE);
 
-                    }else{
+                    } else {
                         holder.minTextView.setText(min);
 
 
                     }
 
-                    holder.exerciseKmTextView.setText(String.format(Locale.getDefault(),"%.2f",exerciseHistory.km));
+                    holder.exerciseKmTextView.setText(String.format(Locale.getDefault(), "%.2f", exerciseHistory.km));
                     Log.d("ad", response.body().username);
 
                 } else {
@@ -167,7 +167,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         TextView exerciseKcalTextview;
 
         TextView minTextView;
-        TextView hurUnitTextView;
+        TextView hourUnitTextView;
         TextView hourTextView;
         TextView minUnitTextView;
 
@@ -186,15 +186,14 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             constraintLayout2 = itemView.findViewById(R.id.card_item2);
             exerciseKcalTextview = itemView.findViewById(R.id.exercise_kcal_text_view);
 
-            hourTextView=itemView.findViewById(R.id.hour_text_view);
-            minTextView=itemView.findViewById(R.id.min_text_view);
-            hurUnitTextView=itemView.findViewById(R.id.hur_unit_text_view);
-            minUnitTextView=itemView.findViewById(R.id.min_unit_text_view);
+            hourTextView = itemView.findViewById(R.id.hour_text_view);
+            minTextView = itemView.findViewById(R.id.min_text_view);
+            hourUnitTextView = itemView.findViewById(R.id.hour_unit_text_view);
+            minUnitTextView = itemView.findViewById(R.id.min_unit_text_view);
 
             exerciseKmTextView = itemView.findViewById(R.id.exercise_km_text_view);
             detailButton = itemView.findViewById(R.id.detail_button);
             context = itemView.getContext();
-
 
 
         }

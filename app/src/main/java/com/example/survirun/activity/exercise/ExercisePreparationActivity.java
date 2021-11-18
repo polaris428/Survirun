@@ -1,14 +1,14 @@
 package com.example.survirun.activity.exercise;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.survirun.BottomSheetModeSelectFragment;
 import com.example.survirun.R;
@@ -22,14 +22,14 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
     String title;
     String calorie;
     String km;
-    String  min;
+    String min;
     String hour;
     int level;
     int zombieCountIntent;
     int time;
 
-    boolean zombieMode=true;
-    boolean isCheckLevel=false;
+    boolean zombieMode = true;
+    boolean isCheckLevel = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,30 +43,30 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         title = exerciseSelection.getStringExtra("title");
         calorie = exerciseSelection.getStringExtra("calorie");
         km = exerciseSelection.getStringExtra("km");
-        hour=exerciseSelection.getStringExtra("hour");
+        hour = exerciseSelection.getStringExtra("hour");
         min = exerciseSelection.getStringExtra("min");
-        level= exerciseSelection.getIntExtra("level",1);
+        level = exerciseSelection.getIntExtra("level", 1);
 
-        int ran = (int)((Math.random()*10000)%10)+1;
-        if(ran==11) ran=1;
-        binding.proverbTextView.setText(R.string.saying_+ ran);
+        int ran = (int) ((Math.random() * 10000) % 10) + 1;
+        if (ran == 11) ran = 1;
+        binding.proverbTextView.setText(R.string.saying_ + ran);
 
         binding.exerciseTitleTextview.setText(title);
         binding.calorieTextView.setText(calorie);
-        if(hour.equals("0")){
+        if (hour.equals("0")) {
             binding.hourTextView.setVisibility(View.GONE);
-            binding.hurUnitTextView.setVisibility(View.GONE);
+            binding.hourUnitTextView.setVisibility(View.GONE);
 
-        }else{
+        } else {
             binding.hourTextView.setText(hour);
         }
-        if(min.equals("0")&&hour.equals("0")) {
+        if (min.equals("0") && hour.equals("0")) {
             binding.minTextView.setText("0");
-        }else if(min.equals("0")){
+        } else if (min.equals("0")) {
             binding.minTextView.setVisibility(View.GONE);
             binding.minUnitTextView.setVisibility(View.GONE);
 
-        }else{
+        } else {
             binding.minTextView.setText(min);
         }
 
@@ -83,17 +83,16 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         binding.backButton.setOnClickListener(v -> {
             finish();
         });
-        time=Integer.parseInt(hour);
-        time=time*60+Integer.parseInt(min);
-        Log.d("time",time+"");
+        time = Integer.parseInt(hour);
+        time = time * 60 + Integer.parseInt(min);
+        Log.d("time", time + "");
     }
 
     @Override
     public void onClickStart() {
-        if (!isCheckLevel){
+        if (!isCheckLevel) {
             Toast.makeText(getApplicationContext(), R.string.choose_level, Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             ArrayList<Integer> modeList = new ArrayList();
             Intent intent = new Intent(ExercisePreparationActivity.this, MapActivity.class);
 
@@ -103,7 +102,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
             intent.putExtra("time", time);
             intent.putExtra("min", min);
             intent.putExtra("level", level);
-            intent.putExtra("zombieCount",zombieCountIntent);
+            intent.putExtra("zombieCount", zombieCountIntent);
             intent.putExtra("zombieMode", zombieMode);
 
             Log.d("asdf", String.valueOf(modeList));

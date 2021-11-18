@@ -73,7 +73,9 @@ public class ExerciseResultActivity extends AppCompatActivity {
         double kmMok = getIntent().getDoubleExtra("kmMok",1);
         int timeMok = getIntent().getIntExtra("time",1);
         int nanEdo = getIntent().getIntExtra("zombieCount",5);
-        binding.timeTextView.setText(String.format("%d:%d:%d", hour, min, sec));
+        //binding.timeTextView.setText(String.format("%d:%d:%d", hour, min, sec));
+        binding.hourTextView.setText(String.valueOf(hour));
+        binding.minTextView.setText(String.valueOf(min));
         binding.goMainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,5 +182,9 @@ public class ExerciseResultActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }

@@ -3,13 +3,13 @@ package com.example.survirun.fragmnet.ranking;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+
 import com.example.survirun.activity.friend.FriendActivity;
 import com.example.survirun.data.rankingData;
 import com.example.survirun.databinding.FragmentRankingBinding;
@@ -28,7 +28,8 @@ public class RankingFragment extends Fragment {
 
     SharedPreferences sf;
     String token;
-    List<RankinData>rankinDataList=new ArrayList<>();
+    List<RankingData> rankinDataList = new ArrayList<>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,25 +40,25 @@ public class RankingFragment extends Fragment {
         binding.friendButton.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), FriendActivity.class));
         });
-        RinkingAdapter RinkingAdapter = new RinkingAdapter(rankinDataList);
-        binding.rankingRecyclerView.setAdapter(RinkingAdapter);
-        Call<rankingData>call = ServerClient.getServerService().getRanking(token);
+        RankingAdapter RankingAdapter = new RankingAdapter(rankinDataList);
+        binding.rankingRecyclerView.setAdapter(RankingAdapter);
+        Call<rankingData> call = ServerClient.getServerService().getRanking(token);
         call.enqueue(new Callback<rankingData>() {
             @Override
             public void onResponse(Call<rankingData> call, Response<rankingData> response) {
-                if(response.isSuccessful()){
-                    Log.d("성공","성공");
-                    for(int i=0;i<response.body().scores.size();i++){
-                        UpData(response.body().users.get(i).username,response.body().users.get(i).email,response.body().scores.get(i));
-                        if(response.body().scores.size()-1==i){
-                            RinkingAdapter RinkingAdapter = new RinkingAdapter(rankinDataList);
+                if (response.isSuccessful()) {
+                    Log.d("성공", "성공");
+                    for (int i = 0; i < response.body().scores.size(); i++) {
+                        UpData(response.body().users.get(i).username, response.body().users.get(i).email, response.body().scores.get(i));
+                        if (response.body().scores.size() - 1 == i) {
+                            RankingAdapter RinkingAdapter = new RankingAdapter(rankinDataList);
                             binding.rankingRecyclerView.setAdapter(RinkingAdapter);
                         }
                     }
 
 
-                }else{
-                    Log.d("실패",response.errorBody().toString());
+                } else {
+                    Log.d("실패", response.errorBody().toString());
                 }
             }
 
@@ -69,8 +70,9 @@ public class RankingFragment extends Fragment {
 
         return view;
     }
+
     public void UpData(String userName, String userEmail, int userScore) {
-        RankinData rankinData =new RankinData();
+        RankingData rankinData = new RankingData();
         rankinData.setUsername(userName);
         rankinData.setUserEmail(userEmail);
         rankinData.setScore(userScore);
