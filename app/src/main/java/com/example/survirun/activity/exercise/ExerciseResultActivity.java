@@ -147,14 +147,14 @@ public class ExerciseResultActivity extends AppCompatActivity {
 
     private void calcScore(String token,int exerciseLevel, int nanEdo, int hp,int timeToSec, double km, int kcal, int timeMok, double kmMok, int kcalMok) {
         score = 0;
-        score += exerciseLevel*100;
+        score += exerciseLevel*10;
         score += hp*10*nanEdo;
-        if(timeToSec>= timeMok) score += 500;
-        if(km >=kmMok) score += 500;
-        if(kcal >=kcalMok) score+=500;
+        if(timeToSec>= timeMok) score += 50;
+        if(km >=kmMok) score += 50;
+        if(kcal >=kcalMok) score+=50;
         /*this is bonus*/
         if((timeToSec >= timeMok) && (km >= kmMok) && (kcal >= kcalMok)) {
-            score+= 500;
+            score+= 100;
         }
         if(hp==100) score+=100;
         //return score;
