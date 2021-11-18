@@ -158,7 +158,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         binding.dragButton.setImageResource(R.drawable.ic_down);
                         binding.group.setVisibility(View.GONE);
                     }
-                }, 1500);
+                }, 800);
             } else {
                 binding.group.setVisibility(View.VISIBLE);
                 binding.layout.startAnimation(animationDown);
@@ -167,7 +167,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     public void run() {
                         binding.dragButton.setImageResource(R.drawable.ic_up);
                     }
-                }, 1500);
+                }, 800);
             }
         });
 
