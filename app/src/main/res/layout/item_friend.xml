@@ -30,7 +30,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="30dp"
-                    android:src="@drawable/userdefaultprofile"
+                    android:background="@drawable/userdefaultprofile"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -42,8 +42,8 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="20dp"
                     android:gravity="center"
-                    android:textStyle="bold"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@+id/profile_imageview"
                     app:layout_constraintRight_toRightOf="parent"
@@ -72,7 +72,7 @@
                 android:id="@+id/card_item2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="310dp"
+                android:maxHeight="300dp"
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/constraint_layout1">
 
@@ -82,7 +82,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="25dp"
                     android:src="@drawable/ic_kcal"
                     app:layout_constraintBottom_toTopOf="@id/clock_icon"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -94,7 +94,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="25dp"
                     android:src="@drawable/ic_clock"
                     app:layout_constraintBottom_toTopOf="@id/run_icon"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -105,7 +105,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:src="@drawable/ic_run"
                     app:layout_constraintBottom_toTopOf="@id/detail_button"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -116,8 +116,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:textStyle="bold"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/kcal_icon"
                     app:layout_constraintLeft_toRightOf="@+id/kcal_icon"
                     app:layout_constraintTop_toTopOf="@+id/kcal_icon" />
@@ -130,57 +130,64 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/exercise_kcal_text_view"
                     app:layout_constraintLeft_toRightOf="@+id/exercise_kcal_text_view" />
 
-                <TextView
-                    android:id="@+id/hour_text_view"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="@+id/clock_icon"
                     app:layout_constraintLeft_toRightOf="@+id/clock_icon"
-                    app:layout_constraintTop_toTopOf="@+id/clock_icon" />
+                    app:layout_constraintTop_toTopOf="@+id/clock_icon">
 
-                <TextView
-                    android:id="@+id/hur_unit_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="@string/hour"
-                    android:textSize="13sp"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/hour_text_view"
-                    app:layout_constraintLeft_toRightOf="@+id/hour_text_view" />
+                    <TextView
+                        android:id="@+id/hour_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="4dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/hour_unit_text_view"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/min_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/clock_icon"
-                    app:layout_constraintLeft_toRightOf="@+id/hur_unit_text_view"
-                    app:layout_constraintTop_toTopOf="@+id/clock_icon" />
+                    <TextView
+                        android:id="@+id/hour_unit_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="@string/hour"
+                        android:textSize="13sp"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/hour_text_view"
+                        app:layout_constraintRight_toLeftOf="@id/min_text_view" />
 
-                <TextView
-                    android:id="@+id/min_unit_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="@string/min"
-                    android:textSize="13sp"
-                    app:layout_constraintBaseline_toBaselineOf="@id/min_text_view"
-                    app:layout_constraintLeft_toRightOf="@+id/min_text_view" />
+                    <TextView
+                        android:id="@+id/min_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="4dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/min_unit_text_view"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/min_unit_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/min"
+                        android:textSize="13sp"
+                        app:layout_constraintBaseline_toBaselineOf="@id/min_text_view"
+                        app:layout_constraintRight_toRightOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <TextView
                     android:id="@+id/exercise_km_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:textStyle="bold"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/run_icon"
                     app:layout_constraintLeft_toRightOf="@+id/run_icon"
                     app:layout_constraintTop_toTopOf="@+id/run_icon" />

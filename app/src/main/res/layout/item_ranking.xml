@@ -30,9 +30,9 @@
                     android:id="@+id/ranking_number_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
                     android:text="1"
                     android:textSize="40sp"
-                    android:layout_marginBottom="6dp"
                     app:layout_constraintBottom_toBottomOf="@id/profile_imageview"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/profile_imageview"
@@ -42,9 +42,9 @@
                     android:id="@+id/profile_imageview"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginVertical="22dp"
-                    android:src="@drawable/userdefaultprofile"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/userdefaultprofile"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/ranking_number_textView"
                     app:layout_constraintRight_toLeftOf="@id/item_ranking_name"
@@ -83,6 +83,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/best_text"
                     app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:id="@+id/best_text"
                     android:layout_width="wrap_content"
@@ -90,7 +91,7 @@
                     android:text="@string/point"
                     android:textSize="13sp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/best_score"
-                    app:layout_constraintRight_toRightOf="parent"/>
+                    app:layout_constraintRight_toRightOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -98,7 +99,7 @@
                 android:id="@+id/card_item2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="310dp"
+                android:maxHeight="300dp"
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/card_item1">
 
@@ -120,7 +121,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="25dp"
                     android:src="@drawable/ic_clock"
                     app:layout_constraintBottom_toTopOf="@id/run_icon"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -131,7 +132,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="25dp"
                     android:src="@drawable/ic_run"
                     app:layout_constraintBottom_toTopOf="@id/add_friend_button"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -156,49 +157,56 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/exercise_kcal_text_view"
                     app:layout_constraintLeft_toRightOf="@+id/exercise_kcal_text_view" />
 
-                <TextView
-                    android:id="@+id/item_exercise_hour_text_view"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/clock_icon"
                     app:layout_constraintLeft_toRightOf="@+id/clock_icon"
-                    app:layout_constraintTop_toTopOf="@+id/clock_icon" />
+                    app:layout_constraintTop_toTopOf="@+id/clock_icon">
 
-                <TextView
-                    android:id="@+id/item_exercise_hur_unit_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="@string/hour"
-                    android:textSize="13sp"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/item_exercise_hour_text_view"
-                    app:layout_constraintLeft_toRightOf="@+id/item_exercise_hour_text_view" />
+                    <TextView
+                        android:id="@+id/item_exercise_hour_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="4dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/item_exercise_hour_unit_text_view"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/item_exercise_min_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/clock_icon"
-                    app:layout_constraintLeft_toRightOf="@+id/item_exercise_hur_unit_text_view"
-                    app:layout_constraintTop_toTopOf="@+id/clock_icon" />
+                    <TextView
+                        android:id="@+id/item_exercise_hour_unit_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="@string/hour"
+                        android:textSize="13sp"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/item_exercise_hour_text_view"
+                        app:layout_constraintRight_toLeftOf="@id/item_exercise_min_text_view" />
 
-                <TextView
-                    android:id="@+id/item_exercise_min_text_view_min_unit_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="@string/min"
-                    android:textSize="13sp"
-                    app:layout_constraintBaseline_toBaselineOf="@id/item_exercise_min_text_view"
-                    app:layout_constraintLeft_toRightOf="@+id/item_exercise_min_text_view" />
+                    <TextView
+                        android:id="@+id/item_exercise_min_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="4dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/item_exercise_min_unit_text_view"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/item_exercise_min_unit_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/min"
+                        android:textSize="13sp"
+                        app:layout_constraintBaseline_toBaselineOf="@id/item_exercise_min_text_view"
+                        app:layout_constraintRight_toRightOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <TextView
                     android:id="@+id/exercise_km_text_view"
