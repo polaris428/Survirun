@@ -64,7 +64,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         FriendRoom item = friendRoomList.get(position);
         holder.email.setText(item.email);
         holder.name.setText(item.name);
-        Glide.with(context).load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + item.profile)
+        Glide.with(context).load(item.profile)
                 .error(R.drawable.userdefaultprofile)
                 .placeholder(R.drawable.ic_userprofile)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
