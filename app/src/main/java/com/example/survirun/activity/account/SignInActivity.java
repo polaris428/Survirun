@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.survirun.R;
 import com.example.survirun.activity.MainActivity;
+import com.example.survirun.data.FindUserData;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.TokenData;
 import com.example.survirun.data.getUserData;
@@ -34,6 +35,7 @@ public class SignInActivity extends AppCompatActivity {
     String id;
     String pwe;
     String name;
+    String token;
     SharedPreferences.Editor editor;
 
     @Override
@@ -108,10 +110,13 @@ public class SignInActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<TokenData> call, Response<TokenData> response) {
                             if (response.isSuccessful()) {
+                                token=response.body().token;
                                 editor.putString("email", email);
                                 editor.putString("pwe", pwe);
-                                editor.putString("token", response.body().token);
+                                editor.putString("token",token );
+                                getFriendNumber();
                                 editor.commit();
+
                                 UserAccount userAccount = new UserAccount();
                                 userAccount.yesterdayExercise(response.body().token, SignInActivity.this);
                                 userAccount.getExercise(response.body().token, SignInActivity.this);
@@ -200,5 +205,25 @@ public class SignInActivity extends AppCompatActivity {
     private void setIntentSignUp() {
         Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
         startActivity(intent);
+    }
+    public void getFriendNumber(){
+        Call<FindUserData> call = ServerClient.getServerService().getFriendList(token);
+        call.enqueue(new Callback<FindUserData>() {
+            @Override
+            public void onResponse(Call<FindUserData> call, Response<FindUserData> response) {
+                if (response.isSuccessful()) {
+                    response.body().users.size();
+                    editor.putInt("friend", response.body().users.size());
+                    editor.commit();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FindUserData> call, Throwable t) {
+            }
+
+        });
+
     }
 }

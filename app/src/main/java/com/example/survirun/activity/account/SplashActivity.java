@@ -22,6 +22,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
+import com.example.survirun.data.FindUserData;
 import com.example.survirun.server.NetworkStatus;
 import com.example.survirun.R;
 import com.example.survirun.activity.exercise.SplashActivity2;
@@ -116,6 +117,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     token=response.body().token;
                     Log.d("token",token );
+                    getFriendNumber();
                     editor.putString("email", email);
                     editor.putString("pwe", pwe);
                     editor.putString("token", token);
@@ -246,6 +248,27 @@ public class SplashActivity extends AppCompatActivity {
                 }
         );
     }
+    public void getFriendNumber(){
+        Call<FindUserData> call = ServerClient.getServerService().getFriendList(token);
+        call.enqueue(new Callback<FindUserData>() {
+            @Override
+            public void onResponse(Call<FindUserData> call, Response<FindUserData> response) {
+                if (response.isSuccessful()) {
+                    response.body().users.size();
+                    editor.putInt("friend", response.body().users.size());
+                    editor.commit();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FindUserData> call, Throwable t) {
+            }
+
+        });
+
+    }
+
 
 }
 
