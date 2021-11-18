@@ -47,6 +47,7 @@ public class SettingFragment extends Fragment {
     String emile;
     String intro;
     Dialog dialog;
+    int score;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -149,9 +150,12 @@ public class SettingFragment extends Fragment {
         name=sf.getString("name","");
         emile=sf.getString("email","");
         intro=sf.getString("intro","");
+        score=sf.getInt("score",0);
+
         binding.infoText.setText(intro);
         binding.nameTextView.setText(name);
         binding.emailText.setText(emile);
+        binding.bestScoreTextView.setText(String.valueOf(score));
 
         Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
         getProfile.enqueue(new Callback<ImageData>() {
