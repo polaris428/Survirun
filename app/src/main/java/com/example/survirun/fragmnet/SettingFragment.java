@@ -56,7 +56,6 @@ public class SettingFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding=FragmentSettingBinding.inflate(inflater,container,false);
         View view=binding.getRoot();
-        sf = getContext().getSharedPreferences("Login", MODE_PRIVATE);
 
         Log.d("asdf", "onCreateView");
 
@@ -65,7 +64,6 @@ public class SettingFragment extends Fragment {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog);
 
-        editor = sf.edit();
 
 
 
@@ -84,6 +82,7 @@ public class SettingFragment extends Fragment {
                 editor.putString("pwe", "");
                 editor.putString("token", "");
                 editor.putString("name", "");
+                editor.putString("intro", "");
                 editor.commit();
                 Intent intent = new Intent(getActivity(), SplashActivity2.class);
                 startActivity(intent);
@@ -148,6 +147,9 @@ public class SettingFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
+        sf = getContext().getSharedPreferences("Login", MODE_PRIVATE);
+        editor = sf.edit();
+
         token = sf.getString("token", "");
         name=sf.getString("name","");
         emile=sf.getString("email","");
@@ -155,7 +157,15 @@ public class SettingFragment extends Fragment {
         score=sf.getInt("score",0);
         friendNumber=sf.getInt("friend",0);
 
-        binding.infoText.setText(intro);
+
+        if(intro.equals("")){
+            binding.infoText.setVisibility(View.GONE);
+        }
+        else{
+            binding.infoText.setVisibility(View.VISIBLE);
+            binding.infoText.setText(intro);
+        }
+
         binding.nameTextView.setText(name);
         binding.emailText.setText(emile);
         binding.bestScoreTextView.setText(String.valueOf(score));

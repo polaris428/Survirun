@@ -56,7 +56,7 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
     SharedPreferences.Editor editor;
     String token;
     String name;
-    String inputName;
+    String inputName, inputIntro;
     String intro;
     boolean isCheck = false;
 
@@ -188,14 +188,15 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
                 }
             }
             if (!intro.equals(binding.commentInputEdittext.getText().toString())) {
+                inputIntro = binding.commentInputEdittext.getText().toString();
                 customProgressDialog.show();
                 isCheck = true;
-                Call<ResultData> call = ServerClient.getServerService().patchEditIntro(token, binding.commentInputEdittext.getText().toString());
+                Call<ResultData> call = ServerClient.getServerService().patchEditIntro(token, inputIntro);
                 call.enqueue(new Callback<ResultData>() {
                     @Override
                     public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                         if (response.isSuccessful()) {
-                            editor.putString("intro", binding.commentInputEdittext.getText().toString());
+                            editor.putString("intro", inputIntro);
                             editor.commit();
                             Toast.makeText(EditProfileActivity.this, R.string.success_reflected, Toast.LENGTH_LONG).show();
                             customProgressDialog.dismiss();
