@@ -95,9 +95,11 @@
             android:id="@+id/name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="?attr/colorBox"
-            app:hintEnabled="false"
             android:layout_marginBottom="10dp"
+            app:boxBackgroundColor="?attr/colorBox"
+            app:counterEnabled="true"
+            app:counterMaxLength="8"
+            app:hintEnabled="false"
             app:layout_constraintBottom_toTopOf="@id/info_layout"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profile_imageview">
@@ -107,6 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:maxLength="8"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 

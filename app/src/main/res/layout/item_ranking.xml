@@ -57,7 +57,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="14dp"
                     android:layout_marginRight="110dp"
-                    android:textSize="19sp"
+                    android:textSize="17sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@id/item_ranking_email"
                     app:layout_constraintLeft_toRightOf="@id/profile_imageview"
@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#959595"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@id/profile_imageview"
                     app:layout_constraintLeft_toLeftOf="@id/item_ranking_name"
                     app:layout_constraintTop_toBottomOf="@id/item_ranking_name" />
