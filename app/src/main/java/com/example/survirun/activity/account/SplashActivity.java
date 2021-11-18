@@ -25,7 +25,6 @@ import android.widget.Button;
 import com.example.survirun.server.NetworkStatus;
 import com.example.survirun.R;
 import com.example.survirun.activity.exercise.SplashActivity2;
-import com.example.survirun.UserAccount;
 import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.TokenData;

@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.example.survirun.Medel.ScoreModel;
 import com.example.survirun.R;
-import com.example.survirun.UserAccount;
 import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.ExerciseData;
 import com.example.survirun.data.ScoreData;

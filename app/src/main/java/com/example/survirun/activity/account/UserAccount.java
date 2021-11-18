@@ -1,4 +1,4 @@
-package com.example.survirun;
+package com.example.survirun.activity.account;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.service.autofill.UserData;
 import android.widget.Toast;
 
+import com.example.survirun.R;
 import com.example.survirun.data.ExerciseData;
 import com.example.survirun.data.ExerciseRecordData;
 import com.example.survirun.data.getUserData;
