@@ -144,7 +144,7 @@
     <string name="delete_friend">친구 삭제</string>
     <string name="died">당신은 죽었습니다.</string>
     <string name="delete_friend_text">친구를 삭제하시겠습니까?</string>
-    <string name="success_add_friend">친구추가 성공\n잠시만 기달려주세요</string>
+    <string name="success_add_friend_text">친구추가 성공\n잠시만 기달려주세요</string>
     <string name="best_score">최고 점수</string>
     <string name="default_profile">기본 프로필</string>
     <string name="introduce">본인을 소개해보세요</string>
@@ -154,4 +154,6 @@
     <string name="easy">쉬움</string>
     <string name="normal">보통</string>
     <string name="hard">어려움</string>
+    <string name="point">점</string>
+    <string name="success_add_friend">친구 추가 성공</string>
 </resources>

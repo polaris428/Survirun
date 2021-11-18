@@ -144,7 +144,7 @@
     <string name="delete_friend">Delete friend</string>
     <string name="died">You died</string>
     <string name="delete_friend_text">Do you want to delete your friend?</string>
-    <string name="success_add_friend">Successfully added friends.\nPlease wait.</string>
+    <string name="success_add_friend_text">Successfully added friends. Please wait.</string>
     <string name="best_score">Best Score</string>
     <string name="default_profile">Default profile</string>
     <string name="introduce">Introduce yourself</string>
@@ -154,4 +154,6 @@
     <string name="easy">Easy</string>
     <string name="normal">Normal</string>
     <string name="hard">Hard</string>
+    <string name="point">Point</string>
+    <string name="success_add_friend">Successfully added friends</string>
 </resources>

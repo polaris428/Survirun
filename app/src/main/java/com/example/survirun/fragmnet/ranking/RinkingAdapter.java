@@ -170,7 +170,7 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
                                                 friendRoom.setEmail(email);
                                                 friendRoom.setName(name);
                                                 friendRoom.setProfile(profile);
-                                                Toast.makeText(context, "친구추가 성공", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(context, R.string.success_add_friend, Toast.LENGTH_LONG).show();
 
 
 
@@ -185,7 +185,7 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
                                             t.printStackTrace();
                                         }
                                     });
-                                    Toast.makeText(context, "친구추가 성공", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(context, R.string.success_add_friend, Toast.LENGTH_LONG).show();
 
 
 
@@ -201,7 +201,7 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
                                 t.printStackTrace();
                             }
                         });
-                        Toast.makeText(context, "친구추가 성공", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.success_add_friend, Toast.LENGTH_LONG).show();
 
                     } else {
                         //실패시

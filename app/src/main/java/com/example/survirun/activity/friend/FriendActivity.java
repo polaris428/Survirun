@@ -177,7 +177,7 @@ public class FriendActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                             if (response.isSuccessful()) {
-                                Toast.makeText(FriendActivity.this, R.string.success_add_friend, Toast.LENGTH_LONG).show();
+                                Toast.makeText(FriendActivity.this, R.string.success_add_friend_text, Toast.LENGTH_LONG).show();
                                 refreshRecyclerView(friendEmile, friendName, profile);
                             } else {
                                 //실패시
