@@ -55,21 +55,16 @@ public class SettingFragment extends Fragment {
         View view=binding.getRoot();
         sf = getContext().getSharedPreferences("Login", MODE_PRIVATE);
 
+        Log.d("asdf", "onCreateView");
 
         dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog);
 
-        token = sf.getString("token", "");
-        name=sf.getString("name","");
-        emile=sf.getString("email","");
-        intro=sf.getString("intro","");
         editor = sf.edit();
 
-        binding.infoText.setText(intro);
-        binding.nameTextView.setText(name);
-        binding.emailText.setText(emile);
+
 
         binding.clearCacheButton.setOnClickListener(v -> {
             setDialog(getString(R.string.delete_cache_text));
@@ -123,6 +118,41 @@ public class SettingFragment extends Fragment {
 
          });
 
+
+        return view;
+    }
+    public void setDialog(String text) {
+        TextView explain = dialog.findViewById(R.id.explain_textView);
+        explain.setText(text);
+        dialog.show();
+        dialog.findViewById(R.id.cancel_button).setOnClickListener(v -> dialog.dismiss());
+    }
+
+    private boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (String child : children) {
+                boolean success = deleteDir(new File(dir, child));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+        return dir.delete();
+    }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        token = sf.getString("token", "");
+        name=sf.getString("name","");
+        emile=sf.getString("email","");
+        intro=sf.getString("intro","");
+        binding.infoText.setText(intro);
+        binding.nameTextView.setText(name);
+        binding.emailText.setText(emile);
+
         Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
         getProfile.enqueue(new Callback<ImageData>() {
             @Override
@@ -153,26 +183,6 @@ public class SettingFragment extends Fragment {
                 t.printStackTrace();
             }
         });
-        return view;
-    }
-    public void setDialog(String text) {
-        TextView explain = dialog.findViewById(R.id.explain_textView);
-        explain.setText(text);
-        dialog.show();
-        dialog.findViewById(R.id.cancel_button).setOnClickListener(v -> dialog.dismiss());
-    }
-
-    private boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (String child : children) {
-                boolean success = deleteDir(new File(dir, child));
-                if (!success) {
-                    return false;
-                }
-            }
-        }
-        return dir.delete();
     }
 
 }

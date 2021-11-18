@@ -26,12 +26,15 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.survirun.BottomSheetSignUpFragment;
 import com.example.survirun.R;
 import com.example.survirun.activity.account.ProgressDialog;
 import com.example.survirun.activity.account.SignUpProfileActivity;
+import com.example.survirun.data.ImageData;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.databinding.ActivityEditProfileBinding;
+import com.example.survirun.fragmnet.SettingFragment;
 import com.example.survirun.server.ServerClient;
 
 import java.io.ByteArrayOutputStream;
@@ -55,6 +58,7 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
     String name;
     String inputName;
     String intro;
+    boolean isCheck = false;
 
     Uri selectedImageUri;
     BottomSheetSignUpFragment signUpFragment;
@@ -68,8 +72,6 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
         setContentView(view);
 
         signUpFragment = new BottomSheetSignUpFragment();
-        binding.profileImageview.setBackground(new ShapeDrawable(new OvalShape()));
-        binding.profileImageview.setClipToOutline(true);
         customProgressDialog = new ProgressDialog(this);
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         customProgressDialog.setCancelable(false);
@@ -80,6 +82,34 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
         token = sf.getString("token", "");
         name = sf.getString("name", "");
         intro = sf.getString("intro", "");
+
+        Call<ImageData> getProfile = ServerClient.getServerService().getProfile(token, "self", "url");
+        getProfile.enqueue(new Callback<ImageData>() {
+            @Override
+            public void onResponse(Call<ImageData> call, Response<ImageData> response) {
+                if (response.isSuccessful()) {
+                    Log.d("프로필", response.body().img);
+                    Glide.with(EditProfileActivity.this)
+                            .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
+                            .circleCrop()
+                            .placeholder(R.drawable.ic_userprofile)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
+                            .error(R.drawable.ic_userprofile)
+                            .into(binding.profileImageview);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ImageData> call, Throwable t) {
+                Glide.with(EditProfileActivity.this)
+                        .load(R.drawable.ic_userprofile)
+                        .circleCrop()
+                        .error(R.drawable.ic_userprofile)
+                        .into(binding.profileImageview);
+                t.printStackTrace();
+            }
+        });
 
 
         binding.nameInputEdittext.setText(name);
@@ -101,6 +131,12 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
                     @Override
                     public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                         if (response.isSuccessful()) {
+                            Glide.with(EditProfileActivity.this)
+                                    .load(R.drawable.ic_userprofile)
+                                    .circleCrop()
+                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                    .skipMemoryCache(true)
+                                    .into(binding.profileImageview);
                             Toast.makeText(EditProfileActivity.this, R.string.success_reflected, Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
@@ -119,45 +155,53 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
         binding.saveButton.setOnClickListener(v -> {
             inputName = binding.nameInputEdittext.getText().toString();
             if (!name.equals(inputName)) {
-                Call<ResultData> call = ServerClient.getServerService().inputName(inputName, token);
-                call.enqueue(new Callback<ResultData>() {
-                    @Override
-                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                        if (response.isSuccessful()) {
-                            editor.putString("name", inputName);
-                            editor.commit();
-                            Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            finish();
-
-                        } else {
-                            response.errorBody();
-                            Log.d("adsf", response.errorBody().toString());
+                if (inputName.equals("")) {
+                    Toast.makeText(getApplicationContext(), R.string.type_name, Toast.LENGTH_SHORT).show();
+                } else {
+                    customProgressDialog.show();
+                    isCheck = true;
+                    Call<ResultData> call = ServerClient.getServerService().inputName(inputName, token);
+                    call.enqueue(new Callback<ResultData>() {
+                        @Override
+                        public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                            if (response.isSuccessful()) {
+                                editor.putString("name", inputName);
+                                editor.commit();
+                                Toast.makeText(EditProfileActivity.this, R.string.success_reflected, Toast.LENGTH_LONG).show();
+                                customProgressDialog.dismiss();
+                                finish();
+                            } else {
+                                response.errorBody();
+                                Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
+                                customProgressDialog.dismiss();
+                                Log.d("adsf", response.errorBody().toString());
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ResultData> call, Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<ResultData> call, Throwable t) {
+                            Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
+                            t.printStackTrace();
+                        }
+                    });
 
-
+                }
             }
             if (!intro.equals(binding.commentInputEdittext.getText().toString())) {
-
+                customProgressDialog.show();
+                isCheck = true;
                 Call<ResultData> call = ServerClient.getServerService().patchEditIntro(token, binding.commentInputEdittext.getText().toString());
                 call.enqueue(new Callback<ResultData>() {
                     @Override
                     public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                         if (response.isSuccessful()) {
-                            Toast.makeText(EditProfileActivity.this, R.string.success_reflected, Toast.LENGTH_LONG).show();
                             editor.putString("intro", binding.commentInputEdittext.getText().toString());
                             editor.commit();
-
-
+                            Toast.makeText(EditProfileActivity.this, R.string.success_reflected, Toast.LENGTH_LONG).show();
+                            customProgressDialog.dismiss();
+                            finish();
                         } else {
+                            customProgressDialog.dismiss();
                             Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
                         }
                     }
@@ -165,6 +209,7 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
                     @Override
                     public void onFailure(Call<ResultData> call, Throwable t) {
                         t.printStackTrace();
+                        customProgressDialog.dismiss();
                         Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
                     }
                 });
@@ -172,19 +217,21 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
             }
             if (selectedImageUri != null) {
                 customProgressDialog.show();
+                isCheck = true;
                 MultipartBody.Part body1 = prepareFilePart("image", selectedImageUri);
                 Call<ResultData> call = ServerClient.getServerService().postProfile(token, body1);
                 call.enqueue(new Callback<ResultData>() {
                     @Override
                     public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                         if (response.isSuccessful()) {
-
+                            Toast.makeText(EditProfileActivity.this, R.string.success_reflected, Toast.LENGTH_LONG).show();
                             customProgressDialog.dismiss();
                             finish();
 
 
                         } else {
                             customProgressDialog.dismiss();
+                            Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
                             Log.d("adsf", response.errorBody().toString());
                         }
                     }
@@ -192,12 +239,15 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
                     @Override
                     public void onFailure(Call<ResultData> call, Throwable t) {
                         customProgressDialog.dismiss();
+                        Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
                         t.printStackTrace();
                     }
                 });
             }
+            if (!isCheck) {
+                finish();
+            }
         });
-
     }
 
     @Override
@@ -272,7 +322,7 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
                     Bitmap img = BitmapFactory.decodeStream(in);
                     in.close();
                     selectedImageUri = getImageUri(this, img);
-                    Glide.with(getApplicationContext()).load(img).into(binding.profileImageview);
+                    Glide.with(getApplicationContext()).load(img).circleCrop().into(binding.profileImageview);
                 } catch (Exception e) {
 
                 }
@@ -284,7 +334,7 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
                     Bundle extras = data.getExtras();
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
                     selectedImageUri = getImageUri(this, imageBitmap);
-                    Glide.with(getApplicationContext()).load(imageBitmap).into(binding.profileImageview);
+                    Glide.with(getApplicationContext()).load(imageBitmap).circleCrop().into(binding.profileImageview);
                 } catch (Exception e) {
 
                 }
