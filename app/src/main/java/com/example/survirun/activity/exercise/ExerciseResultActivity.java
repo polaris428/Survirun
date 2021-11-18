@@ -66,6 +66,7 @@ public class ExerciseResultActivity extends AppCompatActivity {
         int level = getIntent().getIntExtra("level",1);
         double kmMok = getIntent().getDoubleExtra("kmMok",1);
         int timeMok = getIntent().getIntExtra("time",1);
+        int nanEdo = getIntent().getIntExtra("zombieCount",5);
         binding.timeTextView.setText(String.format("%d:%d:%d", hour, min, sec));
         binding.goMainButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +76,7 @@ public class ExerciseResultActivity extends AppCompatActivity {
                 scoreModel.todayExerciseTime=timeToSec;
                 scoreModel.todayCalorie=kcal;
 
-                calcScore(token,level,level,hp,timeToSec,km,kcal,timeMok,kmMok,kcalMok);
+                calcScore(token,level,nanEdo,hp,timeToSec,km,kcal,timeMok,kmMok,kcalMok);
                 Call<ExerciseData>call= ServerClient.getServerService().patchUploadExercise(token,scoreModel);
                 call.enqueue(new Callback<ExerciseData>() {
                     @Override
