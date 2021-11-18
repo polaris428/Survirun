@@ -98,8 +98,8 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
             Intent intent = new Intent(ExercisePreparationActivity.this, MapActivity.class);
 
             intent.putExtra("title", title);
-            intent.putExtra("calorie", calorie);
-            intent.putExtra("km", km);
+            intent.putExtra("calorie", Integer.parseInt(calorie));
+            intent.putExtra("km", Double.parseDouble(km));
             intent.putExtra("time", time);
             intent.putExtra("min", min);
             intent.putExtra("level", level);
