@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.survirun.R;
-import com.example.survirun.Fragmnet.ScreenSlidePagerAdapter;
+import com.example.survirun.fragmnet.ScreenSlidePagerAdapter;
 import com.example.survirun.activity.exercise.ZoomOutPageTransformer;
 import com.example.survirun.databinding.ActivityWelcomeBinding;
 

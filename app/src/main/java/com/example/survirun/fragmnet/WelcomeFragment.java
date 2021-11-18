@@ -1,4 +1,4 @@
-package com.example.survirun.Fragmnet;
+package com.example.survirun.fragmnet;
 
 import android.content.Intent;
 import android.os.Bundle;

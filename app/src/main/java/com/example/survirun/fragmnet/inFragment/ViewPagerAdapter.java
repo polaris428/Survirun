@@ -1,13 +1,10 @@
-package com.example.survirun.Fragmnet.inFragment;
+package com.example.survirun.fragmnet.inFragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.survirun.Fragmnet.inFragment.Fragment1;
-import com.example.survirun.Fragmnet.inFragment.Fragment2;
-import com.example.survirun.Fragmnet.inFragment.Fragment3;
-import com.example.survirun.Fragmnet.StatisticsFragment;
+import com.example.survirun.fragmnet.StatisticsFragment;
 
 import org.jetbrains.annotations.NotNull;
 

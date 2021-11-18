@@ -1,4 +1,4 @@
-package com.example.survirun.Fragmnet.excise;
+package com.example.survirun.fragmnet.excise;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.example.survirun.loom.ExerciseData;
 import com.example.survirun.R;
-import com.example.survirun.Fragmnet.excise.ExerciseListRecyclerViewAdapter;
 import com.example.survirun.databinding.FragmentExerciseBinding;
 
 import java.util.ArrayList;

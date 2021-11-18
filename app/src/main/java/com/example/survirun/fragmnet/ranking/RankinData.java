@@ -1,4 +1,4 @@
-package com.example.survirun.Fragmnet.ranking;
+package com.example.survirun.fragmnet.ranking;
 
 public class RankinData {
     public  String userName;

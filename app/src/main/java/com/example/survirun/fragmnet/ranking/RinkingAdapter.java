@@ -1,4 +1,4 @@
-package com.example.survirun.Fragmnet.ranking;
+package com.example.survirun.fragmnet.ranking;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -7,7 +7,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
-import android.service.autofill.UserData;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +20,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.bumptech.glide.Glide;
 import com.example.survirun.FriendDB;
 import com.example.survirun.R;
-import com.example.survirun.activity.Friend.FriendActivity;
 import com.example.survirun.data.ExerciseHistory;
 import com.example.survirun.data.FriendRoom;
 import com.example.survirun.data.ImageData;

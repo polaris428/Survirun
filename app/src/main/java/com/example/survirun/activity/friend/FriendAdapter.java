@@ -1,4 +1,4 @@
-package com.example.survirun.activity.Friend;
+package com.example.survirun.activity.friend;
 
 import static android.content.Context.MODE_PRIVATE;
 

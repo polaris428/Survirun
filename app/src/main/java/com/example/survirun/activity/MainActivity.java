@@ -15,12 +15,12 @@ import android.view.Window;
 import android.widget.Button;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
-import com.example.survirun.Fragmnet.excise.ExerciseFragment;
-import com.example.survirun.Fragmnet.ranking.RankingFragment;
-import com.example.survirun.Fragmnet.SettingFragment;
+import com.example.survirun.fragmnet.excise.ExerciseFragment;
+import com.example.survirun.fragmnet.ranking.RankingFragment;
+import com.example.survirun.fragmnet.SettingFragment;
 import com.example.survirun.R;
-import com.example.survirun.Fragmnet.StatisticsFragment;
-import com.example.survirun.Fragmnet.UserFragment;
+import com.example.survirun.fragmnet.StatisticsFragment;
+import com.example.survirun.fragmnet.UserFragment;
 import com.example.survirun.databinding.ActivityMainBinding;
 
 import kotlin.Unit;

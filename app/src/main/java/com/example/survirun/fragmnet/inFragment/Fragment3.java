@@ -1,4 +1,4 @@
-package com.example.survirun.Fragmnet.inFragment;
+package com.example.survirun.fragmnet.inFragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package com.example.survirun.Fragmnet;
+package com.example.survirun.fragmnet;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -121,6 +121,9 @@ public class SettingFragment extends Fragment {
                     Glide.with(SettingFragment.this)
                             .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
                             .circleCrop()
+                            .placeholder(R.drawable.ic_userprofile)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
                             .error(R.drawable.ic_userprofile)
                             .into(binding.profileImageview);
                 }

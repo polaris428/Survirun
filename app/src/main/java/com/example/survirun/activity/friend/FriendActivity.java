@@ -1,4 +1,4 @@
-package com.example.survirun.activity.Friend;
+package com.example.survirun.activity.friend;
 
 import android.content.Context;
 import android.content.SharedPreferences;

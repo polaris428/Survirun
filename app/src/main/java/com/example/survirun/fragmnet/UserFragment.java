@@ -1,9 +1,8 @@
-package com.example.survirun.Fragmnet;
+package com.example.survirun.fragmnet;
 
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
@@ -14,17 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.survirun.R;
-import com.example.survirun.data.ExerciseData;
 
 import com.example.survirun.databinding.FragmentUserBinding;
-import com.example.survirun.server.ServerClient;
 
 
 import java.util.Locale;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class UserFragment extends Fragment {
     FragmentUserBinding binding;

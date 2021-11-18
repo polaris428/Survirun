@@ -1,4 +1,4 @@
-package com.example.survirun.Fragmnet.excise;
+package com.example.survirun.fragmnet.excise;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;

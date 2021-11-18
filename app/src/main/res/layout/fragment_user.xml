@@ -6,7 +6,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true"
-    tools:context=".Fragmnet.UserFragment">
+    tools:context=".fragmnet.UserFragment">
 
     <TextView
         android:id="@+id/day_textview"
