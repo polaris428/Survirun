@@ -702,6 +702,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
+                Intent intent =new Intent(MapActivity.this,MapActivity.class);
+                startActivity(intent);
+                finish();
+
             }
         });
         builder.create().show();
