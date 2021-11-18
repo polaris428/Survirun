@@ -58,7 +58,7 @@
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_friend.xml" value="0.264" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_friend_information.xml" value="0.1874386653581943" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_login.xml" value="0.24947916666666667" />
-        <entry key="..\:/Survirun/app/src/main/res/layout/activity_main.xml" value="0.27708333333333335" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_map.xml" value="0.16" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_my_marker_view.xml" value="0.2760416666666667" />
         <entry key="..\:/Survirun/app/src/main/res/layout/activity_nav_header.xml" value="0.1296875" />
@@ -92,7 +92,7 @@
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_satting.xml" value="0.18697916666666667" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_setting.xml" value="0.264" />
         <entry key="..\:/Survirun/app/src/main/res/layout/fragment_statistics.xml" value="0.2765625" />
-        <entry key="..\:/Survirun/app/src/main/res/layout/fragment_user.xml" value="0.3892733564013841" />
+        <entry key="..\:/Survirun/app/src/main/res/layout/fragment_user.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/layout/header.xml" value="0.1" />
         <entry key="..\:/Survirun/app/src/main/res/layout/item_all_ranking.xml" value="0.19746376811594202" />
         <entry key="..\:/Survirun/app/src/main/res/layout/item_exercise.xml" value="0.14570858283433133" />
