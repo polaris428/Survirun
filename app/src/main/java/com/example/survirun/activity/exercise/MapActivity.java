@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -490,6 +491,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 //int zoomLv = getZoomLevelFromMeters(d);
                 int dis = 24576000;
                 int ret = 21;
+                Integer ret1 = ret;
                 for (int i = 1; i <= 21; i++) {
                     if (d >= dis) {
                         ret = i;
@@ -498,12 +500,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         dis /= 2;
                     }
                 }
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mid, ret));
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                    Log.d("ERR", e.getMessage());
-                }
+
 
                 GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback() {
 
@@ -516,12 +513,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 };
 
 
-                mMap.snapshot(callback);
-                try {
-                    Thread.sleep(10);
-                } catch (Exception e) {
-                    Log.d("ERR", e.getMessage());
-                }
+                polylineOptions = new PolylineOptions();
+                pausePolylineOpt = new PolylineOptions();
+
+                ((Activity)mctx).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mid, ret1));
+                        mMap.snapshot(callback);
+                        mMap.clear();
+                    }
+                });
+
+
 
                 Intent intent = new Intent(mctx, ExerciseResultActivity.class); //main말고 다른걸로 변경
                 intent.putExtra("kcal", (int) kcal);
@@ -535,16 +539,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 intent.putExtra("level",levelMok);
                 intent.putExtra("zombieCount",MAX_ZB_CNT);
 
-
-                polylineOptions = new PolylineOptions();
-                pausePolylineOpt = new PolylineOptions();
-                mMap.clear();
                 mctx.startActivity(intent);
 
 
 
             }
-
 
         } catch(Exception e) {
             Log.e("<MapActivity, sstop()>",e.getMessage());
