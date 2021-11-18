@@ -7,9 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.survirun.R;
 import com.example.survirun.activity.friend.FriendActivity;
 import com.example.survirun.data.rankingData;
 import com.example.survirun.databinding.FragmentRankingBinding;
@@ -35,11 +38,18 @@ public class RankingFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentRankingBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
+        binding.image.startAnimation(animation);
+        binding.findRanking.setVisibility(View.VISIBLE);
+
         sf = getContext().getSharedPreferences("Login", getContext().MODE_PRIVATE);
         token = sf.getString("token", "");
+
         binding.friendButton.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), FriendActivity.class));
         });
+
         RankingAdapter RankingAdapter = new RankingAdapter(rankinDataList);
         binding.rankingRecyclerView.setAdapter(RankingAdapter);
         Call<rankingData> call = ServerClient.getServerService().getRanking(token);
@@ -53,6 +63,7 @@ public class RankingFragment extends Fragment {
                         if (response.body().scores.size() - 1 == i) {
                             RankingAdapter RinkingAdapter = new RankingAdapter(rankinDataList);
                             binding.rankingRecyclerView.setAdapter(RinkingAdapter);
+                            binding.findRanking.setVisibility(View.GONE);
                         }
                     }
 
