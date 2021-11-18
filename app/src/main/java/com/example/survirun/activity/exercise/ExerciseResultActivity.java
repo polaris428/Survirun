@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.survirun.Medel.ScoreModel;
+import com.example.survirun.R;
 import com.example.survirun.UserAccount;
 import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.ExerciseData;
@@ -34,6 +35,7 @@ public class ExerciseResultActivity extends AppCompatActivity {
     String token;
     String data;
     String title;
+    int myScore;
     @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,8 @@ public class ExerciseResultActivity extends AppCompatActivity {
         sf = getSharedPreferences("Login", MODE_PRIVATE);
         token = sf.getString("token", "");
         data=sf.getString("data","2021-90-0");
+        myScore=sf.getInt("score",0);
+        Log.d(String.valueOf(myScore),String.valueOf(myScore));
         Intent getIntent=getIntent();
 
         title=getIntent.getStringExtra("title");
@@ -72,7 +76,7 @@ public class ExerciseResultActivity extends AppCompatActivity {
                 scoreModel.todayExerciseTime=timeToSec;
                 scoreModel.todayCalorie=kcal;
 
-                //calcScore(token,level,level,hp,timeToSec,km,kcal,timeMok,kmMok,kcalMok);
+                calcScore(token,level,level,hp,timeToSec,km,kcal,timeMok,kmMok,kcalMok);
                 Call<ExerciseData>call= ServerClient.getServerService().patchUploadExercise(token,scoreModel);
                 call.enqueue(new Callback<ExerciseData>() {
                     @Override
@@ -150,19 +154,23 @@ public class ExerciseResultActivity extends AppCompatActivity {
         }
         if(hp==100) score+=100;
         //return score;
+        if(myScore<score){
+            Call<ScoreData> call2 = ServerClient.getServerService().patchScore(token,score);
+            call2.enqueue(new Callback<ScoreData>() {
+                @Override
+                public void onResponse(Call<ScoreData> call, Response<ScoreData> response) {
 
-        Call<ScoreData> call2 = ServerClient.getServerService().patchScore(token,score);
-        call2.enqueue(new Callback<ScoreData>() {
-            @Override
-            public void onResponse(Call<ScoreData> call, Response<ScoreData> response) {
+                }
 
-            }
+                @Override
+                public void onFailure(Call<ScoreData> call, Throwable t) {
+                    Toast.makeText(ExerciseResultActivity.this, R.string.server_error,Toast.LENGTH_LONG).show();
+                    t.printStackTrace();
+                }
+            });
+        }
 
-            @Override
-            public void onFailure(Call<ScoreData> call, Throwable t) {
 
-            }
-        });
 
 
     }
