@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,8 +21,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.survirun.FriendDB;
 import com.example.survirun.R;
+import com.example.survirun.activity.friend.FriendActivity;
 import com.example.survirun.data.ExerciseHistory;
 import com.example.survirun.data.FriendRoom;
 import com.example.survirun.data.ImageData;
@@ -92,7 +96,36 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
             public void onResponse(retrofit2.Call<getUserData> call, Response<getUserData> response) {
                 if (response.isSuccessful()) {
                     Log.d(response.body().email,  response.body().score+"");
+                    Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url", response.body().username);
+                    getProfile.enqueue(new Callback<ImageData>() {
+                        @Override
+                        public void onResponse(Call<ImageData> call, Response<ImageData> response) {
+                            if (response.isSuccessful()) {
+                                if (context == null) {
+                                    return;
+                                }
+                                Log.d("adf", response.body().img);
 
+                                Glide.with(context)
+                                        .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
+                                        .error(R.drawable.userdefaultprofile)
+                                        .placeholder(R.drawable.ic_userprofile)
+                                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                        .skipMemoryCache(true)
+                                        .circleCrop()
+                                        .into(holder.profileImageView);
+
+
+                            } else {
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ImageData> call, Throwable t) {
+                            t.printStackTrace();
+                        }
+                    });
                     ExerciseHistory exerciseHistory = response.body().exerciseHistory.get( response.body().exerciseHistory.size()-1);
                     holder.kcalTextView.setText(String.valueOf(exerciseHistory.calorie));
                     String hour=String.valueOf(exerciseHistory.time/60);
@@ -238,7 +271,7 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
         TextView kmTextView;
         TextView minUnitTextView;
 
-
+        ImageView profileImageView;
         Button addFriendButton;
         ConstraintLayout constraintLayout1;
         ConstraintLayout constraintLayout2;
@@ -260,6 +293,7 @@ public class RinkingAdapter extends  RecyclerView.Adapter<RinkingAdapter.ViewHol
 
             kmTextView=itemView.findViewById(R.id.exercise_km_text_view);
 
+            profileImageView=itemView.findViewById(R.id.profile_imageview);
             addFriendButton=itemView.findViewById(R.id.add_friend_button);
 
 
