@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -48,6 +49,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -132,7 +134,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         kcalMok = getIntent().getIntExtra("calorie",1);
         levelMok=getIntent.getIntExtra("level",0);
         Log.e(">>>>>",kmMok+" "+timeMok+" "+kcalMok);
-        MAX_ZB_CNT = getIntent().getIntExtra("zombieCount",5);
+        MAX_ZB_CNT = getIntent().getIntExtra("zombieCount",3);
 
         showSnackBar(view);
 
@@ -588,8 +590,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         lastLng = currentLng;
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(new LatLng(currentLat, currentLng));
-        markerOptions.title("시작");
+        markerOptions.title(getString(R.string.base_camp));
+        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.base_camp);
+        Bitmap b=bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 200, 200, false);
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
         mMap.addMarker(markerOptions);
+
+        //mMap.addMarker(markerOptions);
+
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLat, currentLng), 18));
     }
 
