@@ -96,7 +96,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:boxBackgroundColor="?attr/colorBox"
-            app:endIconMode="custom"
             app:hintEnabled="false"
             android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toTopOf="@id/info_layout"
@@ -107,7 +106,7 @@
                 android:id="@+id/name_input_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,7 +126,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:boxBackgroundColor="?attr/colorBox"
-            app:endIconMode="custom"
             app:hintEnabled="false"
             app:layout_constraintBottom_toTopOf="@id/save_button"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -137,7 +135,7 @@
                 android:id="@+id/comment_input_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 

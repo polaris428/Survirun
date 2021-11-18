@@ -92,6 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="쏼라 쏼라 쏼라"
+                    android:textSize="18sp"
                     android:gravity="center"
                     android:visibility="gone"
                     android:layout_marginBottom="20dp"
@@ -130,6 +131,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:text="@string/calorie"
+                        android:textSize="19sp"
                         app:layout_constraintBottom_toBottomOf="@+id/kcal_icon"
                         app:layout_constraintLeft_toRightOf="@+id/kcal_icon"
                         app:layout_constraintTop_toTopOf="@+id/kcal_icon" />
@@ -138,6 +140,7 @@
                         android:id="@+id/calorie_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="19sp"
                         android:gravity="right"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="8dp"
@@ -163,6 +166,7 @@
                         android:layout_marginLeft="16dp"
                         android:gravity="center"
                         android:text="@string/exercise_time"
+                        android:textSize="19sp"
                         app:layout_constraintBottom_toBottomOf="@+id/clock_icon"
                         app:layout_constraintLeft_toRightOf="@+id/clock_icon"
                         app:layout_constraintTop_toTopOf="@+id/clock_icon" />
@@ -173,6 +177,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:layout_marginRight="20dp"
+                        android:textSize="19sp"
                         app:layout_constraintBottom_toBottomOf="@+id/exercise_title_textview"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/exercise_title_textview" />
@@ -195,6 +200,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:text="Km"
+                        android:textSize="19sp"
                         app:layout_constraintBottom_toBottomOf="@+id/run_icon"
                         app:layout_constraintLeft_toRightOf="@+id/run_icon"
                         app:layout_constraintTop_toTopOf="@+id/run_icon" />
@@ -203,9 +209,11 @@
                         android:id="@+id/km_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="19sp"
                         android:gravity="right"
                         android:layout_marginRight="20dp"
                         app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/km_title_text_view"
                         app:layout_constraintTop_toTopOf="@+id/km_title_text_view" />
 
                     <Button
@@ -214,6 +222,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="48dp"
                         android:text="@string/modify_goals"
+                        android:textSize="19sp"
                         android:textColor="@color/white"
                         android:background="@drawable/yes_button_background"
                         app:layout_constraintBottom_toBottomOf="parent"
