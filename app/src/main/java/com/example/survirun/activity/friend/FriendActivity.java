@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.survirun.FriendDB;
 import com.example.survirun.R;
 import com.example.survirun.data.ExerciseHistory;
@@ -133,6 +134,9 @@ public class FriendActivity extends AppCompatActivity {
                                             Glide.with(FriendActivity.this)
                                                     .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
                                                     .error(R.drawable.userdefaultprofile)
+                                                    .placeholder(R.drawable.ic_userprofile)
+                                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                                    .skipMemoryCache(true)
                                                     .circleCrop()
                                                     .into(binding.profileImageview);
                                             profile = "https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img;
