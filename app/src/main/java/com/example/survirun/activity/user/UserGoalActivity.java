@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -112,5 +113,26 @@ public class UserGoalActivity extends AppCompatActivity {
             constraintLayout.requestLayout();
         });
         anim.start();
+    }
+    @Override
+    public void onResume() {
+        SharedPreferences sf = getSharedPreferences("goal", MODE_PRIVATE);
+        calorie = sf.getInt("calorie", 400);
+        time = sf.getInt("time", 60);
+        km = sf.getInt("km", 5);
+
+
+        String h = String.valueOf(time / 60);
+        String m = String.valueOf(time % 60);
+        binding.calorieTextview.setText(String.valueOf(calorie) + "kcal");
+        if ((time / 60 != 0 && time % 60 != 0) || time == 0) {
+            binding.timeTextview.setText(h + getString(R.string.hour) + " " + m + getString(R.string.min));
+        } else if (time / 60 == 0) {
+            binding.timeTextview.setText(m + getString(R.string.min));
+        } else if (time % 60 == 0) {
+            binding.timeTextview.setText(h + getString(R.string.hour));
+        }
+        binding.kmTextview.setText(String.valueOf(km) + "Km");
+        super.onResume();
     }
 }
