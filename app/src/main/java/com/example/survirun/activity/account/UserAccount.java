@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.service.autofill.UserData;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.survirun.R;
@@ -104,14 +105,17 @@ public class UserAccount {
                     SharedPreferences sf;
                     SharedPreferences.Editor editor;
                     sf = context.getSharedPreferences("Login", MODE_PRIVATE);
-                    editor=sf.edit();
 
+                    editor=sf.edit();
+                    Log.d("score",response.body().score+"");
+                    editor.putInt("score", response.body().score);
                     editor.putString("intro", response.body().intro);
+                    editor.commit();
                     sf = context.getSharedPreferences("yesterdayExercise", MODE_PRIVATE);
                     editor = sf.edit();
                     editor.putString("name", response.body().username);
 
-                    editor.putInt("score", response.body().score);
+
                     editor.commit();
                 }
             }

@@ -29,22 +29,28 @@ public class ExerciseResultActivity extends AppCompatActivity {
     ScoreModel scoreModel;
 
 
-    SharedPreferences sf;
+    SharedPreferences exerciseSf;
+    SharedPreferences.Editor exerciseEditor;
+
+
+    SharedPreferences loginSf;
+    SharedPreferences.Editor loginSfEditor;
 
     String token;
     String data;
     String title;
     int myScore;
+    int score = 0;
     @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityExerciseResultBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        sf = getSharedPreferences("Login", MODE_PRIVATE);
-        token = sf.getString("token", "");
-        data=sf.getString("data","2021-90-0");
-        myScore=sf.getInt("score",0);
+        loginSf = getSharedPreferences("Login", MODE_PRIVATE);
+        token = loginSf.getString("token", "");
+        data=loginSf.getString("data","2021-90-0");
+        myScore=loginSf.getInt("score",0);
         Log.d(String.valueOf(myScore),String.valueOf(myScore));
         Intent getIntent=getIntent();
 
@@ -89,16 +95,14 @@ public class ExerciseResultActivity extends AppCompatActivity {
                                     if (response.isSuccessful()) {
                                         assert response.body() != null;
 
-                                        SharedPreferences sf;
 
-                                        SharedPreferences.Editor editor;
-                                        sf = getSharedPreferences("exercise", MODE_PRIVATE);
-                                        editor=sf.edit();
-                                        editor.putString("data", response.body().date);
-                                        editor.putInt("calorie", response.body().calorie);
-                                        editor.putFloat("km", (float) response.body().km);
-                                        editor.putInt("time",response.body().time);
-                                        editor.commit();
+                                        exerciseSf = getSharedPreferences("exercise", MODE_PRIVATE);
+                                        exerciseEditor=exerciseSf.edit();
+                                        exerciseEditor.putString("data", response.body().date);
+                                        exerciseEditor.putInt("calorie", response.body().calorie);
+                                        exerciseEditor.putFloat("km", (float) response.body().km);
+                                        exerciseEditor.putInt("time",response.body().time);
+                                        exerciseEditor.commit();
                                         startActivity(new Intent(ExerciseResultActivity.this, MainActivity.class));
                                         finish();
 
@@ -142,7 +146,7 @@ public class ExerciseResultActivity extends AppCompatActivity {
     }
 
     private void calcScore(String token,int exerciseLevel, int nanEdo, int hp,int timeToSec, double km, int kcal, int timeMok, double kmMok, int kcalMok) {
-        int score = 0;
+        score = 0;
         score += exerciseLevel*100;
         score += hp*10*nanEdo;
         if(timeToSec>= timeMok) score += 500;
@@ -159,7 +163,10 @@ public class ExerciseResultActivity extends AppCompatActivity {
             call2.enqueue(new Callback<ScoreData>() {
                 @Override
                 public void onResponse(Call<ScoreData> call, Response<ScoreData> response) {
-
+                    loginSf = getSharedPreferences("Login", MODE_PRIVATE);
+                    loginSfEditor=loginSf.edit();
+                    int last=score;
+                    loginSfEditor.putInt("score",score);
                 }
 
                 @Override
