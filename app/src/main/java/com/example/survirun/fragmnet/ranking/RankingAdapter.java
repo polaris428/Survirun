@@ -287,8 +287,8 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
             kcalTextView=itemView.findViewById(R.id.exercise_kcal_text_view);
             hourTextView=itemView.findViewById(R.id.item_exercise_hour_text_view);
             minTextView=itemView.findViewById(R.id.item_exercise_min_text_view);
-            hourUnitTextView=itemView.findViewById(R.id.item_exercise_hour_unit_text_view);
-            minUnitTextView=itemView.findViewById(R.id.item_exercise_min_unit_text_view);
+            hourUnitTextView=itemView.findViewById(R.id.item_exercise_hur_unit_text_view);
+            minUnitTextView=itemView.findViewById(R.id.item_exercise_min_text_view_min_unit_text_view);
 
             kmTextView=itemView.findViewById(R.id.exercise_km_text_view);
 
