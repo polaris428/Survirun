@@ -60,6 +60,7 @@
     <string name="zombie_mode">좀비모드</string>
     <string name="story_mode">스토리모드</string>
     <string name="start">함께 달리기</string>
+    <string name="run">달리기!</string>
     <string name="story">Story #</string>
     <string name="sign_out">로그아웃</string>
     <string name="sign_out_user">로그아웃을 하시겠습니까?</string>
@@ -156,7 +157,7 @@
     <string name="hard">어려움</string>
     <string name="point">점</string>
     <string name="success_add_friend">친구 추가 성공</string>
-
+    <string name="score">점수: </string>
     <string name="base_camp">시작 위치</string>
     <string name="bring_ranking">랭킹을 불러오는 중...</string>
     <string name="no_mark_ranking">랭킹에 표시할 친구가 없습니다</string>

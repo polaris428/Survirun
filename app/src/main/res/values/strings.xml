@@ -60,6 +60,7 @@
     <string name="zombie_mode">Zombie Mode</string>
     <string name="story_mode">Story Mode</string>
     <string name="start">Run Together</string>
+    <string name="run">run!</string>
     <string name="story">Story #</string>
     <string name="sign_out">Sign Out</string>
     <string name="sign_out_user">Do you want to sign out?</string>
@@ -156,6 +157,7 @@
     <string name="hard">Hard</string>
     <string name="point">Point</string>
     <string name="success_add_friend">Successfully added friends</string>
+    <string name="score">score: </string>
     
     <string name="base_camp">base camp</string>
     <string name="bring_ranking">Bringing up the rankings...</string>
