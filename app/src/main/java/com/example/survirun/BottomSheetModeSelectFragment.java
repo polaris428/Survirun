@@ -24,7 +24,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
     FragmentBottomSheetModeSelectBinding binding;
     private BottomSheetListener mListener;
-    boolean isZombieMode;
+    boolean isZombieMode, isModeCheck;
     int zombieCount;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -42,26 +42,36 @@ public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
 
         binding.zombieSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             mListener.onCheckZombie(isChecked);
+            if (isChecked) {
+                binding.toggleButton.setVisibility(View.VISIBLE);
+                binding.tipTextView.setVisibility(View.GONE);
+                if (isModeCheck) {
+                    binding.exerciseStartButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.red));
+                } else {
+                    binding.exerciseStartButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.gray));
+                }
+            } else {
+                binding.toggleButton.setVisibility(View.GONE);
+                binding.tipTextView.setVisibility(View.VISIBLE);
+                binding.exerciseStartButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.red));
+            }
         });
 
         binding.toggleButton.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-            if(checkedId==R.id.easy_mode_button){
-                zombieCount =2;
-            }
-            else if(checkedId==R.id.generally_mode_button){
-                zombieCount=4;
-            }
-            else{
-                zombieCount=6;
+            if (checkedId == R.id.easy_mode_button) {
+                zombieCount = 2;
+            } else if (checkedId == R.id.generally_mode_button) {
+                zombieCount = 4;
+            } else {
+                zombieCount = 6;
             }
             mListener.onCheckLevel(zombieCount, isChecked);
-            if(isChecked){
+            isModeCheck = isChecked;
+            if (isChecked) {
                 binding.exerciseStartButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.red));
-            }
-            else binding.exerciseStartButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.gray));
+            } else
+                binding.exerciseStartButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.gray));
         });
-
-
 
 
         return v;
@@ -71,7 +81,9 @@ public class BottomSheetModeSelectFragment extends BottomSheetDialogFragment {
 
     public interface BottomSheetListener {
         void onClickStart();
+
         void onCheckZombie(boolean isCheck);
+
         void onCheckLevel(int zombieCount, boolean isChecked);
     }
 }

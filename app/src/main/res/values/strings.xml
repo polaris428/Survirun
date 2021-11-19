@@ -160,4 +160,5 @@
     <string name="base_camp">base camp</string>
     <string name="bring_ranking">Bringing up the rankings...</string>
     <string name="no_mark_ranking">There are no friends\nto mark on the rankings</string>
+    <string name="zombies_not_appear">Zombies don\'t appear in this mode.</string>
 </resources>
