@@ -67,7 +67,7 @@ public class SplashActivity extends AppCompatActivity {
                 (AnimationDrawable) binding.handsImageView.getBackground();
         drawableHands.start();
 
-        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.run_anim);
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.run_anim);
         binding.floor.startAnimation(anim);
 
         network();
@@ -115,17 +115,17 @@ public class SplashActivity extends AppCompatActivity {
             public void onResponse(Call<TokenData> call, Response<TokenData> response) {
 
                 if (response.isSuccessful()) {
-                    token=response.body().token;
-                    Log.d("token",token );
+                    token = response.body().token;
+                    Log.d("token", token);
                     getFriendNumber();
                     editor.putString("email", email);
                     editor.putString("pwe", pwe);
                     editor.putString("token", token);
                     editor.commit();
-                    UserAccount userAccount=new UserAccount();
-                    userAccount.getExercise(token,SplashActivity.this);
-                    userAccount.getUser(token,email,SplashActivity.this);
-                    userAccount.yesterdayExercise(token,SplashActivity.this);
+                    UserAccount userAccount = new UserAccount();
+                    userAccount.getExercise(token, SplashActivity.this);
+                    userAccount.getUser(token, email, SplashActivity.this);
+                    userAccount.yesterdayExercise(token, SplashActivity.this);
                     Intent intent;
 
                     if (!response.body().username) {
@@ -225,30 +225,34 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     void showDialog() {
-
         Button finishButton = dialog.findViewById(R.id.cancel_button);
         Button retryButton = dialog.findViewById(R.id.yes_button);
-        Button helpButton=dialog.findViewById(R.id.help_button);
+        Button helpButton = dialog.findViewById(R.id.help_button);
+
         dialog.setCancelable(false);
         dialog.show();
         helpButton.setOnClickListener(v -> {
-                    Intent email = new Intent(Intent.ACTION_SEND);
-                    email.setType("plain/text");
-                    String[] address = {"survirun@gmail.com"};
-                    email.putExtra(Intent.EXTRA_EMAIL, address);
-                    email.putExtra(Intent.EXTRA_SUBJECT, R.string.network_error);
-                    email.setPackage("com.google.android.gm");
-                    email.putExtra(Intent.EXTRA_TEXT, R.string.error_detail);
-                    startActivity(email);
+            dialog.dismiss();
+            Intent email = new Intent(Intent.ACTION_SEND);
+            email.setType("plain/text");
+            String[] address = {"survirun@gmail.com"};
+            email.putExtra(Intent.EXTRA_EMAIL, address);
+            email.putExtra(Intent.EXTRA_SUBJECT, R.string.network_error);
+            email.setPackage("com.google.android.gm");
+            email.putExtra(Intent.EXTRA_TEXT, R.string.error_detail);
+            startActivity(email);
         });
-        finishButton.setOnClickListener(v -> finish());
+        finishButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            finish();
+        });
         retryButton.setOnClickListener(v -> {
-                    dialog.dismiss();
-                    network();
-                }
-        );
+            dialog.dismiss();
+            network();
+        });
     }
-    public void getFriendNumber(){
+
+    public void getFriendNumber() {
         Call<FindUserData> call = ServerClient.getServerService().getFriendList(token);
         call.enqueue(new Callback<FindUserData>() {
             @Override

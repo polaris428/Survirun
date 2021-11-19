@@ -1,13 +1,5 @@
 package com.example.survirun.activity.exercise;
 
-import androidx.annotation.MainThread;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -38,14 +30,17 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.example.survirun.Medel.ZombieModel;
 import com.example.survirun.R;
-import com.example.survirun.activity.MainActivity;
 import com.example.survirun.databinding.ActivityMapBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -57,9 +52,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,8 +99,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static int kcalMok;
     private static int timeMok; //sec
     private static double kmMok;
-    private static  int levelMok;
-    private static  boolean zombieMode;
+    private static int levelMok;
+    private static boolean zombieMode;
     public static SupportMapFragment mapFragment;
 
     public static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
@@ -123,7 +116,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         View view = binding.getRoot();
         setContentView(view);
         mctx = this;
-        Intent getIntent=getIntent();
+        Intent getIntent = getIntent();
 
 
         //Log.d(title,title);
@@ -131,14 +124,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog);
-        title=getIntent.getStringExtra("title");
-        zombieMode=getIntent.getBooleanExtra("zombieMode",true);
-        kmMok = getIntent().getDoubleExtra("km",1);
-        timeMok = getIntent().getIntExtra("time",1);
-        kcalMok = getIntent().getIntExtra("calorie",1);
-        levelMok=getIntent.getIntExtra("level",0);
-        Log.e(">>>>>",kmMok+" "+timeMok+" "+kcalMok);
-        MAX_ZB_CNT = getIntent().getIntExtra("zombieCount",3);
+
+        title = getIntent.getStringExtra("title");
+        zombieMode = getIntent.getBooleanExtra("zombieMode", true);
+        kmMok = getIntent().getDoubleExtra("km", 1);
+        timeMok = getIntent().getIntExtra("time", 1);
+        kcalMok = getIntent().getIntExtra("calorie", 1);
+        levelMok = getIntent.getIntExtra("level", 0);
+        Log.e(">>>>>", kmMok + " " + timeMok + " " + kcalMok);
+        MAX_ZB_CNT = getIntent().getIntExtra("zombieCount", 3);
 
         showSnackBar(view);
 
@@ -300,27 +294,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mediaPlayer != null) {
+        if (mediaPlayer != null) {
             mediaPlayer.release();
             mediaPlayer = null;
         }
         HP = 100;
         isZombieCreating = true;
-        lastLat=0;
-        lastLng=0;
-        currentLat=0;
-        currentLng=0;
-        kcal=0;
-        walkingDistance=0;
-        timeToSec=0;
-        isRunning=true;
-        isFirst=false;
+        lastLat = 0;
+        lastLng = 0;
+        currentLat = 0;
+        currentLng = 0;
+        kcal = 0;
+        walkingDistance = 0;
+        timeToSec = 0;
+        isRunning = true;
+        isFirst = false;
         timeThread = null;
         zombieList = new ArrayList<>();
-        zombieListCurrentPos=0;
-
-
-
+        zombieListCurrentPos = 0;
 
 
     }
@@ -452,15 +443,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             intent.putExtra("kcal", (int) kcal);
             intent.putExtra("walkedDistanceToKm", walkingDistance / 1000);
             intent.putExtra("timeToSec", (int) timeToSec);
-            intent.putExtra("title",title);
-            intent.putExtra("hp",HP);
+            intent.putExtra("title", title);
+            intent.putExtra("hp", HP);
             //intent.putExtra()
             //intent.putExtra("title",title);
-            intent.putExtra("calorie",kcalMok);
-            intent.putExtra("km",kmMok);
-            intent.putExtra("time",timeMok);
-            intent.putExtra("level",levelMok);
-            intent.putExtra("zombieCount",MAX_ZB_CNT);
+            intent.putExtra("calorie", kcalMok);
+            intent.putExtra("km", kmMok);
+            intent.putExtra("time", timeMok);
+            intent.putExtra("level", levelMok);
+            intent.putExtra("zombieCount", MAX_ZB_CNT);
 
 
             polylineOptions = new PolylineOptions();
@@ -538,7 +529,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 polylineOptions = new PolylineOptions();
                 pausePolylineOpt = new PolylineOptions();
 
-                ((Activity)mctx).runOnUiThread(new Runnable() {
+                ((Activity) mctx).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mid, ret1));
@@ -548,27 +539,25 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 });
 
 
-
                 Intent intent = new Intent(mctx, ExerciseResultActivity.class); //main말고 다른걸로 변경
                 intent.putExtra("kcal", (int) kcal);
                 intent.putExtra("walkedDistanceToKm", walkingDistance / 1000);
                 intent.putExtra("timeToSec", (int) timeToSec);
-                intent.putExtra("title",title);
-                intent.putExtra("hp",HP);
-                intent.putExtra("calorie",kcalMok);
-                intent.putExtra("km",kmMok);
-                intent.putExtra("time",timeMok);
-                intent.putExtra("level",levelMok);
-                intent.putExtra("zombieCount",MAX_ZB_CNT);
+                intent.putExtra("title", title);
+                intent.putExtra("hp", HP);
+                intent.putExtra("calorie", kcalMok);
+                intent.putExtra("km", kmMok);
+                intent.putExtra("time", timeMok);
+                intent.putExtra("level", levelMok);
+                intent.putExtra("zombieCount", MAX_ZB_CNT);
 
                 mctx.startActivity(intent);
 
 
-
             }
 
-        } catch(Exception e) {
-            Log.e("<MapActivity, sstop()>",e.getMessage());
+        } catch (Exception e) {
+            Log.e("<MapActivity, sstop()>", e.getMessage());
         }
     }
 
@@ -612,8 +601,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(new LatLng(currentLat, currentLng));
         markerOptions.title(getString(R.string.base_camp));
-        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.base_camp);
-        Bitmap b=bitmapdraw.getBitmap();
+        BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.base_camp);
+        Bitmap b = bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 200, 200, false);
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
 
@@ -623,6 +612,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLat, currentLng), 18));
     }
+
     private BitmapDescriptor BitmapFromVector(Context context, int vectorResId) {
         // below line is use to generate a drawable.
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
@@ -745,7 +735,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
-                Intent intent =new Intent(MapActivity.this,MapActivity.class);
+                Intent intent = new Intent(MapActivity.this, MapActivity.class);
                 startActivity(intent);
                 finish();
 
@@ -893,13 +883,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
 
                 /*목표달성체크*/
-                if(kcal >= kcalMok&& (walkingDistance/1000) >=kmMok && timeToSec >= timeMok) {
+                if (kcal >= kcalMok && (walkingDistance / 1000) >= kmMok && timeToSec >= timeMok) {
                     playTTS(getString(R.string.mok_cl));
                     stop();
                 }
 
             } catch (Exception e) {
-                Log.e("<MapActivity, Time Handler> : " , e.getMessage());
+                Log.e("<MapActivity, Time Handler> : ", e.getMessage());
             }
 
 
@@ -917,7 +907,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             sstop(); //종료하고 싶으면
         }
     }
-
 
 
     @MainThread
@@ -971,7 +960,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void createZombie() {
-        ZombieModel mZombie = new ZombieModel(new LatLng(currentLat, currentLng), zombieListCurrentPos,MapActivity.this);
+        ZombieModel mZombie = new ZombieModel(new LatLng(currentLat, currentLng), zombieListCurrentPos, MapActivity.this);
         zombieListCurrentPos++;
         zombieList.add(mZombie);
         playTTS(getString(R.string.create_zb));
@@ -985,7 +974,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         //dialog.findViewById(R.id.help_button).setVisibility(View.GONE);
         dialog.show();
 
-        yesButton.setOnClickListener(v -> stop());
+        yesButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            stop();
+        });
         cancelButton.setOnClickListener(v -> dialog.dismiss());
     }
 
@@ -994,7 +986,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         showDialog();
     }
 
-    private void showSnackBar(View v){
+    private void showSnackBar(View v) {
         final Snackbar snackbar = Snackbar.make(v, "", 10000);
         View customSnackView = getLayoutInflater().inflate(R.layout.snackbar, null);
         snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
