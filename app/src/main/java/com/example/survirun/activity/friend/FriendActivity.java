@@ -279,7 +279,54 @@ public class FriendActivity extends AppCompatActivity {
                             Log.d("뿜뿜", response.body().profiles.get(i)._id);
 
                         }
-                    } else {
+                    } else if(friendsServerNumber==friendsRoomNumber){
+                        Boolean friend = false;
+                        for (i = 0; i < friendsServerNumber; i++) {
+                            for (j = 0; j < friendsRoomNumber; j++) {
+                                if (response.body().users.get(i).email.equals(friendRoomList.get(j).email)) {
+                                    if(!response.body().users.get(i).username.equals(friendRoomList.get(j).name)){
+                                        String changeName= friendRoomList.get(j).name;
+                                        class InsertRunnable implements Runnable {
+                                            @Override
+                                            public void run() {
+                                                try {
+                                                    FriendRoom friendRoom = friendDB.friendDao().findById(changeName);
+                                                    friendDB.friendDao().delete(friendRoom);
+                                                    finish();
+                                                    checkFriends();
+                                                } catch (Exception e) {
+
+                                                }
+                                            }
+                                        }
+                                        InsertRunnable insertRunnable = new InsertRunnable();
+                                        Thread t = new Thread(insertRunnable);
+                                        t.start();
+                                    }
+                                    friend = true;
+                                    break;
+                                } else {
+                                    Log.d("반복중", i + "");
+
+
+                                }
+                                if (!friend) {
+                                    refreshRecyclerView(response.body().users.get(i).email, response.body().users.get(i).username, response.body().profiles.get(i)._id);
+                                    //String profile=response.body().users.get(i).profiles.get(i)._id;
+
+
+                                } else {
+                                    friend = false;
+                                }
+
+                            }
+                        }
+
+
+
+
+
+                    }else {
                         if (friendsServerNumber > friendsRoomNumber) {
                             Log.d("친구를 추가할 준비", "");
                             Boolean friend = false;
