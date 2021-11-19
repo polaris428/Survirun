@@ -31,20 +31,30 @@ public class UserGoalModifyActivity extends AppCompatActivity {
         int calorie = sf.getInt("calorie", 400);
         int time = sf.getInt("time", 60);
         int km = sf.getInt("km", 5);
-        List<String> numList = new ArrayList();
-        for(int i = 100; i<5001; i+=100){
-            numList.add(String.valueOf(i));
+
+        List<String> calorieList = new ArrayList<>();
+        for (int i = 100; i < 5001; i += 100) {
+            calorieList.add(String.valueOf(i));
+        }
+
+        List<String> minList = new ArrayList<>();
+        for (int j = 0; j < 56; j += 5) {
+            minList.add(String.valueOf(j));
         }
 
 
-        binding.calorieNumberPicker.setValue(calorie);
+        binding.calorieNumberPicker.setValue(calorie + 100);
         binding.hourNumberPicker.setValue(time / 60);
-        binding.minuteNumberPicker.setValue(time % 60);
+        binding.minuteNumberPicker.setValue(time % 60 / 5 + 1);
         binding.kmNumberPicker.setValue(km);
 
         binding.calorieNumberPicker.setMinValue(1);
-        binding.calorieNumberPicker.setMaxValue(numList.size());
-        binding.calorieNumberPicker.setDisplayedValues(numList.toArray(new String[numList.size()]));
+        binding.calorieNumberPicker.setMaxValue(calorieList.size());
+        binding.calorieNumberPicker.setDisplayedValues(calorieList.toArray(new String[calorieList.size()]));
+
+        binding.minuteNumberPicker.setMinValue(1);
+        binding.minuteNumberPicker.setMaxValue(minList.size());
+        binding.minuteNumberPicker.setDisplayedValues(minList.toArray(new String[minList.size()]));
 
         binding.calorieNumberPicker.setTextColor(ContextCompat.getColor(this, R.color.transparent));
         binding.hourNumberPicker.setTextColor(ContextCompat.getColor(this, R.color.transparent));
@@ -73,8 +83,8 @@ public class UserGoalModifyActivity extends AppCompatActivity {
 
 
         binding.saveButton.setOnClickListener(v -> {
-            int inputCalorie = binding.calorieNumberPicker.getValue()*100;
-            int inputTime = binding.hourNumberPicker.getValue() * 60 + binding.minuteNumberPicker.getValue();
+            int inputCalorie = binding.calorieNumberPicker.getValue() * 100;
+            int inputTime = binding.hourNumberPicker.getValue() * 60 + (binding.minuteNumberPicker.getValue() - 1) * 5;
             int inputKm = binding.kmNumberPicker.getValue();
             SharedPreferences.Editor editor = sf.edit();
             editor.putInt("calorie", inputCalorie);

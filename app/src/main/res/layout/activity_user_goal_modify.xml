@@ -189,8 +189,6 @@
                 app:np_dividerThickness="2.5dp"
                 app:np_dividerType="underline"
                 app:np_height="180dp"
-                app:np_max="59"
-                app:np_min="0"
                 app:np_selectedTextColor="?attr/colorBlackToWhite"
                 app:np_textColor="#CB6A6A6A"
                 app:np_textSize="18sp"
