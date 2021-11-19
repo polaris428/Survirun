@@ -1,19 +1,27 @@
 package com.example.survirun.Medel;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.survirun.R;
 import com.example.survirun.activity.exercise.MapActivity;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Random;
 
-public class ZombieModel {
+public class ZombieModel   {
     public int markerImageResourceId;
     public final int LOCATION_DIFF = 100;
     public MarkerOptions options;
@@ -22,6 +30,7 @@ public class ZombieModel {
     public Marker myMarker;
     public int currentIdx;
     public int timeCnt = 0;
+    Context context;
 
     public double getLngWithEq(LatLng f, LatLng s, double xp) { // 두 점의 방정식 구해서 사용!
         double m = (s.longitude - f.longitude) / (s.latitude - f.latitude);
@@ -52,6 +61,11 @@ public class ZombieModel {
 
         this.options = new MarkerOptions();
         this.options.position(new LatLng(zb.getLatitude(), zb.getLongitude()));
+        BitmapDrawable bitmapdraw=(BitmapDrawable)context.getResources().getDrawable(R.drawable.zombi_marker);
+        Bitmap b=bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
+        this.options.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+
         MapActivity.updateMarkerPos(this.currentIdx);
 
         /* 마지막에 거리 검사 */
@@ -93,9 +107,10 @@ public class ZombieModel {
 
     }
 
-    public ZombieModel(LatLng human, int idx) {//, int markerImageResourceId) {
+    public ZombieModel(LatLng human, int idx ,Context context) {//, int markerImageResourceId) {
         //this.markerImageResourceId = markerImageResourceId;
         this.currentIdx = idx;
+        this.context=context;
         Random r = new Random();
         r.setSeed(System.currentTimeMillis());
         int d = r.nextInt(3);
@@ -130,7 +145,13 @@ public class ZombieModel {
         this.options.position(new LatLng(randomLat, randomLng));
         this.options.title("zombie");
         Log.d(">", this.options.getPosition().latitude + " " + this.options.getPosition().longitude);
+
+        BitmapDrawable bitmapdraw=(BitmapDrawable)context.getResources().getDrawable(R.drawable.zombi_marker);
+        Bitmap b=bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
+        this.options.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
         myMarker = MapActivity.mMap.addMarker(this.options);
+
         //MapActivity.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(randomLat, randomLng), 18));
         thread = new Thread(new zombieMoveThread());
         isRun = true;

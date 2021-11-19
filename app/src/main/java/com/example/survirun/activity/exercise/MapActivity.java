@@ -18,9 +18,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -50,6 +52,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -594,11 +597,33 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Bitmap b=bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 200, 200, false);
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+
         mMap.addMarker(markerOptions);
 
         //mMap.addMarker(markerOptions);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLat, currentLng), 18));
+    }
+    private BitmapDescriptor BitmapFromVector(Context context, int vectorResId) {
+        // below line is use to generate a drawable.
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+
+        // below line is use to set bounds to our vector drawable.
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+
+        // below line is use to create a bitmap for our
+        // drawable which we have added.
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+
+        // below line is use to add bitmap in our canvas.
+        Canvas canvas = new Canvas(bitmap);
+
+        // below line is use to draw our
+        // vector drawable in canvas.
+        vectorDrawable.draw(canvas);
+
+        // after generating our bitmap we are returning our bitmap.
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
     public void setCurrentLatLng(double lat, double lng) {
@@ -927,7 +952,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void createZombie() {
-        ZombieModel mZombie = new ZombieModel(new LatLng(currentLat, currentLng), zombieListCurrentPos);
+        ZombieModel mZombie = new ZombieModel(new LatLng(currentLat, currentLng), zombieListCurrentPos,MapActivity.this);
         zombieListCurrentPos++;
         zombieList.add(mZombie);
         playTTS(getString(R.string.create_zb));
