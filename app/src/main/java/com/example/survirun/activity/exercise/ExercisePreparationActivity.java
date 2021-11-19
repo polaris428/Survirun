@@ -1,7 +1,12 @@
 package com.example.survirun.activity.exercise;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,9 +14,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.survirun.BottomSheetModeSelectFragment;
 import com.example.survirun.R;
+import com.example.survirun.activity.MainActivity;
 import com.example.survirun.databinding.ActivityExercisePreparationBinding;
 
 import java.util.ArrayList;
@@ -19,6 +27,9 @@ import java.util.ArrayList;
 public class ExercisePreparationActivity extends AppCompatActivity implements BottomSheetModeSelectFragment.BottomSheetListener {
     ActivityExercisePreparationBinding binding;
     BottomSheetModeSelectFragment selectFragment;
+    private static final int PERMISSIONS_REQUEST_CODE = 100;
+    private static final int GPS_ENABLE_REQUEST_CODE = 2001;
+    String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     String title;
     String calorie;
     String km;
@@ -36,7 +47,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
         super.onCreate(savedInstanceState);
         binding = ActivityExercisePreparationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        checkGPSPermission();
         selectFragment = new BottomSheetModeSelectFragment();
 
         Intent exerciseSelection = getIntent();
@@ -90,6 +101,7 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
 
     @Override
     public void onClickStart() {
+
         if (!isCheckLevel) {
             Toast.makeText(getApplicationContext(), R.string.choose_level, Toast.LENGTH_SHORT).show();
         } else {
@@ -132,6 +144,59 @@ public class ExercisePreparationActivity extends AppCompatActivity implements Bo
             constraintLayout.requestLayout();
         });
         anim.start();
+    }
+    private void checkGPSPermission() {
+        if (!checkLocationServicesStatus()) {
+            showDialogForLocationServiceSetting();
+        } else {
+            checkRunTimePermission();
+        }
+    }
+    public boolean checkLocationServicesStatus() {
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+    void checkRunTimePermission() {
+        //런타임 퍼미션 처리
+        // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
+        int hasFineLocationPermission = ContextCompat.checkSelfPermission(ExercisePreparationActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        int hasCoarseLocationPermission = ContextCompat.checkSelfPermission(ExercisePreparationActivity.this,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (hasFineLocationPermission != PackageManager.PERMISSION_GRANTED || hasCoarseLocationPermission != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(ExercisePreparationActivity.this, REQUIRED_PERMISSIONS[0])) {
+                Toast.makeText(ExercisePreparationActivity.this, R.string.need_location, Toast.LENGTH_LONG).show();
+            }
+            ActivityCompat.requestPermissions(ExercisePreparationActivity.this, REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE);
+        }
+    }
+    private void showDialogForLocationServiceSetting() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ExercisePreparationActivity.this);
+        builder.setCancelable(false);
+        builder.setTitle(R.string.disable_location);
+        builder.setMessage("위치 서비스를 활성화 시켜주세요");
+        builder.setPositiveButton(R.string.setting, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                Intent callGPSSettingIntent
+                        = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE);
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+                Intent intent = new Intent(ExercisePreparationActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+        builder.create().show();
     }
 
 }
