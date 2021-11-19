@@ -44,21 +44,6 @@ public class RankingFragment extends Fragment {
         binding = FragmentRankingBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        class InsertRunnable implements Runnable {
-            @Override
-            public void run() {
-                try {
-                    friendRoomList = FriendDB.getInstance(getActivity()).friendDao().getAll();
-
-                } catch (Exception e) {
-
-                }
-            }
-        }
-        InsertRunnable insertRunnable = new InsertRunnable();
-        Thread t = new Thread(insertRunnable);
-        t.start();
-
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
         binding.image.startAnimation(animation);
 
@@ -109,6 +94,21 @@ public class RankingFragment extends Fragment {
                     }
                 });
             } else {
+                class InsertRunnable implements Runnable {
+                    @Override
+                    public void run() {
+                        try {
+                            friendRoomList = FriendDB.getInstance(getActivity()).friendDao().getAll();
+
+                        } catch (Exception e) {
+
+                        }
+                    }
+                }
+                InsertRunnable insertRunnable = new InsertRunnable();
+                Thread t = new Thread(insertRunnable);
+                t.start();
+
                 binding.rankingModeButton.setText("친구");
                 ranking = true;
                 friendRankingList.clear();
@@ -140,6 +140,30 @@ public class RankingFragment extends Fragment {
         });
 
 
+
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        class InsertRunnable implements Runnable {
+            @Override
+            public void run() {
+                try {
+                    friendRoomList = FriendDB.getInstance(getActivity()).friendDao().getAll();
+
+                } catch (Exception e) {
+
+                }
+            }
+        }
+        InsertRunnable insertRunnable = new InsertRunnable();
+        Thread t = new Thread(insertRunnable);
+        t.start();
+
+        ranking = false;
         RankingAdapter RankingAdapter = new RankingAdapter(rankinDataList);
         binding.rankingRecyclerView.setAdapter(RankingAdapter);
         Call<rankingData> call = ServerClient.getServerService().getRanking(token);
@@ -167,8 +191,6 @@ public class RankingFragment extends Fragment {
                 t.printStackTrace();
             }
         });
-
-        return view;
     }
 
 
