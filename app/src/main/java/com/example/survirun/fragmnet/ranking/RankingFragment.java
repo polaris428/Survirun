@@ -39,6 +39,7 @@ public class RankingFragment extends Fragment {
     List<RankingData> rankinDataList = new ArrayList<>();
     List<RankingData> friendRankingList = new ArrayList<>();
     List<FriendRoom> friendRoomList;
+    boolean ranking=true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,28 +72,68 @@ public class RankingFragment extends Fragment {
         });
         binding.rankingModeButton.setOnClickListener(v-> {
 
+            if(ranking){
+                ranking=false;
+                rankinDataList.clear();
+                binding.rankingModeButton.setText("전체");
+                RankingAdapter RankingAdapter = new RankingAdapter(rankinDataList);
+                binding.rankingRecyclerView.setAdapter(RankingAdapter);
+                Call<rankingData> call = ServerClient.getServerService().getRanking(token);
+                call.enqueue(new Callback<rankingData>() {
+                    @Override
+                    public void onResponse(Call<rankingData> call, Response<rankingData> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("성공", "성공");
+                            for (int i = 0; i < response.body().scores.size(); i++) {
+                                UpData(response.body().users.get(i).username, response.body().users.get(i).email, response.body().scores.get(i));
+                                if (response.body().scores.size() - 1 == i) {
+                                    RankingAdapter RinkingAdapter = new RankingAdapter(rankinDataList);
+                                    binding.rankingRecyclerView.setAdapter(RinkingAdapter);
+                                    binding.findRanking.setVisibility(View.GONE);
+                                }
+                            }
 
 
-            for(int i=0;i<rankinDataList.size();i++){
-                for(int j=0;j<friendRoomList.size();j++){
-                    if (rankinDataList.get(i).userEmail.equals(friendRoomList.get(j).email)){
-                        Log.d("겹침",rankinDataList.get(i).userName);
-                        RankingData rankingData=new RankingData();
-                        rankingData.userEmail=rankinDataList.get(i).userEmail;
-                        rankingData.userName=rankinDataList.get(i).userName;
-                        rankingData.userScore=rankinDataList.get(i).userScore;
-                        friendRankingList.add(rankingData);
-
-
-
+                        } else {
+                            Log.d("실패", response.errorBody().toString());
+                        }
                     }
+
+                    @Override
+                    public void onFailure(Call<rankingData> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+            }else {
+
+                binding.rankingModeButton.setText("친구");
+                ranking=true;
+                friendRankingList.clear();
+                for(int i=0;i<rankinDataList.size();i++){
+                    for(int j=0;j<friendRoomList.size();j++){
+                        if (rankinDataList.get(i).userEmail.equals(friendRoomList.get(j).email)){
+                            Log.d("겹침",rankinDataList.get(i).userName);
+                            RankingData friendRankingData=new RankingData();
+                            friendRankingData.userEmail=rankinDataList.get(i).userEmail;
+                            friendRankingData.userName=rankinDataList.get(i).userName;
+                            friendRankingData.userScore=rankinDataList.get(i).userScore;
+                            friendRankingList.add(friendRankingData);
+
+
+
+                        }
+                    }
+
                 }
+                RankingAdapter RankingAdapter = new RankingAdapter(friendRankingList);
+                binding.rankingRecyclerView.setAdapter(RankingAdapter);
 
             }
-            RankingAdapter RankingAdapter = new RankingAdapter(friendRankingList);
-            binding.rankingRecyclerView.setAdapter(RankingAdapter);
+
+
 
         });
+
 
         RankingAdapter RankingAdapter = new RankingAdapter(rankinDataList);
         binding.rankingRecyclerView.setAdapter(RankingAdapter);
