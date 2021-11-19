@@ -18,15 +18,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.survirun.FriendDB;
 import com.example.survirun.R;
-import com.example.survirun.activity.friend.FriendAdapter;
 import com.example.survirun.data.ExerciseHistory;
 import com.example.survirun.data.FriendRoom;
 import com.example.survirun.data.ImageData;
@@ -48,9 +47,11 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
     Context context;
     String token;
     String myEmail;
+    private final RequestManager glide;
 
-    public RankingAdapter(List<RankingData> list) {
+    public RankingAdapter(List<RankingData> list, RequestManager glide) {
         rankinDataList = list;
+        this.glide = glide;
     }
 
     @NonNull
@@ -141,8 +142,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
                                 if (context == null) {
                                     return;
                                 }
-                                Glide.with(context)
-                                        .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
+                                glide.load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
                                         .error(R.drawable.userdefaultprofile)
                                         .placeholder(R.drawable.ic_userprofile)
                                         .diskCacheStrategy(DiskCacheStrategy.NONE)

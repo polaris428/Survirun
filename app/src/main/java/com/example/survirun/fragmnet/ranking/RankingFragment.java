@@ -12,6 +12,8 @@ import android.view.animation.AnimationUtils;
 
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.example.survirun.FriendDB;
 import com.example.survirun.R;
 import com.example.survirun.activity.friend.FriendActivity;
@@ -37,13 +39,13 @@ public class RankingFragment extends Fragment {
     List<RankingData> friendRankingList = new ArrayList<>();
     List<FriendRoom> friendRoomList;
     boolean ranking = false;
-
+    RequestManager glide ;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentRankingBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
+        glide = Glide.with(getContext());
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
         binding.image.startAnimation(animation);
 
@@ -65,7 +67,8 @@ public class RankingFragment extends Fragment {
                 ranking = false;
                 rankinDataList.clear();
                 binding.rankingModeButton.setText(R.string.all);
-                RankingAdapter RankingAdapter = new RankingAdapter(rankinDataList);
+
+                RankingAdapter RankingAdapter = new RankingAdapter(rankinDataList,glide );
                 binding.rankingRecyclerView.setAdapter(RankingAdapter);
                 Call<rankingData> call = ServerClient.getServerService().getRanking(token);
                 call.enqueue(new Callback<rankingData>() {
@@ -76,7 +79,7 @@ public class RankingFragment extends Fragment {
                             for (int i = 0; i < response.body().scores.size(); i++) {
                                 UpData(response.body().users.get(i).username, response.body().users.get(i).email, response.body().scores.get(i));
                                 if (response.body().scores.size() - 1 == i) {
-                                    RankingAdapter RinkingAdapter = new RankingAdapter(rankinDataList);
+                                    RankingAdapter RinkingAdapter = new RankingAdapter(rankinDataList, glide);
                                     binding.rankingRecyclerView.setAdapter(RinkingAdapter);
                                     binding.rankingRecyclerView.setVisibility(View.VISIBLE);
                                     binding.rankingMessage.setVisibility(View.GONE);
@@ -122,7 +125,7 @@ public class RankingFragment extends Fragment {
                     binding.rankingRecyclerView.setVisibility(View.GONE);
                     binding.rankingModeButton.setEnabled(true);
                 } else {
-                    RankingAdapter RankingAdapter = new RankingAdapter(friendRankingList);
+                    RankingAdapter RankingAdapter = new RankingAdapter(friendRankingList, glide);
                     binding.rankingRecyclerView.setAdapter(RankingAdapter);
                     binding.rankingRecyclerView.setVisibility(View.VISIBLE);
                     binding.rankingMessage.setVisibility(View.GONE);
@@ -153,7 +156,7 @@ public class RankingFragment extends Fragment {
                     for (int i = 0; i < response.body().scores.size(); i++) {
                         UpData(response.body().users.get(i).username, response.body().users.get(i).email, response.body().scores.get(i));
                         if (response.body().scores.size() - 1 == i) {
-                            RankingAdapter RinkingAdapter = new RankingAdapter(rankinDataList);
+                            RankingAdapter RinkingAdapter = new RankingAdapter(rankinDataList, glide);
                             binding.rankingRecyclerView.setAdapter(RinkingAdapter);
                             binding.rankingMessage.setVisibility(View.GONE);
                             binding.rankingRecyclerView.setVisibility(View.VISIBLE);
