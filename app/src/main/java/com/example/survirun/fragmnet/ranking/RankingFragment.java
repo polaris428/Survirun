@@ -138,11 +138,12 @@ public class RankingFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         upDataFriend();
+        rankinDataList.clear();
         ranking = false;
         binding.rankingModeButton.setText(R.string.all);
-        RankingAdapter RankingAdapter = new RankingAdapter(rankinDataList);
-        binding.rankingRecyclerView.setAdapter(RankingAdapter);
+
         Call<rankingData> call = ServerClient.getServerService().getRanking(token);
         call.enqueue(new Callback<rankingData>() {
             @Override
