@@ -35,7 +35,7 @@
             android:name=".activity.UserSettingActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.exercise.SplashActivity2"
+            android:name=".activity.account.SplashActivity2"
             android:exported="false" />
         <activity
             android:name=".activity.account.ProgressDialog"

@@ -1,4 +1,4 @@
-package com.example.survirun.activity.exercise;
+package com.example.survirun.activity.account;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,9 +15,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import com.example.survirun.R;
-import com.example.survirun.activity.MainActivity;
-import com.example.survirun.activity.account.SignInActivity;
-import com.example.survirun.activity.account.SignUpActivity;
 import com.example.survirun.databinding.ActivitySplash2Binding;
 
 public class SplashActivity2 extends AppCompatActivity {
