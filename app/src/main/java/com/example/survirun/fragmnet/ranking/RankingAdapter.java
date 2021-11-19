@@ -312,6 +312,7 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
         ConstraintLayout constraintLayout2;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            this.setIsRecyclable(false);
             constraintLayout1=itemView.findViewById(R.id.card_item1);
             constraintLayout2=itemView.findViewById(R.id.card_item2);
 

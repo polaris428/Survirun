@@ -178,7 +178,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
         ViewHolder(View itemView) {
             super(itemView);
-
+            this.setIsRecyclable(false);
             name = itemView.findViewById(R.id.item_friend_name);
             email = itemView.findViewById(R.id.item_friend_email);
             profile = itemView.findViewById(R.id.profile_imageview);
