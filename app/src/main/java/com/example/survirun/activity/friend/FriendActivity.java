@@ -258,9 +258,10 @@ public class FriendActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     friendsServerNumber = response.body().users.size();
                     friendsRoomNumber = friendRoomList.size();
-                    Log.d("asdf", String.valueOf(friendsServerNumber));
-                    Log.d("asdf", String.valueOf(friendsRoomNumber));
+                    Log.d("서버", String.valueOf(friendsServerNumber));
+                    Log.d("룸", String.valueOf(friendsRoomNumber));
                     int i = 0;
+                    int j=0;
                     if (friendsRoomNumber == 0) {
                         for (i = 0; i < friendsServerNumber; i++) {
                             refreshRecyclerView(response.body().users.get(i).email, response.body().users.get(i).username, response.body().profiles.get(i)._id);
@@ -269,11 +270,41 @@ public class FriendActivity extends AppCompatActivity {
 
                         }
                     } else {
-                        Boolean friend = false;
-                        if (friendsServerNumber != friendsRoomNumber) {
-                            for (i = 0; i < friendsServerNumber; i++) {
-                                for (int j = 0; j < friendsRoomNumber; j++) {
-                                    if (response.body().users.get(i).email.equals(friendRoomList.get(j).email)) {
+                        if (friendsServerNumber > friendsRoomNumber) {
+                            Log.d("친구를 추가할 준비","");
+                            Boolean friend = false;
+
+                                for (i = 0; i < friendsServerNumber; i++) {
+                                    for ( j = 0; j < friendsRoomNumber; j++) {
+                                        if (response.body().users.get(i).email.equals(friendRoomList.get(j).email)) {
+                                            Log.d("반복중", i + "");
+                                            Log.d("일치함", "일치함" + j);
+                                            friend = true;
+                                            break;
+                                        } else {
+                                            Log.d("반복중", i + "");
+
+
+                                        }
+                                        if (!friend) {
+                                            refreshRecyclerView(response.body().users.get(i).email, response.body().users.get(i).username, response.body().profiles.get(i)._id);
+                                            //String profile=response.body().users.get(i).profiles.get(i)._id;
+
+
+                                        } else {
+                                            friend = false;
+                                        }
+
+                                    }
+                                }
+                                Log.d("반복된 횟수", i + "");
+                            }
+                        if(friendsRoomNumber>friendsServerNumber){
+                            Boolean friend = false;
+
+                            for (i = 0; i < friendsRoomNumber; i++) {
+                                for ( j = 0; j < friendsServerNumber; j++) {
+                                    if (response.body().users.get(j).email.equals(friendRoomList.get(i).email)) {
                                         Log.d("반복중", i + "");
                                         Log.d("일치함", "일치함" + j);
                                         friend = true;
@@ -283,19 +314,41 @@ public class FriendActivity extends AppCompatActivity {
 
 
                                     }
-                                    if (!friend) {
-                                        refreshRecyclerView(response.body().users.get(i).email, response.body().users.get(i).username, response.body().profiles.get(i)._id);
-                                        //String profile=response.body().users.get(i).profiles.get(i)._id;
-
-
-                                    } else {
-                                        friend = false;
-                                    }
 
                                 }
+                                if (!friend) {
+
+                                    Log.d("삭제할 친구",friendRoomList.get(i).email);
+                                    String username=friendRoomList.get(i).email;
+                                    //String profile=response.body().users.get(i).profiles.get(i)._id;
+
+                                    class InsertRunnable implements Runnable {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                FriendRoom friendRoom = friendDB.friendDao().findById(username);
+                                                friendDB.friendDao().delete(friendRoom);
+                                                finish();
+                                            } catch (Exception e) {
+
+                                            }
+                                        }
+                                    }
+                                    InsertRunnable insertRunnable = new InsertRunnable();
+                                    Thread t = new Thread(insertRunnable);
+                                    t.start();
+                                } else {
+                                    friend = false;
+                                }
+
+
+
                             }
                             Log.d("반복된 횟수", i + "");
+
+
                         }
+
                     }
 
                 }
