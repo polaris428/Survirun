@@ -23,8 +23,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.survirun.activity.EditProfileActivity;
 import com.example.survirun.R;
 import com.example.survirun.activity.WelcomeActivity;
-import com.example.survirun.activity.exercise.SplashActivity2;
+import com.example.survirun.activity.account.SplashActivity2;
 import com.example.survirun.activity.user.UserGoalActivity;
+import com.example.survirun.data.FindUserData;
 import com.example.survirun.data.ImageData;
 import com.example.survirun.databinding.FragmentSettingBinding;
 import com.example.survirun.server.ServerClient;
@@ -59,7 +60,7 @@ public class SettingFragment extends Fragment {
         View view = binding.getRoot();
 
         Log.d("asdf", "onCreateView");
-
+        getFriendNumber();
         dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -203,6 +204,26 @@ public class SettingFragment extends Fragment {
                 t.printStackTrace();
             }
         });
+    }
+    public void getFriendNumber() {
+        Call<FindUserData> call = ServerClient.getServerService().getFriendList(token);
+        call.enqueue(new Callback<FindUserData>() {
+            @Override
+            public void onResponse(Call<FindUserData> call, Response<FindUserData> response) {
+                if (response.isSuccessful()) {
+                    response.body().users.size();
+                    editor.putInt("friend", response.body().users.size());
+                    editor.commit();
+                    binding.friendNumberTextView.setText(String.valueOf(response.body().users.size()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FindUserData> call, Throwable t) {
+            }
+
+        });
+
     }
 
 }
