@@ -154,11 +154,10 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
 
         binding.saveButton.setOnClickListener(v -> {
             inputName = binding.nameInputEdittext.getText().toString();
-            if (inputName.equals("")) {
-                Toast.makeText(getApplicationContext(), R.string.type_name, Toast.LENGTH_SHORT).show();
-            } else {
-                if (!name.equals(inputName)) {
-
+            if (!name.equals(inputName)) {
+                if (inputName.equals("")) {
+                    Toast.makeText(getApplicationContext(), R.string.type_name, Toast.LENGTH_SHORT).show();
+                } else {
                     customProgressDialog.show();
                     isCheck = true;
                     Call<ResultData> call = ServerClient.getServerService().inputName(inputName, token);
@@ -167,7 +166,6 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
                         public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                             if (response.isSuccessful()) {
                                 editor.putString("name", inputName);
-                                editor.putString("intro", inputIntro);
                                 editor.commit();
                                 Toast.makeText(EditProfileActivity.this, R.string.success_reflected, Toast.LENGTH_LONG).show();
                                 customProgressDialog.dismiss();
@@ -188,69 +186,65 @@ public class EditProfileActivity extends AppCompatActivity implements BottomShee
                     });
 
                 }
-                if (!intro.equals(binding.commentInputEdittext.getText().toString())) {
-                    inputIntro = binding.commentInputEdittext.getText().toString();
-                    customProgressDialog.show();
-                    isCheck = true;
-                    Call<ResultData> call = ServerClient.getServerService().patchEditIntro(token, inputIntro);
-                    call.enqueue(new Callback<ResultData>() {
-                        @Override
-                        public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                            if (response.isSuccessful()) {
-                                editor.putString("name", inputName);
-                                editor.putString("intro", inputIntro);
-                                editor.commit();
-                                Toast.makeText(EditProfileActivity.this, R.string.success_reflected, Toast.LENGTH_LONG).show();
-                                customProgressDialog.dismiss();
-                                finish();
-                            } else {
-                                customProgressDialog.dismiss();
-                                Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResultData> call, Throwable t) {
-                            t.printStackTrace();
+            }
+            if (!intro.equals(binding.commentInputEdittext.getText().toString())) {
+                inputIntro = binding.commentInputEdittext.getText().toString();
+                customProgressDialog.show();
+                isCheck = true;
+                Call<ResultData> call = ServerClient.getServerService().patchEditIntro(token, inputIntro);
+                call.enqueue(new Callback<ResultData>() {
+                    @Override
+                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                        if (response.isSuccessful()) {
+                            editor.putString("intro", inputIntro);
+                            editor.commit();
+                            Toast.makeText(EditProfileActivity.this, R.string.success_reflected, Toast.LENGTH_LONG).show();
+                            customProgressDialog.dismiss();
+                            finish();
+                        } else {
                             customProgressDialog.dismiss();
                             Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
                         }
-                    });
+                    }
 
-                }
-                if (selectedImageUri != null) {
-                    customProgressDialog.show();
-                    isCheck = true;
-                    MultipartBody.Part body1 = prepareFilePart("image", selectedImageUri);
-                    Call<ResultData> call = ServerClient.getServerService().postProfile(token, body1);
-                    call.enqueue(new Callback<ResultData>() {
-                        @Override
-                        public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                            if (response.isSuccessful()) {
-                                Toast.makeText(EditProfileActivity.this, R.string.success_reflected, Toast.LENGTH_LONG).show();
-                                customProgressDialog.dismiss();
-                                finish();
-
-
-                            } else {
-                                customProgressDialog.dismiss();
-                                Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
-                                Log.d("adsf", response.errorBody().toString());
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResultData> call, Throwable t) {
-                            customProgressDialog.dismiss();
-                            Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
-                            t.printStackTrace();
-                        }
-                    });
-                }
+                    @Override
+                    public void onFailure(Call<ResultData> call, Throwable t) {
+                        t.printStackTrace();
+                        customProgressDialog.dismiss();
+                        Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
+                    }
+                });
 
             }
+            if (selectedImageUri != null) {
+                customProgressDialog.show();
+                isCheck = true;
+                MultipartBody.Part body1 = prepareFilePart("image", selectedImageUri);
+                Call<ResultData> call = ServerClient.getServerService().postProfile(token, body1);
+                call.enqueue(new Callback<ResultData>() {
+                    @Override
+                    public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(EditProfileActivity.this, R.string.success_reflected, Toast.LENGTH_LONG).show();
+                            customProgressDialog.dismiss();
+                            finish();
 
 
+                        } else {
+                            customProgressDialog.dismiss();
+                            Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
+                            Log.d("adsf", response.errorBody().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResultData> call, Throwable t) {
+                        customProgressDialog.dismiss();
+                        Toast.makeText(EditProfileActivity.this, R.string.server_error, Toast.LENGTH_LONG).show();
+                        t.printStackTrace();
+                    }
+                });
+            }
             if (!isCheck) {
                 finish();
             }
