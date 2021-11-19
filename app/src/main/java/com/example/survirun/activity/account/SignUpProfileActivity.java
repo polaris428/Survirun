@@ -1,16 +1,8 @@
 package com.example.survirun.activity.account;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.loader.content.CursorLoader;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,21 +10,21 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.loader.content.CursorLoader;
 
 import com.bumptech.glide.Glide;
 import com.example.survirun.BottomSheetSignUpFragment;
@@ -42,7 +34,6 @@ import com.example.survirun.activity.WelcomeActivity;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.databinding.ActivitySignUpProfileBinding;
 import com.example.survirun.server.ServerClient;
-
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -54,7 +45,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Multipart;
 
 public class SignUpProfileActivity extends AppCompatActivity implements BottomSheetSignUpFragment.BottomSheetListener {
     public static final String MULTIPART_FORM_DATA = "multipart/form-data";
@@ -87,16 +77,13 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
         SharedPreferences sharedPreferences = getSharedPreferences("checkFirstAccess", MODE_PRIVATE);
         boolean checkFirstAccess = sharedPreferences.getBoolean("checkFirstAccess", false);
 
-
-        binding.profileImageview.setBackground(new ShapeDrawable(new OvalShape()));
-        binding.profileImageview.setClipToOutline(true);
         binding.textView.setCharacterDelay(90);
 
         customProgressDialog = new ProgressDialog(this);
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         customProgressDialog.setCancelable(false);
 
-        String story =  ""+getText(R.string.story_profile);
+        String story = "" + getText(R.string.story_profile);
         binding.textView.displayTextWithAnimation(story);
         ;
 
@@ -125,8 +112,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
                                 editor.apply();
                                 Intent tutorialIntent = new Intent(SignUpProfileActivity.this, WelcomeActivity.class);
                                 startActivity(tutorialIntent);
-                            }
-                            else{
+                            } else {
                                 Intent intent = new Intent(SignUpProfileActivity.this, MainActivity.class);
                                 startActivity(intent);
                             }
@@ -144,28 +130,28 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
                 });
             } else {
                 customProgressDialog.show();
-                Call<ResultData>postDefaultImage=ServerClient.getServerService().postDefaultImage(token);
+                Call<ResultData> postDefaultImage = ServerClient.getServerService().postDefaultImage(token);
                 postDefaultImage.enqueue(new Callback<ResultData>() {
                     @Override
                     public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                        if(response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             editor.putBoolean("profile", true);
                             customProgressDialog.dismiss();
                             Intent intent = new Intent(SignUpProfileActivity.this, MainActivity.class);
                             startActivity(intent);
 
-                        }else{
+                        } else {
                             customProgressDialog.dismiss();
-                            Toast.makeText(SignUpProfileActivity.this,R.string.profile_error,Toast.LENGTH_LONG).show();
-                            Log.d("에러",response.errorBody().toString());
-                            Log.d("adf",token);
+                            Toast.makeText(SignUpProfileActivity.this, R.string.profile_error, Toast.LENGTH_LONG).show();
+                            Log.d("에러", response.errorBody().toString());
+                            Log.d("adf", token);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResultData> call, Throwable t) {
                         customProgressDialog.dismiss();
-                        Toast.makeText(SignUpProfileActivity.this,R.string.profile_error,Toast.LENGTH_LONG);
+                        Toast.makeText(SignUpProfileActivity.this, R.string.profile_error, Toast.LENGTH_LONG);
                     }
                 });
             }
@@ -246,7 +232,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
                     Bitmap img = BitmapFactory.decodeStream(in);
                     in.close();
                     selectedImageUri = getImageUri(this, img);
-                    Glide.with(getApplicationContext()).load(img).into(binding.profileImageview);
+                    Glide.with(getApplicationContext()).load(img).circleCrop().into(binding.profileImageview);
                 } catch (Exception e) {
 
                 }
@@ -258,7 +244,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
                     Bundle extras = data.getExtras();
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
                     selectedImageUri = getImageUri(this, imageBitmap);
-                    Glide.with(getApplicationContext()).load(imageBitmap).into(binding.profileImageview);
+                    Glide.with(getApplicationContext()).load(imageBitmap).circleCrop().into(binding.profileImageview);
                 } catch (Exception e) {
 
                 }
