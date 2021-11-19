@@ -157,7 +157,7 @@
     <string name="hard">어려움</string>
     <string name="point">점</string>
     <string name="success_add_friend">친구 추가 성공</string>
-    <string name="score">점수: </string>
+    <string name="score">점</string>
     <string name="base_camp">시작 위치</string>
     <string name="bring_ranking">랭킹을 불러오는 중...</string>
     <string name="no_mark_ranking">랭킹에 표시할 친구가 없습니다</string>

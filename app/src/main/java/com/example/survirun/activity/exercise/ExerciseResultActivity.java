@@ -88,6 +88,7 @@ public class ExerciseResultActivity extends AppCompatActivity {
         binding.hourTextView.setText(String.valueOf(hour));
         binding.minTextView.setText(String.valueOf(min));
 
+        calcScore(token, level, nanEdo, hp, timeToSec, km, kcal, timeMok, kmMok, kcalMok);
         binding.goMainButton.setOnClickListener(v -> {
             customProgressDialog.show();
             ScoreModel scoreModel = new ScoreModel();
@@ -95,7 +96,6 @@ public class ExerciseResultActivity extends AppCompatActivity {
             scoreModel.todayExerciseTime = timeToSec;
             scoreModel.todayCalorie = kcal;
 
-            calcScore(token, level, nanEdo, hp, timeToSec, km, kcal, timeMok, kmMok, kcalMok);
             Call<ExerciseData> call = ServerClient.getServerService().patchUploadExercise(token, scoreModel);
             call.enqueue(new Callback<ExerciseData>() {
                 @Override
@@ -169,6 +169,8 @@ public class ExerciseResultActivity extends AppCompatActivity {
             score += 100;
         }
         if (hp == 100) score += 100;
+
+        binding.scoreTextview.setText(String.valueOf(score));
         //return score;
         if (myScore < score) {
             Call<ScoreData> call2 = ServerClient.getServerService().patchScore(token, score);
