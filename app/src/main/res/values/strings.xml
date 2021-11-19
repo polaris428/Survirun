@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Survirun</string>
-    <string name="story_profile">Please post a picture of the survivor</string>
+    <string name="story_profile">Good👍\n\nPlease post a picture of the survivor</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="story_name">Hi\nYou\'re a survivor of zombie apocalypse.\nWhat is your name?</string>
+    <string name="story_name">Hi👋\n\nYou\'re a survivor of zombie apocalypse.\nWhat is your name?</string>
     <string name="pwd">Password</string>
     <string name="sign_in">Sign In</string>
     <string name="no_account">Don\'t have an account?</string>
@@ -161,4 +161,5 @@
     <string name="bring_ranking">Bringing up the rankings...</string>
     <string name="no_mark_ranking">There are no friends\nto mark on the rankings</string>
     <string name="zombies_not_appear">Zombies don\'t appear in this mode.</string>
+    <string name="chart">Chart</string>
 </resources>

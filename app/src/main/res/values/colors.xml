@@ -18,4 +18,5 @@
     <color name="tooDarkGray">#2C2C2C</color>
     <color name="textGray">#555555</color>
     <color name="yellow">#FFD600</color>
+    <color name="line">#51A5A5A5</color>
 </resources>
