@@ -304,6 +304,25 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        HP = 100;
+        isZombieCreating = true;
+        lastLat=0;
+        lastLng=0;
+        currentLat=0;
+        currentLng=0;
+        kcal=0;
+        walkingDistance=0;
+        timeToSec=0;
+        isRunning=true;
+        isFirst=false;
+        timeThread = null;
+        zombieList = new ArrayList<>();
+        zombieListCurrentPos=0;
+
+
+
+
+
     }
 
     public static void resumeZombie() {
@@ -990,4 +1009,5 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         snackbarLayout.addView(customSnackView, 0);
         snackbar.show();
     }
+
 }
