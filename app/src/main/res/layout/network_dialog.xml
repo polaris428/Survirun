@@ -55,7 +55,7 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center"
-            android:background="@drawable/cancel_button_background"
+            android:background="@drawable/close_button_background"
             android:text="@string/close"
             android:textColor="@color/white"/>
 
@@ -64,7 +64,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:background="@drawable/yes_button_background"
+            android:background="@drawable/retry_button_background"
             android:text="@string/retry"
             android:gravity="center"
             android:textColor="@color/white"/>
