@@ -118,6 +118,7 @@ public class SignUpActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(Call<EmileCheck> call, Throwable t) {
                                 t.printStackTrace();
+                                Toast.makeText(SignUpActivity.this,R.string.server_error,Toast.LENGTH_LONG).show();
                             }
                         });
                     }
