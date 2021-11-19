@@ -39,8 +39,9 @@ import retrofit2.Response;
 public class SettingFragment extends Fragment {
 
     FragmentSettingBinding binding;
-    SharedPreferences sf;
+    SharedPreferences sf, sharedPreferences;
     SharedPreferences.Editor editor;
+    SharedPreferences.Editor editorBoolean;
 
     String token;
     String name;
@@ -64,7 +65,8 @@ public class SettingFragment extends Fragment {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog);
 
-
+        sharedPreferences = getContext().getSharedPreferences("checkFirstAccess", MODE_PRIVATE);
+        editorBoolean = sharedPreferences.edit();
 
 
         binding.clearCacheButton.setOnClickListener(v -> {
@@ -83,6 +85,8 @@ public class SettingFragment extends Fragment {
                 editor.putString("token", "");
                 editor.putString("name", "");
                 editor.putString("intro", "");
+                editorBoolean.putBoolean("checkFirstAccess", false);
+                editorBoolean.commit();
                 editor.commit();
                 Intent intent = new Intent(getActivity(), SplashActivity2.class);
                 startActivity(intent);
