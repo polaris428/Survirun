@@ -109,7 +109,6 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginTop="20dp"
                     android:src="@drawable/ic_kcal"
                     app:layout_constraintBottom_toTopOf="@id/clock_icon"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -133,8 +132,9 @@
                     android:layout_height="60dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="30dp"
+                    android:layout_marginBottom="25dp"
                     android:src="@drawable/ic_run"
-                    app:layout_constraintBottom_toTopOf="@id/add_friend_button"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/clock_icon" />
 
