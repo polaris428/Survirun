@@ -60,10 +60,11 @@ public class RankingFragment extends Fragment {
             binding.rankingMessage.setVisibility(View.VISIBLE);
             binding.noFriend.setVisibility(View.GONE);
             binding.findRanking.setVisibility(View.VISIBLE);
+            binding.rankingModeButton.setEnabled(false);
             if (ranking) {
                 ranking = false;
                 rankinDataList.clear();
-                binding.rankingModeButton.setText("전체");
+                binding.rankingModeButton.setText(R.string.all);
                 RankingAdapter RankingAdapter = new RankingAdapter(rankinDataList);
                 binding.rankingRecyclerView.setAdapter(RankingAdapter);
                 Call<rankingData> call = ServerClient.getServerService().getRanking(token);
@@ -79,6 +80,7 @@ public class RankingFragment extends Fragment {
                                     binding.rankingRecyclerView.setAdapter(RinkingAdapter);
                                     binding.rankingRecyclerView.setVisibility(View.VISIBLE);
                                     binding.rankingMessage.setVisibility(View.GONE);
+                                    binding.rankingModeButton.setEnabled(true);
                                 }
                             }
 
@@ -94,22 +96,10 @@ public class RankingFragment extends Fragment {
                     }
                 });
             } else {
-                class InsertRunnable implements Runnable {
-                    @Override
-                    public void run() {
-                        try {
-                            friendRoomList = FriendDB.getInstance(getActivity()).friendDao().getAll();
+                upDataFriend();
 
-                        } catch (Exception e) {
-
-                        }
-                    }
-                }
-                InsertRunnable insertRunnable = new InsertRunnable();
-                Thread t = new Thread(insertRunnable);
-                t.start();
-
-                binding.rankingModeButton.setText("친구");
+                friendRankingList.clear();
+                binding.rankingModeButton.setText(R.string.friends);
                 ranking = true;
                 friendRankingList.clear();
                 for (int i = 0; i < rankinDataList.size(); i++) {
@@ -130,16 +120,16 @@ public class RankingFragment extends Fragment {
                     binding.noFriend.setVisibility(View.VISIBLE);
                     binding.findRanking.setVisibility(View.GONE);
                     binding.rankingRecyclerView.setVisibility(View.GONE);
+                    binding.rankingModeButton.setEnabled(true);
                 } else {
                     RankingAdapter RankingAdapter = new RankingAdapter(friendRankingList);
                     binding.rankingRecyclerView.setAdapter(RankingAdapter);
                     binding.rankingRecyclerView.setVisibility(View.VISIBLE);
                     binding.rankingMessage.setVisibility(View.GONE);
+                    binding.rankingModeButton.setEnabled(true);
                 }
             }
         });
-
-
 
 
         return view;
@@ -148,22 +138,9 @@ public class RankingFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        class InsertRunnable implements Runnable {
-            @Override
-            public void run() {
-                try {
-                    friendRoomList = FriendDB.getInstance(getActivity()).friendDao().getAll();
-
-                } catch (Exception e) {
-
-                }
-            }
-        }
-        InsertRunnable insertRunnable = new InsertRunnable();
-        Thread t = new Thread(insertRunnable);
-        t.start();
-
+        upDataFriend();
         ranking = false;
+        binding.rankingModeButton.setText(R.string.all);
         RankingAdapter RankingAdapter = new RankingAdapter(rankinDataList);
         binding.rankingRecyclerView.setAdapter(RankingAdapter);
         Call<rankingData> call = ServerClient.getServerService().getRanking(token);
@@ -200,6 +177,23 @@ public class RankingFragment extends Fragment {
         rankinData.setUserEmail(userEmail);
         rankinData.setScore(userScore);
         rankinDataList.add(rankinData);
+    }
+
+    private void upDataFriend() {
+        class InsertRunnable implements Runnable {
+            @Override
+            public void run() {
+                try {
+                    friendRoomList = FriendDB.getInstance(getActivity()).friendDao().getAll();
+
+                } catch (Exception e) {
+
+                }
+            }
+        }
+        InsertRunnable insertRunnable = new InsertRunnable();
+        Thread t = new Thread(insertRunnable);
+        t.start();
     }
 
 
