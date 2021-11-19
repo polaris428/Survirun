@@ -151,21 +151,23 @@
                 android:id="@+id/username_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="30dp"
                 android:textSize="18sp"
+                app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintLeft_toRightOf="@+id/profile_imageview"
+                app:layout_constraintBottom_toTopOf="@id/exercise_textview"
                 app:layout_constraintTop_toTopOf="@+id/profile_imageview" />
 
             <TextView
                 android:id="@+id/exercise_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:textColor="#808080"
                 android:textSize="15sp"
-                app:layout_constraintLeft_toRightOf="@+id/profile_imageview"
-                app:layout_constraintTop_toBottomOf="@+id/username_textview" />
+                app:layout_constraintLeft_toLeftOf="@id/username_textview"
+                app:layout_constraintTop_toBottomOf="@id/username_textview"
+                app:layout_constraintBottom_toBottomOf="@id/profile_imageview"/>
 
             <Button
                 android:id="@+id/add_friend"

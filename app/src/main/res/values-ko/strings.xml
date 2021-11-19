@@ -158,4 +158,5 @@
     <string name="success_add_friend">친구 추가 성공</string>
 
     <string name="base_camp">시작 위치</string>
+    <string name="bring_ranking">랭킹을 불러오는 중...</string>
 </resources>
