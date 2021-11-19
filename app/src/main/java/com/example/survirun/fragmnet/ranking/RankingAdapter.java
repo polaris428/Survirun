@@ -41,20 +41,22 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHolder> {
+public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHolder> {
     private List<RankingData> rankinDataList;
     private List<FriendRoom> friendRoomList;
     int friendCount;
     Context context;
     String token;
     String myEmail;
+
     public RankingAdapter(List<RankingData> list) {
         rankinDataList = list;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-         context = parent.getContext();
+        context = parent.getContext();
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_ranking, parent, false);
 
         SharedPreferences sf = context.getSharedPreferences("Login", MODE_PRIVATE);
@@ -65,7 +67,7 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
             public void run() {
                 try {
                     friendRoomList = FriendDB.getInstance(context).friendDao().getAll();
-                    friendCount=friendRoomList.size();
+                    friendCount = friendRoomList.size();
                 } catch (Exception e) {
 
                 }
@@ -85,15 +87,18 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
         SharedPreferences sf;
 
         sf = context.getSharedPreferences("Login", MODE_PRIVATE);
-        myEmail=sf.getString("email","");
-        if(myEmail.equals(rankinDataList.get(position).userEmail)){
+        myEmail = sf.getString("email", "");
+
+        if (myEmail.equals(rankinDataList.get(position).userEmail)) {
             holder.addFriendButton.setVisibility(View.GONE);
         }
-        for(int i=0;i<friendCount;i++){
-            if(friendRoomList.get(i).email.equals(rankinDataList.get(position).userEmail)){
+
+        for (int i = 0; i < friendCount; i++) {
+            if (friendRoomList.get(i).email.equals(rankinDataList.get(position).userEmail)) {
                 holder.addFriendButton.setVisibility(View.GONE);
             }
         }
+
         boolean isExpanded = false;
         holder.constraintLayout1.setOnClickListener(v -> {
             if (holder.constraintLayout2.getVisibility() == View.GONE) {
@@ -117,17 +122,17 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
         });
 
 
-        holder.rankingTextView.setText(String.valueOf(position+1));
+        holder.rankingTextView.setText(String.valueOf(position + 1));
         holder.nameTextView.setText(rankinDataList.get(position).userName);
         holder.scoreTextView.setText(String.valueOf(rankinDataList.get(position).userScore));
-        holder.emailTextView.setText(rankinDataList.get(position).userEmail);
+        holder.emailTextView.setText(rankinDataList.get(position).userEmail.substring(0, rankinDataList.get(position).userEmail.indexOf("@")));
 
-        Call<getUserData> call1 = ServerClient.getServerService().getUser(token,rankinDataList.get(position).userEmail);
+        Call<getUserData> call1 = ServerClient.getServerService().getUser(token, rankinDataList.get(position).userEmail);
         call1.enqueue(new Callback<getUserData>() {
             @Override
             public void onResponse(retrofit2.Call<getUserData> call, Response<getUserData> response) {
                 if (response.isSuccessful()) {
-                    Log.d(response.body().email,  response.body().score+"");
+                    Log.d(response.body().email, response.body().score + "");
                     Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url", response.body().username);
                     getProfile.enqueue(new Callback<ImageData>() {
                         @Override
@@ -136,11 +141,6 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
                                 if (context == null) {
                                     return;
                                 }
-
-
-
-
-
                                 Glide.with(context)
                                         .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
                                         .error(R.drawable.userdefaultprofile)
@@ -149,8 +149,6 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
                                         .skipMemoryCache(true)
                                         .circleCrop()
                                         .into(holder.profileImageView);
-
-
                             } else {
 
                             }
@@ -161,30 +159,30 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
                             t.printStackTrace();
                         }
                     });
-                    ExerciseHistory exerciseHistory = response.body().exerciseHistory.get( response.body().exerciseHistory.size()-1);
+                    ExerciseHistory exerciseHistory = response.body().exerciseHistory.get(response.body().exerciseHistory.size() - 1);
                     holder.kcalTextView.setText(String.valueOf(exerciseHistory.calorie));
-                    String hour=String.valueOf(exerciseHistory.time/60);
-                    String min=String.valueOf(exerciseHistory.time-Integer.parseInt(hour)*60);
-                    if(hour.equals("0")){
+                    String hour = String.valueOf(exerciseHistory.time / 60);
+                    String min = String.valueOf(exerciseHistory.time - Integer.parseInt(hour) * 60);
+                    if (hour.equals("0")) {
                         holder.hourTextView.setVisibility(View.GONE);
                         holder.hourUnitTextView.setVisibility(View.GONE);
 
-                    }else{
+                    } else {
                         holder.hourTextView.setText(hour);
                     }
-                    if(min.equals("0")&&hour.equals("0")) {
+                    if (min.equals("0") && hour.equals("0")) {
                         holder.minTextView.setText("0");
-                    }else if(min.equals("0")){
+                    } else if (min.equals("0")) {
                         holder.minTextView.setVisibility(View.GONE);
                         holder.minUnitTextView.setVisibility(View.GONE);
 
-                    }else{
+                    } else {
                         holder.minTextView.setText(min);
 
 
                     }
 
-                    holder.kmTextView.setText(String.format(Locale.getDefault(),"%.2f",exerciseHistory.km));
+                    holder.kmTextView.setText(String.format(Locale.getDefault(), "%.2f", exerciseHistory.km));
                     Log.d("ad", response.body().username);
 
                 } else {
@@ -204,13 +202,13 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
                 @Override
                 public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                     if (response.isSuccessful()) {
-                        Call<getUserData> call1 = ServerClient.getServerService().getUser(token,rankinDataList.get(position).userEmail);
+                        Call<getUserData> call1 = ServerClient.getServerService().getUser(token, rankinDataList.get(position).userEmail);
                         call1.enqueue(new Callback<getUserData>() {
                             @Override
                             public void onResponse(retrofit2.Call<getUserData> call, Response<getUserData> response) {
                                 if (response.isSuccessful()) {
-                                    String name=response.body().username;
-                                    String email=response.body().email;
+                                    String name = response.body().username;
+                                    String email = response.body().email;
 
                                     Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url", response.body().username);
                                     getProfile.enqueue(new Callback<ImageData>() {
@@ -241,8 +239,6 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
                                                 Toast.makeText(context, R.string.success_add_friend, Toast.LENGTH_LONG).show();
 
 
-
-
                                             } else {
 
                                             }
@@ -254,8 +250,6 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
                                         }
                                     });
                                     Toast.makeText(context, R.string.success_add_friend, Toast.LENGTH_LONG).show();
-
-
 
 
                                 } else {
@@ -310,29 +304,28 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
         Button addFriendButton;
         ConstraintLayout constraintLayout1;
         ConstraintLayout constraintLayout2;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.setIsRecyclable(false);
-            constraintLayout1=itemView.findViewById(R.id.card_item1);
-            constraintLayout2=itemView.findViewById(R.id.card_item2);
+            constraintLayout1 = itemView.findViewById(R.id.card_item1);
+            constraintLayout2 = itemView.findViewById(R.id.card_item2);
 
-            rankingTextView =itemView.findViewById(R.id.ranking_number_textView);
-            nameTextView=itemView.findViewById(R.id.item_ranking_name);
-            emailTextView=itemView.findViewById(R.id.item_ranking_email);
-            scoreTextView=itemView.findViewById(R.id.best_score);
+            rankingTextView = itemView.findViewById(R.id.ranking_number_textView);
+            nameTextView = itemView.findViewById(R.id.item_ranking_name);
+            emailTextView = itemView.findViewById(R.id.item_ranking_email);
+            scoreTextView = itemView.findViewById(R.id.best_score);
 
-            kcalTextView=itemView.findViewById(R.id.exercise_kcal_text_view);
-            hourTextView=itemView.findViewById(R.id.item_exercise_hour_text_view);
-            minTextView=itemView.findViewById(R.id.item_exercise_min_text_view);
-            hourUnitTextView=itemView.findViewById(R.id.item_exercise_hur_unit_text_view);
-            minUnitTextView=itemView.findViewById(R.id.item_exercise_min_text_view_min_unit_text_view);
+            kcalTextView = itemView.findViewById(R.id.exercise_kcal_text_view);
+            hourTextView = itemView.findViewById(R.id.item_exercise_hour_text_view);
+            minTextView = itemView.findViewById(R.id.item_exercise_min_text_view);
+            hourUnitTextView = itemView.findViewById(R.id.item_exercise_hur_unit_text_view);
+            minUnitTextView = itemView.findViewById(R.id.item_exercise_min_text_view_min_unit_text_view);
 
-            kmTextView=itemView.findViewById(R.id.exercise_km_text_view);
+            kmTextView = itemView.findViewById(R.id.exercise_km_text_view);
 
-            profileImageView=itemView.findViewById(R.id.profile_imageview);
-            addFriendButton=itemView.findViewById(R.id.add_friend_button);
-
-
+            profileImageView = itemView.findViewById(R.id.profile_imageview);
+            addFriendButton = itemView.findViewById(R.id.add_friend_button);
 
 
         }
