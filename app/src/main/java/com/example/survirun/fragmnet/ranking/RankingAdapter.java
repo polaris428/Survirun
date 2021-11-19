@@ -43,6 +43,7 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
     private List<RankingData> rankinDataList;
     Context context;
     String token;
+    String myEmail;
     public RankingAdapter(List<RankingData> list) {
         rankinDataList = list;
     }
@@ -61,6 +62,13 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Handler handler = new Handler();
+        SharedPreferences sf;
+
+        sf = context.getSharedPreferences("Login", MODE_PRIVATE);
+        myEmail=sf.getString("email","");
+        if(myEmail.equals(rankinDataList.get(position).userEmail)){
+            holder.addFriendButton.setVisibility(View.GONE);
+        }
         boolean isExpanded = false;
         holder.constraintLayout1.setOnClickListener(v -> {
             if (holder.constraintLayout2.getVisibility() == View.GONE) {
@@ -103,7 +111,10 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
                                 if (context == null) {
                                     return;
                                 }
-                                Log.d("adf", response.body().img);
+
+
+
+
 
                                 Glide.with(context)
                                         .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
