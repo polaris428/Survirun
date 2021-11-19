@@ -11,13 +11,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.survirun.FriendDB;
 import com.example.survirun.R;
 import com.example.survirun.activity.friend.FriendActivity;
-import com.example.survirun.activity.friend.FriendAdapter;
 import com.example.survirun.data.FriendRoom;
 import com.example.survirun.data.rankingData;
 import com.example.survirun.databinding.FragmentRankingBinding;
@@ -39,13 +36,14 @@ public class RankingFragment extends Fragment {
     List<RankingData> rankinDataList = new ArrayList<>();
     List<RankingData> friendRankingList = new ArrayList<>();
     List<FriendRoom> friendRoomList;
-    boolean ranking=false;
+    boolean ranking = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentRankingBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
         class InsertRunnable implements Runnable {
             @Override
             public void run() {
@@ -60,8 +58,10 @@ public class RankingFragment extends Fragment {
         InsertRunnable insertRunnable = new InsertRunnable();
         Thread t = new Thread(insertRunnable);
         t.start();
+
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
         binding.image.startAnimation(animation);
+
         binding.findRanking.setVisibility(View.VISIBLE);
 
         sf = getContext().getSharedPreferences("Login", getContext().MODE_PRIVATE);
@@ -70,10 +70,13 @@ public class RankingFragment extends Fragment {
         binding.friendButton.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), FriendActivity.class));
         });
-        binding.rankingModeButton.setOnClickListener(v-> {
 
-            if(ranking){
-                ranking=false;
+        binding.rankingModeButton.setOnClickListener(v -> {
+            binding.rankingMessage.setVisibility(View.VISIBLE);
+            binding.noFriend.setVisibility(View.GONE);
+            binding.findRanking.setVisibility(View.VISIBLE);
+            if (ranking) {
+                ranking = false;
                 rankinDataList.clear();
                 binding.rankingModeButton.setText("전체");
                 RankingAdapter RankingAdapter = new RankingAdapter(rankinDataList);
@@ -89,7 +92,8 @@ public class RankingFragment extends Fragment {
                                 if (response.body().scores.size() - 1 == i) {
                                     RankingAdapter RinkingAdapter = new RankingAdapter(rankinDataList);
                                     binding.rankingRecyclerView.setAdapter(RinkingAdapter);
-                                    binding.findRanking.setVisibility(View.GONE);
+                                    binding.rankingRecyclerView.setVisibility(View.VISIBLE);
+                                    binding.rankingMessage.setVisibility(View.GONE);
                                 }
                             }
 
@@ -104,34 +108,35 @@ public class RankingFragment extends Fragment {
                         t.printStackTrace();
                     }
                 });
-            }else {
-
+            } else {
                 binding.rankingModeButton.setText("친구");
-                ranking=true;
+                ranking = true;
                 friendRankingList.clear();
-                for(int i=0;i<rankinDataList.size();i++){
-                    for(int j=0;j<friendRoomList.size();j++){
-                        if (rankinDataList.get(i).userEmail.equals(friendRoomList.get(j).email)){
-                            Log.d("겹침",rankinDataList.get(i).userName);
-                            RankingData friendRankingData=new RankingData();
-                            friendRankingData.userEmail=rankinDataList.get(i).userEmail;
-                            friendRankingData.userName=rankinDataList.get(i).userName;
-                            friendRankingData.userScore=rankinDataList.get(i).userScore;
+                for (int i = 0; i < rankinDataList.size(); i++) {
+                    for (int j = 0; j < friendRoomList.size(); j++) {
+                        if (rankinDataList.get(i).userEmail.equals(friendRoomList.get(j).email)) {
+                            Log.d("겹침", rankinDataList.get(i).userName);
+                            RankingData friendRankingData = new RankingData();
+                            friendRankingData.userEmail = rankinDataList.get(i).userEmail;
+                            friendRankingData.userName = rankinDataList.get(i).userName;
+                            friendRankingData.userScore = rankinDataList.get(i).userScore;
                             friendRankingList.add(friendRankingData);
-
-
-
                         }
                     }
 
                 }
-                RankingAdapter RankingAdapter = new RankingAdapter(friendRankingList);
-                binding.rankingRecyclerView.setAdapter(RankingAdapter);
-
+                if (friendRankingList.size() == 0) {
+                    binding.rankingMessage.setVisibility(View.VISIBLE);
+                    binding.noFriend.setVisibility(View.VISIBLE);
+                    binding.findRanking.setVisibility(View.GONE);
+                    binding.rankingRecyclerView.setVisibility(View.GONE);
+                } else {
+                    RankingAdapter RankingAdapter = new RankingAdapter(friendRankingList);
+                    binding.rankingRecyclerView.setAdapter(RankingAdapter);
+                    binding.rankingRecyclerView.setVisibility(View.VISIBLE);
+                    binding.rankingMessage.setVisibility(View.GONE);
+                }
             }
-
-
-
         });
 
 
@@ -148,11 +153,10 @@ public class RankingFragment extends Fragment {
                         if (response.body().scores.size() - 1 == i) {
                             RankingAdapter RinkingAdapter = new RankingAdapter(rankinDataList);
                             binding.rankingRecyclerView.setAdapter(RinkingAdapter);
-                            binding.findRanking.setVisibility(View.GONE);
+                            binding.rankingMessage.setVisibility(View.GONE);
+                            binding.rankingRecyclerView.setVisibility(View.VISIBLE);
                         }
                     }
-
-
                 } else {
                     Log.d("실패", response.errorBody().toString());
                 }
@@ -166,6 +170,7 @@ public class RankingFragment extends Fragment {
 
         return view;
     }
+
 
     public void UpData(String userName, String userEmail, int userScore) {
         RankingData rankinData = new RankingData();
