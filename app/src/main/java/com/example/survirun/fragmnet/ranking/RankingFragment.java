@@ -39,7 +39,7 @@ public class RankingFragment extends Fragment {
     List<RankingData> rankinDataList = new ArrayList<>();
     List<RankingData> friendRankingList = new ArrayList<>();
     List<FriendRoom> friendRoomList;
-    boolean ranking=true;
+    boolean ranking=false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
