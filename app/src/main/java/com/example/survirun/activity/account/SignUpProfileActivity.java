@@ -90,7 +90,7 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
 
         binding.profileImageview.setBackground(new ShapeDrawable(new OvalShape()));
         binding.profileImageview.setClipToOutline(true);
-        binding.textView.setCharacterDelay(120);
+        binding.textView.setCharacterDelay(90);
 
         customProgressDialog = new ProgressDialog(this);
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));

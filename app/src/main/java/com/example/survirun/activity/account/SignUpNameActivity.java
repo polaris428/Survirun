@@ -53,7 +53,7 @@ public class SignUpNameActivity extends AppCompatActivity {
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         customProgressDialog.setCancelable(false);
 
-        binding.textView.setCharacterDelay(120);
+        binding.textView.setCharacterDelay(90);
         binding.textView.displayTextWithAnimation(getText(R.string.story_name));
 
         story = (String) getText(R.string.story_name);
