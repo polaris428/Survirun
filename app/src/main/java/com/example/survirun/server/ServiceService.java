@@ -87,7 +87,7 @@ public interface ServiceService {
 
 
     @PATCH("/api/v1/auth/intro")
-    Call<ResultData>patchEditIntro(@Header("x-access-token")String token ,@Body String intro);
+    Call<ResultData>patchEditIntro(@Header("x-access-token")String token ,@Query("intro") String intro);
 
     @PATCH("/api/v1/exercise/score")
     Call<ScoreData> patchScore(@Header("x-access-token")String token, @Query("score") int score);
