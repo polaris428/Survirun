@@ -24,6 +24,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.survirun.FriendDB;
 import com.example.survirun.R;
 import com.example.survirun.activity.account.ProgressDialog;
+import com.example.survirun.data.FindUserData;
 import com.example.survirun.data.FriendRoom;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.data.getUserData;
@@ -109,6 +110,24 @@ public class FriendInformationActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<getUserData> call, Response<getUserData> response) {
                 if (response.isSuccessful()) {
+                    binding.bestScoreTextView.setText(String.valueOf(response.body().score));
+                    binding.userIntroTextView.setText(response.body().intro);
+                    Call<FindUserData> getFriend = ServerClient.getServerService().getFriendList(token);
+                    getFriend.enqueue(new Callback<FindUserData>() {
+                        @Override
+                        public void onResponse(Call<FindUserData> call, Response<FindUserData> response) {
+                            if (response.isSuccessful()) {
+                                binding.friendNumberTextView.setText(String.valueOf(response.body().users.size()));
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<FindUserData> call, Throwable t) {
+                        }
+
+                    });
                     binding.calorieBarGraph.clearChart();
                     binding.kmBarGraph.clearChart();
                     binding.exerciseTimeBarGraph.clearChart();
