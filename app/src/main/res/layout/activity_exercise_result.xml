@@ -83,7 +83,7 @@
                     android:id="@+id/clock_icon"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="40dp"
                     android:layout_marginTop="25dp"
                     android:src="@drawable/ic_clock"
                     app:layout_constraintBottom_toTopOf="@id/run_icon"
