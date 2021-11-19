@@ -55,8 +55,8 @@ public class SettingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding=FragmentSettingBinding.inflate(inflater,container,false);
-        View view=binding.getRoot();
+        binding = FragmentSettingBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
         Log.d("asdf", "onCreateView");
 
@@ -88,6 +88,7 @@ public class SettingFragment extends Fragment {
                 editorBoolean.putBoolean("checkFirstAccess", false);
                 editorBoolean.commit();
                 editor.commit();
+                dialog.dismiss();
                 Intent intent = new Intent(getActivity(), SplashActivity2.class);
                 startActivity(intent);
                 getActivity().finish();
@@ -103,30 +104,28 @@ public class SettingFragment extends Fragment {
             startActivity(intent);
         });
 
-         binding.helpButton.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
+        binding.helpButton.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), WelcomeActivity.class);
+                startActivity(intent);
+        });
 
-                 Intent intent =new Intent(getActivity(), WelcomeActivity.class);
-                 startActivity(intent);
-             }
-         });
-         binding.bugButton.setOnClickListener(view1 -> {
+        binding.bugButton.setOnClickListener(view1 -> {
 
-             Intent email = new Intent(Intent.ACTION_SEND);
-             email.setType("plain/text");
-             String[] address = {"survirun@gmail.com"};
-             email.putExtra(Intent.EXTRA_EMAIL, address);
-             email.putExtra(Intent.EXTRA_SUBJECT, R.string.network_error);
-             email.setPackage("com.google.android.gm");
-             email.putExtra(Intent.EXTRA_TEXT, R.string.error_detail);
-             startActivity(email);
+            Intent email = new Intent(Intent.ACTION_SEND);
+            email.setType("plain/text");
+            String[] address = {"survirun@gmail.com"};
+            email.putExtra(Intent.EXTRA_EMAIL, address);
+            email.putExtra(Intent.EXTRA_SUBJECT, R.string.network_error);
+            email.setPackage("com.google.android.gm");
+            email.putExtra(Intent.EXTRA_TEXT, R.string.error_detail);
+            startActivity(email);
 
-         });
+        });
 
 
         return view;
     }
+
     public void setDialog(String text) {
         TextView explain = dialog.findViewById(R.id.explain_textView);
         explain.setText(text);
@@ -149,23 +148,22 @@ public class SettingFragment extends Fragment {
 
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         sf = getContext().getSharedPreferences("Login", MODE_PRIVATE);
         editor = sf.edit();
 
         token = sf.getString("token", "");
-        name=sf.getString("name","");
-        emile=sf.getString("email","");
-        intro=sf.getString("intro","");
-        score=sf.getInt("score",0);
-        friendNumber=sf.getInt("friend",0);
+        name = sf.getString("name", "");
+        emile = sf.getString("email", "");
+        intro = sf.getString("intro", "");
+        score = sf.getInt("score", 0);
+        friendNumber = sf.getInt("friend", 0);
 
 
-        if(intro.equals("")){
+        if (intro.equals("")) {
             binding.infoText.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             binding.infoText.setVisibility(View.VISIBLE);
             binding.infoText.setText(intro);
         }
@@ -183,7 +181,7 @@ public class SettingFragment extends Fragment {
                     if (getActivity() == null) {
                         return;
                     }
-                    Log.d("프로필",response.body().img);
+                    Log.d("프로필", response.body().img);
                     Glide.with(SettingFragment.this)
                             .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img)
                             .circleCrop()

@@ -112,6 +112,9 @@ public class MainActivity extends AppCompatActivity {
         Button cancelButton = dialog.findViewById(R.id.cancel_button);
         dialog.show();
         cancelButton.setOnClickListener(v -> dialog.dismiss());
-        yesButton.setOnClickListener(v -> finishAffinity());
+        yesButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            finishAffinity();
+        });
     }
 }
