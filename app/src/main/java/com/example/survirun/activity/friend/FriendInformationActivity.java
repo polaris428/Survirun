@@ -78,7 +78,7 @@ public class FriendInformationActivity extends AppCompatActivity {
         binding.usernameTextview.setText(userName);
         binding.userEmailTextView.setText(userEmile);
         Glide.with(this)
-                .load("https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + userProfile)
+                .load(userProfile)
                 .placeholder(R.drawable.ic_userprofile)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)

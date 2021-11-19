@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -76,9 +77,10 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         Log.d("adsf", item.profile);
         Handler handler = new Handler();
         boolean isExpanded = false;
-        holder.constraintLayout1.setOnClickListener(v -> {
+        holder.expandImageButton.setOnClickListener(v -> {
             if (holder.constraintLayout2.getVisibility() == View.GONE) {
                 holder.constraintLayout2.setVisibility(View.VISIBLE);
+                holder.expandImageButton.setImageResource(R.drawable.ic_upblack);
                 ValueAnimator anim = ValueAnimator.ofInt(1, holder.constraintLayout2.getMaxHeight());
                 setAnimation(anim, holder.constraintLayout2);
 
@@ -88,6 +90,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        holder.expandImageButton.setImageResource(R.drawable.ic_downblack);
                         holder.constraintLayout2.setVisibility(View.GONE);
 
                     }
@@ -164,6 +167,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         TextView name;
         TextView email;
         ImageView profile;
+        ImageButton expandImageButton;
         TextView exerciseKcalTextview;
 
         TextView minTextView;
@@ -185,6 +189,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             constraintLayout1 = itemView.findViewById(R.id.constraint_layout);
             constraintLayout2 = itemView.findViewById(R.id.card_item2);
             exerciseKcalTextview = itemView.findViewById(R.id.exercise_kcal_text_view);
+            expandImageButton=itemView.findViewById(R.id.expand_image_button);
 
             hourTextView = itemView.findViewById(R.id.hour_text_view);
             minTextView = itemView.findViewById(R.id.min_text_view);
