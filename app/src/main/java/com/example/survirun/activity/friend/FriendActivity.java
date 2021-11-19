@@ -292,7 +292,7 @@ public class FriendActivity extends AppCompatActivity {
                                                 try {
                                                     FriendRoom friendRoom = friendDB.friendDao().findById(changeName);
                                                     friendDB.friendDao().delete(friendRoom);
-                                                    finish();
+
                                                     checkFriends();
                                                 } catch (Exception e) {
 
@@ -385,7 +385,7 @@ public class FriendActivity extends AppCompatActivity {
                                             try {
                                                 FriendRoom friendRoom = friendDB.friendDao().findById(username);
                                                 friendDB.friendDao().delete(friendRoom);
-                                                finish();
+
                                             } catch (Exception e) {
 
                                             }
