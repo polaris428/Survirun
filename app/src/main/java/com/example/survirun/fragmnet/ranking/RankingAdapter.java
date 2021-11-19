@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -25,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.survirun.FriendDB;
 import com.example.survirun.R;
+import com.example.survirun.activity.friend.FriendAdapter;
 import com.example.survirun.data.ExerciseHistory;
 import com.example.survirun.data.FriendRoom;
 import com.example.survirun.data.ImageData;
@@ -41,6 +43,8 @@ import retrofit2.Response;
 
 public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHolder> {
     private List<RankingData> rankinDataList;
+    private List<FriendRoom> friendRoomList;
+    int friendCount;
     Context context;
     String token;
     String myEmail;
@@ -56,6 +60,22 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
         SharedPreferences sf = context.getSharedPreferences("Login", MODE_PRIVATE);
 
         token = sf.getString("token", "");
+        class InsertRunnable implements Runnable {
+            @Override
+            public void run() {
+                try {
+                    friendRoomList = FriendDB.getInstance(context).friendDao().getAll();
+                    friendCount=friendRoomList.size();
+                } catch (Exception e) {
+
+                }
+            }
+        }
+        InsertRunnable insertRunnable = new InsertRunnable();
+        Thread t = new Thread(insertRunnable);
+        t.start();
+
+
         return new RankingAdapter.ViewHolder(itemView);
     }
 
@@ -68,6 +88,11 @@ public class RankingAdapter extends  RecyclerView.Adapter<RankingAdapter.ViewHol
         myEmail=sf.getString("email","");
         if(myEmail.equals(rankinDataList.get(position).userEmail)){
             holder.addFriendButton.setVisibility(View.GONE);
+        }
+        for(int i=0;i<friendCount;i++){
+            if(friendRoomList.get(i).email.equals(rankinDataList.get(position).userEmail)){
+                holder.addFriendButton.setVisibility(View.GONE);
+            }
         }
         boolean isExpanded = false;
         holder.constraintLayout1.setOnClickListener(v -> {
