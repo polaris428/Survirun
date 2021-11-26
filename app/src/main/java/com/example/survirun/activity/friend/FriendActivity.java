@@ -190,7 +190,7 @@ public class FriendActivity extends AppCompatActivity {
                                 Toast.makeText(FriendActivity.this, R.string.success_add_friend_text, Toast.LENGTH_LONG).show();
                                 refreshRecyclerView(friendEmile, friendName, profile);
                             } else {
-                                //실패시
+
 
                             }
                         }
