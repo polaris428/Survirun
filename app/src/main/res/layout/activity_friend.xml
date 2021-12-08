@@ -70,11 +70,58 @@
         android:layout_marginTop="16dp"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/layout">
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/find_friends_loading"
+            android:id="@+id/friends_shimmer_card_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/profile_shimmer_imageview"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_marginLeft="30dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/username_shimmer_textview"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@color/brightGray"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintLeft_toRightOf="@+id/profile_shimmer_imageview"
+                        app:layout_constraintBottom_toTopOf="@id/exercise_shimmer_textview"
+                        app:layout_constraintTop_toTopOf="@+id/profile_shimmer_imageview" />
+
+                    <TextView
+                        android:id="@+id/exercise_shimmer_textview"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/brightGray"
+                        app:layout_constraintLeft_toLeftOf="@id/username_shimmer_textview"
+                        app:layout_constraintTop_toBottomOf="@id/username_shimmer_textview"
+                        app:layout_constraintBottom_toBottomOf="@id/profile_shimmer_imageview"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--<androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/find_friends_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/image"
@@ -99,14 +146,15 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/image" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/friends_error"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
             <ImageView
                 android:id="@+id/radio"
                 android:layout_width="wrap_content"

@@ -43,7 +43,7 @@ public class FriendActivity extends AppCompatActivity {
     String token;
     String email;
     String friendName;
-    String friendEmile;
+    String getFriendEmail;
     String friendEmail;
     String profile;
     int friendsServerNumber, friendsRoomNumber;
@@ -70,10 +70,10 @@ public class FriendActivity extends AppCompatActivity {
 
         binding.cardView.setVisibility(View.GONE);
 
-        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
+        //Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
         checkFriends();
 
-        binding.image.startAnimation(animation);
+        //binding.image.startAnimation(animation);
 
 
         binding.findFriends.setOnClickListener(v -> {
@@ -96,21 +96,16 @@ public class FriendActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 Handler handler = new Handler();
                 friendEmail = binding.emileInputEditText.getText().toString();
-                if (email.equals(friendEmail)) {
-                    binding.findFriendsCardView.setVisibility(View.GONE);
-                    binding.friendsError.setVisibility(View.GONE);
-                    binding.cardView.setVisibility(View.GONE);
+                if (friendEmail.equals(email)) {
+                    noShow();
+                    binding.shimmerLayout.stopShimmer();
                     Toast.makeText(getApplicationContext(), R.string.you_already_friend, Toast.LENGTH_LONG).show();
                 } else if (binding.emileInputEditText.getText().toString().equals("")) {
-                    binding.findFriendsCardView.setVisibility(View.GONE);
-                    binding.friendsError.setVisibility(View.GONE);
-                    binding.cardView.setVisibility(View.GONE);
+                    noShow();
+                    binding.shimmerLayout.stopShimmer();
                 } else {
-                    binding.findFriendsLoading.setVisibility(View.VISIBLE);
-                    binding.backButton.setVisibility(View.GONE);
-                    binding.findFriendsCardView.setVisibility(View.GONE);
-                    binding.friendsError.setVisibility(View.GONE);
-                    binding.cardView.setVisibility(View.VISIBLE);
+                    loading();
+
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -120,16 +115,17 @@ public class FriendActivity extends AppCompatActivity {
                                 public void onResponse(Call<getUserData> call, Response<getUserData> response) {
                                     if (response.isSuccessful()) {
                                         friendName = response.body().username;
-                                        friendEmile = response.body().email;
-                                        friendEmail = binding.emileInputEditText.getText().toString();
+                                        getFriendEmail = response.body().email;
                                         binding.cardView.setVisibility(View.VISIBLE);
                                         binding.findFriendsCardView.setVisibility(View.VISIBLE);
                                         binding.friendsError.setVisibility(View.GONE);
-                                        binding.findFriendsLoading.setVisibility(View.GONE);
+                                        binding.friendsShimmerCardView.setVisibility(View.GONE);
+                                        binding.shimmerLayout.stopShimmer();
                                         binding.backButton.setVisibility(View.VISIBLE);
                                         binding.usernameTextview.setText(friendName);
                                         ExerciseHistory exerciseHistory = response.body().exerciseHistory.get(0);
                                         binding.exerciseTextview.setText(exerciseHistory.calorie + "kcal " + exerciseHistory.time + getString(R.string.hour) + " " + exerciseHistory.km + "km ");
+
                                         Call<ImageData> getProfile = ServerClient.getServerService().getSuchProfile(token, "username", "url", response.body().username);
                                         getProfile.enqueue(new Callback<ImageData>() {
                                             @Override
@@ -150,10 +146,7 @@ public class FriendActivity extends AppCompatActivity {
                                                     profile = "https://dicon21.2tle.io/api/v1/image?reqType=profile&id=" + response.body().img;
 
                                                 } else {
-                                                    binding.findFriendsLoading.setVisibility(View.GONE);
-                                                    binding.backButton.setVisibility(View.VISIBLE);
-                                                    binding.cardView.setVisibility(View.VISIBLE);
-                                                    binding.friendsError.setVisibility(View.VISIBLE);
+                                                    error();
                                                 }
                                             }
 
@@ -163,10 +156,8 @@ public class FriendActivity extends AppCompatActivity {
                                             }
                                         });
                                     } else {
-                                        binding.findFriendsLoading.setVisibility(View.GONE);
-                                        binding.backButton.setVisibility(View.VISIBLE);
-                                        binding.cardView.setVisibility(View.VISIBLE);
-                                        binding.friendsError.setVisibility(View.VISIBLE);
+                                        error();
+                                        binding.shimmerLayout.stopShimmer();
                                     }
                                 }
 
@@ -188,7 +179,7 @@ public class FriendActivity extends AppCompatActivity {
                         public void onResponse(Call<ResultData> call, Response<ResultData> response) {
                             if (response.isSuccessful()) {
                                 Toast.makeText(FriendActivity.this, R.string.success_add_friend_text, Toast.LENGTH_LONG).show();
-                                refreshRecyclerView(friendEmile, friendName, profile);
+                                refreshRecyclerView(getFriendEmail, friendName, profile);
                             } else {
 
 
@@ -455,5 +446,31 @@ public class FriendActivity extends AppCompatActivity {
             textInputLayout.requestLayout();
         });
         anim.start();
+    }
+
+    private void loading(){
+        Glide.with(this)
+                .load(getDrawable(R.color.brightGray))
+                .circleCrop()
+                .into(binding.profileShimmerImageview);
+        binding.friendsShimmerCardView.setVisibility(View.VISIBLE);
+        binding.backButton.setVisibility(View.GONE);
+        binding.findFriendsCardView.setVisibility(View.GONE);
+        binding.friendsError.setVisibility(View.GONE);
+        binding.cardView.setVisibility(View.VISIBLE);
+        binding.shimmerLayout.startShimmer();
+    }
+
+    private void noShow(){
+        binding.findFriendsCardView.setVisibility(View.GONE);
+        binding.friendsError.setVisibility(View.GONE);
+        binding.cardView.setVisibility(View.GONE);
+    }
+
+    private void error(){
+        binding.friendsShimmerCardView.setVisibility(View.GONE);
+        binding.backButton.setVisibility(View.VISIBLE);
+        binding.cardView.setVisibility(View.VISIBLE);
+        binding.friendsError.setVisibility(View.VISIBLE);
     }
 }
