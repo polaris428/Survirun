@@ -22,6 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Survirun">
         <activity
+            android:name=".ExerciseMulti"
+            android:exported="false" />
+        <activity
             android:name=".activity.friend.FriendActivity"
             android:exported="false" />
         <activity
@@ -43,8 +46,7 @@
             tools:ignore="Instantiatable" />
         <activity
             android:name=".activity.friend.FriendInformationActivity"
-            android:exported="true"
-            />
+            android:exported="true" />
         <activity
             android:name=".activity.exercise.ExerciseStoryActivity"
             android:exported="true" />
@@ -61,7 +63,7 @@
         <activity android:name=".activity.user.UserGoalModifyActivity" />
         <activity
             android:name=".activity.user.UserGoalActivity"
-            android:parentActivityName=".activity.MainActivity"></activity>
+            android:parentActivityName=".activity.MainActivity" />
         <activity android:name=".activity.exercise.MapActivity" />
 
         <meta-data
