@@ -46,6 +46,8 @@ public class FriendActivity extends AppCompatActivity {
     String getFriendEmail;
     String friendEmail;
     String profile;
+
+    Boolean isLoading = true;
     int friendsServerNumber, friendsRoomNumber;
     private List<FriendRoom> friendRoomList;
     private FriendDB friendDB = null;
@@ -74,6 +76,7 @@ public class FriendActivity extends AppCompatActivity {
         checkFriends();
 
         //binding.image.startAnimation(animation);
+        showSampleData();
 
 
         binding.findFriends.setOnClickListener(v -> {
@@ -216,6 +219,8 @@ public class FriendActivity extends AppCompatActivity {
     }
 
     void getFriend() {
+        isLoading = false;
+        showSampleData();
         class InsertRunnable implements Runnable {
             @Override
             public void run() {
@@ -233,8 +238,6 @@ public class FriendActivity extends AppCompatActivity {
         InsertRunnable insertRunnable = new InsertRunnable();
         Thread t = new Thread(insertRunnable);
         t.start();
-
-
     }
 
     @Override
@@ -270,13 +273,13 @@ public class FriendActivity extends AppCompatActivity {
                             Log.d("뿜뿜", response.body().profiles.get(i)._id);
 
                         }
-                    } else if(friendsServerNumber==friendsRoomNumber){
+                    } else if (friendsServerNumber == friendsRoomNumber) {
                         Boolean friend = false;
                         for (i = 0; i < friendsServerNumber; i++) {
                             for (j = 0; j < friendsRoomNumber; j++) {
                                 if (response.body().users.get(i).email.equals(friendRoomList.get(j).email)) {
-                                    if(!response.body().users.get(i).username.equals(friendRoomList.get(j).name)){
-                                        String changeName= friendRoomList.get(j).name;
+                                    if (!response.body().users.get(i).username.equals(friendRoomList.get(j).name)) {
+                                        String changeName = friendRoomList.get(j).name;
                                         class InsertRunnable implements Runnable {
                                             @Override
                                             public void run() {
@@ -314,10 +317,7 @@ public class FriendActivity extends AppCompatActivity {
                         }
 
 
-
-
-
-                    }else {
+                    } else {
                         if (friendsServerNumber > friendsRoomNumber) {
                             Log.d("친구를 추가할 준비", "");
                             Boolean friend = false;
@@ -448,11 +448,7 @@ public class FriendActivity extends AppCompatActivity {
         anim.start();
     }
 
-    private void loading(){
-        Glide.with(this)
-                .load(getDrawable(R.color.brightGray))
-                .circleCrop()
-                .into(binding.profileShimmerImageview);
+    private void loading() {
         binding.friendsShimmerCardView.setVisibility(View.VISIBLE);
         binding.backButton.setVisibility(View.GONE);
         binding.findFriendsCardView.setVisibility(View.GONE);
@@ -461,16 +457,29 @@ public class FriendActivity extends AppCompatActivity {
         binding.shimmerLayout.startShimmer();
     }
 
-    private void noShow(){
+    private void noShow() {
         binding.findFriendsCardView.setVisibility(View.GONE);
         binding.friendsError.setVisibility(View.GONE);
         binding.cardView.setVisibility(View.GONE);
     }
 
-    private void error(){
+    private void error() {
         binding.friendsShimmerCardView.setVisibility(View.GONE);
         binding.backButton.setVisibility(View.VISIBLE);
         binding.cardView.setVisibility(View.VISIBLE);
         binding.friendsError.setVisibility(View.VISIBLE);
     }
+
+    private void showSampleData() {
+        if (isLoading) {
+            binding.sfLayout.startShimmer();
+            binding.sfLayout.setVisibility(View.VISIBLE);
+            binding.friendListRecyclerView.setVisibility(View.GONE);
+        } else {
+            binding.sfLayout.stopShimmer();
+            binding.sfLayout.setVisibility(View.GONE);
+            binding.friendListRecyclerView.setVisibility(View.VISIBLE);
+        }
+    }
+
 }
