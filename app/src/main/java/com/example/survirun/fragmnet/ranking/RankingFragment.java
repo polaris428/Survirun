@@ -38,7 +38,8 @@ public class RankingFragment extends Fragment {
     List<RankingData> rankinDataList = new ArrayList<>();
     List<RankingData> friendRankingList = new ArrayList<>();
     List<FriendRoom> friendRoomList;
-    boolean ranking = false;
+    Boolean ranking = false;
+    Boolean isLoading = true;
     RequestManager glide ;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,10 +47,10 @@ public class RankingFragment extends Fragment {
         binding = FragmentRankingBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         glide = Glide.with(getContext());
-        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
+        /*Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
         binding.image.startAnimation(animation);
 
-        binding.findRanking.setVisibility(View.VISIBLE);
+        binding.findRanking.setVisibility(View.VISIBLE);*/
 
         sf = getContext().getSharedPreferences("Login", getContext().MODE_PRIVATE);
         token = sf.getString("token", "");
@@ -59,15 +60,15 @@ public class RankingFragment extends Fragment {
         });
 
         binding.rankingModeButton.setOnClickListener(v -> {
-            binding.rankingMessage.setVisibility(View.VISIBLE);
+            binding.rankingMessage.setVisibility(View.GONE);
             binding.noFriend.setVisibility(View.GONE);
-            binding.findRanking.setVisibility(View.VISIBLE);
+            isLoading = true;
+            showSampleData();
             binding.rankingModeButton.setEnabled(false);
             if (ranking) {
                 ranking = false;
                 rankinDataList.clear();
                 binding.rankingModeButton.setText(R.string.all);
-
                 RankingAdapter RankingAdapter = new RankingAdapter(rankinDataList,glide );
                 binding.rankingRecyclerView.setAdapter(RankingAdapter);
                 Call<rankingData> call = ServerClient.getServerService().getRanking(token);
@@ -81,7 +82,8 @@ public class RankingFragment extends Fragment {
                                 if (response.body().scores.size() - 1 == i) {
                                     RankingAdapter RinkingAdapter = new RankingAdapter(rankinDataList, glide);
                                     binding.rankingRecyclerView.setAdapter(RinkingAdapter);
-                                    binding.rankingRecyclerView.setVisibility(View.VISIBLE);
+                                    isLoading = false;
+                                    showSampleData();
                                     binding.rankingMessage.setVisibility(View.GONE);
                                     binding.rankingModeButton.setEnabled(true);
                                 }
@@ -121,14 +123,13 @@ public class RankingFragment extends Fragment {
                 if (friendRankingList.size() == 0) {
                     binding.rankingMessage.setVisibility(View.VISIBLE);
                     binding.noFriend.setVisibility(View.VISIBLE);
-                    binding.findRanking.setVisibility(View.GONE);
                     binding.rankingRecyclerView.setVisibility(View.GONE);
                     binding.rankingModeButton.setEnabled(true);
                 } else {
                     RankingAdapter RankingAdapter = new RankingAdapter(friendRankingList, glide);
                     binding.rankingRecyclerView.setAdapter(RankingAdapter);
-                    binding.rankingRecyclerView.setVisibility(View.VISIBLE);
-                    binding.rankingMessage.setVisibility(View.GONE);
+                    isLoading = false;
+                    showSampleData();
                     binding.rankingModeButton.setEnabled(true);
                 }
             }
@@ -158,8 +159,8 @@ public class RankingFragment extends Fragment {
                         if (response.body().scores.size() - 1 == i) {
                             RankingAdapter RinkingAdapter = new RankingAdapter(rankinDataList, glide);
                             binding.rankingRecyclerView.setAdapter(RinkingAdapter);
-                            binding.rankingMessage.setVisibility(View.GONE);
-                            binding.rankingRecyclerView.setVisibility(View.VISIBLE);
+                            isLoading = false;
+                            showSampleData();
                         }
                     }
                 } else {
@@ -200,5 +201,16 @@ public class RankingFragment extends Fragment {
         t.start();
     }
 
-
+    private void showSampleData() {
+        if (isLoading) {
+            binding.sfLayout.startShimmer();
+            binding.sfLayout.setVisibility(View.VISIBLE);
+            binding.rankingRecyclerView.setVisibility(View.GONE);
+        } else {
+            binding.sfLayout.stopShimmer();
+            binding.sfLayout.setVisibility(View.GONE);
+            binding.rankingRecyclerView.setVisibility(View.VISIBLE);
+            binding.rankingMessage.setVisibility(View.GONE);
+        }
+    }
 }
