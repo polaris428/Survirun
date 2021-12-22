@@ -1,0 +1,32 @@
+<vector android:height="397.5568dp" android:viewportHeight="362"
+    android:viewportWidth="295.022" android:width="324dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#858585" android:pathData="M244.022,53L285.022,53A10,10 0,0 1,295.022 63L295.022,80A10,10 0,0 1,285.022 90L244.022,90A10,10 0,0 1,234.022 80L234.022,63A10,10 0,0 1,244.022 53z"/>
+    <path android:fillColor="#00000000"
+        android:pathData="M4.022,4L186.022,4"
+        android:strokeColor="#191919" android:strokeLineCap="round" android:strokeWidth="8"/>
+    <path android:fillColor="#858585" android:pathData="M172.022,53L213.022,53A10,10 0,0 1,223.022 63L223.022,80A10,10 0,0 1,213.022 90L172.022,90A10,10 0,0 1,162.022 80L162.022,63A10,10 0,0 1,172.022 53z"/>
+    <path android:fillColor="#00000000"
+        android:pathData="M4.022,40L186.022,40"
+        android:strokeColor="#191919" android:strokeLineCap="round" android:strokeWidth="8"/>
+    <path android:fillColor="#00000000"
+        android:pathData="M4.022,21L186.022,22"
+        android:strokeColor="#191919" android:strokeLineCap="round" android:strokeWidth="8"/>
+    <path android:fillColor="#00000000"
+        android:pathData="M4.022,76L146.022,76"
+        android:strokeColor="#191919" android:strokeLineCap="round" android:strokeWidth="8"/>
+    <path android:fillColor="#00000000"
+        android:pathData="M4.022,58L146.022,58"
+        android:strokeColor="#191919" android:strokeLineCap="round" android:strokeWidth="8"/>
+    <path android:fillColor="#858585" android:pathData="M24.022,132L82.022,132A10,10 0,0 1,92.022 142L92.022,159A10,10 0,0 1,82.022 169L24.022,169A10,10 0,0 1,14.022 159L14.022,142A10,10 0,0 1,24.022 132z"/>
+    <path android:fillColor="#858585" android:pathData="M126.022,132L183.022,132A10,10 0,0 1,193.022 142L193.022,159A10,10 0,0 1,183.022 169L126.022,169A10,10 0,0 1,116.022 159L116.022,142A10,10 0,0 1,126.022 132z"/>
+    <path android:fillColor="#858585" android:pathData="M227.022,132L285.022,132A10,10 0,0 1,295.022 142L295.022,159A10,10 0,0 1,285.022 169L227.022,169A10,10 0,0 1,217.022 159L217.022,142A10,10 0,0 1,227.022 132z"/>
+    <path android:fillColor="#858585" android:pathData="M24.022,197L82.022,197A10,10 0,0 1,92.022 207L92.022,224A10,10 0,0 1,82.022 234L24.022,234A10,10 0,0 1,14.022 224L14.022,207A10,10 0,0 1,24.022 197z"/>
+    <path android:fillColor="#858585" android:pathData="M126.022,197L183.022,197A10,10 0,0 1,193.022 207L193.022,224A10,10 0,0 1,183.022 234L126.022,234A10,10 0,0 1,116.022 224L116.022,207A10,10 0,0 1,126.022 197z"/>
+    <path android:fillColor="#858585" android:pathData="M227.022,197L285.022,197A10,10 0,0 1,295.022 207L295.022,224A10,10 0,0 1,285.022 234L227.022,234A10,10 0,0 1,217.022 224L217.022,207A10,10 0,0 1,227.022 197z"/>
+    <path android:fillColor="#858585" android:pathData="M24.022,261L82.022,261A10,10 0,0 1,92.022 271L92.022,288A10,10 0,0 1,82.022 298L24.022,298A10,10 0,0 1,14.022 288L14.022,271A10,10 0,0 1,24.022 261z"/>
+    <path android:fillColor="#858585" android:pathData="M126.022,261L183.022,261A10,10 0,0 1,193.022 271L193.022,288A10,10 0,0 1,183.022 298L126.022,298A10,10 0,0 1,116.022 288L116.022,271A10,10 0,0 1,126.022 261z"/>
+    <path android:fillColor="#858585" android:pathData="M227.022,261L285.022,261A10,10 0,0 1,295.022 271L295.022,288A10,10 0,0 1,285.022 298L227.022,298A10,10 0,0 1,217.022 288L217.022,271A10,10 0,0 1,227.022 261z"/>
+    <path android:fillColor="#858585" android:pathData="M24.022,325L82.022,325A10,10 0,0 1,92.022 335L92.022,352A10,10 0,0 1,82.022 362L24.022,362A10,10 0,0 1,14.022 352L14.022,335A10,10 0,0 1,24.022 325z"/>
+    <path android:fillColor="#858585" android:pathData="M126.022,325L183.022,325A10,10 0,0 1,193.022 335L193.022,352A10,10 0,0 1,183.022 362L126.022,362A10,10 0,0 1,116.022 352L116.022,335A10,10 0,0 1,126.022 325z"/>
+    <path android:fillColor="#858585" android:pathData="M227.022,325L285.022,325A10,10 0,0 1,295.022 335L295.022,352A10,10 0,0 1,285.022 362L227.022,362A10,10 0,0 1,217.022 352L217.022,335A10,10 0,0 1,227.022 325z"/>
+</vector>
