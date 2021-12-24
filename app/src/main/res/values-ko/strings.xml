@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Survirun</string>
-    <string name="story_name">안녕하세요👋\n\n당신은 좀비 아포칼립스에서\n살아남은 생존자입니다.\n당신의 이름을 알려주세요.</string>
+    <string name="story_name">안녕하세요👋\n당신은 좀비 아포칼립스에서 살아남은\n생존자입니다. 당신의 이름을 알려주세요.</string>
     <string name="story_profile">좋습니다👍\n\n생존자의 사진을 등록해주세요</string>
     <string name="pwd">비밀번호</string>
     <string name="sign_in">로그인</string>

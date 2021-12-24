@@ -2,7 +2,7 @@
     <string name="app_name">Survirun</string>
     <string name="story_profile">Good👍\n\nPlease post a picture of the survivor</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="story_name">Hi👋\n\nYou\'re a survivor of zombie apocalypse.\nWhat is your name?</string>
+    <string name="story_name">Hi👋\nYou\'re a survivor of zombie apocalypse.\nWhat is your name?</string>
     <string name="pwd">Password</string>
     <string name="sign_in">Sign In</string>
     <string name="no_account">Don\'t have an account?</string>
