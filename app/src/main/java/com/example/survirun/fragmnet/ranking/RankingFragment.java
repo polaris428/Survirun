@@ -121,15 +121,15 @@ public class RankingFragment extends Fragment {
 
                 }
                 if (friendRankingList.size() == 0) {
+                    binding.rankingRecyclerView.setVisibility(View.GONE);
+                    binding.sfLayout.stopShimmer();
+                    binding.sfLayout.setVisibility(View.GONE);
                     binding.rankingMessage.setVisibility(View.VISIBLE);
                     binding.noFriend.setVisibility(View.VISIBLE);
-                    binding.rankingRecyclerView.setVisibility(View.GONE);
                     binding.rankingModeButton.setEnabled(true);
                 } else {
                     RankingAdapter RankingAdapter = new RankingAdapter(friendRankingList, glide);
                     binding.rankingRecyclerView.setAdapter(RankingAdapter);
-                    isLoading = false;
-                    showSampleData();
                     binding.rankingModeButton.setEnabled(true);
                 }
             }
@@ -144,6 +144,8 @@ public class RankingFragment extends Fragment {
         super.onResume();
 
         upDataFriend();
+        isLoading = true;
+        showSampleData();
         rankinDataList.clear();
         ranking = false;
         binding.rankingModeButton.setText(R.string.all);
@@ -206,6 +208,7 @@ public class RankingFragment extends Fragment {
             binding.sfLayout.startShimmer();
             binding.sfLayout.setVisibility(View.VISIBLE);
             binding.rankingRecyclerView.setVisibility(View.GONE);
+            binding.rankingMessage.setVisibility(View.GONE);
         } else {
             binding.sfLayout.stopShimmer();
             binding.sfLayout.setVisibility(View.GONE);
