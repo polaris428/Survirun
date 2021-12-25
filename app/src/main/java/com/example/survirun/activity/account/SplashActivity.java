@@ -43,6 +43,7 @@ public class SplashActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     Dialog dialog;
     String token;
+    Boolean isName = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,8 +129,9 @@ public class SplashActivity extends AppCompatActivity {
                     Intent intent;
 
                     if (!response.body().username) {
-
-                        intent = new Intent(SplashActivity.this, SignUpNameActivity.class);
+                        intent = new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        isName = true;
 
                     } else {
                         if (response.body().profile) {
@@ -139,8 +141,6 @@ public class SplashActivity extends AppCompatActivity {
                         }
                     }
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-
                     startActivity(intent);
                     overridePendingTransition(0, 0);
 
@@ -202,7 +202,6 @@ public class SplashActivity extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
-                        finish();
                     }, 2000); //딜레이 타임 조절
 
 
@@ -217,7 +216,6 @@ public class SplashActivity extends AppCompatActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     overridePendingTransition(0, 0);
-                    finish();
                 }
             }
         }
@@ -270,6 +268,16 @@ public class SplashActivity extends AppCompatActivity {
 
         });
 
+    }
+
+    protected void onPause(){
+        super.onPause();
+        if(isName){
+            Intent intent = new Intent(this, SignUpNameActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_up, R.anim.stay);
+            finish();
+        }
     }
 
 

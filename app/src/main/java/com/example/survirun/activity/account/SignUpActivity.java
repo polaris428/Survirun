@@ -28,6 +28,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.survirun.R;
+import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.EmileCheck;
 import com.example.survirun.data.LoginData;
 import com.example.survirun.data.NewUserData;
@@ -216,7 +217,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         editor.putString("token", response.body().token);
                                         editor.commit();
                                         Log.d("token", response.body().token);
-                                        Intent intent = new Intent(SignUpActivity.this, SignUpNameActivity.class);
+                                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
                                     }
@@ -265,5 +266,13 @@ public class SignUpActivity extends AppCompatActivity {
         if (isEmailCheck && isEmailEnterCheck && isPwdEnter && isPwdCheck) {
             binding.signUpButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
         }
+    }
+
+    protected void onPause(){
+        super.onPause();
+        Intent intent = new Intent(this, SignUpNameActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_up, R.anim.stay);
+        finish();
     }
 }

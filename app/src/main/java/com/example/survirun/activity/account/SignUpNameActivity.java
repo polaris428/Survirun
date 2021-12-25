@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,11 +15,14 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
 
 import com.example.survirun.R;
+import com.example.survirun.activity.MainActivity;
+import com.example.survirun.activity.WelcomeActivity;
 import com.example.survirun.data.ResultData;
 import com.example.survirun.databinding.ActivitySignUpNameBinding;
 import com.example.survirun.server.ServerClient;
@@ -32,10 +36,15 @@ public class SignUpNameActivity extends AppCompatActivity {
     String story;
     String name;
     String token;
+
     SharedPreferences.Editor editor;
+    SharedPreferences sharedPreferences;
+    Boolean checkFirstAccess = false;
+    Boolean isBack = false;
 
     ProgressDialog customProgressDialog;
     Dialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +57,17 @@ public class SignUpNameActivity extends AppCompatActivity {
         token = sf.getString("token", "");
         editor = sf.edit();
 
+        sharedPreferences = getSharedPreferences("checkFirstAccess", MODE_PRIVATE);
+        checkFirstAccess = sharedPreferences.getBoolean("checkFirstAccess", false);
 
         customProgressDialog = new ProgressDialog(this);
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         customProgressDialog.setCancelable(false);
+
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.dialog);
 
         binding.textView.setCharacterDelay(90);
         binding.textView.displayTextWithAnimation(getText(R.string.story_name));
@@ -68,8 +84,7 @@ public class SignUpNameActivity extends AppCompatActivity {
                 if (!s.toString().replace(" ", "").isEmpty()) {
                     binding.inputLayout.setErrorEnabled(false);
                     binding.nameSendButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                }
-                else{
+                } else {
                     binding.nameSendButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.gray));
                 }
             }
@@ -95,9 +110,7 @@ public class SignUpNameActivity extends AppCompatActivity {
                             editor.putString("name", name);
                             editor.commit();
                             customProgressDialog.dismiss();
-                            Intent intent = new Intent(SignUpNameActivity.this, SignUpProfileActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
+                            finish();
                         } else {
                             response.errorBody();
                             customProgressDialog.dismiss();
@@ -120,6 +133,7 @@ public class SignUpNameActivity extends AppCompatActivity {
             return false;
         });
     }
+
     @Override
     public void onBackPressed() {
         showDialog();
@@ -128,9 +142,22 @@ public class SignUpNameActivity extends AppCompatActivity {
     public void showDialog() {
         Button yesButton = dialog.findViewById(R.id.yes_button);
         Button cancelButton = dialog.findViewById(R.id.cancel_button);
-        dialog.findViewById(R.id.help_button).setVisibility(View.GONE);
         dialog.show();
         cancelButton.setOnClickListener(v -> dialog.dismiss());
-        yesButton.setOnClickListener(v -> finishAffinity());
+        yesButton.setOnClickListener(v -> {
+            finishAffinity();
+            isBack = true;
+        });
+    }
+
+    protected void onPause() {
+        super.onPause();
+        if (!checkFirstAccess && !isBack) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("checkFirstAccess", true);
+            editor.apply();
+            Intent tutorialIntent = new Intent(SignUpNameActivity.this, WelcomeActivity.class);
+            startActivity(tutorialIntent);
+        }
     }
 }
