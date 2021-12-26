@@ -205,6 +205,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
             public void onLocationChanged(@NonNull Location location) {
                 try {
                     setCurrentLatLng(location.getLatitude(), location.getLongitude());
+                    sendSocket(); //CurrentLatLng
                     if (lastLat == 0) {
                         exerciseTrackingInit();
                     }
@@ -274,6 +275,10 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
                 stop();
             }
         });
+
+    }
+
+    public void sendSocket() {
 
     }
 
@@ -907,6 +912,8 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
             sstop(); //종료하고 싶으면
         }
     }
+
+
 
 
     @MainThread
