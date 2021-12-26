@@ -10,9 +10,10 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        app:layout_constraintVertical_chainStyle="spread_inside"
+        android:layout_marginTop="80dp"
         app:layout_constraintBottom_toTopOf="@id/text"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <TextView
         android:id="@+id/text"
@@ -29,13 +30,14 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/survivor_cardView"
         android:layout_width="170dp"
-        android:layout_height="wrap_content"
+        android:layout_height="220dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="8dp"
+        android:alpha="1"
+        app:layout_constraintBottom_toTopOf="@id/tip_textView"
         app:layout_constraintEnd_toStartOf="@id/researcher_cardView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text"
-        app:layout_constraintBottom_toTopOf="@id/tip_textView">
+        app:layout_constraintTop_toBottomOf="@id/text">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -65,7 +67,7 @@
                 android:id="@+id/text1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="생존조건"
+                android:text="승리 조건"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -85,9 +87,42 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:alpha="0"
+        android:layout_width="170dp"
+        android:layout_height="220dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        app:layout_constraintStart_toStartOf="@id/survivor_cardView"
+        app:layout_constraintTop_toTopOf="@id/survivor_cardView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/title_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="설명"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="솨람ㄴ일;ㅁㄴㅇㄻ나앟ㄴ;ㅇ하ㅏㅁㄴ이;항ㅎ;닝홈ㄴ;ㅇㅎ"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_textView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/researcher_cardView"
         android:layout_width="170dp"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,7 +157,7 @@
                 android:id="@+id/text2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="생존조건"
+                android:text="승리 조건"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -145,19 +180,20 @@
         android:id="@+id/tip_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tip. 역할을 오래누르면 역할을 볼수 있어요"
+        android:text="Tip. 역할을 오래누르면 설명을 볼수 있어요"
         android:textColor="@color/gray"
         app:layout_constraintBottom_toTopOf="@id/start_button"
-        app:layout_constraintTop_toBottomOf="@id/survivor_cardView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/survivor_cardView" />
+
     <Button
         android:id="@+id/start_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="무선기 통신하기"
-        app:layout_constraintTop_toBottomOf="@id/tip_textView"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tip_textView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
