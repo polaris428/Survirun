@@ -1,6 +1,7 @@
 package com.example.survirun.fragmnet.excise;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.example.survirun.activity.exercise.MultiActivity;
 import com.example.survirun.loom.ExerciseData;
 import com.example.survirun.R;
 import com.example.survirun.databinding.FragmentExerciseBinding;
@@ -42,6 +44,10 @@ public class ExerciseFragment extends Fragment {
                 binding.aloneModeLayout.setVisibility(View.VISIBLE);
             }, 200);
             YoYo.with(Techniques.FadeIn).delay(300).duration(300).playOn(binding.aloneModeLayout);
+        });
+        binding.togetherMode.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), MultiActivity.class);
+            startActivity(intent);
         });
         binding.plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
