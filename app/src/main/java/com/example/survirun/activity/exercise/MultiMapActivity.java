@@ -39,7 +39,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.survirun.Medel.ZombieModel;
+import com.example.survirun.Medel.MultiZombieModel;
 import com.example.survirun.R;
 import com.example.survirun.databinding.ActivityMapBinding;
 import com.example.survirun.databinding.ActivityMultiMapBinding;
@@ -103,7 +103,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
     private static boolean zombieMode;
     public static SupportMapFragment mapFragment;
 
-    public static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
+    public static ArrayList<MultiZombieModel> zombieList = new ArrayList<MultiZombieModel>();
     private int zombieListCurrentPos = 0; // +1 해서 좀데 리스트 요소 개수 ㄱㄴ
     Dialog dialog;
     private static String title;
@@ -285,7 +285,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
 
     public static void waitZombie() {
         isZombieCreating = false;
-        for (ZombieModel z : zombieList) {
+        for (MultiZombieModel z : zombieList) {
             z.isRun = false;
 
         }
@@ -318,7 +318,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
 
     public static void resumeZombie() {
         isZombieCreating = true;
-        for (ZombieModel z : zombieList) {
+        for (MultiZombieModel z : zombieList) {
             z.isRun = true;
 
         }
@@ -362,7 +362,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
                 isZombieCreating = false;
                 polylineOptions.color(Color.parseColor("#FA1D25"));
                 if (zombieList.size() != 0) {
-                    for (ZombieModel z : zombieList) {
+                    for (MultiZombieModel z : zombieList) {
                         z.myMarker.remove();
                         z.thread.interrupt();
                     }
@@ -960,7 +960,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
     }
 
     public void createZombie() {
-        ZombieModel mZombie = new ZombieModel(new LatLng(currentLat, currentLng), zombieListCurrentPos, MultiMapActivity.this);
+        MultiZombieModel mZombie = new MultiZombieModel(new LatLng(currentLat, currentLng), zombieListCurrentPos, MultiMapActivity.this);
         zombieListCurrentPos++;
         zombieList.add(mZombie);
         playTTS(getString(R.string.create_zb));
