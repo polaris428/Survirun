@@ -19,35 +19,55 @@ public class MultiActivity extends AppCompatActivity {
     ActivityMultiBinding binding;
     AnimatorSet front_anim;
     AnimatorSet back_anim;
-    Boolean isFront = true;
+    Boolean isFrontSurvivor = true,
+            isFrontResearcher = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMultiBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Float scale = getApplicationContext().getResources().getDisplayMetrics().density;
+        float scale = getApplicationContext().getResources().getDisplayMetrics().density;
         binding.survivorCardView.setCameraDistance(8000*scale);
-        binding.cardView.setCardElevation(8000*scale);
+        binding.survivorBackCardView.setCardElevation(8000*scale);
+        binding.researcherCardView.setCameraDistance(8000*scale);
+        binding.researcherBackCardView.setCardElevation(8000*scale);
 
         front_anim = (AnimatorSet)AnimatorInflater.loadAnimator(this, R.animator.flip_out);
         back_anim = (AnimatorSet)AnimatorInflater.loadAnimator(this, R.animator.flip_in);
 
         binding.survivorCardView.setOnLongClickListener(v -> {
-            if(isFront){
+            if(isFrontSurvivor){
                 front_anim.setTarget(binding.survivorCardView);
-                back_anim.setTarget(binding.cardView);
+                back_anim.setTarget(binding.survivorBackCardView);
                 front_anim.start();
                 back_anim.start();
-                isFront = false;
+                isFrontSurvivor = false;
             }else{
-                front_anim.setTarget(binding.cardView);
+                front_anim.setTarget(binding.survivorBackCardView);
                 back_anim.setTarget(binding.survivorCardView);
                 back_anim.start();
                 front_anim.start();
-                isFront = true;
+                isFrontSurvivor = true;
             }
             return true;
         });
+        binding.researcherCardView.setOnLongClickListener(v -> {
+            if(isFrontResearcher){
+                front_anim.setTarget(binding.researcherCardView);
+                back_anim.setTarget(binding.researcherBackCardView);
+                front_anim.start();
+                back_anim.start();
+                isFrontResearcher = false;
+            }else{
+                front_anim.setTarget(binding.researcherBackCardView);
+                back_anim.setTarget(binding.researcherCardView);
+                back_anim.start();
+                front_anim.start();
+                isFrontResearcher = true;
+            }
+            return true;
+        });
+
     }
 }
