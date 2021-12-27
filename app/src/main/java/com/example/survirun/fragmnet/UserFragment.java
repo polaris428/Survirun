@@ -29,12 +29,14 @@ public class UserFragment extends Fragment {
     int goalCalorie;
     int goalTime;
     double goalKm;
+    int characterNum;
 
     String token;
     String name;
     SharedPreferences sf;
     SharedPreferences goal;
     SharedPreferences exercise;
+    SharedPreferences character;
     SharedPreferences yesterdayExercise;
 
 
@@ -54,6 +56,10 @@ public class UserFragment extends Fragment {
         token = sf.getString("token", "");
         name=sf.getString("name","");
         exercise=getContext().getSharedPreferences("exercise",MODE_PRIVATE);
+
+        character = getContext().getSharedPreferences("character", MODE_PRIVATE);
+        characterNum = character.getInt("num", 1);
+
         binding.dateTextview.setText(exercise.getString("data",""));
         score(exercise.getInt("calorie",0),exercise.getInt("time",0),exercise.getFloat("km",0));
 
@@ -63,6 +69,17 @@ public class UserFragment extends Fragment {
             Intent intent = new Intent(getContext(), CharacterChangeActivity.class);
             startActivity(intent);
         });
+
+        switch (characterNum){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+        }
 
         return view;
     }

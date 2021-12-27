@@ -2,6 +2,7 @@ package com.example.survirun.fragmnet;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.example.survirun.activity.MainActivity;
 
 public class CharacterFragment extends Fragment {
     Dialog dialog;
+    SharedPreferences.Editor editor;
 
     public static CharacterFragment newInstance(int page) {
         CharacterFragment characterFragment = new CharacterFragment();
@@ -54,28 +56,32 @@ public class CharacterFragment extends Fragment {
         });
         if (page == R.layout.fragment_character1) {
             view.findViewById(R.id.character1).setOnClickListener(v -> {
-                showDialog("캐릭터1");
+                showDialog("캐릭터1", 1);
             });
         }
         if (page == R.layout.fragment_character2) {
             view.findViewById(R.id.character2).setOnClickListener(v -> {
-                showDialog("캐릭터2");
+                showDialog("캐릭터2", 2);
             });
         }
         if (page == R.layout.fragment_character3) {
             view.findViewById(R.id.character3).setOnClickListener(v -> {
-                showDialog("캐릭터3");
+                showDialog("캐릭터3", 3);
             });
         }
         if (page == R.layout.fragment_character4) {
             view.findViewById(R.id.character4).setOnClickListener(v -> {
-                showDialog("캐릭터4");
+                showDialog("캐릭터4", 4);
             });
         }
         return view;
     }
 
-    public void showDialog(String name) {
+    public void showDialog(String name, int num) {
+        SharedPreferences sf = getActivity().getSharedPreferences("character", 0);
+        editor = sf.edit();
+        editor.putInt("num", num);
+        editor.commit();
         Button yesButton = dialog.findViewById(R.id.yes_button);
         Button cancelButton = dialog.findViewById(R.id.cancel_button);
         TextView textView = dialog.findViewById(R.id.explain_textView);
