@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -35,6 +36,7 @@ public class QueueActivity extends AppCompatActivity {
     private Gson gson = new Gson();
     SharedPreferences loginSf;
     String token;
+    private boolean isEnqueue = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +69,13 @@ public class QueueActivity extends AppCompatActivity {
     }
 
     private void enqueue() {
+        if(isEnqueue) {
+           return;
+        }
+        isEnqueue = true;
         EnqueueSocketData enqueueSocketData = new EnqueueSocketData();
         GpsTracker tempGPS = new GpsTracker(QueueActivity.this);
-
+        Log.d("QueueCounter >","Press");
         enqueueSocketData.latitude = tempGPS.getLatitude();
         enqueueSocketData.longitude = tempGPS.getLongitude();
         mSocket.emit("enqueue",gson.toJson(enqueueSocketData));
@@ -97,8 +103,8 @@ public class QueueActivity extends AppCompatActivity {
                 @Override
                 public void call(Object... args) {
                     @SuppressWarnings("unchecked")
-                    Map<String, String> headers = (Map<String, String>) args[0];
-                    headers.put("x-access-token", token);
+                    Map<String, List<String>> headers = (Map<String, List<String>>) args[0];
+                    headers.put("x-access-token", Arrays.asList(token));
                 }
             }).on(Transport.EVENT_RESPONSE_HEADERS, new Emitter.Listener() {
                 @Override
