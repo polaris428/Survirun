@@ -6,349 +6,203 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true"
+    android:paddingBottom="60dp"
     tools:context=".fragmnet.UserFragment">
 
-    <ScrollView
+    <androidx.cardview.widget.CardView
+        android:id="@+id/main_cardView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="6dp"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/day_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="45dp"
-                android:text="@string/daily_target"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/date_textview"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="20dp">
 
             <TextView
                 android:id="@+id/date_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="30dp"
-                android:text=""
-                android:textColor="?attr/colorUserText"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toTopOf="@id/calorieCardView"
+                android:text="2021.02.21"
+                android:textColor="?attr/colorBlackToWhite"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/day_textview" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/calorieCardView"
-                android:layout_width="match_parent"
-                android:layout_height="95dp"
-                android:layout_marginHorizontal="30dp"
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:cardCornerRadius="30dp"
-                app:cardElevation="5dp"
-                app:layout_constraintBottom_toTopOf="@id/exerciseTimeCardView"
-                app:layout_constraintTop_toBottomOf="@id/date_textview">
+                android:text="@string/calorie"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/date_textview" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="15dp"
-                        android:text="@string/calorie"
-                        android:textSize="20sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/calorie_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:textSize="27sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/calorie_unit_textview"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/calorie_unit_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:text="kcal"
-                        android:textSize="13sp"
-                        app:layout_constraintBaseline_toBaselineOf="@id/calorie_textview"
-                        app:layout_constraintRight_toRightOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="160dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="50dp"
-                    android:background="@drawable/circle"
-                    android:backgroundTint="?attr/colorCardViewInLayout">
-
-                    <TextView
-                        android:id="@+id/comparisonCalorie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:text="@string/yesterday"
-                        android:textColor="?attr/colorUserText"
-                        android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/eve_calorie_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:gravity="right"
-                        android:textColor="?attr/colorUserText"
-                        android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/exerciseTimeCardView"
-                android:layout_width="match_parent"
-                android:layout_height="95dp"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginVertical="20dp"
-                app:cardCornerRadius="30dp"
-                app:cardElevation="5dp"
-                app:layout_constraintBottom_toTopOf="@id/kmCardView"
-                app:layout_constraintTop_toBottomOf="@id/calorieCardView">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="15dp"
-                        android:text="@string/exercise_time"
-                        android:textSize="20sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/time_h_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="4dp"
-                        android:textSize="27sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/time_unit_textview"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/time_unit_textview"
-                        android:layout_width="25dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:gravity="center"
-                        android:text="@string/hour"
-                        android:textSize="13sp"
-                        app:layout_constraintBaseline_toBaselineOf="@id/time_h_textview"
-                        app:layout_constraintRight_toLeftOf="@+id/time_m_textview" />
-
-                    <TextView
-                        android:id="@+id/time_m_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="4dp"
-                        android:textSize="27sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toLeftOf="@+id/text1"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/text1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:text="@string/min"
-                        android:textSize="13sp"
-                        app:layout_constraintBaseline_toBaselineOf="@id/time_m_textview"
-                        app:layout_constraintRight_toRightOf="parent" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="160dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="50dp"
-                    android:background="@drawable/circle"
-                    android:backgroundTint="?attr/colorCardViewInLayout">
-
-                    <TextView
-                        android:id="@+id/comparisonExerciseTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:text="@string/yesterday"
-                        android:textColor="?attr/colorUserText"
-                        android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/eve_time_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:gravity="right"
-                        android:textColor="?attr/colorUserText"
-                        android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/kmCardView"
-                android:layout_width="match_parent"
-                android:layout_height="95dp"
-                android:layout_marginHorizontal="30dp"
-                app:cardCornerRadius="30dp"
-                app:cardElevation="5dp"
-                app:layout_constraintBottom_toTopOf="@id/arc_progress_card_view"
-                app:layout_constraintTop_toBottomOf="@id/exerciseTimeCardView">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="15dp"
-                        android:text="Km"
-                        android:textSize="20sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/km_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:textSize="27sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/km_unit_textview"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/km_unit_textview"
-                        android:layout_width="25dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:gravity="center"
-                        android:text="km"
-                        android:textSize="13sp"
-                        app:layout_constraintBaseline_toBaselineOf="@id/km_textview"
-                        app:layout_constraintRight_toRightOf="parent" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="160dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="50dp"
-                    android:background="@drawable/circle"
-                    android:backgroundTint="?attr/colorCardViewInLayout">
-
-                    <TextView
-                        android:id="@+id/comparisonKm"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:text="@string/yesterday"
-                        android:textColor="?attr/colorUserText"
-                        android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/eve_km_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:gravity="right"
-                        android:textColor="?attr/colorUserText"
-                        android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/arc_progress_card_view"
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/calorie_progress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="65dp"
-                app:cardCornerRadius="30dp"
-                app:cardElevation="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/kmCardView">
+                android:layout_marginTop="8dp"
+                android:max="10"
+                app:indicatorColor="@color/gray"
+                app:layout_constraintTop_toBottomOf="@id/text1"
+                app:trackThickness="8dp" />
 
-                <com.github.lzyzsd.circleprogress.ArcProgress
-                    android:id="@+id/arc_progress"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="10dp"
-                    app:arc_bottom_text="@string/goal"
-                    app:arc_bottom_text_size="15sp"
-                    app:arc_finished_color="#EA0000"
-                    app:arc_text_color="#EA0000"
-                    app:arc_unfinished_color="#000000" />
+            <TextView
+                android:id="@+id/calorie_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/calorie_unit_textview"
+                app:layout_constraintTop_toBottomOf="@id/calorie_progress" />
 
-            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/calorie_unit_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="kcal"
+                android:textColor="@color/gray"
+                android:textSize="13sp"
+                app:layout_constraintBaseline_toBaselineOf="@id/calorie_textview"
+                app:layout_constraintEnd_toEndOf="parent" />
 
+            <TextView
+                android:id="@+id/text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/exercise_time"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/calorie_textview" />
 
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/exercise_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:max="10"
+                app:indicatorColor="@color/gray"
+                app:layout_constraintTop_toBottomOf="@id/text2"
+                app:trackThickness="8dp" />
+
+            <TextView
+                android:id="@+id/time_h_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintRight_toLeftOf="@id/time_h_unit_textview"
+                app:layout_constraintTop_toBottomOf="@id/exercise_progress" />
+
+            <TextView
+                android:id="@+id/time_h_unit_textview"
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:gravity="center"
+                android:text="@string/hour"
+                android:textColor="@color/gray"
+                android:textSize="13sp"
+                app:layout_constraintBaseline_toBaselineOf="@id/time_h_textview"
+                app:layout_constraintRight_toLeftOf="@+id/time_m_textview" />
+
+            <TextView
+                android:id="@+id/time_m_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintRight_toLeftOf="@+id/time_m_unit_textview"
+                app:layout_constraintTop_toBottomOf="@id/exercise_progress" />
+
+            <TextView
+                android:id="@+id/time_m_unit_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/min"
+                android:textColor="@color/gray"
+                android:textSize="13sp"
+                app:layout_constraintBaseline_toBaselineOf="@id/time_m_textview"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Km"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/exercise_progress" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/km_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:max="10"
+                app:indicatorColor="@color/gray"
+                app:layout_constraintTop_toBottomOf="@id/text3"
+                app:trackThickness="8dp" />
+
+            <TextView
+                android:id="@+id/km_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintRight_toLeftOf="@id/km_unit_textview"
+                app:layout_constraintTop_toBottomOf="@id/km_progress" />
+
+            <TextView
+                android:id="@+id/km_unit_textview"
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="km"
+                android:textColor="@color/gray"
+                android:textSize="13sp"
+                app:layout_constraintBaseline_toBaselineOf="@id/km_textview"
+                app:layout_constraintRight_toRightOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </ScrollView>
+    </androidx.cardview.widget.CardView>
+    <ImageView
+        android:id="@+id/Character_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_cardView"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_change"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
