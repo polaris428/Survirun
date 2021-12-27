@@ -23,6 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Survirun">
         <activity
+            android:name=".activity.exercise.QueueActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.exercise.MultiActivity"
             android:exported="false" />
         <activity

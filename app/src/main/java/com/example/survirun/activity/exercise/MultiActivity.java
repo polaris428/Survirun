@@ -11,7 +11,6 @@ import android.view.animation.AnimationUtils;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.daimajia.androidanimations.library.flippers.FlipInXAnimator;
 import com.example.survirun.R;
 import com.example.survirun.databinding.ActivityMultiBinding;
 
