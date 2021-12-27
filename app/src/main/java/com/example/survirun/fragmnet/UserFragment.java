@@ -2,6 +2,7 @@ package com.example.survirun.fragmnet;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.survirun.CharacterChangeActivity;
 import com.example.survirun.R;
 
 import com.example.survirun.databinding.FragmentUserBinding;
@@ -57,7 +59,10 @@ public class UserFragment extends Fragment {
 
         yesterdayExercise= getContext().getSharedPreferences("yesterdayExercise", MODE_PRIVATE);
 
-
+        binding.changeButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), CharacterChangeActivity.class);
+            startActivity(intent);
+        });
 
         return view;
     }

@@ -19,7 +19,12 @@ public class ScreenSlidePagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return WelcomeFragment.newInstance(layouts.get(position));
+        if(layouts.size()==3){
+            return WelcomeFragment.newInstance(layouts.get(position));
+        }
+        else{
+            return CharacterFragment.newInstance(layouts.get(position));
+        }
     }
 
 
