@@ -3,6 +3,7 @@ package com.example.survirun.fragmnet;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -18,19 +19,23 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.airbnb.lottie.L;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.survirun.FriendDB;
 import com.example.survirun.activity.EditProfileActivity;
 import com.example.survirun.R;
 import com.example.survirun.activity.WelcomeActivity;
 import com.example.survirun.activity.account.SplashActivity2;
 import com.example.survirun.activity.user.UserGoalActivity;
 import com.example.survirun.data.FindUserData;
+import com.example.survirun.data.FriendRoom;
 import com.example.survirun.data.ImageData;
 import com.example.survirun.databinding.FragmentSettingBinding;
 import com.example.survirun.server.ServerClient;
 
 import java.io.File;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,10 +49,16 @@ public class SettingFragment extends Fragment {
     SharedPreferences.Editor editor;
     SharedPreferences.Editor editorBoolean;
 
+    private List<FriendRoom> friendRoomList;
+    private FriendDB friendDB = null;
+    private Context mContext = null;
+
     String token;
     String name;
     String emile;
     String intro;
+
+    FriendRoom friendRoom;
 
     Dialog dialog;
     int score;
@@ -58,6 +69,10 @@ public class SettingFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentSettingBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+
+        friendDB = FriendDB.getInstance(getContext());
+        mContext = getContext().getApplicationContext();
 
         Log.d("asdf", "onCreateView");
         getFriendNumber();
@@ -81,6 +96,24 @@ public class SettingFragment extends Fragment {
         binding.logoutButton.setOnClickListener(v -> {
             setDialog(getString(R.string.sign_out_user));
             dialog.findViewById(R.id.yes_button).setOnClickListener(v1 -> {
+                class InsertRunnable implements Runnable {
+                    @Override
+                    public void run() {
+                        try {
+                            friendRoomList = FriendDB.getInstance(mContext).friendDao().getAll();
+                            for (int i = 0; i < friendRoomList.size(); i++) {
+                                friendRoom = friendRoomList.get(i);
+                                FriendDB.getInstance(mContext).friendDao().delete(friendRoom);
+                            }
+
+                        } catch (Exception e) {
+
+                        }
+                    }
+                }
+                InsertRunnable insertRunnable = new InsertRunnable();
+                Thread t = new Thread(insertRunnable);
+                t.start();
                 editor.putString("email", "");
                 editor.putString("pwe", "");
                 editor.putString("token", "");
@@ -106,8 +139,8 @@ public class SettingFragment extends Fragment {
         });
 
         binding.helpButton.setOnClickListener(v -> {
-                Intent intent = new Intent(getActivity(), WelcomeActivity.class);
-                startActivity(intent);
+            Intent intent = new Intent(getActivity(), WelcomeActivity.class);
+            startActivity(intent);
         });
 
         binding.bugButton.setOnClickListener(view1 -> {
@@ -205,6 +238,7 @@ public class SettingFragment extends Fragment {
             }
         });
     }
+
     public void getFriendNumber() {
         Call<FindUserData> call = ServerClient.getServerService().getFriendList(token);
         call.enqueue(new Callback<FindUserData>() {
