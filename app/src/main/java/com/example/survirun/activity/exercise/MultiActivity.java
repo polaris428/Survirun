@@ -2,6 +2,7 @@ package com.example.survirun.activity.exercise;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -34,7 +35,10 @@ public class MultiActivity extends AppCompatActivity {
 
         front_anim = (AnimatorSet)AnimatorInflater.loadAnimator(this, R.animator.flip_out);
         back_anim = (AnimatorSet)AnimatorInflater.loadAnimator(this, R.animator.flip_in);
-
+        binding.startButton.setOnClickListener(v -> {
+            Intent t = new Intent(MultiActivity.this, QueueActivity.class);
+            startActivity(t);
+        });
         binding.survivorCardView.setOnLongClickListener(v -> {
             if(isFrontSurvivor){
                 front_anim.setTarget(binding.survivorCardView);
