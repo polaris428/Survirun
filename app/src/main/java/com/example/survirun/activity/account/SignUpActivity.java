@@ -52,6 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
     boolean isPwdCheck = false;
     boolean isEmailCheck = false;
     boolean isPwdEnter = false;
+    boolean isName = false;
     String email;
     String pwe;
     SharedPreferences.Editor editor;
@@ -270,9 +271,11 @@ public class SignUpActivity extends AppCompatActivity {
 
     protected void onPause(){
         super.onPause();
-        Intent intent = new Intent(this, SignUpNameActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_up, R.anim.stay);
-        finish();
+        if(isName){
+            Intent intent = new Intent(this, SignUpNameActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_up, R.anim.stay);
+            finish();
+        }
     }
 }
