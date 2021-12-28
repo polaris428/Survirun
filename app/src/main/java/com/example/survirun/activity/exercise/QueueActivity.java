@@ -87,6 +87,13 @@ public class QueueActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    @Override
+    protected void onDestroy() {
+        leaveQueue();
+        super.onDestroy();
+
+    }
+
     // 뒤로가는 경우 반드시 큐 아웃 요청
     private void leaveQueue() {
         mSocket.disconnect();
