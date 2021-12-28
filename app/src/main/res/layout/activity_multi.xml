@@ -33,13 +33,13 @@
         android:layout_height="220dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
-        android:alpha="1"
         app:layout_constraintBottom_toTopOf="@id/tip_textView"
         app:layout_constraintEnd_toStartOf="@id/researcher_cardView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/survivor_front"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingVertical="16dp">
@@ -48,9 +48,10 @@
                 android:id="@+id/survivor_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="생존자"
+                android:text="@string/survivor"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/survivor_imageView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -62,15 +63,17 @@
                 android:src="@drawable/ic_survior"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/text1"
                 app:layout_constraintTop_toBottomOf="@id/survivor_title" />
 
             <TextView
                 android:id="@+id/text1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="승리 조건"
+                android:text="@string/win_condition"
                 android:textSize="13sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/survivor_context"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/survivor_imageView" />
@@ -80,45 +83,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="모든 연구소를\n폭파하세요"
+                android:text="@string/explode_institutes"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text1" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/survivor_back_cardView"
-        android:alpha="0"
-        android:layout_width="170dp"
-        android:layout_height="220dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="5dp"
-        app:layout_constraintStart_toStartOf="@id/survivor_cardView"
-        app:layout_constraintTop_toTopOf="@id/survivor_cardView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/survivor_back"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/title1_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="설명"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:visibility="invisible">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="솨람ㄴ일;ㅁㄴㅇㄻ나앟ㄴ;ㅇ하ㅏㅁㄴ이;항ㅎ;닝홈ㄴ;ㅇㅎ"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title1_textView" />
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/researcher_cardView"
@@ -131,6 +120,7 @@
         app:layout_constraintTop_toTopOf="@id/survivor_cardView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/researcher_front"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingVertical="16dp">
@@ -139,9 +129,10 @@
                 android:id="@+id/researcher_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="미친 과학자"
+                android:text="@string/researcher"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/researcher_imageView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -153,15 +144,17 @@
                 android:src="@drawable/ic_scientist"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/text2"
                 app:layout_constraintTop_toBottomOf="@id/researcher_title" />
 
             <TextView
                 android:id="@+id/text2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="승리 조건"
+                android:text="@string/win_condition"
                 android:textSize="13sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/researcher_context"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/researcher_imageView" />
@@ -171,50 +164,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="모든 생존자를\n죽이세요"
+                android:text="@string/kill_survivor"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
-        android:id="@+id/researcher_back_cardView"
-        android:alpha="0"
-        android:layout_width="170dp"
-        android:layout_height="220dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="5dp"
-        app:layout_constraintStart_toStartOf="@id/researcher_cardView"
-        app:layout_constraintTop_toTopOf="@id/researcher_cardView">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/researcher_back"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/title2_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="설명"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:visibility="invisible">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="솨람ㄴ일;ㅁㄴㅇㄻ나앟ㄴ;ㅇ하ㅏㅁㄴ이;항ㅎ;닝홈ㄴ;ㅇㅎ"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title2_textView" />
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
 
     <TextView
         android:id="@+id/tip_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tip. 역할을 오래누르면 설명을 볼수 있어요"
+        android:text="@string/press_down_explanation"
         android:textColor="@color/gray"
         app:layout_constraintBottom_toTopOf="@id/start_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -225,7 +206,8 @@
         android:id="@+id/start_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="무선기 통신하기"
+        android:text="@string/radio_communication"
+        android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tip_textView" />

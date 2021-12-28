@@ -166,4 +166,22 @@
     <string name="check_status">능력치 확인하기</string>
     <string name="status">능력치</string>
     <string name="closing_status">능력치 닫기</string>
+    <string name="radio_communication">무전기 통신하기</string>
+    <string name="press_down_explanation">Tip. 역할을 꾹 누르면 설명을 볼 수 있어요</string>
+    <string name="survivor">생존자</string>
+    <string name="win_condition">승리 조건</string>
+    <string name="researcher">연구원</string>
+    <string name="explode_institutes">모든 연구소를\n폭파하세요</string>
+    <string name="kill_survivor">모든 생존자를\n죽이세요</string>
+    <string name="finding_bread">빵찾기 (체력 10 회복)</string>
+    <string name="ahn">안도휘</string>
+    <string name="gang">강철</string>
+    <string name="supplies">보급품 (아이템 획득)</string>
+    <string name="kim">김세리</string>
+    <string name="remove_zombie">좀비물질 제거</string>
+    <string name="rex">렉스</string>
+    <string name="choose_character">선택후 캐릭터를 터치해주세요</string>
+    <string name="mode_selection">모드 선택</string>
+    <string name="running_alone">혼자 달리기</string>
+    <string name="running_together">함께 달리기</string>
 </resources>
