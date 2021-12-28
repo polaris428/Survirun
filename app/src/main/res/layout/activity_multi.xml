@@ -9,8 +9,9 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:layout_marginTop="80dp"
+        android:layout_height="280dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/rival"
         app:layout_constraintBottom_toTopOf="@id/text"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside" />
@@ -33,6 +34,7 @@
         android:layout_height="220dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintBottom_toTopOf="@id/tip_textView"
         app:layout_constraintEnd_toStartOf="@id/researcher_cardView"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,23 +90,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text1" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/survivor_back"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
-            android:visibility="invisible">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="솨람ㄴ일;ㅁㄴㅇㄻ나앟ㄴ;ㅇ하ㅏㅁㄴ이;항ㅎ;닝홈ㄴ;ㅇㅎ"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -170,37 +155,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/researcher_back"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
-            android:visibility="invisible">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="솨람ㄴ일;ㅁㄴㅇㄻ나앟ㄴ;ㅇ하ㅏㅁㄴ이;항ㅎ;닝홈ㄴ;ㅇㅎ"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
 
-    <TextView
-        android:id="@+id/tip_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/press_down_explanation"
-        android:textColor="@color/gray"
-        app:layout_constraintBottom_toTopOf="@id/start_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/survivor_cardView" />
 
     <Button
         android:id="@+id/start_button"
@@ -209,8 +166,7 @@
         android:text="@string/radio_communication"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tip_textView" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
