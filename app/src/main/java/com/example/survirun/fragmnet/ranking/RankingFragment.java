@@ -116,6 +116,8 @@ public class RankingFragment extends Fragment {
                             friendRankingData.userName = rankinDataList.get(i).userName;
                             friendRankingData.userScore = rankinDataList.get(i).userScore;
                             friendRankingList.add(friendRankingData);
+                            isLoading = false;
+                            showSampleData();
                         }
                     }
 
