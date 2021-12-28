@@ -110,9 +110,14 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
     public static ArrayList<Marker> markerList = new ArrayList<>();
     public static Marker labMarker;
 
+    public static ArrayList<Marker> itemMarkerList = new ArrayList<>();
+
+
+
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         binding = ActivityMultiMapBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
@@ -127,13 +132,20 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
                 if(i==0) {
                     MarkerOptions tempOptLab = new MarkerOptions();
                     tempOptLab.position(new LatLng(userList.get(i).latitude, userList.get(i).longitude));
-                    /*BitmapDrawable bitmapdraw=(BitmapDrawable)this.getResources().getDrawable(R.drawable.zombi_marker);
+                    BitmapDrawable bitmapdraw=(BitmapDrawable)this.getResources().getDrawable(R.drawable.ic_laboratory);
                     Bitmap b=bitmapdraw.getBitmap();
                     Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
-                    tempOptLab.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));*/
+                    tempOptLab.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
                     labMarker = mMap.addMarker(tempOptLab);
                 }
                 MarkerOptions tempOpt = new MarkerOptions();
+                /*
+                * BitmapDrawable bitmapdraw=(BitmapDrawable)this.getResources().getDrawable(R.drawable.ic_laboratory);
+                    Bitmap b=bitmapdraw.getBitmap();
+                    Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
+                    tempOpt.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                *
+                * */
                 tempOpt.position(new LatLng(userList.get(i).latitude, userList.get(i).longitude));
                 Marker tempMk = mMap.addMarker(tempOpt);
                 markerList.add(tempMk);

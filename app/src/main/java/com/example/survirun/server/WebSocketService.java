@@ -152,7 +152,25 @@ public class WebSocketService extends AppCompatActivity {
 
                     //
                     LatLngData latlngData = gson.fromJson(args[0].toString(), LatLngData.class);
-                    
+                    MarkerOptions tempMarkerOpt = new MarkerOptions();
+                    tempMarkerOpt.position(new LatLng(latlngData.latitude, latlngData.longitude));
+                    /*아이템 */
+
+                    /* 아이템 마커뷰 이미지 지정 */
+                    /*
+                    * BitmapDrawable bitmapdraw=(BitmapDrawable)this.getResources().getDrawable(R.drawable.ic_laboratory);
+                    Bitmap b=bitmapdraw.getBitmap();
+                    Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
+                    tempMarkerOpt.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                     */
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            MultiMapActivity.itemMarkerList.add(MultiMapActivity.mMap.addMarker(tempMarkerOpt));
+                        }
+                    });
+
+
 
 
                 }
