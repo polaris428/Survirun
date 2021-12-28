@@ -1,6 +1,8 @@
 package com.example.survirun.server;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -9,9 +11,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.L;
+import com.example.survirun.R;
 import com.example.survirun.activity.exercise.MultiMapActivity;
 import com.example.survirun.data.CoordinateData;
 import com.example.survirun.data.LatLngData;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -157,12 +161,12 @@ public class WebSocketService extends AppCompatActivity {
                     /*아이템 */
 
                     /* 아이템 마커뷰 이미지 지정 */
-                    /*
-                    * BitmapDrawable bitmapdraw=(BitmapDrawable)this.getResources().getDrawable(R.drawable.ic_laboratory);
+                    //BitmapDrawable bdraw = (BitmapDrawable)MultiMapActivity.mctx.getResources().getDrawable();
+                    BitmapDrawable bitmapdraw=(BitmapDrawable)MultiMapActivity.mctx.getResources().getDrawable(R.drawable.box);
                     Bitmap b=bitmapdraw.getBitmap();
                     Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
                     tempMarkerOpt.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-                     */
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
