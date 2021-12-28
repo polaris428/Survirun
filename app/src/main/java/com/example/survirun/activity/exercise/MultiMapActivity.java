@@ -56,10 +56,15 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -124,35 +129,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
         setContentView(view);
         mctx = this;
         Intent getIntent = getIntent();
-        JSONObject jsonDT;
-        try {
-            jsonDT = new JSONObject(getIntent.getStringExtra("jsonString"));
-            userList = (ArrayList<MultiUserModel>) jsonDT.get("users");
-            for(int i =0; i<3;i++) {
-                if(i==0) {
-                    MarkerOptions tempOptLab = new MarkerOptions();
-                    tempOptLab.position(new LatLng(userList.get(i).latitude, userList.get(i).longitude));
-                    BitmapDrawable bitmapdraw=(BitmapDrawable)this.getResources().getDrawable(R.drawable.ic_laboratory);
-                    Bitmap b=bitmapdraw.getBitmap();
-                    Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
-                    tempOptLab.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-                    labMarker = mMap.addMarker(tempOptLab);
-                }
-                MarkerOptions tempOpt = new MarkerOptions();
-                /*
-                * BitmapDrawable bitmapdraw=(BitmapDrawable)this.getResources().getDrawable(R.drawable.ic_laboratory);
-                    Bitmap b=bitmapdraw.getBitmap();
-                    Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
-                    tempOpt.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-                *
-                * */
-                tempOpt.position(new LatLng(userList.get(i).latitude, userList.get(i).longitude));
-                Marker tempMk = mMap.addMarker(tempOpt);
-                markerList.add(tempMk);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
 
 
 
@@ -217,7 +194,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
 
 
         checkGPSPermission();
-
+        JSONObject jsonDT;
         try {
             init(MultiMapActivity.this);
             mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
@@ -226,9 +203,13 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
             }
             timeThread = new Thread(new MultiMapActivity.timeThread());
             timeThread.start();
-        } catch (Exception e) {
 
+
+
+        } catch (Exception e) {
+            Log.e(">",e.getMessage());
         }
+
 
         playTTS(getString(R.string.start_tts));
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, new LocationListener() {
@@ -729,6 +710,48 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
         mMapUiSetting.setZoomGesturesEnabled(true);
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.555201,126.970734), 10));
+
+
+        JSONObject jsonDT;
+        try {
+            jsonDT = new JSONObject(getIntent().getStringExtra("jsonString"));
+            Log.d("<>",jsonDT.toString());
+            JSONArray tmp = jsonDT.getJSONArray("users");
+            Gson gson = new Gson();
+            Type type = new TypeToken<ArrayList<MultiUserModel>>(){}.getType();
+            userList = gson.fromJson(tmp.toString(),type);
+            /*for(int i =0; i< tmp.length();i++) {
+                MultiUserModel mdl = new MultiUserModel();
+                mdl.username = tmp.get(i).getClass()
+            }*/
+            Log.d("<<>>",userList.toString());
+            for(int i =0; i<3;i++) {
+                if (i == 0) {
+                    MarkerOptions tempOptLab = new MarkerOptions();
+                    tempOptLab.position(new LatLng(userList.get(i).latitude, userList.get(i).longitude));
+                    //BitmapDrawable bitmapdraw=(BitmapDrawable)this.getResources().getDrawable(R.drawable.ic_laboratory);
+                    //Bitmap b=bitmapdraw.getBitmap();
+                    //Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
+                    //tempOptLab.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                    labMarker = mMap.addMarker(tempOptLab);
+                }
+                MarkerOptions tempOpt = new MarkerOptions();
+                /*
+                * BitmapDrawable bitmapdraw=(BitmapDrawable)this.getResources().getDrawable(R.drawable.ic_laboratory);
+                    Bitmap b=bitmapdraw.getBitmap();
+                    Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
+                    tempOpt.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                *
+                * */
+                tempOpt.position(new LatLng(userList.get(i).latitude, userList.get(i).longitude));
+                Marker tempMk = mMap.addMarker(tempOpt);
+                markerList.add(tempMk);
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
 
     }
