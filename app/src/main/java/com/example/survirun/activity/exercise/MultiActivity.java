@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import com.example.survirun.R;
 import com.example.survirun.databinding.ActivityMultiBinding;
 
+
 public class MultiActivity extends AppCompatActivity {
     ActivityMultiBinding binding;
     AnimatorSet front_anim;
