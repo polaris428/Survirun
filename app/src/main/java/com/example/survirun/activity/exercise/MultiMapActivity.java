@@ -975,7 +975,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
 
             double len = Math.round(ll1.distanceTo(ll2) *100) / 100.0; //단위는 1m
             if(len <= 5) {
-                WebSocketService.mSocket.emit("getItem","{\"roomName\":\""+WebSocketService.roomName+"\"}");
+                WebSocketService.mSocket.emit("getItem","{\"roomName\":\""+WebSocketService.roomName+"\",\"idx\":"+i+"}");
                 itemMarkerList.get(i).remove();
                 itemMarkerList.remove(i);
             }
