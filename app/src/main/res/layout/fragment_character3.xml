@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/character3"
@@ -10,48 +10,55 @@
         android:layout_height="500dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/scientist"
-        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintBottom_toTopOf="@id/character_name"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/character_name" />
+        app:layout_constraintVertical_chainStyle="packed" />
+
     <TextView
         android:id="@+id/character_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="@string/kim"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/character_info"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/character3"
-        app:layout_constraintBottom_toTopOf="@id/character_info"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/character3" />
+
     <TextView
         android:id="@+id/character_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:text="@string/kim_info"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/character_name"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/character_name" />
+
     <SlidingDrawer
         android:id="@+id/sliding_drawer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:allowSingleTap="true"
         android:animateOnClick="true"
-        android:handle="@id/handle"
         android:content="@id/content"
+        android:handle="@id/handle"
         android:orientation="vertical"
         android:topOffset="380dp"
         app:layout_constraintBottom_toBottomOf="parent">
+
         <Button
             android:id="@+id/handle"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/check_status"
-            android:textSize="13sp"
-            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+            android:textSize="13sp" />
+
         <LinearLayout
             android:id="@+id/content"
             android:layout_width="wrap_content"
@@ -84,6 +91,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:id="@+id/text2"
                         android:layout_width="wrap_content"
@@ -104,6 +112,7 @@
                         android:progress="7"
                         app:layout_constraintTop_toBottomOf="@id/text2"
                         app:trackThickness="8dp" />
+
                     <TextView
                         android:id="@+id/text3"
                         android:layout_width="wrap_content"

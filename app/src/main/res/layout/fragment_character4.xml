@@ -10,14 +10,15 @@
         android:layout_height="500dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/agent"
-        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintBottom_toTopOf="@id/character_name"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/character_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="@string/rex"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -30,6 +31,7 @@
         android:id="@+id/character_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:text="@string/rex_info"
         app:layout_constraintBottom_toBottomOf="parent"
