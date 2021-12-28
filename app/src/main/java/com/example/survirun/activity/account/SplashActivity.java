@@ -51,8 +51,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        WebSocketService webSocketService=new WebSocketService();
-        webSocketService.socketConnect();
+
         SharedPreferences sf = getSharedPreferences("Login", MODE_PRIVATE);    // test 이름의 기본모드 설정
         email = sf.getString("email", "");
         pwe = sf.getString("pwe", "");
