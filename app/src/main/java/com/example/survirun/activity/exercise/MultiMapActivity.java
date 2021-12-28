@@ -44,6 +44,7 @@ import com.example.survirun.Medel.MultiZombieModel;
 import com.example.survirun.R;
 import com.example.survirun.databinding.ActivityMapBinding;
 import com.example.survirun.databinding.ActivityMultiMapBinding;
+import com.example.survirun.server.WebSocketService;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -218,6 +219,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
                 try {
                     setCurrentLatLng(location.getLatitude(), location.getLongitude());
                     sendSocket(); //CurrentLatLng
+                    getDistanceBetweenLatLngs(new LatLng(currentLat,currentLng));
                     if (lastLat == 0) {
                         exerciseTrackingInit();
                     }
@@ -231,6 +233,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
                         }
                         drawPausePolyline();
                     }
+
                     setLastLatLng(currentLat, currentLng);
                 } catch (Exception e) {
                 }
@@ -291,7 +294,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
     }
 
     public void sendSocket() {
-
+        WebSocketService.mSocket.emit("UpdataCoordinate","{\"roomName\":\""+WebSocketService.roomName+"\",\"latitude\":"+currentLat+",\"longitude\":"+currentLng+"}");
     }
 
     @Override
@@ -717,6 +720,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
         try {
             jsonDT = new JSONObject(getIntent().getStringExtra("jsonString"));
             Log.d("<>",jsonDT.toString());
+            WebSocketService.roomName = jsonDT.getString("roomName");
             JSONArray tmp = jsonDT.getJSONArray("users");
             Gson gson = new Gson();
             Type type = new TypeToken<ArrayList<MultiUserModel>>(){}.getType();
@@ -925,6 +929,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
                         String d = String.format(getString(R.string.tts_type), (int) kcal, walkingDistance / 1000.0, hour, min, sec);
                         playTTS(d);
                     }
+
                 } else {
                     String str = String.format(getString(R.string.pause_text) + "%02d:%02d:%02d", hour, min, sec);
                     binding.pauseText.setText(str);
@@ -956,6 +961,25 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
             stopZombie();
             splayTTS(mctx.getString(R.string.died));
             sstop(); //종료하고 싶으면
+        }
+    }
+
+    public void getDistanceBetweenLatLngs(LatLng l1) {
+        Location ll1 = new Location("ll1");
+        ll1.setLatitude(l1.latitude);
+        ll1.setLongitude(l1.longitude);
+
+        for(int i = 0; i<itemMarkerList.size();i++) {
+            Location ll2 = new Location("ll2");
+            ll2.setLatitude(itemMarkerList.get(i).getPosition().latitude);
+            ll2.setLongitude(itemMarkerList.get(i).getPosition().longitude);
+
+            double len = Math.round(ll1.distanceTo(ll2) *100) / 100.0; //단위는 1m
+            if(len <= 5) {
+                WebSocketService.mSocket.emit("getItem","{\"roomName\":\""+WebSocketService.roomName+"\"}");
+                itemMarkerList.get(i).remove();
+                itemMarkerList.remove(i);
+            }
         }
     }
 

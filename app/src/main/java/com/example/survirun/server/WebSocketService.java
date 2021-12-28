@@ -38,7 +38,7 @@ import io.socket.engineio.client.Transport;
 
 public class WebSocketService extends AppCompatActivity {
     public static Socket mSocket;
-    public static int roomName;
+    public static String roomName;
     private Gson gson = new Gson();
     SharedPreferences loginSf;
     String token;
@@ -153,7 +153,6 @@ public class WebSocketService extends AppCompatActivity {
                             MultiMapActivity.mMap.addMarker(markerOptions);
                         }
                     });*/
-
                     //
                     LatLngData latlngData = gson.fromJson(args[0].toString(), LatLngData.class);
                     MarkerOptions tempMarkerOpt = new MarkerOptions();
