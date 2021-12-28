@@ -124,6 +124,9 @@
         <entry key="..\:/Users/iou10/AndroidStudioProjects/Survirun/app/src/main/res/layout/fragment_statistics.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/iou10/AndroidStudioProjects/Survirun/app/src/main/res/layout/fragment_user.xml" value="0.17407407407407408" />
         <entry key="..\:/Users/iou10/AndroidStudioProjects/Survirun/app/src/main/res/layout/itemexercise.xml" value="0.25364583333333335" />
+        <entry key="app/src/main/res/layout/activity_map.xml" value="0.3302083333333333" />
+        <entry key="app/src/main/res/layout/activity_multi.xml" value="0.16058763931104356" />
+        <entry key="app/src/main/res/layout/activity_queue.xml" value="0.16058763931104356" />
       </map>
     </option>
   </component>

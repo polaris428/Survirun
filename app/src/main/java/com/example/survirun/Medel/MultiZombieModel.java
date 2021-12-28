@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.example.survirun.R;
 import com.example.survirun.activity.exercise.MultiMapActivity;
+import com.example.survirun.server.WebSocketService;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -153,6 +154,7 @@ public class MultiZombieModel {
             thread = new Thread(new MultiZombieModel.zombieMoveThread());
             isRun = true;
             thread.start();
+            //WebSocketService.mSocket.io()
             //this.options.icon(BitmapDescriptorFactory.fromResource(markerImageResourceId));
         }
 
