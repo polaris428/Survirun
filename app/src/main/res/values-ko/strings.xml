@@ -163,4 +163,7 @@
     <string name="no_mark_ranking">랭킹에 표시할 친구가 없습니다</string>
     <string name="zombies_not_appear">이 모드에서는 좀비가 나타나지 않습니다.</string>
     <string name="chart">차트</string>
+    <string name="check_status">능력치 확인하기</string>
+    <string name="status">능력치</string>
+    <string name="closing_status">능력치 닫기</string>
 </resources>

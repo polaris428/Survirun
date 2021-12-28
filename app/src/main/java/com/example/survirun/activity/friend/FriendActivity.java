@@ -222,6 +222,7 @@ public class FriendActivity extends AppCompatActivity {
                     binding.friendListRecyclerView.setAdapter(friendAdapter);
                     LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
                     binding.friendListRecyclerView.setLayoutManager(mLinearLayoutManager);
+                    isLoading = false;
                 } catch (Exception e) {
 
                 }
@@ -230,7 +231,6 @@ public class FriendActivity extends AppCompatActivity {
         InsertRunnable insertRunnable = new InsertRunnable();
         Thread t = new Thread(insertRunnable);
         t.start();
-        isLoading = false;
         showSampleData();
 
     }

@@ -49,10 +49,10 @@ public class CharacterFragment extends Fragment {
         dialog.setContentView(R.layout.dialog);
 
         slidingDrawer.setOnDrawerOpenListener(() -> {
-            button.setText("능력치 닫기");
+            button.setText(R.string.closing_status);
         });
         slidingDrawer.setOnDrawerCloseListener(() -> {
-            button.setText("능력치 확인하기");
+            button.setText(R.string.check_status);
         });
         if (page == R.layout.fragment_character1) {
             view.findViewById(R.id.character1).setOnClickListener(v -> {
