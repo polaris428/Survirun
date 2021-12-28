@@ -59,6 +59,7 @@
                 android:id="@+id/survivor_imageView"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:src="@drawable/ic_survior"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/survivor_title" />
@@ -138,7 +139,7 @@
                 android:id="@+id/researcher_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="연구원"
+                android:text="미친 과학자"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -149,6 +150,7 @@
                 android:id="@+id/researcher_imageView"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:src="@drawable/ic_scientist"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/researcher_title" />
