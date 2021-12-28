@@ -210,17 +210,9 @@ public class FriendActivity extends AppCompatActivity {
             finish();
         });
 
-
-        //binding.friendListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        /*binding.findFriends.setOnClickListener(v -> {
-
-
-        });*/
     }
 
     void getFriend() {
-        isLoading = false;
-        showSampleData();
         class InsertRunnable implements Runnable {
             @Override
             public void run() {
@@ -238,6 +230,9 @@ public class FriendActivity extends AppCompatActivity {
         InsertRunnable insertRunnable = new InsertRunnable();
         Thread t = new Thread(insertRunnable);
         t.start();
+        isLoading = false;
+        showSampleData();
+
     }
 
     @Override
