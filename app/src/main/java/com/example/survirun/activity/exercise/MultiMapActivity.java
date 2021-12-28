@@ -39,6 +39,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.survirun.Medel.MultiUserModel;
 import com.example.survirun.Medel.MultiZombieModel;
 import com.example.survirun.R;
 import com.example.survirun.databinding.ActivityMapBinding;
@@ -51,9 +52,13 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,8 +69,6 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     private static final int DEFAULT_KCAL_WEIGHT = 80;
     public static MediaPlayer mediaPlayer;
-    private static int ZOMBIE_CREATE_MINUTES = 2;
-    private static int MAX_ZB_CNT = 0;
     public static int HP = 100;
     public static int minusHp = 20;
 
@@ -96,10 +99,6 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
     private static Thread timeThread = null;
     public static ActivityMultiMapBinding binding;
 
-    private static int kcalMok;
-    private static int timeMok; //sec
-    private static double kmMok;
-    private static int levelMok;
     private static boolean zombieMode;
     public static SupportMapFragment mapFragment;
 
@@ -107,6 +106,8 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
     private int zombieListCurrentPos = 0; // +1 해서 좀데 리스트 요소 개수 ㄱㄴ
     Dialog dialog;
     private static String title;
+    public static ArrayList<MultiUserModel> userList;
+    public static ArrayList<Marker> markerList = new ArrayList<>();
 
     @SuppressLint("MissingPermission")
     @Override
@@ -117,6 +118,21 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
         setContentView(view);
         mctx = this;
         Intent getIntent = getIntent();
+        JSONObject jsonDT;
+        try {
+            jsonDT = new JSONObject(getIntent.getStringExtra("jsonString"));
+            userList = (ArrayList<MultiUserModel>) jsonDT.get("users");
+            for(int i =0; i<3;i++) {
+                MarkerOptions tempOpt = new MarkerOptions();
+                tempOpt.position(new LatLng(userList.get(i).latitude, userList.get(i).longitude));
+                Marker tempMk = mMap.addMarker(tempOpt);
+                markerList.add(tempMk);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
 
 
         //Log.d(title,title);
@@ -126,13 +142,6 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
         dialog.setContentView(R.layout.dialog);
 
         title = getIntent.getStringExtra("title");
-        zombieMode = getIntent.getBooleanExtra("zombieMode", true);
-        kmMok = getIntent().getDoubleExtra("km", 1);
-        timeMok = getIntent().getIntExtra("time", 1);
-        kcalMok = getIntent().getIntExtra("calorie", 1);
-        levelMok = getIntent.getIntExtra("level", 0);
-        Log.e(">>>>>", kmMok + " " + timeMok + " " + kcalMok);
-        MAX_ZB_CNT = getIntent().getIntExtra("zombieCount", 3);
 
         showSnackBar(view);
 
@@ -450,13 +459,6 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
             intent.putExtra("timeToSec", (int) timeToSec);
             intent.putExtra("title", title);
             intent.putExtra("hp", HP);
-            //intent.putExtra()
-            //intent.putExtra("title",title);
-            intent.putExtra("calorie", kcalMok);
-            intent.putExtra("km", kmMok);
-            intent.putExtra("time", timeMok);
-            intent.putExtra("level", levelMok);
-            intent.putExtra("zombieCount", MAX_ZB_CNT);
 
 
             polylineOptions = new PolylineOptions();
@@ -550,11 +552,6 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
                 intent.putExtra("timeToSec", (int) timeToSec);
                 intent.putExtra("title", title);
                 intent.putExtra("hp", HP);
-                intent.putExtra("calorie", kcalMok);
-                intent.putExtra("km", kmMok);
-                intent.putExtra("time", timeMok);
-                intent.putExtra("level", levelMok);
-                intent.putExtra("zombieCount", MAX_ZB_CNT);
 
                 mctx.startActivity(intent);
 
@@ -879,19 +876,15 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
                     String str = String.format(getString(R.string.pause_text) + "%02d:%02d:%02d", hour, min, sec);
                     binding.pauseText.setText(str);
                 }
-                if (zombieMode) {
-                    if (isRunning) {
-                        if ((timeToSec1 / 60) % ZOMBIE_CREATE_MINUTES == 0 && timeToSec1 % 60 == 0 && isZombieCreating && timeToSec1 >= 60) {
-                            if (zombieList.size() < MAX_ZB_CNT) createZombie();
-                        }
+
+                if (isRunning) {
+                    if (isZombieCreating && timeToSec1 == 60) {
+                        createZombie();
                     }
                 }
 
-                /*목표달성체크*/
-                if (kcal >= kcalMok && (walkingDistance / 1000) >= kmMok && timeToSec >= timeMok) {
-                    playTTS(getString(R.string.mok_cl));
-                    stop();
-                }
+
+
 
             } catch (Exception e) {
                 Log.e("<MapActivity, Time Handler> : ", e.getMessage());
