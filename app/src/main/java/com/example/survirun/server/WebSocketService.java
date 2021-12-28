@@ -8,9 +8,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.airbnb.lottie.L;
 import com.example.survirun.activity.exercise.MultiMapActivity;
 import com.example.survirun.data.CoordinateData;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -61,6 +63,23 @@ public class WebSocketService extends AppCompatActivity {
         public void call(Object... args) {
             try {
                 JSONObject userObj= new JSONObject(args[0].toString());
+                for(int i=0;i<3;i++) {
+                    if(MultiMapActivity.userList.get(i).username.equals(userObj.getString("userName"))) {
+                        MultiMapActivity.markerList.get(i).remove();
+                        MarkerOptions temp1 = new MarkerOptions();
+                        temp1.position(new LatLng(userObj.getDouble("latitude"), userObj.getDouble("longitude")));
+                        int idx= i;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                MultiMapActivity.markerList.set(idx, MultiMapActivity.mMap.addMarker(temp1));
+                            }
+                        });
+
+
+                        break;
+                    }
+                }
 
             }catch (JSONException err){
                 Log.d("Error", err.toString());
