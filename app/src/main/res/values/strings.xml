@@ -190,4 +190,6 @@
     <string name="kim_info">A prestigious researcher at S University.\nShe is studying zombie materials\nto treat people who turned into zombies.</string>
     <string name="rex_info">A secret agent whose name and age are unknown.\nMay be he knows the cause of the zombie incident.</string>
     <string name="choose_ch">Do you want to choose %s as\nthe main character?</string>
+    <string name="sending_signal">Sending signals through\nthe walkie-talkie...</string>
+    <string name="disconnect">Do you want to disconnect\nthe communication?</string>
 </resources>

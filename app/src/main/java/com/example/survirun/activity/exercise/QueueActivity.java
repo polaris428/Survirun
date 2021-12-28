@@ -2,13 +2,21 @@ package com.example.survirun.activity.exercise;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.survirun.R;
+import com.example.survirun.activity.MainActivity;
 import com.example.survirun.data.EnqueueSocketData;
 import com.example.survirun.databinding.ActivityMultiMapBinding;
 import com.example.survirun.databinding.ActivityQueueBinding;
@@ -37,6 +45,7 @@ public class QueueActivity extends AppCompatActivity {
     SharedPreferences loginSf;
     String token;
     private boolean isEnqueue = false;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +53,22 @@ public class QueueActivity extends AppCompatActivity {
         binding = ActivityQueueBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+
+        dialog = new Dialog(QueueActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.dialog);
+
+
         loginSf = getSharedPreferences("Login", MODE_PRIVATE);
         token = loginSf.getString("token", "");
         initAndConnectSocket();
         enqueue();
+
+        final AnimationDrawable drawableCommunicate =
+                (AnimationDrawable) binding.communicateImageView.getBackground();
+        drawableCommunicate.start();
 
 
     }
@@ -83,8 +104,7 @@ public class QueueActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        leaveQueue();
-        super.onBackPressed();
+        showDialog();
     }
 
     @Override
@@ -92,6 +112,20 @@ public class QueueActivity extends AppCompatActivity {
         leaveQueue();
         super.onDestroy();
 
+    }
+
+    public void showDialog() {
+        Button yesButton = dialog.findViewById(R.id.yes_button);
+        Button cancelButton = dialog.findViewById(R.id.cancel_button);
+        TextView textView = dialog.findViewById(R.id.explain_textView);
+        textView.setText(R.string.disconnect);
+        dialog.show();
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
+        yesButton.setOnClickListener(v -> {
+            leaveQueue();
+            dialog.dismiss();
+            super.onBackPressed();
+        });
     }
 
     // 뒤로가는 경우 반드시 큐 아웃 요청
