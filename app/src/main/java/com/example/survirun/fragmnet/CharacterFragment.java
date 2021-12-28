@@ -56,22 +56,22 @@ public class CharacterFragment extends Fragment {
         });
         if (page == R.layout.fragment_character1) {
             view.findViewById(R.id.character1).setOnClickListener(v -> {
-                showDialog("캐릭터1", 1);
+                showDialog(getString(R.string.ahn), 1);
             });
         }
         if (page == R.layout.fragment_character2) {
             view.findViewById(R.id.character2).setOnClickListener(v -> {
-                showDialog("캐릭터2", 2);
+                showDialog(getString(R.string.gang), 2);
             });
         }
         if (page == R.layout.fragment_character3) {
             view.findViewById(R.id.character3).setOnClickListener(v -> {
-                showDialog("캐릭터3", 3);
+                showDialog(getString(R.string.kim), 3);
             });
         }
         if (page == R.layout.fragment_character4) {
             view.findViewById(R.id.character4).setOnClickListener(v -> {
-                showDialog("캐릭터4", 4);
+                showDialog(getString(R.string.rex), 4);
             });
         }
         return view;
@@ -85,7 +85,7 @@ public class CharacterFragment extends Fragment {
         Button yesButton = dialog.findViewById(R.id.yes_button);
         Button cancelButton = dialog.findViewById(R.id.cancel_button);
         TextView textView = dialog.findViewById(R.id.explain_textView);
-        textView.setText(name+"을(를) 메인캐릭터로\n선택하시겠습니까?");
+        textView.setText(String.format(getString(R.string.choose_ch), name));
         dialog.show();
         cancelButton.setOnClickListener(v -> dialog.dismiss());
         yesButton.setOnClickListener(v -> {
