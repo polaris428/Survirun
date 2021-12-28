@@ -606,6 +606,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(new LatLng(currentLat, currentLng));
         markerOptions.title(getString(R.string.base_camp));
+
         BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.base_camp);
         Bitmap b = bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 200, 200, false);
@@ -728,6 +729,13 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
             for(int i =0; i<3;i++) {
                 if (i == 0) {
                     MarkerOptions tempOptLab = new MarkerOptions();
+                    BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.laboratory);
+                    Bitmap b = bitmapdraw.getBitmap();
+                    Bitmap smallMarker = Bitmap.createScaledBitmap(b, 200, 200, false);
+                    tempOptLab.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+
+
+
                     tempOptLab.position(new LatLng(userList.get(i).latitude, userList.get(i).longitude));
                     //BitmapDrawable bitmapdraw=(BitmapDrawable)this.getResources().getDrawable(R.drawable.ic_laboratory);
                     //Bitmap b=bitmapdraw.getBitmap();
