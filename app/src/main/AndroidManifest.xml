@@ -32,6 +32,9 @@
             android:name=".activity.exercise.MultiActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.exercise.MultiMapActivity"
+            android:exported="false" />
+        <activity
             android:name=".ExerciseMulti"
             android:exported="false" />
         <activity
