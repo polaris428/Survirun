@@ -249,6 +249,7 @@ public class WebSocketService extends AppCompatActivity {
                         public void run() {
                             int idx= tempInt;
                             try {
+                                //MultiMapActivity.userList[idx]
                                 if(MultiMapActivity.userList.get(idx).username.equals(userObj.getString("userName"))) {
                                     MultiMapActivity.markerList.get(idx).remove();
                                     MarkerOptions temp1 = new MarkerOptions();
@@ -265,7 +266,7 @@ public class WebSocketService extends AppCompatActivity {
                                         }
                                     });
                                 }
-                            } catch (JSONException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
