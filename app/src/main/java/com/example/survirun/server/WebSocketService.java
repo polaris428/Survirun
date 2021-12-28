@@ -58,6 +58,8 @@ public class WebSocketService extends AppCompatActivity {
             mSocket.on("UpdataCoordinate",updataCoordinate);
             mSocket.on("subscribe",subscribe);
             mSocket.on("makeBox",makeBox);
+            mSocket.on("getItem",getItem);
+            mSocket.on("deleteItem",deleteItem);
         } catch (URISyntaxException e) {
             e.printStackTrace();
 
@@ -133,6 +135,20 @@ public class WebSocketService extends AppCompatActivity {
     };
 
     private static Emitter.Listener onConnect = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+
+        }
+    };
+
+    private static Emitter.Listener getItem = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+
+        }
+    };
+
+    private static Emitter.Listener deleteItem = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
 
