@@ -17,6 +17,7 @@
         <item name="colorBox">@color/transparent</item>
         <item name="colorBackground">@color/red</item>
         <item name="colorNameBackground">@color/red</item>
+        <item name="mainBackground">@drawable/back_</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
@@ -56,4 +57,5 @@
     <attr format="color" name="colorUserText"/>
     <attr format="color" name="colorBackground"/>
     <attr format="color" name="colorNameBackground"/>
+    <attr format="color" name="mainBackground"/>
 </resources>

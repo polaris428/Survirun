@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragmnet.StatisticsFragment">
+    tools:context=".fragmnet.StatisticsFragment"
+    android:paddingBottom="60dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/ExerciseMessage"
@@ -152,7 +153,7 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="50dp"
-                android:layout_marginBottom="80dp"
+                android:layout_marginBottom="20dp"
                 app:cardCornerRadius="30dp"
                 app:cardElevation="5dp">
 

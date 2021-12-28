@@ -36,7 +36,7 @@
     <string name="need_location">You need location access to run this app.</string>
     <string name="permission_error_re_run">Permission denied.\nPlease re-run the app to allow permission.</string>
     <string name="permission_error_allow_setting">Permission denied.\nPermissions must be allowed in settings (app information).</string>
-    <string name="tts_type">Now you burned %d kilocalories and ran a total of %.2f kilometers. So far, you\'ve exercised %d hour, %d minute and %d second.</string>
+    <string name="tts_type" formatted="false">Now you burned %d kilocalories and ran a total of %.2f kilometers. So far, you\'ve exercised %d hour, %d minute and %d second.</string>
     <string name="pause_text">Since you starting resting,\n</string>
     <string name="total_exercise">Total Exercise</string>
     <string name="exercise_time_br">Exercise\nTime</string>
