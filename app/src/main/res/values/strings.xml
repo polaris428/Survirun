@@ -167,4 +167,27 @@
     <string name="check_status">Check your status</string>
     <string name="status">Status</string>
     <string name="closing_status">Closing status</string>
+    <string name="radio_communication">Radio communication</string>
+    <string name="press_down_explanation">Tip. Press down on the roles to see the explanation.</string>
+    <string name="survivor">Survivor</string>
+    <string name="win_condition">Win condition</string>
+    <string name="researcher">Researcher</string>
+    <string name="explode_institutes">Explode all the\nresearch institutes.</string>
+    <string name="kill_survivor">Kill all survivors.\n</string>
+    <string name="finding_bread">Finding bread. (Fully recovered 10)</string>
+    <string name="ahn">Ahn Do-hwi</string>
+    <string name="gang">Gang Cheol</string>
+    <string name="supplies">Supplies. (Obtained items)</string>
+    <string name="kim">Seri Kim</string>
+    <string name="remove_zombie">Remove zombie substances</string>
+    <string name="rex">Rex</string>
+    <string name="choose_character">Choose one and touch the character</string>
+    <string name="mode_selection">Mode selection</string>
+    <string name="running_alone">Running alone</string>
+    <string name="running_together">Running together</string>
+    <string name="ahn_info">High school student.\nHe always carry bread from the snack bar.</string>
+    <string name="gang_info">He is fighting zombies to protect people\non his own when zombies suddenly appeared\non vacation and lost contact with his superiors.</string>
+    <string name="kim_info">A prestigious researcher at S University.\nShe is studying zombie materials\nto treat people who turned into zombies.</string>
+    <string name="rex_info">A secret agent whose name and age are unknown.\nMay be he knows the cause of the zombie incident.</string>
+    <string name="choose_ch">Do you want to choose %s as\nthe main character?</string>
 </resources>

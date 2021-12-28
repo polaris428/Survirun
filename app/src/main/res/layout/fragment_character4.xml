@@ -18,7 +18,7 @@
         android:id="@+id/character_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="보노보노"
+        android:text="@string/rex"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/character_info"
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="어쩌구저꺼루\n어쩡ㄱ윰ㄴㅇㄹ\naskdjfl;sdfk"
+        android:text="@string/rex_info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,6 +106,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:max="10"
+                        android:progress="10"
                         app:layout_constraintTop_toBottomOf="@id/text2"
                         app:trackThickness="8dp" />
 
@@ -125,6 +127,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:max="5"
+                        android:progress="5"
                         app:layout_constraintTop_toBottomOf="@id/text3"
                         app:trackThickness="8dp" />
 
@@ -144,6 +148,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:max="10"
+                        android:progress="10"
                         app:layout_constraintTop_toBottomOf="@id/text4"
                         app:trackThickness="8dp" />
 
@@ -162,7 +168,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="어쩌구저쩌구솰라라랄ㄹ"
+                        android:text="@string/supplies"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/text5" />
