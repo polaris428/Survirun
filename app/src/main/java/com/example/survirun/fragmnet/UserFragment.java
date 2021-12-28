@@ -57,8 +57,7 @@ public class UserFragment extends Fragment {
         name=sf.getString("name","");
         exercise=getContext().getSharedPreferences("exercise",MODE_PRIVATE);
 
-        character = getContext().getSharedPreferences("character", MODE_PRIVATE);
-        characterNum = character.getInt("num", 1);
+
 
         binding.dateTextview.setText(exercise.getString("data",""));
         score(exercise.getInt("calorie",0),exercise.getInt("time",0),exercise.getFloat("km",0));
@@ -70,16 +69,7 @@ public class UserFragment extends Fragment {
             startActivity(intent);
         });
 
-        switch (characterNum){
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-        }
+
 
         return view;
     }
@@ -158,5 +148,24 @@ public class UserFragment extends Fragment {
         }
     }
 
+    public void onStart(){
+        super.onStart();
+        character = getContext().getSharedPreferences("character", MODE_PRIVATE);
+        characterNum = character.getInt("num", 1);
+        switch (characterNum){
+            case 1:
+                binding.characterImageView.setImageResource(R.drawable.student);
+                break;
+            case 2:
+                binding.characterImageView.setImageResource(R.drawable.military_man);
+                break;
+            case 3:
+                binding.characterImageView.setImageResource(R.drawable.scientist);
+                break;
+            case 4:
+                binding.characterImageView.setImageResource(R.drawable.agent);;
+                break;
+        }
+    }
 
 }

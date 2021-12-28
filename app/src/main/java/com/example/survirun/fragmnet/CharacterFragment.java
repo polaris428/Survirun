@@ -80,8 +80,6 @@ public class CharacterFragment extends Fragment {
     public void showDialog(String name, int num) {
         SharedPreferences sf = getActivity().getSharedPreferences("character", 0);
         editor = sf.edit();
-        editor.putInt("num", num);
-        editor.commit();
         Button yesButton = dialog.findViewById(R.id.yes_button);
         Button cancelButton = dialog.findViewById(R.id.cancel_button);
         TextView textView = dialog.findViewById(R.id.explain_textView);
@@ -89,7 +87,8 @@ public class CharacterFragment extends Fragment {
         dialog.show();
         cancelButton.setOnClickListener(v -> dialog.dismiss());
         yesButton.setOnClickListener(v -> {
-            ///여기 캐릭터 변경 서버로 보내는 코드
+            editor.putInt("num", num);
+            editor.commit();
             getActivity().finish();
         });
     }
