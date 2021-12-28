@@ -110,6 +110,8 @@ public class SignUpNameActivity extends AppCompatActivity {
                             editor.putString("name", name);
                             editor.commit();
                             customProgressDialog.dismiss();
+                            Intent intent = new Intent(SignUpNameActivity.this, SignUpProfileActivity.class);
+                            startActivity(intent);
                             finish();
                         } else {
                             response.errorBody();
@@ -150,14 +152,4 @@ public class SignUpNameActivity extends AppCompatActivity {
         });
     }
 
-    protected void onPause() {
-        super.onPause();
-        if (!checkFirstAccess && !isBack) {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("checkFirstAccess", true);
-            editor.apply();
-            Intent tutorialIntent = new Intent(SignUpNameActivity.this, SignUpProfileActivity.class);
-            startActivity(tutorialIntent);
-        }
-    }
 }

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.view.View;
@@ -47,6 +48,31 @@ public class CharacterChangeActivity extends AppCompatActivity {
             int current = binding.characterPager.getCurrentItem();
             if(current!=3){
                 binding.characterPager.setCurrentItem(current+1);
+            }
+        });
+
+        binding.characterPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if(position==0){
+                    binding.leftButton.setVisibility(View.GONE);
+                    binding.circleImageView.setImageResource(R.drawable.ic_circle_1);
+                }
+                else if(position==1){
+                    binding.leftButton.setVisibility(View.VISIBLE);
+                    binding.rightButton.setVisibility(View.VISIBLE);
+                    binding.circleImageView.setImageResource(R.drawable.ic_circle_2);
+                }
+                else if(position==2){
+                    binding.leftButton.setVisibility(View.VISIBLE);
+                    binding.rightButton.setVisibility(View.VISIBLE);
+                    binding.circleImageView.setImageResource(R.drawable.ic_circle_3);
+                }
+                else if(position==3){
+                    binding.rightButton.setVisibility(View.GONE);
+                    binding.circleImageView.setImageResource(R.drawable.ic_circle_4);
+                }
             }
         });
         FragmentStateAdapter welcomePagerAdapter = new ScreenSlidePagerAdapter(this, characterLayouts);

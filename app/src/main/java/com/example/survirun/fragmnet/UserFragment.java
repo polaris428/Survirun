@@ -57,7 +57,7 @@ public class UserFragment extends Fragment {
         name=sf.getString("name","");
         exercise=getContext().getSharedPreferences("exercise",MODE_PRIVATE);
 
-
+        binding.changeButton.setColorFilter(ContextCompat.getColor(getContext(),R.color.white));
 
         binding.dateTextview.setText(exercise.getString("data",""));
         score(exercise.getInt("calorie",0),exercise.getInt("time",0),exercise.getFloat("km",0));

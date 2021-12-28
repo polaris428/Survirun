@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/character1"
@@ -10,14 +10,15 @@
         android:layout_height="500dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/student"
-        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintBottom_toTopOf="@id/character_name"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/character_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="@string/ahn"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -30,150 +31,155 @@
         android:id="@+id/character_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:text="@string/ahn_info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/character_name" />
-        <SlidingDrawer
-            android:id="@+id/sliding_drawer"
-            android:layout_width="match_parent"
+
+    <SlidingDrawer
+        android:id="@+id/sliding_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:allowSingleTap="true"
+        android:animateOnClick="true"
+        android:content="@id/content"
+        android:handle="@id/handle"
+        android:orientation="vertical"
+        android:topOffset="380dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/handle"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:allowSingleTap="true"
-            android:animateOnClick="true"
-            android:handle="@id/handle"
-            android:content="@id/content"
-            android:orientation="vertical"
-            android:topOffset="380dp"
-            app:layout_constraintBottom_toBottomOf="parent">
-            <Button
-                android:id="@+id/handle"
-                android:layout_width="wrap_content"
+            android:text="@string/check_status"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/stamina_cardView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/check_status"
-                android:textSize="13sp"
-                style="@style/Widget.MaterialComponents.Button.TextButton"/>
-            <LinearLayout
-                android:id="@+id/content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/character_info">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/stamina_cardView"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginBottom="20dp"
-                    app:cardCornerRadius="30dp"
-                    app:cardElevation="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/character_info">
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="12dp">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:id="@+id/text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/status"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:text="HP"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/text1" />
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/HP_progress"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingHorizontal="20dp"
-                        android:paddingVertical="12dp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:max="10"
+                        android:progress="8"
+                        app:layout_constraintTop_toBottomOf="@id/text2"
+                        app:trackThickness="8dp" />
 
-                        <TextView
-                            android:id="@+id/text1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/status"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                        <TextView
-                            android:id="@+id/text2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="14dp"
-                            android:text="HP"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/text1" />
+                    <TextView
+                        android:id="@+id/text3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:text="ATK"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/HP_progress" />
 
-                        <com.google.android.material.progressindicator.LinearProgressIndicator
-                            android:id="@+id/HP_progress"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:max="10"
-                            android:progress="8"
-                            app:layout_constraintTop_toBottomOf="@id/text2"
-                            app:trackThickness="8dp" />
-                        <TextView
-                            android:id="@+id/text3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="14dp"
-                            android:text="ATK"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/HP_progress" />
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/ATK_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:max="5"
+                        android:progress="1"
+                        app:layout_constraintTop_toBottomOf="@id/text3"
+                        app:trackThickness="8dp" />
 
-                        <com.google.android.material.progressindicator.LinearProgressIndicator
-                            android:id="@+id/ATK_progress"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:max="5"
-                            android:progress="1"
-                            app:layout_constraintTop_toBottomOf="@id/text3"
-                            app:trackThickness="8dp" />
+                    <TextView
+                        android:id="@+id/text4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:text="DEF"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ATK_progress" />
 
-                        <TextView
-                            android:id="@+id/text4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="14dp"
-                            android:text="DEF"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/ATK_progress" />
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/DEF_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:max="10"
+                        android:progress="1"
+                        app:layout_constraintTop_toBottomOf="@id/text4"
+                        app:trackThickness="8dp" />
 
-                        <com.google.android.material.progressindicator.LinearProgressIndicator
-                            android:id="@+id/DEF_progress"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:max="10"
-                            android:progress="1"
-                            app:layout_constraintTop_toBottomOf="@id/text4"
-                            app:trackThickness="8dp" />
+                    <TextView
+                        android:id="@+id/text5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:text="Skill"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/DEF_progress" />
 
-                        <TextView
-                            android:id="@+id/text5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="14dp"
-                            android:text="Skill"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/DEF_progress" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/finding_bread"
-                            android:textSize="14sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/text5" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/finding_bread"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/text5" />
 
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
-        </SlidingDrawer>
-
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </SlidingDrawer>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
