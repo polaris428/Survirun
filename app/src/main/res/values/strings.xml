@@ -192,4 +192,5 @@
     <string name="choose_ch">Do you want to choose %s as\nthe main character?</string>
     <string name="sending_signal">Sending signals through\nthe walkie-talkie...</string>
     <string name="disconnect">Do you want to disconnect\nthe communication?</string>
+    <string name="apply_base_camp">Apply for the base camp</string>
 </resources>

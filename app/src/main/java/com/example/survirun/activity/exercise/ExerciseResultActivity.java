@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.example.survirun.Medel.ScoreModel;
@@ -73,6 +74,7 @@ public class ExerciseResultActivity extends AppCompatActivity {
         binding.exerciseTitleTextview.setText(title);
 
         customProgressDialog = new ProgressDialog(this);
+        customProgressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         int sec = timeToSec % 60;
