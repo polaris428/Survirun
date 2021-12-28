@@ -130,8 +130,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
         setContentView(view);
         mctx = this;
         Intent getIntent = getIntent();
-
-
+        WebSocketService.socketConnect();
 
 
 

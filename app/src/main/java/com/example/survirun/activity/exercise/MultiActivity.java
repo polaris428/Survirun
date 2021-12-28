@@ -18,10 +18,10 @@ public class MultiActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.startButton.setOnClickListener(v -> {
-            Intent t = new Intent(MultiActivity.this, QueueActivity.class);
-            /*Intent t = new Intent(MultiActivity.this, MultiMapActivity.class);
+            //Intent t = new Intent(MultiActivity.this, QueueActivity.class);
+            Intent t = new Intent(MultiActivity.this, MultiMapActivity.class);
             String k = "{\"roomName\":1,\"users\":[{\"email\":\"sadf@sdf.com\",\"username\":\"ttt\",\"latitude\":37.121,\"longitude\":121.213,\"role\":1},{\"email\":\"sad1f@sdf.com\",\"username\":\"12314\",\"latitude\":37.163,\"longitude\":122.1152,\"role\":0},{\"email\":\"iam@2tle.io\",\"username\":\"Dobby\",\"latitude\":37.555,\"longitude\":122.1134,\"role\":0}]}";
-            t.putExtra("jsonString",k);*/
+            t.putExtra("jsonString",k);
             startActivity(t);
         });
 

@@ -1,5 +1,6 @@
 package com.example.survirun.server;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -39,12 +40,14 @@ import io.socket.engineio.client.Transport;
 public class WebSocketService extends AppCompatActivity {
     public static Socket mSocket;
     public static String roomName;
-    private Gson gson = new Gson();
-    SharedPreferences loginSf;
-    String token;
-    public void socketConnect(){
+    private static Gson gson = new Gson();
+    static SharedPreferences loginSf;
+    static String token;
+    public static int tempInt = 0;
+    //public static void c() { socketConnect()}
+    public static void socketConnect(){
         try {
-            loginSf = getSharedPreferences("Login", MODE_PRIVATE);
+            loginSf = MultiMapActivity.mctx.getSharedPreferences("Login", MODE_PRIVATE);
             token = loginSf.getString("token", "");
 
 
@@ -63,27 +66,41 @@ public class WebSocketService extends AppCompatActivity {
     }
 
     //사용자 위치 업데이-트
-    private Emitter.Listener updataCoordinate = new Emitter.Listener() {
+    private static Emitter.Listener updataCoordinate = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             try {
                 JSONObject userObj= new JSONObject(args[0].toString());
+                Log.d("<TS1>",userObj.getString("userName")+userObj.getDouble("latitude")+userObj.getDouble("longitude"));
                 for(int i=0;i<3;i++) {
-                    if(MultiMapActivity.userList.get(i).username.equals(userObj.getString("userName"))) {
-                        MultiMapActivity.markerList.get(i).remove();
-                        MarkerOptions temp1 = new MarkerOptions();
-                        temp1.position(new LatLng(userObj.getDouble("latitude"), userObj.getDouble("longitude")));
-                        int idx= i;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                MultiMapActivity.markerList.set(idx, MultiMapActivity.mMap.addMarker(temp1));
+                    tempInt = i;
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            int idx= tempInt;
+                            try {
+                                if(MultiMapActivity.userList.get(idx).username.equals(userObj.getString("userName"))) {
+                                    MultiMapActivity.markerList.get(idx).remove();
+                                    MarkerOptions temp1 = new MarkerOptions();
+                                    try {
+                                        temp1.position(new LatLng(userObj.getDouble("latitude"), userObj.getDouble("longitude")));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    ((Activity)MultiMapActivity.mctx).runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            MultiMapActivity.markerList.set(idx, MultiMapActivity.mMap.addMarker(temp1));
+                                        }
+                                    });
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        });
+                        }
+                    });
 
-
-                        break;
-                    }
                 }
 
             }catch (JSONException err){
@@ -95,7 +112,7 @@ public class WebSocketService extends AppCompatActivity {
     };
 
     //헤더 보내기 위해
-    private Emitter.Listener onTransport = new Emitter.Listener() {
+    private static Emitter.Listener onTransport = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
 
@@ -115,21 +132,21 @@ public class WebSocketService extends AppCompatActivity {
         }
     };
 
-    private Emitter.Listener onConnect = (args) -> {
-        runOnUiThread(() -> {
-            Log.i("성공", "connected");
+    private static Emitter.Listener onConnect = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
 
-        });
+        }
     };
 
-    private  Emitter.Listener subscribe=new Emitter.Listener() {
+    private static Emitter.Listener subscribe=new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             Log.d("실행됨",args[0].toString());
         }
     };
 
-    private  Emitter.Listener makeBox=new Emitter.Listener() {
+    private static Emitter.Listener makeBox=new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             Handler handler = new Handler(Looper.getMainLooper());
@@ -154,37 +171,36 @@ public class WebSocketService extends AppCompatActivity {
                         }
                     });*/
                     //
-                    LatLngData latlngData = gson.fromJson(args[0].toString(), LatLngData.class);
-                    MarkerOptions tempMarkerOpt = new MarkerOptions();
-                    tempMarkerOpt.position(new LatLng(latlngData.latitude, latlngData.longitude));
+
                     /*아이템 */
 
-                    /* 아이템 마커뷰 이미지 지정 */
-                    //BitmapDrawable bdraw = (BitmapDrawable)MultiMapActivity.mctx.getResources().getDrawable();
-                    BitmapDrawable bitmapdraw=(BitmapDrawable)MultiMapActivity.mctx.getResources().getDrawable(R.drawable.box);
-                    Bitmap b=bitmapdraw.getBitmap();
-                    Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
-                    tempMarkerOpt.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-
-                    runOnUiThread(new Runnable() {
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
-                            MultiMapActivity.itemMarkerList.add(MultiMapActivity.mMap.addMarker(tempMarkerOpt));
+                            LatLngData latlngData = gson.fromJson(args[0].toString(), LatLngData.class);
+                            MarkerOptions tempMarkerOpt = new MarkerOptions();
+                            tempMarkerOpt.position(new LatLng(latlngData.latitude, latlngData.longitude));
+
+                            BitmapDrawable bitmapdraw=(BitmapDrawable)MultiMapActivity.mctx.getResources().getDrawable(R.drawable.box);
+                            Bitmap b=bitmapdraw.getBitmap();
+                            Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
+                            tempMarkerOpt.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+
+                            ((Activity)MultiMapActivity.mctx).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    MultiMapActivity.itemMarkerList.add(MultiMapActivity.mMap.addMarker(tempMarkerOpt));
+                                }
+                            });
+
                         }
                     });
 
-
-
+                    /* 아이템 마커뷰 이미지 지정 */
+                    //BitmapDrawable bdraw = (BitmapDrawable)MultiMapActivity.mctx.getResources().getDrawable();
 
                 }
             }, 0);
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-
-                }
-            });
 
         }
     };
