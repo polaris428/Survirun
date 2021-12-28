@@ -175,25 +175,31 @@ public class FriendActivity extends AppCompatActivity {
 
 
                 binding.addFriend.setOnClickListener(v1 -> {
+                    if(email.equals( binding.emileInputEditText.getText().toString())){
+                        Toast.makeText(getApplicationContext(), R.string.you_already_friend, Toast.LENGTH_LONG).show();
 
-                    Call<ResultData> call2 = ServerClient.getServerService().postAddFriend(token, "email", binding.emileInputEditText.getText().toString());
-                    call2.enqueue(new Callback<ResultData>() {
-                        @Override
-                        public void onResponse(Call<ResultData> call, Response<ResultData> response) {
-                            if (response.isSuccessful()) {
-                                Toast.makeText(FriendActivity.this, R.string.success_add_friend_text, Toast.LENGTH_LONG).show();
-                                refreshRecyclerView(getFriendEmail, friendName, profile);
-                            } else {
+                    }else{
+                        Call<ResultData> call2 = ServerClient.getServerService().postAddFriend(token, "email", binding.emileInputEditText.getText().toString());
+                        call2.enqueue(new Callback<ResultData>() {
+                            @Override
+                            public void onResponse(Call<ResultData> call, Response<ResultData> response) {
+                                if (response.isSuccessful()) {
+                                    Toast.makeText(FriendActivity.this, R.string.success_add_friend_text, Toast.LENGTH_LONG).show();
+                                    refreshRecyclerView(getFriendEmail, friendName, profile);
+                                } else {
 
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResultData> call, Throwable t) {
 
                             }
-                        }
+                        });
+                    }
 
-                        @Override
-                        public void onFailure(Call<ResultData> call, Throwable t) {
 
-                        }
-                    });
                 });
             }
         });
