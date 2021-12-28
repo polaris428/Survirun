@@ -14,9 +14,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -85,7 +88,14 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
 
         String story = "" + getText(R.string.story_profile);
         binding.textView.displayTextWithAnimation(story);
-        ;
+
+        final Animation animTransRight = AnimationUtils.loadAnimation(
+                this, R.anim.right_to_left);
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            binding.profileLayout.startAnimation(animTransRight);
+        }, 200);
+
 
         token = sf.getString("token", "");
 
@@ -291,6 +301,9 @@ public class SignUpProfileActivity extends AppCompatActivity implements BottomSh
         dialog.findViewById(R.id.help_button).setVisibility(View.GONE);
         dialog.show();
         cancelButton.setOnClickListener(v -> dialog.dismiss());
-        yesButton.setOnClickListener(v -> finishAffinity());
+        yesButton.setOnClickListener(v -> {
+            finishAffinity();
+            dialog.dismiss();
+        });
     }
 }
