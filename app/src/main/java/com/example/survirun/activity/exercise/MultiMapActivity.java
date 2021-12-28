@@ -127,10 +127,10 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
                 if(i==0) {
                     MarkerOptions tempOptLab = new MarkerOptions();
                     tempOptLab.position(new LatLng(userList.get(i).latitude, userList.get(i).longitude));
-                    /*BitmapDrawable bitmapdraw=(BitmapDrawable)this.getResources().getDrawable(R.drawable.zombi_marker);
+                    BitmapDrawable bitmapdraw=(BitmapDrawable)this.getResources().getDrawable(R.drawable.ic_laboratory);
                     Bitmap b=bitmapdraw.getBitmap();
                     Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
-                    tempOptLab.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));*/
+                    tempOptLab.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
                     labMarker = mMap.addMarker(tempOptLab);
                 }
                 MarkerOptions tempOpt = new MarkerOptions();
