@@ -22,5 +22,8 @@ public class MultiActivity extends AppCompatActivity {
             startActivity(t);
         });
 
+        binding.backButton.setOnClickListener(v -> {
+            finish();
+        });
     }
 }

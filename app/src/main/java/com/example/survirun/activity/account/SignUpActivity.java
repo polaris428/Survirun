@@ -217,6 +217,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         customProgressDialog.dismiss();
                                         editor.putString("token", response.body().token);
                                         editor.commit();
+                                        isName = true;
                                         Log.d("token", response.body().token);
                                         Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
