@@ -7,6 +7,7 @@
     tools:context=".activity.exercise.QueueActivity">
 
     <ImageView
+        android:id="@+id/circle_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_communicate_circle"

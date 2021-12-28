@@ -2,6 +2,8 @@ package com.example.survirun.activity.exercise;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -69,6 +72,13 @@ public class QueueActivity extends AppCompatActivity {
         final AnimationDrawable drawableCommunicate =
                 (AnimationDrawable) binding.communicateImageView.getBackground();
         drawableCommunicate.start();
+
+        ObjectAnimator object = ObjectAnimator.ofFloat(binding.circleImageView, "rotation",360);
+        object.setInterpolator(new LinearInterpolator());
+        object.setDuration(7000);
+        object.setRepeatCount(ValueAnimator.INFINITE);
+        object.start();
+
 
 
     }
