@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,6 +20,7 @@ import com.example.survirun.R;
 import com.example.survirun.activity.exercise.MultiMapActivity;
 import com.example.survirun.data.CoordinateData;
 import com.example.survirun.data.LatLngData;
+import com.example.survirun.data.RoomNameData;
 import com.example.survirun.lastData;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -51,18 +55,23 @@ public class WebSocketService extends AppCompatActivity {
      static int characterNum;
     public static boolean Scientist=false;
     public static int maxBoom=30;
-    public static  int maxJombi=30;
+    public static  int maxZombie=30;
+    public static RoomNameData data;
+    public static String jsonData;
     SharedPreferences sharedPreferences= getSharedPreferences("item", MODE_PRIVATE);
 
     SharedPreferences.Editor editor= sharedPreferences.edit();
 
-    public static void socketConnect(Context context){
+    public static void socketConnect(Context context){ //, String roomName){
         try {
 
             loginSf = MultiMapActivity.mctx.getSharedPreferences("Login", MODE_PRIVATE);
             token = loginSf.getString("token", "");
             loginSf =  MultiMapActivity.mctx.getSharedPreferences("character", MODE_PRIVATE);
             characterNum = loginSf.getInt("num", 1);
+
+
+
 
             mContext=context;
             mSocket = IO.socket("https://dicon21.2tle.io");
@@ -72,7 +81,9 @@ public class WebSocketService extends AppCompatActivity {
             mSocket.on("UpdataCoordinate",updataCoordinate);
             mSocket.on("subscribe",subscribe);
             mSocket.on("makeBox",makeBox);
-            mSocket.on("getItem",getItem);
+            mSocket.on("getItem", getItem);
+            mSocket.on("addBoom", addBoom);
+            mSocket.on("addZombie",addZombie);
             mSocket.on("deleteItem",deleteItem);
             mSocket.on("laboratory",laboratory);
 
@@ -94,6 +105,133 @@ public class WebSocketService extends AppCompatActivity {
         //lastData.lastData=p;
         //jsonData = gson.toJson(lastData);
         //mSocket.emit("laboratory",jsonData);
+    }
+
+    private static Emitter.Listener onConnect = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Log.d("comment", "연결됨");
+
+        }
+    };
+    private static Emitter.Listener addBoom = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            maxBoom--;
+            if (!Scientist) {
+                toast("폭탄을 터트렸습니다 승리 까지 남은 폭탄" + maxBoom);
+                //Toast.makeText(MainActivity.this, "폭탄을 터트렸습니다 승리 까지 남은 폭탄" + maxBoom, Toast.LENGTH_LONG).show();
+
+                if (maxBoom == 0) {
+                    //생존자 승리
+                }
+            } else {
+
+                Vibrator vibrator = (Vibrator) MultiMapActivity.mctx.getSystemService(MultiMapActivity.mctx.VIBRATOR_SERVICE);
+
+                // 1초 진동
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator.vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    vibrator.vibrate(1000);
+                }
+                toast("생존자들이 폭탄을 터트렸습니다 패배 까지 남은 폭탄" + maxBoom);
+                //Toast.makeText(MainActivity.this, "생존자들이 폭탄을 터트렸습니다 승리 까지 남은 폭탄" + maxBoom, Toast.LENGTH_LONG).show();
+
+
+            }
+
+        }
+    };
+
+    private  static Emitter.Listener addZombie = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            maxZombie--;
+            if (!Scientist) {
+                Vibrator vibrator = (Vibrator) MultiMapActivity.mctx.getSystemService(MultiMapActivity.mctx.VIBRATOR_SERVICE);
+
+                // 1초 진동
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator.vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    vibrator.vibrate(1000);
+                }
+                toast("오염물질이 발견됬습니다 패배 까지 남은 오염물질" + maxZombie);
+                //Toast.makeText(MainActivity.this, "오염물질이 발견됬습니다 패배 까지 남은 오염물질" + maxZombie, Toast.LENGTH_LONG).show();
+
+                if (maxBoom == 0) {
+                    //생존자 승리
+                }
+            } else {
+
+                toast("염물질이 발견됬습니다 승리 까지 남은 오염물질" + maxZombie);
+                //Toast.makeText(MainActivity.this, "염물질이 발견됬습니다 승리 까지 남은 오염물질" + maxZombie, Toast.LENGTH_LONG).show();
+
+
+            }
+
+
+        }
+    };
+    private static Emitter.Listener getItem = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            data = new RoomNameData();
+            data.roomName = roomName;
+            jsonData = gson.toJson(data);
+
+            boolean Scientist = false;
+            int ran = (int) (Math.random() * 100);
+            if (ran % 2 == 0) {
+                if (!Scientist) {
+                    toast("폭탄을 얻었습니다" );
+                    //     Toast.makeText(MainActivity.this, "폭탄을 얻었습니다 승리 까지 남은 폭탄" + maxBoom, Toast.LENGTH_LONG).show();
+                    mSocket.emit("addBoom",jsonData);
+                    if (maxBoom == 0) {
+                        //생존자 승리
+                    }
+                } else {
+                    toast("이런... 나한테 필요없는 물건이다" );
+                    //Toast.makeText(MainActivity.this, "이런 나한테 필요없는 물건이다", Toast.LENGTH_LONG).show();
+                    if (maxZombie == 0) {
+                        //과학자 승리
+
+                    }
+                }
+
+
+            } else {
+                if (!Scientist) {
+                    toast("이런.. 나한테 필요없는 물건이다" );
+                    //Toast.makeText(MainActivity.this, "이런 나한테 필요없는 물건이다" + maxBoom, Toast.LENGTH_LONG).show();
+
+                } else {
+                    toast("오염물질을 얻었다" );
+                    // Toast.makeText(MainActivity.this, "오염물질을 얻었다 승리 까지 남은 오염물질" + maxZombie, Toast.LENGTH_LONG).show();
+                    mSocket.emit("addZombie",jsonData);
+
+
+                }
+
+
+            }
+
+        }
+
+
+
+
+    };
+    public static void toast(String text){
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run()
+            {
+                Toast.makeText(MultiMapActivity.mctx, text, Toast.LENGTH_SHORT).show();
+            }
+        }, 0);
     }
 
 
@@ -164,41 +302,8 @@ public class WebSocketService extends AppCompatActivity {
         }
     };
 
-    private static Emitter.Listener onConnect = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-
-        }
-    };
-
-    private static Emitter.Listener getItem = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-
-            if(!Scientist){
-                maxBoom--;
-                Toast.makeText(mContext,"폭탄을 얻었습니다 승리 까지 남은 폭탄"+maxBoom,Toast.LENGTH_LONG).show();
-                if(maxBoom==0){
-                    //생존자 승리
-                }
-            }else {
-                maxJombi--;
-                Toast.makeText(mContext,"오염물질을 얻었습니다 현재 오염물질 갯수"+maxBoom,Toast.LENGTH_LONG).show();
-                if(maxJombi==0){
-                    //과학자 승리
-
-                }
 
 
-            }
-
-
-
-
-
-
-        }
-    };
     private static Emitter.Listener laboratory = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
