@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -130,7 +131,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
         setContentView(view);
         mctx = this;
         Intent getIntent = getIntent();
-        WebSocketService.socketConnect();
+        WebSocketService.socketConnect(MultiMapActivity.this);
 
 
 
@@ -143,6 +144,54 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
         title = getIntent.getStringExtra("title");
 
         showSnackBar(view);
+        binding.addItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               //테스트
+
+                WebSocketService.mSocket.emit("testGetItem","{\"roomName\":\""+WebSocketService.roomName+"}");
+
+            }
+        });
+        binding.abilityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences character;
+                character = getSharedPreferences("character", MODE_PRIVATE);
+                int characterNum = character.getInt("num", 1);
+                switch (characterNum){
+                    case 1:
+                        if(HP==100){
+                            Toast.makeText(MultiMapActivity.this,"체력이 100입니다 테스트를 위해 체력을 감소 시키겠습니다",Toast.LENGTH_LONG).show();
+
+                            HP=HP-50;
+                        }else{
+                            Toast.makeText(MultiMapActivity.this,"체력을 회복합니다",Toast.LENGTH_LONG).show();
+                            HP=HP+10;
+                        }
+                        binding.progress2.setProgress(HP);
+
+
+                        break;
+                    case 2:
+                        Toast.makeText(MultiMapActivity.this,"이능력은 테스트 할 수 없습니다",Toast.LENGTH_LONG).show();
+                        break;
+                    case 3:
+                        Toast.makeText(MultiMapActivity.this,"지도상의 박스를 제거합니다",Toast.LENGTH_LONG).show();
+
+                        //박스 제거 코드
+                        break;
+                    case 4:
+                        Toast.makeText(MultiMapActivity.this,"이능력은 테스트 할 수 없습니다",Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+        });
+
+
+
+
+
 
         binding.dragButton.setOnClickListener(v -> {
             Animation animationDown = AnimationUtils.loadAnimation(binding.layout.getContext(), R.anim.map_sliding_down);
@@ -255,46 +304,13 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
             }
         });
 
-        binding.pause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnVisibilityChange(binding.pause);
-                btnVisibilityChange(binding.resumeButton);
-                btnVisibilityChange(binding.stopButton);
-                binding.pauseText.setVisibility(View.VISIBLE);
-                waitZombie();
-                isFirst = true;
-                isRunning = false;
-
-            }
-        });
-
-        binding.resumeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnVisibilityChange(binding.pause);
-                btnVisibilityChange(binding.resumeButton);
-                btnVisibilityChange(binding.stopButton);
-                binding.pauseText.setVisibility(View.GONE);
-                resumeZombie();
-                isRunning = true;
-                isFirst = false;
-
-            }
-        });
-
-        binding.stopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stop();
-            }
-        });
 
     }
 
     public void sendSocket() {
         WebSocketService.mSocket.emit("UpdataCoordinate","{\"roomName\":\""+WebSocketService.roomName+"\",\"latitude\":"+currentLat+",\"longitude\":"+currentLng+"}");
     }
+
 
     @Override
     public void onStart() {
