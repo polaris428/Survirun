@@ -32,10 +32,9 @@
         android:id="@+id/survivor_cardView"
         android:layout_width="170dp"
         android:layout_height="220dp"
+        android:layout_marginTop="24dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintBottom_toTopOf="@id/tip_textView"
         app:layout_constraintEnd_toStartOf="@id/researcher_cardView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text">
@@ -63,9 +62,9 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/ic_survior"
+                app:layout_constraintBottom_toTopOf="@id/text1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/text1"
                 app:layout_constraintTop_toBottomOf="@id/survivor_title" />
 
             <TextView
@@ -127,9 +126,9 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/ic_scientist"
+                app:layout_constraintBottom_toTopOf="@id/text2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/text2"
                 app:layout_constraintTop_toBottomOf="@id/researcher_title" />
 
             <TextView
@@ -158,7 +157,6 @@
     </androidx.cardview.widget.CardView>
 
 
-
     <Button
         android:id="@+id/start_button"
         android:layout_width="match_parent"
@@ -166,7 +164,7 @@
         android:text="@string/radio_communication"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
