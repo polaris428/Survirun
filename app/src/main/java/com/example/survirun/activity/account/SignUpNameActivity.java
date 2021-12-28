@@ -156,7 +156,7 @@ public class SignUpNameActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("checkFirstAccess", true);
             editor.apply();
-            Intent tutorialIntent = new Intent(SignUpNameActivity.this, WelcomeActivity.class);
+            Intent tutorialIntent = new Intent(SignUpNameActivity.this, SignUpProfileActivity.class);
             startActivity(tutorialIntent);
         }
     }
