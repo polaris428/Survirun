@@ -108,6 +108,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
     private static String title;
     public static ArrayList<MultiUserModel> userList;
     public static ArrayList<Marker> markerList = new ArrayList<>();
+    public static Marker labMarker;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -123,6 +124,15 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
             jsonDT = new JSONObject(getIntent.getStringExtra("jsonString"));
             userList = (ArrayList<MultiUserModel>) jsonDT.get("users");
             for(int i =0; i<3;i++) {
+                if(i==0) {
+                    MarkerOptions tempOptLab = new MarkerOptions();
+                    tempOptLab.position(new LatLng(userList.get(i).latitude, userList.get(i).longitude));
+                    /*BitmapDrawable bitmapdraw=(BitmapDrawable)this.getResources().getDrawable(R.drawable.zombi_marker);
+                    Bitmap b=bitmapdraw.getBitmap();
+                    Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
+                    tempOptLab.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));*/
+                    labMarker = mMap.addMarker(tempOptLab);
+                }
                 MarkerOptions tempOpt = new MarkerOptions();
                 tempOpt.position(new LatLng(userList.get(i).latitude, userList.get(i).longitude));
                 Marker tempMk = mMap.addMarker(tempOpt);

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.airbnb.lottie.L;
 import com.example.survirun.activity.exercise.MultiMapActivity;
 import com.example.survirun.data.CoordinateData;
+import com.example.survirun.data.LatLngData;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -132,6 +133,7 @@ public class WebSocketService extends AppCompatActivity {
                 @Override
                 public void run()
                 {
+                    /*
                     Toast.makeText(getApplicationContext(),args[0].toString(), Toast.LENGTH_SHORT).show();
                     CoordinateData coordinateData= gson.fromJson(args[0].toString(),CoordinateData.class);
                     Log.d("a",coordinateData.latitude+"\n"+coordinateData.longitude);
@@ -146,7 +148,11 @@ public class WebSocketService extends AppCompatActivity {
                         public void run() {
                             MultiMapActivity.mMap.addMarker(markerOptions);
                         }
-                    });
+                    });*/
+
+                    //
+                    LatLngData latlngData = gson.fromJson(args[0].toString(), LatLngData.class);
+                    
 
 
                 }
