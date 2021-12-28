@@ -19,10 +19,13 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
@@ -898,13 +901,30 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     public static void minusHPAndCheck() {
 
-        MapActivity.HP = MapActivity.HP - MapActivity.minusHp;
+        vibration();
         updateHpUI();
         splayTTS(mctx.getString(R.string.hitted_zb));
         if (HP <= 0) {
+
             stopZombie();
             splayTTS(mctx.getString(R.string.died));
             sstop(); //종료하고 싶으면
+        }
+    }
+
+    public static void vibration(){
+        MapActivity.HP = MapActivity.HP - MapActivity.minusHp;
+        Vibrator vibrator = (Vibrator) mctx.getSystemService(Context.VIBRATOR_SERVICE);
+
+        // 0.5초 대기 -> 1초 진동 -> 0.5초 대기 -> 1초 진동
+        final long[] vibratePattern = new long[]{500, 1000, 500, 1000,500,1000};
+        // 반복 없음
+        final int repeat = -1;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createWaveform(vibratePattern, repeat));
+        } else {
+            vibrator.vibrate(vibratePattern, repeat);
         }
     }
 
