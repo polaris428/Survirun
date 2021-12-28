@@ -164,4 +164,7 @@
     <string name="no_mark_ranking">There are no friends\nto mark on the rankings</string>
     <string name="zombies_not_appear">Zombies don\'t appear in this mode.</string>
     <string name="chart">Chart</string>
+    <string name="check_status">Check your status</string>
+    <string name="status">Status</string>
+    <string name="closing_status">Closing status</string>
 </resources>
