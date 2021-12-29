@@ -733,7 +733,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
 
         JSONObject jsonDT;
         try {
-            jsonDT = new JSONObject(getIntent().getStringExtra("jsonString"));
+            jsonDT = new JSONObject(getIntent().getStringExtra("jsonString")).getJSONObject("data");
             Log.d("<>",jsonDT.toString());
             WebSocketService.roomName = jsonDT.getString("roomName");
             JSONArray tmp = jsonDT.getJSONArray("users");
