@@ -149,7 +149,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
             public void onClick(View view) {
                //테스트
 
-                WebSocketService.mSocket.emit("testGetItem","{\"roomName\":\""+WebSocketService.roomName+"}");
+                WebSocketService.mSocket.emit("testGetItem","{\"roomName\":\""+WebSocketService.roomName+"\"}");
 
             }
         });
@@ -752,7 +752,7 @@ public class MultiMapActivity  extends AppCompatActivity implements OnMapReadyCa
                     Bitmap b = bitmapdraw.getBitmap();
                     Bitmap smallMarker = Bitmap.createScaledBitmap(b, 200, 200, false);
                     tempOptLab.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-
+                    //if(userList.get(i).username == )
 
 
                     tempOptLab.position(new LatLng(userList.get(i).latitude, userList.get(i).longitude));
