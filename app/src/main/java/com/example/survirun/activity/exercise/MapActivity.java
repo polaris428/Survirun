@@ -61,6 +61,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/* 일반 메서드는 맵액티 내에서 사용, 스태틱 메서드는 스태틱 메서드 및 좀비모델에서 사용*/
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final int GPS_ENABLE_REQUEST_CODE = 2001; //GPS 권한 요청 코드 상수
@@ -258,39 +259,47 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
+        //일지정지 버튼 눌렀다면
         binding.pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //버튼 활성화-비활성화 상태 변경
                 btnVisibilityChange(binding.pause);
                 btnVisibilityChange(binding.resumeButton);
                 btnVisibilityChange(binding.stopButton);
+                //텍스트 보이게
                 binding.pauseText.setVisibility(View.VISIBLE);
+                //좀비들 이동 일시정지
                 waitZombie();
-                isFirst = true;
-                isRunning = false;
+                isFirst = true; //?
+                isRunning = false; //달리지 않는 상태로
 
             }
         });
 
+        //재개버튼 눌렀다면
         binding.resumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //버튼 활성화-비활성화 상태 변경
                 btnVisibilityChange(binding.pause);
                 btnVisibilityChange(binding.resumeButton);
                 btnVisibilityChange(binding.stopButton);
+                //일시정지 버튼 안보이게
                 binding.pauseText.setVisibility(View.GONE);
-                resumeZombie();
-                isRunning = true;
-                isFirst = false;
+                resumeZombie(); //좀비 다시 달리게
+                isRunning = true; //달리는 상태로
+                isFirst = false; //?
 
             }
         });
 
+        //멈추는 버튼 누른다면?
         binding.stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stop();
-            }
+            } //정지!
         });
 
     }
@@ -301,16 +310,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
+    //좀비 멈춰!
     public static void waitZombie() {
-        isZombieCreating = false;
-        for (ZombieModel z : zombieList) {
+        isZombieCreating = false; //좀비 생성을 잠시 멈춥니다.
+        for (ZombieModel z : zombieList) { //반복문을 돌며 좀비가 달리지 않는 상태로 변경
             z.isRun = false;
 
         }
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroy() { //여긴 끝나면 초기화진행
         super.onDestroy();
         if (mediaPlayer != null) {
             mediaPlayer.release();
@@ -334,7 +344,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
-    public static void resumeZombie() {
+    public static void resumeZombie() { // 좀비가 다시 달릴 수 있도록 재개
         isZombieCreating = true;
         for (ZombieModel z : zombieList) {
             z.isRun = true;
@@ -342,27 +352,27 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
-    public static void playZBS() {
+    public static void playZBS() { //좀비 사운드재생
         mediaPlayer = MediaPlayer.create(mctx, R.raw.zombie4);
         mediaPlayer.setLooping(false);
         mediaPlayer.start();
     }
 
     @MainThread
-    public static void updateMarkerPos(int idx) {
+    public static void updateMarkerPos(int idx) { // 특정 좀비 마커의 위치 갱신
         //
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                zombieList.get(idx).myMarker.remove();
-                zombieList.get(idx).myMarker = mMap.addMarker(zombieList.get(idx).options);
+                zombieList.get(idx).myMarker.remove(); // 마커 제거
+                zombieList.get(idx).myMarker = mMap.addMarker(zombieList.get(idx).options); //마커 이동
 
             }
         });
     }
 
     @MainThread
-    public static void removeMarker(int idx) {
+    public static void removeMarker(int idx) { //특정 좀비 마커 제거
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
@@ -373,7 +383,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
     @MainThread
-    public static void stopZombie() {
+    public static void stopZombie() { //좀비 자체를 멈춤
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
@@ -389,7 +399,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
     }
 
-    public void stop() {
+    public void stop() { //맵 액티 내에서 종료하는 함수
         try {
             timeThread.interrupt();
             if (zombieMode) {
@@ -484,7 +494,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
-
+    // 외부에서 종료.
     public static void sstop() {
         try {
             timeThread.interrupt();
@@ -579,6 +589,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    //맵 사진 찍을 때 지도 줌 레벨 조정
     private int getZoomLevelFromMeters(double distanceTo) {
         int dis = 24576000;
         int ret = 21;
@@ -594,7 +605,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
-
+    // 맵 액티 초기화
     public void init(Context ctx) {
         polylineOptions.color(Color.parseColor("#64A3F5"));
         polylineOptions.zIndex(0);
@@ -605,6 +616,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
+    //gps 펄미션 검사
     private void checkGPSPermission() {
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
@@ -613,6 +625,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    //운동 추적 초기화?
     public void exerciseTrackingInit() {
         lastLat = currentLat;
         lastLng = currentLng;
@@ -630,7 +643,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLat, currentLng), 18));
     }
-
+    //맵 사진 촬영용
     private BitmapDescriptor BitmapFromVector(Context context, int vectorResId) {
         // below line is use to generate a drawable.
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
@@ -653,16 +666,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
+    //현재위치 설정 ( 변수 업데이트 )
     public void setCurrentLatLng(double lat, double lng) {
         currentLat = lat;
         currentLng = lng;
     }
 
+    //마지막 위치 설정 (변수 업데이트)
     public void setLastLatLng(double lat, double lng) {
         lastLat = lat;
         lastLng = lng;
     }
-
+    //활성화된 폴리라인 그리기
     public void drawActivePolyline() {
         isFirst = false;
         LatLng currentLatLng = new LatLng(currentLat, currentLng);
@@ -671,6 +686,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
     }
 
+    //거리계산후 더하기
     @SuppressLint("DefaultLocale")
     public String addMovedDistance() {
         Location loA = new Location("last");
@@ -683,12 +699,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return String.format("%.2f", walkingDistance / 1000.0);
     }
 
+    //소모한 칼로리 계산후 더하기
     @SuppressLint("DefaultLocale")
     public String addUsedKcal() {
         kcal = DEFAULT_KCAL_WEIGHT * (walkingDistance / 1000.0);
         return String.format("%.0f", kcal);
     }
 
+    //일시정지한 폴리라인 초기화
     public void pausePolylineInit() {
         isFirst = false;
         pausePolylineOpt = new PolylineOptions();
@@ -697,6 +715,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         pausePolylineOpt.add(new LatLng(lastLat, lastLng));
     }
 
+    //일시정지한 폴리라인 그리기
     public void drawPausePolyline() {
         LatLng t = new LatLng(currentLat, currentLng);
         polylineOptions.add(t);
@@ -706,7 +725,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(t, 18));
     }
 
-
+    // 맵 액티비티 초기화
     @Override
     public void onMapReady(@NonNull final GoogleMap googleMap) { //초기 Init
         mMap = googleMap;
@@ -818,7 +837,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
             }
         }
-        if (requestCode == 1000) {
+        if (requestCode == 1000) { //다이얼로그 띄웠을 때..
             if (resultCode == RESULT_OK) {
                 storyUserSelect = data.getIntExtra("result", -1);
             } else {
@@ -850,6 +869,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //
 //    }
 
+    // 버튼 활성화-비활성화 상태 변경
     public void btnVisibilityChange(Button btn) {
         if (btn.getVisibility() == View.VISIBLE) {
             btn.setVisibility(View.GONE);
@@ -858,12 +878,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    // tts 재생
     public void playTTS(String text) {
         tts.setPitch(1.0f);
         tts.setSpeechRate(1.0f);
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, text);
     }
-
+    //스태틱 메서드에서 tts 재생
     public static void splayTTS(String text) {
         tts.setPitch(1.0f);
         tts.setSpeechRate(1.0f);
