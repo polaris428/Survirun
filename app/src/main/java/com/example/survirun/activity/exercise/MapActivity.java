@@ -63,53 +63,53 @@ import java.util.Locale;
 
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private static final int GPS_ENABLE_REQUEST_CODE = 2001;
-    private static final int PERMISSIONS_REQUEST_CODE = 100;
-    private static final int DEFAULT_KCAL_WEIGHT = 80;
-    public static MediaPlayer mediaPlayer;
-    private static int ZOMBIE_CREATE_MINUTES = 2;
-    private static int MAX_ZB_CNT = 0;
-    public static int HP = 100;
-    public static int minusHp = 20;
+    private static final int GPS_ENABLE_REQUEST_CODE = 2001; //GPS 권한 요청 코드 상수
+    private static final int PERMISSIONS_REQUEST_CODE = 100; //권한 요청 코드 상수
+    private static final int DEFAULT_KCAL_WEIGHT = 80; // 기본 칼로리
+    public static MediaPlayer mediaPlayer; //사운드 재생할때 쓰는 미디어플레이어
+    private static int ZOMBIE_CREATE_MINUTES = 2; // 몇분마다 좀비 생성할건지?
+    private static int MAX_ZB_CNT = 0; // 최대 좀비 개수 ( getIntent에서 기본값 3으로 설정됨 )
+    public static int HP = 100; // 사용자의 현재 HP
+    public static int minusHp = 20; // 좀비에게 물렸을때 HP가 얼마나 깎일껀지
 
-    public static boolean isZombieCreating = true;
+    public static boolean isZombieCreating = true; //좀비 생성 여부
 
-    public int storyUserSelect = -1;
-    public static Context mctx;
-    String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-    public static GoogleMap mMap = null;
-    private LocationManager lm;
-    public static PolylineOptions polylineOptions = new PolylineOptions();
+    public int storyUserSelect = -1; // 유저가 어떤 스토리(버튼)을 클릭했는지 ( Intent )
+    public static Context mctx; // static method에서 사용하는 mapactivity의 컨텍스트 ( 좀비에서 맵 참조 )
+    String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}; //요청해야하는 퍼미션 목록
+    public static GoogleMap mMap = null; // 환장의 구글맵 ( 초기화 하기 전에 사용되면 터짐 )
+    private LocationManager lm; // 로케이션 매니저, 실질적으로 gps 값을 가져올때 쓰는 친구
+    public static PolylineOptions polylineOptions = new PolylineOptions(); //플레이 중일때 사용자가 움직인 경로 (폴리라인) 그리는 친구
 
-    private static PolylineOptions pausePolylineOpt = new PolylineOptions();
-    private static TextToSpeech tts;
+    private static PolylineOptions pausePolylineOpt = new PolylineOptions(); //일시정지 했을 때 사용자가 움직인 경로 그리는 친구
+    private static TextToSpeech tts; //TTS 객체
 
-    private double lastLat = 0.0;
-    private double lastLng = 0.0;
-    public static double currentLat = 0.0;
-    public static double currentLng = 0.0;
+    private double lastLat = 0.0; // 마지막 위치 ( latitude, 위도 )
+    private double lastLng = 0.0; // 마지막 위치 (longitude, 경도)
+    public static double currentLat = 0.0; //현재 위치 (lat, 위도 )
+    public static double currentLng = 0.0; //현재 위치 (lng, 경도)
 
-    private static double kcal = 0.0;
-    private static double walkingDistance = 0;
-    private static double timeToSec = 0.0;
+    private static double kcal = 0.0; //소모한 칼로리
+    private static double walkingDistance = 0; //현재까지 걸은 거리 ( 아마 미터 단위 )
+    private static double timeToSec = 0.0; //지금까지 활동한 시간 (아마)
 
     public static boolean isRunning = true; //일시정지시 false로
-    private boolean isFirst = false;
+    private boolean isFirst = false; // 추측상 폴리라인 그리기 전 최초 여부 판단하는 친구..?
     /*if err remove static*/
-    private static Thread timeThread = null;
-    public static ActivityMapBinding binding;
+    private static Thread timeThread = null; // 시간측정용 타임쓰레드
+    public static ActivityMapBinding binding; //바인딩
 
-    private static int kcalMok;
-    private static int timeMok; //sec
-    private static double kmMok;
-    private static int levelMok;
-    private static boolean zombieMode;
-    public static SupportMapFragment mapFragment;
+    private static int kcalMok; //칼로리 목표
+    private static int timeMok; //시간 목표
+    private static double kmMok;//키로미터 목표
+    private static int levelMok; //목표 레벨..?
+    private static boolean zombieMode; //좀비모드여부 판단
+    public static SupportMapFragment mapFragment; //맵 프래그먼트..
 
-    public static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>();
+    public static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>(); //좀비 객체 관리용 좀비 리스트
     private int zombieListCurrentPos = 0; // +1 해서 좀데 리스트 요소 개수 ㄱㄴ
-    Dialog dialog;
-    private static String title;
+    Dialog dialog; //다이얼로그 발생용 다이얼로그
+    private static String title; //?
 
     @SuppressLint("MissingPermission")
     @Override
@@ -117,17 +117,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         binding = ActivityMapBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+
         setContentView(view);
-        mctx = this;
-        Intent getIntent = getIntent();
+        mctx = this; //컨텍스트 스태틱 변수에 컨텍스트 넣는 과정 ( 스태틱 메서드에서 사용, 좀비 모델에서 사용 )
+        Intent getIntent = getIntent(); // 넘어온 값 관리
 
 
         //Log.d(title,title);
+
+
+        /* 다이얼로그 초기화 */
         dialog = new Dialog(MapActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog);
 
+        /* 이전 액티비티에서 값 가져오는거 */
         title = getIntent.getStringExtra("title");
         zombieMode = getIntent.getBooleanExtra("zombieMode", true);
         kmMok = getIntent().getDoubleExtra("km", 1);
@@ -137,7 +142,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Log.e(">>>>>", kmMok + " " + timeMok + " " + kcalMok);
         MAX_ZB_CNT = getIntent().getIntExtra("zombieCount", 3);
 
+        //스낵바
         showSnackBar(view);
+
 
         binding.dragButton.setOnClickListener(v -> {
             Animation animationDown = AnimationUtils.loadAnimation(binding.layout.getContext(), R.anim.map_sliding_down);
@@ -172,6 +179,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
+        // 음성 TTS 초기화
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -187,11 +195,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-
+        //GPS Permission Check
         checkGPSPermission();
 
+
         try {
+            //맵 액티비티 초기화
             init(MapActivity.this);
+            //맵 초기화...
             mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
             if (mapFragment != null) {
                 mapFragment.getMapAsync(this);
@@ -202,7 +213,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         }
 
+        //TTS 출력
         playTTS(getString(R.string.start_tts));
+
+        //위치 변동시 위치값 갱신 및 폴리라인 갱신
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
@@ -211,14 +225,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     if (lastLat == 0) {
                         exerciseTrackingInit();
                     }
-                    if (isRunning) {
+                    if (isRunning) { //달리는중?
                         drawActivePolyline();
                         binding.textviewKm.setText(addMovedDistance());
                         binding.textviewKcal.setText(addUsedKcal());
                     } else {
-                        if (isFirst) {
+                        if (isFirst) { //처음이면 초기화!
                             pausePolylineInit();
                         }
+                        //폴리라인 그리기
                         drawPausePolyline();
                     }
                     setLastLatLng(currentLat, currentLng);
