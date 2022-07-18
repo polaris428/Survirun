@@ -891,6 +891,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, text);
     }
 
+    //시간 측정 타이버 ** 시간관련 , 초당 업데이트는 전부 여기서 처리
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @SuppressLint("DefaultLocale")
@@ -935,6 +936,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     };
 
+    // hp 감소
     public static void minusHPAndCheck() {
 
         vibration();
@@ -947,7 +949,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             sstop(); //종료하고 싶으면
         }
     }
-
+    //진동발생
     public static void vibration(){
         MapActivity.HP = MapActivity.HP - MapActivity.minusHp;
         Vibrator vibrator = (Vibrator) mctx.getSystemService(Context.VIBRATOR_SERVICE);
@@ -964,7 +966,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
-
+    //HP ui update
     @MainThread
     public static void updateHpUI() {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -976,7 +978,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
     }
 
-    /* no use
+    // 스토리 사용 예정
     private void readStory() {
 
         Intent u = new Intent(MapActivity.this, ExerciseStoryActivity.class);
@@ -984,13 +986,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         u.putExtra("negative", "NO");
         u.putExtra("positive", "YES");
         startActivityForResult(u, 1000);
-    }*/
+    }
 
     private void afterReadStory() {
 
     }
 
-
+    // 시간 계산기
     public class timeThread implements Runnable {
         @Override
         public void run() {
@@ -1014,14 +1016,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         }
     }
-
+    //좀비 생성
     public void createZombie() {
         ZombieModel mZombie = new ZombieModel(new LatLng(currentLat, currentLng), zombieListCurrentPos, MapActivity.this);
         zombieListCurrentPos++;
         zombieList.add(mZombie);
         playTTS(getString(R.string.create_zb));
     }
-
+    // 다이얼로그 생성
     void showDialog() {
         TextView explain = dialog.findViewById(R.id.explain_textView);
         Button cancelButton = dialog.findViewById(R.id.cancel_button);
@@ -1036,7 +1038,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
         cancelButton.setOnClickListener(v -> dialog.dismiss());
     }
-
+    // 백버튼시 다이얼로그 발생
     @Override
     public void onBackPressed() {
         showDialog();
