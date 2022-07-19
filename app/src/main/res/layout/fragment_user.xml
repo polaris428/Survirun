@@ -9,6 +9,7 @@
     android:background="@drawable/back"
     tools:context=".fragmnet.UserFragment">
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/main_cardView"
         android:layout_width="match_parent"
@@ -209,6 +210,17 @@
        android:layout_margin="20dp"
         android:src="@drawable/ic_change"
         app:layout_constraintTop_toTopOf="parent"
-
         app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:text="오늘도 달려보자"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/bullun"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
