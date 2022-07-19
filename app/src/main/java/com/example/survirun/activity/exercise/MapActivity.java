@@ -236,8 +236,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     }
                     if (isRunning) { //달리는중?
                         drawActivePolyline();
-                        binding.textviewKm.setText(addMovedDistance());
+                        addMovedDistance();
+                        //binding.textviewKm.setText(addMovedDistance());
                         binding.textviewKcal.setText(addUsedKcal());
+
+
+
+
                     } else {
                         if (isFirst) { //처음이면 초기화!
                             pausePolylineInit();
@@ -696,7 +701,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     //거리계산후 더하기
     @SuppressLint("DefaultLocale")
-    public String addMovedDistance() {
+    public void addMovedDistance() {
         Location loA = new Location("last");
         loA.setLatitude(lastLat);
         loA.setLongitude(lastLng);
@@ -707,42 +712,55 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         /*story play..*/
         // condition: km check
+
+
+        binding.textviewKm.setText(String.format("%.2f", walkingDistance / 1000.0));
+
         if(  walkingDistance > ( storyShowKM * 1000 * storyCheckCnt)) {
             storyCheckCnt++;
             createEvent();
             readStory("TEST STORY", "YES", "NO", 1000);
         }
-
-        if(( storyCheckCnt-1) % 5 == 0) {
-            createItemMarker();
-            /*item create*/
-            //생성..
-        }
-        if(( storyCheckCnt-1) % 3 == 0) {
-            Random r = new Random();
-            r.setSeed(System.currentTimeMillis());
-            int d = r.nextInt(9);
-
-            if(d <= 4) { // 0,1,2,3,4 pass
-                removeItemMarker();
+        if(storyCheckCnt != 1) {
+            if(( storyCheckCnt-1) % 5 == 0) { //5
+                createItemMarker();
+                /*item create*/
+                //생성..
             }
 
+            if(( storyCheckCnt-1) % 4 == 0) { //10
+                updateHospital();
+            }
+
+            if(( storyCheckCnt-1) % 3 == 0) { //3
+                Random r = new Random();
+                r.setSeed(System.currentTimeMillis());
+                int d = r.nextInt(10);
+
+                if(d <= 4) { // 0,1,2,3,4 pass
+                    removeItemMarker();
+                }
+
+            }
+
+            itemCheck();
+            hospitalCheck();
+
+
         }
 
-        itemCheck();
-
-        if(( storyCheckCnt-1) % 10 == 0) {
-            updateHospital();
-        }
 
 
-        return String.format("%.2f", walkingDistance / 1000.0);
+
+
+
+        //return String.format("%.2f", walkingDistance / 1000.0);
     }
 
     private void updateHospital() {
         MarkerOptions opt = new MarkerOptions();
         opt.title("Hospital: Heal 20 HP");
-        opt.position(createRandomPos(new LatLng(currentLat,currentLat)));
+        opt.position(createRandomPos(new LatLng(currentLat,currentLng)));
         if(hospitalMarker == null) {
             hospitalMarker = mMap.addMarker(opt);
         }
@@ -871,7 +889,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     public void getUserItem(int index) {
         String itemZongRyu = itemMarkerList.get(index).getTitle();
-        itemMarkerList.remove(0);
+        itemMarkerList.get(index).remove();
+        itemMarkerList.remove(index);
+
         itemList.add(itemZongRyu);
 
         readStory(itemZongRyu+"아이템을 얻었습니다.","확인","OK",20000);

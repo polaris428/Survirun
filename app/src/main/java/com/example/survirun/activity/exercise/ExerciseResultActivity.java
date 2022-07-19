@@ -51,6 +51,13 @@ public class ExerciseResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityExerciseResultBinding.inflate(getLayoutInflater());
+        //supportRequestWindowFeature(WindowsCompat.FEATURE_ACTION_BAR);
+
+        customProgressDialog = new ProgressDialog(this);
+        //customProgressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+
         setContentView(binding.getRoot());
 
         loginSf = getSharedPreferences("Login", MODE_PRIVATE);
@@ -73,9 +80,7 @@ public class ExerciseResultActivity extends AppCompatActivity {
         binding.kmTextView.setText(String.format("%.2f", km));
         binding.exerciseTitleTextview.setText(title);
 
-        customProgressDialog = new ProgressDialog(this);
-        customProgressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
 
         int sec = timeToSec % 60;
         int min = timeToSec / 60;
