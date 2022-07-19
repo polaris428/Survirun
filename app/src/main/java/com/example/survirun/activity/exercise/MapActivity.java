@@ -53,6 +53,7 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.snackbar.Snackbar;
@@ -60,6 +61,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 /* 일반 메서드는 맵액티 내에서 사용, 스태틱 메서드는 스태틱 메서드 및 좀비모델에서 사용*/
 
@@ -72,6 +74,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static int MAX_ZB_CNT = 0; // 최대 좀비 개수 ( getIntent에서 기본값 3으로 설정됨 )
     public static int HP = 100; // 사용자의 현재 HP
     public static int minusHp = 20; // 좀비에게 물렸을때 HP가 얼마나 깎일껀지
+    public static double storyShowKM = 0.2; // 몇 km마다 사용자에게 스토리를 띄울것인가?
+    public static int storyCheckCnt = 1;
 
     public static boolean isZombieCreating = true; //좀비 생성 여부
 
@@ -108,6 +112,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public static SupportMapFragment mapFragment; //맵 프래그먼트..
 
     public static ArrayList<ZombieModel> zombieList = new ArrayList<ZombieModel>(); //좀비 객체 관리용 좀비 리스트
+    public static ArrayList<String> itemList = new ArrayList<String>();
+    public static ArrayList<Marker> itemMarkerList = new ArrayList<>();
     private int zombieListCurrentPos = 0; // +1 해서 좀데 리스트 요소 개수 ㄱㄴ
     Dialog dialog; //다이얼로그 발생용 다이얼로그
     private static String title; //?
@@ -696,7 +702,142 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         loB.setLatitude(currentLat);
         loB.setLongitude(currentLng);
         walkingDistance = walkingDistance + loA.distanceTo(loB);
+
+        /*story play..*/
+        // condition: km check
+        if(  walkingDistance > ( storyShowKM * 1000 * storyCheckCnt)) {
+            storyCheckCnt++;
+            createEvent();
+            readStory("TEST STORY", "YES", "NO", 1000);
+        }
+
+        if(( storyCheckCnt-1) % 5 == 0) {
+            createItemMarker();
+            /*item create*/
+            //생성..
+        }
+        if(( storyCheckCnt-1) % 3 == 0) {
+            Random r = new Random();
+            r.setSeed(System.currentTimeMillis());
+            int d = r.nextInt(9);
+
+            if(d <= 4) { // 0,1,2,3,4 pass
+                removeItemMarker();
+            }
+
+        }
+
+        itemCheck();
+
+
         return String.format("%.2f", walkingDistance / 1000.0);
+    }
+    public void itemCheck() {
+        Location human = new Location("human");
+        human.setLatitude(currentLat);
+        human.setLongitude(currentLng);
+        for(int m = 0; m<itemMarkerList.size(); m++) {
+            Location item = new Location("Item");
+            item.setLatitude(itemMarkerList.get(m).getPosition().latitude);
+            item.setLongitude(itemMarkerList.get(m).getPosition().longitude);
+
+            double distance = Math.round(item.distanceTo(human) * 100) / 100.0; //km
+            if(distance <= 5) {
+                getUserItem(m);
+            }
+        }
+
+    }
+
+    private double latIndiff(int diff) { //단위는 m
+        final int earth = 6371000;
+        return (diff * 360.0) / (2 * Math.PI * earth);
+    }
+
+    public double lonIndiff(double _currentLat, int diff) {
+        final int earth = 6371000;
+        double ddd = Math.cos(0);
+        double ddf = Math.cos(Math.toRadians(_currentLat));
+        return (diff * 360.0) / (2 * Math.PI * earth * Math.cos(Math.toRadians(_currentLat)));
+    }
+
+    public LatLng createRandomPos(LatLng current) {
+        Random random = new Random();
+        random.setSeed(System.currentTimeMillis());
+        int d = random.nextInt(3);
+        double ta, to;
+        double z = 0.0015;
+        switch(d) {
+            case 0:
+                ta = to = z;
+                break;
+            case 1:
+                ta = 0 -z;
+                to = z;
+                break;
+            case 2:
+                ta = to = 0 -z;
+                break;
+            default:
+                ta = z;
+                to = 0 -z;
+                break;
+        }
+        double diffLat = latIndiff(100);
+        double diffLon = lonIndiff(current.latitude, 100);
+        LatLng minLatLng = new LatLng(current.latitude - diffLat, current.longitude - diffLon);
+        LatLng maxLatLng = new LatLng(current.latitude+ diffLat, current.longitude + diffLon);
+        double randomLat = (Math.random() * (maxLatLng.latitude - minLatLng.latitude + ta) + minLatLng.latitude);
+        double randomLng = (Math.random() * (maxLatLng.longitude - minLatLng.longitude + to) + minLatLng.longitude);
+        return new LatLng(randomLat, randomLng);
+    }
+
+    public void createItemMarker() {
+        MarkerOptions opt = new MarkerOptions();
+        opt.position(createRandomPos(new LatLng(currentLat, currentLng)));
+        Random r = new Random();
+        r.setSeed(System.currentTimeMillis());
+        int d = r.nextInt(5);
+        opt.title("Item"+(d+1));
+        switch(d) {
+            case 0:
+                //여기에 이미지 생성
+//                BitmapDrawable bitmapdraw=(BitmapDrawable)context.getResources().getDrawable(R.drawable.zombi_marker);
+//                Bitmap b=bitmapdraw.getBitmap();
+//                Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
+//                this.options.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default:
+                break;
+        }
+        Marker cur = mMap.addMarker(opt);
+        itemMarkerList.add(cur);
+
+    }
+
+    public void removeItemMarker() {
+        itemMarkerList.get(0).remove();
+        itemMarkerList.remove(0);
+    }
+
+    public void getUserItem(int index) {
+        String itemZongRyu = itemMarkerList.get(index).getTitle();
+        itemMarkerList.remove(0);
+        itemList.add(itemZongRyu);
+
+        readStory(itemZongRyu+"아이템을 얻었습니다.","확인","OK",20000);
+    }
+
+    public void createEvent() {
+
     }
 
     //소모한 칼로리 계산후 더하기
@@ -845,6 +986,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
             afterReadStory();
         }
+        if (requestCode == 20000) {
+
+        }
     }
 
 //    public void sendDataToFirebase(int kcal, double km, int time, Bitmap mapImg) {
@@ -979,17 +1123,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     // 스토리 사용 예정
-    private void readStory() {
+    private void readStory(String storyBody, String positive, String negative, int reqCode) {
 
         Intent u = new Intent(MapActivity.this, ExerciseStoryActivity.class);
-        u.putExtra("storyBody", "TEST STORY");
-        u.putExtra("negative", "NO");
-        u.putExtra("positive", "YES");
-        startActivityForResult(u, 1000);
+        u.putExtra("storyBody", storyBody);
+        u.putExtra("negative", negative);
+        u.putExtra("positive", positive);
+        startActivityForResult(u, reqCode);
     }
 
     private void afterReadStory() {
-
+        //스토리 읽고 난 뒤 진행되는 메서드..
+        //positvie btn -> 1
+        //negative btn -> 0
+        // maybe hardcoding
     }
 
     // 시간 계산기
