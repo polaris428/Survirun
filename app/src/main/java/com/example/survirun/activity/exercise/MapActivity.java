@@ -864,7 +864,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         opt.position(createRandomPos(new LatLng(currentLat, currentLng)));
         Random r = new Random();
         r.setSeed(System.currentTimeMillis());
-        int d = r.nextInt(2);
+        int d = r.nextInt(5);
         //opt.title("Item"+(d+1));
         switch(d) {
             case 0:
@@ -872,7 +872,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 Bitmap b=bitmapdraw.getBitmap();
                 Bitmap smallMarker = Bitmap.createScaledBitmap(b, 150, 150, false);
                 opt.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-                opt.title("모");
+                opt.title("모자");
                 break;
             case 1:
                 BitmapDrawable bitmapdraw1 =(BitmapDrawable) getResources().getDrawable(R.drawable.item_cap);
@@ -880,6 +880,27 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 Bitmap smallMarker1 = Bitmap.createScaledBitmap(b1, 150, 150, false);
                 opt.icon(BitmapDescriptorFactory.fromBitmap(smallMarker1));
                 opt.title("너클");
+                break;
+            case 2:
+                BitmapDrawable bitmapdraw2 =(BitmapDrawable) getResources().getDrawable(R.drawable.bat);
+                Bitmap b2 =bitmapdraw2.getBitmap();
+                Bitmap smallMarker2 = Bitmap.createScaledBitmap(b2, 150, 150, false);
+                opt.icon(BitmapDescriptorFactory.fromBitmap(smallMarker2));
+                opt.title("야구빠따");
+                break;
+            case 3:
+                BitmapDrawable bitmapdraw3 =(BitmapDrawable) getResources().getDrawable(R.drawable.alcohol);
+                Bitmap b3 =bitmapdraw3.getBitmap();
+                Bitmap smallMarker3 = Bitmap.createScaledBitmap(b3, 150, 150, false);
+                opt.icon(BitmapDescriptorFactory.fromBitmap(smallMarker3));
+                opt.title("화염병");
+                break;
+            case 4:
+                BitmapDrawable bitmapdraw4 =(BitmapDrawable) getResources().getDrawable(R.drawable.knife);
+                Bitmap b4 =bitmapdraw4.getBitmap();
+                Bitmap smallMarker4 = Bitmap.createScaledBitmap(b4, 150, 150, false);
+                opt.icon(BitmapDescriptorFactory.fromBitmap(smallMarker4));
+                opt.title("칼");
                 break;
             default:
                 break;
@@ -901,7 +922,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         itemList.add(itemZongRyu);
 
-        readStory(itemZongRyu+"아이템을 얻었습니다.","확인","OK",20000);
+        readStory(itemZongRyu,"확인","OK",20000);
     }
 
     public void createEvent() {
