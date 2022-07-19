@@ -118,6 +118,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     Dialog dialog; //다이얼로그 발생용 다이얼로그
     private static String title; //?
 
+    public static Marker hospitalMarker = null;
+
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -729,9 +731,48 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         itemCheck();
 
+        if(( storyCheckCnt-1) % 10 == 0) {
+            updateHospital();
+        }
+
 
         return String.format("%.2f", walkingDistance / 1000.0);
     }
+
+    private void updateHospital() {
+        MarkerOptions opt = new MarkerOptions();
+        opt.title("Hospital: Heal 20 HP");
+        opt.position(createRandomPos(new LatLng(currentLat,currentLat)));
+        if(hospitalMarker == null) {
+            hospitalMarker = mMap.addMarker(opt);
+        }
+        else {
+            hospitalMarker.remove();
+            hospitalMarker = mMap.addMarker(opt);
+        }
+    }
+
+    public void hospitalCheck() {
+        Location human = new Location("human");
+        human.setLatitude(currentLat);
+        human.setLongitude(currentLng);
+        Location item = new Location("Item");
+        item.setLatitude(hospitalMarker.getPosition().latitude);
+        item.setLongitude(hospitalMarker.getPosition().longitude);
+
+        double distance = Math.round(item.distanceTo(human) * 100) / 100.0; //km
+        if(distance <= 5) {
+            hospitalMarker.remove();
+            hospitalMarker = null;
+            plusHP(20);
+        }
+    }
+    public void plusHP(int value) {
+        if(HP>=80) HP = 100;
+        else HP= HP + value;
+        updateHpUI();
+    }
+
     public void itemCheck() {
         Location human = new Location("human");
         human.setLatitude(currentLat);
@@ -987,7 +1028,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             afterReadStory();
         }
         if (requestCode == 20000) {
-
+            if(resultCode == RESULT_OK) {
+                //READ CHECK
+            }
         }
     }
 
