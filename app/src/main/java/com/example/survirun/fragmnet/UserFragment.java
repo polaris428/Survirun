@@ -60,8 +60,8 @@ public class UserFragment extends Fragment {
         binding.changeButton.setColorFilter(ContextCompat.getColor(getContext(),R.color.white));
 
         binding.dateTextview.setText(exercise.getString("data",""));
-        score(exercise.getInt("calorie",0),exercise.getInt("time",0),exercise.getFloat("km",0));
-
+        //score(exercise.getInt("calorie",0),exercise.getInt("time",0),exercise.getFloat("km",0));
+        score(300,2100,10);
         yesterdayExercise= getContext().getSharedPreferences("yesterdayExercise", MODE_PRIVATE);
 
         binding.changeButton.setOnClickListener(v -> {
