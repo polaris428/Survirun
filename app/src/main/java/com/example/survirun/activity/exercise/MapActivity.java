@@ -59,6 +59,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -120,6 +121,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     public static Marker hospitalMarker = null;
 
+    //story hardcoding
+    private String[] storyList = {"서울  사람들과 동물들이 같이 어올리며 지내던 도시\n" +
+            "분명 얼마전까지만 해도 모두가 알던 서울이었다\n" +
+            "새벽 갑자기 발생한 원인 모를 바이러스에 의해 사람들은 서로가 서로를 물어 뜻었다\n" +
+            "서울 도심은 한순간에 감염자들로 가득 채워졌고 \n" +
+            "정부와 군 또한 바이러스에 속수무책이었다\n" +
+            "바이러스는 전국으로 퍼졌고 살아남은 사람들은 작은 마을을 만들며 살아갔다\n" +
+            "모두들 마을은 안전할거라 믿었지만 그 생각은 오래가지않았다\n" +
+            "마을에 감염자가 발생하며 사람들은 뿔뿔히 흩어졌다\n" +
+            "구석진 곳에서 한숨을 돌리던 도중 감염자들의 소리가 들렸다","더이상 좀비가 보이지 않는다. \n이쯤이면 따돌린 것 같다.. \n무너진 건둘틈 사이에서 반짝이는 무언가가 보인다"};
+    //private ArrayList<List<String>> answerList = new ArrayList<>(new ArrayList<>());
+    private List<List<String>> answerList = Arrays.asList( Arrays.asList("달린다","달린다"), Arrays.asList("꺼내본다","무시한다"));
+    private static int storyQuery = 0;
+
+
+
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +149,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Intent getIntent = getIntent(); // 넘어온 값 관리
 
 
+        //answerList.add(Arrays.asList("달린다","달린"));
         //Log.d(title,title);
 
 
@@ -719,9 +737,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if(  walkingDistance > ( storyShowKM * 1000 * storyCheckCnt)) {
             storyCheckCnt++;
             createEvent();
-            readStory("TEST STORY", "YES", "NO", 1000);
+            //readStory("TEST STORY", "YES", "NO", 1000);
         }
         if(storyCheckCnt != 1) {
+            if((storyCheckCnt-1) % 10 == 0) {
+                readStory(storyList[storyQuery], answerList.get(storyQuery).get(0), answerList.get(storyQuery).get(1), 1000);
+            }
             if(( storyCheckCnt-1) % 5 == 0) { //5
                 createItemMarker();
                 /*item create*/
