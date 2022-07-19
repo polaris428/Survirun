@@ -759,6 +759,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void updateHospital() {
         MarkerOptions opt = new MarkerOptions();
+
+        BitmapDrawable bitmapdraw=(BitmapDrawable) getResources().getDrawable(R.drawable.hospitalmarkerview);
+        Bitmap b=bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
+        opt.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+
+
+
         opt.title("Hospital: Heal 20 HP");
         opt.position(createRandomPos(new LatLng(currentLat,currentLng)));
         if(hospitalMarker == null) {
@@ -856,23 +864,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         opt.position(createRandomPos(new LatLng(currentLat, currentLng)));
         Random r = new Random();
         r.setSeed(System.currentTimeMillis());
-        int d = r.nextInt(5);
-        opt.title("Item"+(d+1));
+        int d = r.nextInt(2);
+        //opt.title("Item"+(d+1));
         switch(d) {
             case 0:
-                //여기에 이미지 생성
-//                BitmapDrawable bitmapdraw=(BitmapDrawable)context.getResources().getDrawable(R.drawable.zombi_marker);
-//                Bitmap b=bitmapdraw.getBitmap();
-//                Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 150, false);
-//                this.options.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                BitmapDrawable bitmapdraw=(BitmapDrawable) getResources().getDrawable(R.drawable.item_knuckle);
+                Bitmap b=bitmapdraw.getBitmap();
+                Bitmap smallMarker = Bitmap.createScaledBitmap(b, 150, 150, false);
+                opt.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                opt.title("모");
                 break;
             case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
+                BitmapDrawable bitmapdraw1 =(BitmapDrawable) getResources().getDrawable(R.drawable.item_cap);
+                Bitmap b1 =bitmapdraw1.getBitmap();
+                Bitmap smallMarker1 = Bitmap.createScaledBitmap(b1, 150, 150, false);
+                opt.icon(BitmapDescriptorFactory.fromBitmap(smallMarker1));
+                opt.title("너클");
                 break;
             default:
                 break;
